@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>欢迎登录</title>
+  <link rel="shortcut icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/animate.min.css">
+  <link rel="stylesheet" href="css/login.css">
+  <!--[if lt IE 9]>
+      <meta http-equiv="refresh" content="0;ie.html" />
+  <![endif]-->
+</head>
+<body>
+	<div id="loginpage">
+    <div class="container animated fadeInDown">
+      <h2 class="page-header">欢迎登录</h2>
+      <form id="signinForm" action="signup.html" method="post">
+        <div class="form-group">
+          <input type="text" id="mobile" name="username" class="form-control" placeholder="手机号码/邮箱" required />
+          <span class="fa fa-check"></span>
+        </div>
+        <div class="form-group">
+          <input type="password" name="password" id="password" class="form-control" placeholder="请输入密码" required />
+          <span class="fa fa-check"></span>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-8">
+            <input type="text" id="authcode" name="authcode" class="form-control" placeholder="请输入验证码" required />
+          </div>
+          <div class="col-md-4">
+            <canvas id="canvas" class="canvas-code" width="100%" height="35px" onClick="drawCode()"></canvas>
+          </div>
+        </div>
+        <button type="submit" id="btnSignIn" class="btn btn-primary btn-block">立即登录</button>
+      </form>
+      <div class="login-footer text-center">
+        <p>
+          <a href="signup.html">尚未注册？</a>
+          <span class="line">|</span>
+          <a data-toggle="modal" href="signin.html#myModal">忘记密码</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">忘记密码 ?</h4>
+              </div>
+              <div class="modal-body">
+                  <p>请输入邮箱号重置密码</p>
+                  <input type="text" name="email" placeholder="邮箱号" autocomplete="off" class="form-control placeholder-no-fix">
+
+              </div>
+              <div class="modal-footer">
+                  <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                  <button class="btn btn-theme" type="button">提交</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

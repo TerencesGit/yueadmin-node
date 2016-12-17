@@ -1,0 +1,238 @@
+/*样式初始化*/
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none
+}
+a,a:hover,a:focus,a:active{
+  text-decoration: none
+}
+body{
+  background: #f0f3f4
+}
+
+/*左侧边栏*/
+aside{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 240px;
+  height: 100%;
+  overflow: hidden;
+  background: #1c2b36;
+}
+.sidebar {
+  position: absolute;
+  width: 260px;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.sidebar-header {
+  padding: 8px 25px;
+}
+
+.sidebar-header h4 {
+  color: #DFE4ED;
+}
+
+.line {
+  width: 100%;
+  height: 2px;
+  margin: 10px 0;
+  overflow: hidden;
+  font-size: 0;
+  background-color: #131e26;
+}
+/*手风琴菜单*/
+.accordion {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto 20px;
+}
+
+.accordion .link {
+  display: block;
+  position: relative;
+  padding: 15px 15px 15px 42px;
+  color: #869fb1;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.accordion .link:hover {
+  background: #131e26;
+  color: #fff;
+}
+.accordion .link a{
+  color: #869fb1;
+}
+.accordion li i {
+  position: absolute;
+  top: 16px;
+  left: 12px;
+  font-size: 18px;
+  transition: all 0.4s ease;
+}
+
+.accordion li i.fa-chevron-down {
+  right: 20px;
+  left: auto;
+  font-size: 10px;
+}
+.accordion li.open{
+  border-left: 4px solid #19a9d5;
+  transition: all .4s 
+}
+.accordion li.open .link {
+  color: #fff;
+}
+.accordion li.open i {
+  color: #fff;
+}
+
+.accordion li.open i.fa-chevron-down {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  display: none;
+  background: #131e26;
+  font-size: 14px;
+}
+
+.submenu a {
+  display: block;
+  text-decoration: none;
+  color: #869fb1;
+  padding: 12px;
+  padding-left: 42px;
+  transition: all 0.25s ease;
+}
+
+.submenu a:hover {
+  color: #fff;
+}
+
+/*右侧主区域*/
+.page-wrap {
+  position: absolute;
+  top: 0;
+  left: 240px;
+  right: 0;
+}
+
+/*页头区域*/
+.navbar {
+  position: fixed;
+  width: 100%;
+  padding-right: 240px;
+  border-radius: 0;
+  background: #fff;
+  z-index: 99
+}
+
+.btn-toggle {
+  padding: 5px 12px;
+  margin: 10px 5px 5px 20px;
+  font-size: 14px;
+  float: left;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #23b7e5;
+  border-color: #23b7e5;
+}
+.btn-toggle:hover,
+.btn-toggle:focus {
+  color: #fff;
+}
+.navbar-form {
+  display: inline-block;
+}
+
+.navbar-form .form-control {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+  border: medium none;
+  font-size: 14px;
+  box-shadow: none
+}
+.navbar-form .form-control:focus {
+  box-shadow: none;
+  border-bottom: 1px solid #23b7e5;
+}
+.topbar > li{
+  display: inline-block;
+  margin-left: 10px;
+}
+.topbar > li > a{
+  position: relative;
+  display: block;
+  color: #666;
+  font-size: 16px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border: 1px solid #f0f0f8;
+  padding: 2px 6px;
+  margin-right: 15px;
+}
+.count-info .label {
+  position: absolute;
+  top: -3px;
+  right: -7px;
+  line-height: 12px;
+  padding: 1px 5px;
+}
+
+.topbar .personal-center {
+  margin-top: 8px;
+}
+.topbar .personal-center > a{
+  padding: 5px 10px;
+  color: #666;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #f0f0f8;
+  background: transparent;
+}
+.topbar li > a:hover{
+  background: #F1F2F7;
+}
+.topbar .personal-center > a > img {
+  width: 25px;
+  height: 25px;
+}
+.personal-center > .dropdown-menu {
+  left: -20px;
+}
+.dropdown-menu .divider{
+  margin: 0;
+}
+.dropdown-menu>li>a {
+  padding: 5px 20px;
+  color: #a4abbb
+}
+/*页脚区域*/
+.site-footer {
+  color: #fff;
+  line-height: 50px;
+  text-align: center;
+  background: #5b6e84
+}
+/*主内容区域*/
+.main-content {
+  margin-top: 50px;
+  min-height: 800px;
+  color: #333;
+  padding: 20px;
+}
+/*面包屑导航*/
+.breadcrumb {
+  background-color: #ccc;
+}
