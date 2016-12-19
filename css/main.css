@@ -8,10 +8,14 @@ li {
 li {
   list-style: none
 }
-a,a:hover,a:focus,a:active{
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
   text-decoration: none
 }
-body{
+body {
   background: #f0f3f4
 }
 
@@ -41,7 +45,7 @@ aside{
   color: #DFE4ED;
 }
 
-.line {
+.divide-line {
   width: 100%;
   height: 2px;
   margin: 10px 0;
@@ -101,7 +105,9 @@ aside{
 .accordion li.open i.fa-chevron-down {
   transform: rotate(180deg);
 }
-
+.accordion li.open .submenu {
+  display: block;
+}
 .submenu {
   display: none;
   background: #131e26;
@@ -110,18 +116,17 @@ aside{
 
 .submenu a {
   display: block;
-  text-decoration: none;
   color: #869fb1;
   padding: 12px;
   padding-left: 42px;
   transition: all 0.25s ease;
 }
 
-.submenu a:hover {
+.submenu li.active a, .submenu a:hover {
   color: #fff;
 }
 
-/*右侧主区域*/
+/*右侧主体区域*/
 .page-wrap {
   position: absolute;
   top: 0;
@@ -138,7 +143,9 @@ aside{
   background: #fff;
   z-index: 99
 }
-
+.navbar-header {
+  width: 400px;
+}
 .btn-toggle {
   padding: 5px 12px;
   margin: 10px 5px 5px 20px;
@@ -167,11 +174,11 @@ aside{
   box-shadow: none;
   border-bottom: 1px solid #23b7e5;
 }
-.topbar > li{
+.navbar-nav > li{
   display: inline-block;
-  margin-left: 10px;
+  margin: 15px 0 0 10px;
 }
-.topbar > li > a{
+.navbar-nav > li > a{
   position: relative;
   display: block;
   color: #666;
@@ -190,10 +197,10 @@ aside{
   padding: 1px 5px;
 }
 
-.topbar .personal-center {
+.navbar-nav .personal-center {
   margin-top: 8px;
 }
-.topbar .personal-center > a{
+.navbar-nav .personal-center > a{
   padding: 5px 10px;
   color: #666;
   font-size: 16px;
@@ -201,10 +208,10 @@ aside{
   border: 1px solid #f0f0f8;
   background: transparent;
 }
-.topbar li > a:hover{
+.navbar-nav > li > a:hover{
   background: #F1F2F7;
 }
-.topbar .personal-center > a > img {
+.personal-center > a > img {
   width: 25px;
   height: 25px;
 }
@@ -214,7 +221,7 @@ aside{
 .dropdown-menu .divider{
   margin: 0;
 }
-.dropdown-menu>li>a {
+.dropdown-menu > li > a {
   padding: 5px 20px;
   color: #a4abbb
 }

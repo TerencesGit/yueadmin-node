@@ -3,7 +3,7 @@
    var speed = 200;
    var $aside = $('#aside'),
        $main = $('#main'),
-       $header = $('#navbar-header');
+       $header = $('#header');
    //侧边栏显示隐藏
     $('#btnToggle').on('click', function() {
        if (!toggle) {
@@ -27,6 +27,10 @@
        element: this.element,
        multiple: this.multiple
      }, this.dropdown)
+     // var submenuItem = links.next('.submenu').find('li');
+     // submenuItem.on('click', function(){
+     //   $(this).addClass('active').siblings().removeClass('active')
+     // })
    }
    Accordion.prototype.dropdown = function(e) {
      var $element = e.data.element;
