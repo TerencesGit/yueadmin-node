@@ -19,8 +19,8 @@ body {
   background: #f0f3f4
 }
 
-/*左侧边栏*/
-aside{
+/*左侧导航*/
+.sidebar-warp{
   position: fixed;
   top: 0;
   left: 0;
@@ -38,17 +38,22 @@ aside{
 }
 
 .sidebar-header {
-  padding: 8px 25px;
+  padding: 8px 40px;
 }
 
-.sidebar-header h4 {
+.sidebar-header .brand {
+  display: block;
+  margin: 10px 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.1;
   color: #DFE4ED;
 }
 
 .divide-line {
   width: 100%;
   height: 2px;
-  margin: 10px 0;
+  margin-bottom: 10px;
   overflow: hidden;
   font-size: 0;
   background-color: #131e26;
@@ -59,7 +64,6 @@ aside{
   max-width: 300px;
   margin: 0 auto 20px;
 }
-
 .accordion .link {
   display: block;
   position: relative;
@@ -87,11 +91,12 @@ aside{
 }
 
 .accordion li i.fa-chevron-down {
-  right: 20px;
+  right: 40px;
   left: auto;
   font-size: 10px;
 }
 .accordion li.open{
+  background: #131e26;
   border-left: 4px solid #19a9d5;
   transition: all .4s 
 }
@@ -110,7 +115,6 @@ aside{
 }
 .submenu {
   display: none;
-  background: #131e26;
   font-size: 14px;
 }
 
@@ -126,22 +130,15 @@ aside{
   color: #fff;
 }
 
-/*右侧主体区域*/
-.page-wrap {
-  position: absolute;
+/*页头区域*/
+.header {
+  position: fixed;
   top: 0;
   left: 240px;
   right: 0;
-}
-
-/*页头区域*/
-.navbar {
-  position: fixed;
-  width: 100%;
-  padding-right: 240px;
-  border-radius: 0;
   background: #fff;
-  z-index: 99
+  border: 1px solid #e7e7e7;
+  z-index: 999
 }
 .navbar-header {
   width: 400px;
@@ -225,20 +222,25 @@ aside{
   padding: 5px 20px;
   color: #a4abbb
 }
+
+/*主体区域*/
+.main {
+  position: fixed;
+  top: 50px;
+  left: 240px;
+  right: 0;
+  bottom: 0;
+}
+
 /*页脚区域*/
 .site-footer {
+  margin-top: 30px;
   color: #fff;
   line-height: 50px;
   text-align: center;
   background: #5b6e84
 }
-/*主内容区域*/
-.main-content {
-  margin-top: 50px;
-  min-height: 800px;
-  color: #333;
-  padding: 20px;
-}
+
 /*面包屑导航*/
 .breadcrumb {
   background-color: #ccc;

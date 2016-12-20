@@ -4,227 +4,160 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>悦视觉</title>
-  <link rel="shortcut icon" href="img/favicon.ico">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/animate.min.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="shortcut icon" href="assets/img/favicon.ico">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/css/animate.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
   <!--[if lt IE 9]>
       <meta http-equiv="refresh" content="0;ie.html" />
   <![endif]-->
 </head>
 <body>
-<!-- 侧边栏 -->
-  <aside id="aside">
+  <!--左侧导航-->
+  <aside id="aside" class="sidebar-warp">
   	<div class="sidebar">
-  		<div class="sidebar-header">
-      <h4>
-				<i class="fa fa-flag"></i>
-				<strong>悦视觉</strong>
-			</h4>
-    </div>
-    <div class="divide-line"></div>
-    <ul id="accordion" class="accordion">
-      <li>
-        <div class="link">
-          <i class="fa fa-home"></i>
-          <a href="#">首页</a>
-        </div>
-      </li>
-       <li>
-        <div class="link">
-          <i class="fa fa-user"></i>账户管理<i class="fa fa-chevron-down"></i>
-        </div>
-        <ul class="submenu">
-          <li><a href="#">账户信息维护</a></li>
-          <li><a href="#">修改账户密码</a></li>
-          <li><a href="#">注册我的企业</a></li>
+    	<div class="sidebar-header">
+        <a href="index.html" class="brand">
+  				<i class="fa fa-flag"></i>
+  				<strong>悦视觉</strong>
+  			</a>
+      </div>
+      <div class="divide-line"></div>
+      <nav>
+        <ul id="accordion" class="accordion">
+           <li>
+            <div class="link">
+              <i class="fa fa-user"></i>账户管理<i class="fa fa-chevron-down"></i>
+            </div>
+            <ul class="submenu">
+              <li><a href="account/account_info.html" target="main">账户信息维护</a></li>
+              <li><a href="account/account_info_edit.html" target="main">修改账户密码</a></li>
+              <li><a href="account/account_register.html" target="main">注册我的企业</a></li>
+            </ul>
+          </li>
+          <li>
+            <div class="link">
+              <i class="fa fa-desktop"></i>我的企业管理
+              <i class="fa fa-chevron-down"></i>
+            </div>
+            <ul class="submenu">
+              <li><a href="departmentTree.html" target="main">组织部门管理</a></li>
+              <li><a href="company/staff_manage.html" target="main">员工管理</a></li>
+              <!-- <li><a href="#">部门权限管理</a></li> -->
+              <li><a href="company_info.html" target="main">企业信息维护</a></li>
+              <!-- <li><a href="#">账户代注册</a></li> -->
+              <!-- <li><a href="#">岗位管理</a></li> -->
+            </ul>
+          </li>
+          <li>
+            <div class="link">
+              <i class="fa fa-group"></i> 我所管理的商家
+              <i class="fa fa-chevron-down"></i>
+            </div>
+            <ul class="submenu">
+              <li><a href="shop/shop_maintain.html" target="main">商家维护</a></li>
+              <li><a href="shop/shop_review.html" target="main">商家信息审核</a></li>
+              <!-- <li><a href="#">合同管理</a></li> -->
+              <!-- <li><a href="#">权限管理</a></li> -->
+            </ul>
+          </li>
+          <li>
+            <div class="link">
+              <i class="fa fa-globe"></i> 系统管理
+              <i class="fa fa-chevron-down"></i>
+            </div>
+            <ul class="submenu">
+              <li><a href="system/systemTree.html" target="main">系统功能树管理</a></li>
+              <li><a href="system/systemTree.html" target="main">系统角色管理</a></li>
+              <li><a href="system/" target="main">公告信息维护</a></li>
+              <li><a href="system/" target="main">系统内账户维护</a></li>
+            </ul>
+          </li>
         </ul>
-      </li>
-      <li>
-        <div class="link"><i class="fa fa-desktop"></i>我的企业管理<i class="fa fa-chevron-down"></i></div>
-        <ul class="submenu">
-          <li><a href="departmentTree.html">组织部门管理</a></li>
-          <li><a href="#">员工管理</a></li>
-          <li><a href="#">部门权限管理</a></li>
-          <li><a href="#">信息维护</a></li>
-          <li><a href="#">账户代注册</a></li>
-          <li><a href="#">岗位管理</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="link">
-          <i class="fa fa-group"></i> 我所管理的商家
-          <i class="fa fa-chevron-down"></i>
-        </div>
-        <ul class="submenu">
-          <li><a href="#">商家维护</a></li>
-          <li><a href="#">商家信息审核</a></li>
-          <li><a href="#">合同管理</a></li>
-          <li><a href="#">权限管理</a></li>
-          <li><a href="#">管辖分配</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="link">
-          <i class="fa fa-globe"></i> 系统管理
-          <i class="fa fa-chevron-down"></i>
-        </div>
-        <ul class="submenu">
-          <li><a href="#">系统功能树管理</a></li>
-          <li><a href="#">系统角色管理</a></li>
-          <li><a href="#">公告信息维护</a></li>
-          <li><a href="#">系统内账户维护</a></li>
-        </ul>
-      </li>
-       <li>
-        <div class="link">
-          <i class="fa fa-globe"></i> 系统管理
-          <i class="fa fa-chevron-down"></i>
-        </div>
-        <ul class="submenu">
-          <li><a href="#">系统功能树管理</a></li>
-          <li><a href="#">系统角色管理</a></li>
-          <li><a href="#">公告信息维护</a></li>
-          <li><a href="#">系统内账户维护</a></li>
-        </ul>
-      </li>
-       <li>
-        <div class="link">
-          <i class="fa fa-globe"></i> 系统管理
-          <i class="fa fa-chevron-down"></i>
-        </div>
-        <ul class="submenu">
-          <li><a href="#">系统功能树管理</a></li>
-          <li><a href="#">系统角色管理</a></li>
-          <li><a href="#">公告信息维护</a></li>
-          <li><a href="#">系统内账户维护</a></li>
-        </ul>
-      </li>
-       <li>
-        <div class="link">
-          <i class="fa fa-globe"></i> 系统管理
-          <i class="fa fa-chevron-down"></i>
-        </div>
-        <ul class="submenu">
-          <li><a href="#">系统功能树管理</a></li>
-          <li><a href="#">系统角色管理</a></li>
-          <li><a href="#">公告信息维护</a></li>
-          <li><a href="#">系统内账户维护</a></li>
-        </ul>
-      </li>
-       <li>
-        <div class="link">
-          <i class="fa fa-globe"></i> 系统管理
-          <i class="fa fa-chevron-down"></i>
-        </div>
-        <ul class="submenu">
-          <li><a href="#">系统功能树管理</a></li>
-          <li><a href="#">系统角色管理</a></li>
-          <li><a href="#">公告信息维护</a></li>
-          <li><a href="#">系统内账户维护</a></li>
-        </ul>
-      </li>
-       <li>
-        <div class="link">
-          <i class="fa fa-globe"></i> 系统管理
-          <i class="fa fa-chevron-down"></i>
-        </div>
-        <ul class="submenu">
-          <li><a href="#">系统功能树管理</a></li>
-          <li><a href="#">系统角色管理</a></li>
-          <li><a href="#">公告信息维护</a></li>
-          <li><a href="#">系统内账户维护</a></li>
-        </ul>
-      </li>
-    </ul>
+      </nav>
   	</div>   
   </aside>
-  <!-- 主体区域 -->
-  <section id="main" class="page-wrap">
-  <!-- 页头导航 -->
-    <nav id="header" class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a href="javascript:;" id="btnToggle" class="btn-toggle">
-            <i class="fa fa-bars"></i>
-          </a>
-          <form role="search" class="navbar-form" method="post" action="#">
-              <div class="form-group">
-                  <input type="text" placeholder="请输入要查找内容 …" class="form-control" name="top-search" id="top-search">
-              </div>
-          </form>
-        </div>
-        <ul class="navbar-nav pull-right"> 
-        	<li class="dropdown">
-              <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="false">
-                  <i class="fa fa-bell"></i> <span class="label label-warning">8</span>
-              </a>
-              <ul class="dropdown-menu dropdown-alerts">
-                  <li>
-                      <a href="mailbox.html">
-                          <div>
-                              <i class="fa fa-envelope fa-fw"></i> 您有16条未读消息
-                              <!-- <span class="pull-right text-muted small">4分钟前</span> -->
-                          </div>
-                      </a>
-                  </li>
-                  <li class="divider"></li>
-                  <li>
-                      <a href="profile.html">
-                          <div>
-                              <i class="fa fa-qq fa-fw"></i> 3条新回复
-                              <!-- <span class="pull-right text-muted small">12分钟钱</span> -->
-                          </div>
-                      </a>
-                  </li>
-                  <li class="divider"></li>
-                  <li>
-                      <div class="text-center link-block">
-                          <a class="J_menuItem" href="notifications.html">
-                              <strong>查看所有 </strong>
-                              <i class="fa fa-angle-right"></i>
-                          </a>
-                      </div>
-                  </li>
-              </ul>
-          </li>
-	        <li class="dropdown personal-center">
-					    <a href="javascript:;" class="dropdown-toggle" id="personMenu" data-toggle="dropdown">
-					    	<img src="img/avatar.jpg" alt="头像">
-					    	<span class="username">悦视觉</span>
-					      <span class="caret"></span>
-					    </a>
-					    <ul class="dropdown-menu" role="menu" aria-labelledby="personMenu">
-					        <li role="presentation">
-					            <a role="menuitem" tabindex="-1" href="#">个人中心</a>
-					        </li>
-					        <li role="presentation" class="divider"></li>
-					        <li role="presentation">
-					            <a role="menuitem" tabindex="-1" href="#">设置</a>
-					        </li>
-					        <li role="presentation" class="divider"></li>
-					        <li role="presentation">
-					            <a role="menuitem" tabindex="-1" href="signin.html">退出</a>
-					        </li>
-					    </ul>
-					</li>
-        </ul>
+  <!-- 页头区域 -->
+  <header id="header" class="header">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="javascript:;" id="btnToggle" class="btn-toggle">
+          <i class="fa fa-bars"></i>
+        </a>
+        <form role="search" class="navbar-form" method="post" action="#">
+            <div class="form-group">
+                <input type="text" placeholder="请输入要查找内容 …" class="form-control" name="top-search" id="top-search">
+            </div>
+        </form>
       </div>
-    </nav>
-    <!-- 内容区域 -->
-    <section class="main-content animated fadeInRight">
-    	<div class="pull-right">
-    		blank 
-    	</div>
-    </section>
-    <!-- 页脚区域 -->
-    <footer class="site-footer">
-      <span>Copyright © 2016 yueshijue.com</span>
-    </footer>
+      <ul class="navbar-nav pull-right"> 
+        <li class="dropdown">
+            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="false">
+                <i class="fa fa-bell"></i> <span class="label label-warning">8</span>
+            </a>
+            <ul class="dropdown-menu dropdown-alerts">
+                <li>
+                    <a href="mailbox.html">
+                        <div>
+                            <i class="fa fa-envelope fa-fw"></i> 您有16条未读消息
+                            <!-- <span class="pull-right text-muted small">4分钟前</span> -->
+                        </div>
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="profile.html">
+                        <div>
+                            <i class="fa fa-qq fa-fw"></i> 3条新回复
+                            <!-- <span class="pull-right text-muted small">12分钟钱</span> -->
+                        </div>
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <div class="text-center link-block">
+                        <a class="J_menuItem" href="notifications.html">
+                            <strong>查看所有 </strong>
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown personal-center">
+            <a href="javascript:;" class="dropdown-toggle" id="personMenu" data-toggle="dropdown">
+              <img src="assets/img/avatar.jpg" alt="头像">
+              <span class="username">悦视觉</span>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="personMenu">
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">个人中心</a>
+                </li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">设置</a>
+                </li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="signin.html">退出</a>
+                </li>
+            </ul>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <!-- 主体区域 -->
+  <section id="main" class="main animated fadeInRight">
+    <iframe src="departmentTree.html" name="main" width="100%" height="100%" frameborder="0"></iframe>
   </section>
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/main.js"></script>
+  <!-- 页脚区域 -->
+  <!-- <footer class="site-footer">
+    <span>Copyright © 2016 yueshijue.com</span>
+  </footer> -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>

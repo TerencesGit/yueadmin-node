@@ -9,11 +9,11 @@
        if (!toggle) {
          $aside.animate({ 'left': -240 }, speed)
          $main.animate({ 'left': 0 }, speed)
-         $header.animate({paddingRight: 0}, speed)
+         $header.animate({'left': 0}, speed)
        }else{
          $aside.animate({ 'left': 0 }, speed)
          $main.animate({ 'left': 240 }, speed)
-         $header.animate({paddingRight: 240}, speed)
+         $header.animate({'left': 240}, speed)
        }
        toggle = !toggle
     })
@@ -27,10 +27,11 @@
        element: this.element,
        multiple: this.multiple
      }, this.dropdown)
-     // var submenuItem = links.next('.submenu').find('li');
-     // submenuItem.on('click', function(){
-     //   $(this).addClass('active').siblings().removeClass('active')
-     // })
+     var submenuItem = links.next('.submenu').find('li');
+     submenuItem.on('click', function(){
+       $(this).addClass('active').siblings().removeClass('active')
+              .parents('li').siblings().find('.active').removeClass('active')
+     })
    }
    Accordion.prototype.dropdown = function(e) {
      var $element = e.data.element;
