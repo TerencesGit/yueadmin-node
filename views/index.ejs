@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('link') %>
+    <link rel="stylesheet" href="/css/main.css">
+  </head>
+  <body>
+    <%- include('aside') %>
+    <%- include('header') %>
+    <div id="main" class="main">
+    	<div class="container-fluid">
+    		<!-- <h1><%= title %></h1> -->
+    		<!-- <p>Welcome to <%= title %></p> -->
+    		<%- include('account_info') %>
+    	</div>
+    	<%- include('footer') %>
+    </div>
+		<script src="/js/main.js"></script>
+  </body>
+</html>

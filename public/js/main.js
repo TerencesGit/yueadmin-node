@@ -33,15 +33,26 @@
               .parents('li').siblings().find('.active').removeClass('active')
      })
    }
-   Accordion.prototype.dropdown = function(e) {
-     var $element = e.data.element;
-     var $this = $(this),
-         $next = $this.next();
-     $next.slideToggle();
-     $this.parent().toggleClass('open');
-     if(!e.data.multiple) {
-       $element.find('.submenu').not($next).slideUp().parent().removeClass('open');
-     };
-   }
-   new Accordion($('#accordion'));
+    Accordion.prototype.dropdown = function(e) {
+      var $element = e.data.element;
+      var $this = $(this),
+          $next = $this.next();
+      $next.slideToggle();
+      $this.parent().toggleClass('open');
+      if(!e.data.multiple) {
+        $element.find('.submenu').not($next).slideUp().parent().removeClass('open');
+      };
+    }
+    new Accordion($('#accordion'));
+    
  })(jQuery)
+//上传图片预览
+function uploadPreview(fileInput, $Image){
+  if(fileInput.files && fileInput.files[0]){
+    var reader = new FileReader();
+    reader.onload = function(e){
+      $Image.attr('src', e.target.result)
+    }
+    reader.readAsDataURL(fileInput.files[0])
+  }
+}

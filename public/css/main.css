@@ -13,7 +13,8 @@ a:link,
 a:visited,
 a:hover,
 a:active {
-  text-decoration: none
+  text-decoration: none;
+  outline: 0
 }
 body {
   background: #f0f3f4
@@ -225,8 +226,8 @@ body {
 
 /*主体区域*/
 .main {
-  position: fixed;
-  top: 50px;
+  position: absolute;
+  top: 65px;
   left: 240px;
   right: 0;
   bottom: 0;
@@ -243,5 +244,132 @@ body {
 
 /*面包屑导航*/
 .breadcrumb {
-  background-color: #ccc;
+  background-color: #ddd;
 }
+input[type="file"]{
+  display: none
+}
+
+.page-main-introduction {
+    margin: 20px;
+    margin-bottom: 0;
+    float: left;
+  }
+  
+  .page-introduction-header {
+    height: 220px;
+    background: #207a94;
+    border-radius: 4px 4px 0 0;
+    color: #fff;
+    text-align: center;
+    padding-top: 20px;
+    margin: 0;
+  }
+  
+  .page-introduction-dt {
+    height: 120px;
+    border-radius: 20px;
+    background: #63a2b4;
+    margin: 0 50px;
+  }
+  
+  .page-introduction-dt img {
+    height: 100px;
+    margin: 10px;
+    border-radius: 20px;
+  }
+  
+  .page-introduction-dd1 {
+    font-size: 18px;
+    padding-top: 18px;
+  }
+  
+  .page-introduction-dd2 {
+    padding-top: 6px;
+  }
+  
+  .page-main-infor1 {
+    background: #fff;
+  }
+  
+  .page-main-infor1 li {
+    height: 60px;
+    line-height: 60px;
+    padding-left: 20px;
+    color: #89817f;
+    border-bottom: 1px solid #ebeae6;
+  }
+  
+  .page-main-infor1 li i {
+    margin-right: 15px;
+  }
+  
+  .page-main-infor2 {
+    margin-top: 20px;
+    background: #fff;
+  }
+  
+  .page-main-infor2 li {
+    height: 50px;
+    line-height: 50px;
+    color: #89817f;
+  }
+  
+  .page-infor2-span1 {
+    padding: 25px;
+  }
+  
+  .page-main-content {
+    padding: 0;
+    margin-right: 20px;
+    float: left;
+    margin-top: 20px;
+  }
+  
+  .page-content-header {
+    background: #fff;
+    height: 250px;
+  }
+  
+  .page-content-header h3 {
+    font-size: 24px;
+    color: #1d85a3;
+    line-height: 60px;
+    ;
+    margin: 0;
+    padding: 0;
+    padding-left: 25px;
+  }
+  
+  .page-header-introduce {
+    height: 150px;
+    background: #48aecb;
+    color: #fff;
+    margin-left: 30px;
+    line-height: 20px;
+    padding: 40px;
+  }
+  
+  .page-content-detailed {
+    background: #fff;
+    margin-top: 20px;
+  }
+  
+  .page-content-detailed h3 {
+    font-size: 24px;
+    color: #89817e;
+    line-height: 60px;
+    ;
+    margin: 0;
+    padding: 0;
+    padding-left: 25px;
+  }
+  
+  .nav-account {
+    color: #fff;
+  }
+  
+  .page-main-active {
+    background: #eee;
+    color: #fff;
+  }

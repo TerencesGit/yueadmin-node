@@ -1,28 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>欢迎登录</title>
-  <link rel="shortcut icon" href="assets/img/favicon.ico">
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-  <link rel="stylesheet" href="assets/css/animate.min.css">
-  <link rel="stylesheet" href="assets/css/login.css">
-  <!--[if lt IE 9]>
-      <meta http-equiv="refresh" content="0;ie.html" />
-  <![endif]-->
+	<%- include('link') %>
+  <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
 	<div id="loginpage">
     <div class="container animated fadeInDown">
       <h2 class="page-header">欢迎登录</h2>
-      <form id="signinForm" action="signup.html" method="post">
+      <form id="signinForm" action="/user/signin" method="post">
         <div class="form-group">
-          <input type="text" id="mobile" name="username" class="form-control" placeholder="手机号码/邮箱" required />
+          <input type="text" id="mobileIn" name="user[mobile]" class="form-control" placeholder="手机号码/邮箱" required />
           <span class="fa fa-check"></span>
         </div>
         <div class="form-group">
-          <input type="password" name="password" id="password" class="form-control" placeholder="请输入密码" required />
+          <input type="password" name="user[password]" id="passwordIn" class="form-control" placeholder="请输入密码" required />
           <span class="fa fa-check"></span>
         </div>
         <div class="form-group row">
@@ -37,7 +29,7 @@
       </form>
       <div class="login-footer text-center">
         <p>
-          <a href="signup.html">尚未注册？</a>
+          <a href="/signup">尚未注册？</a>
           <span class="line">|</span>
           <a data-toggle="modal" href="signin.html#myModal">忘记密码</a>
         </p>
@@ -63,8 +55,6 @@
           </div>
       </div>
   </div>
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/login.js"></script>
+  <script src="/js/login.js"></script>
 </body>
 </html>

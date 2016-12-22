@@ -2,7 +2,8 @@ $(function() {
   drawCode()
 })
 //保存表单Input对象
-var mobileInput = $('#mobile'),
+var mobileInput = $('#mobileUp'),
+    mobileInput2 = $('#mobileIn'),
     passwdInput = $('#password'),
     passwdInput2 = $('#password2'),
     authCodeInput = $('#authcode'),
@@ -39,20 +40,42 @@ btnSubmit.on('click',function(e) {
 //登录表单提交
 $('#btnSignIn').on('click',function(e){
   e.preventDefault()
-  formCheck(mobileInput, pattern.mobile, message.mobile) && 
-  formCheck(passwdInput, pattern.password, message.password) &&
-  validateCode() && alert('登录成功！')
+  // formCheck(mobileInput, pattern.mobile, message.mobile) && 
+  // formCheck(passwdInput, pattern.password, message.password) &&
+  validateCode() && $('#signinForm').submit()
 })
 //注册表单验证
 function submitFrom() {
-  formCheck(mobileInput, pattern.mobile, message.mobile) && 
+  mobileValid && 
   formCheck(passwdInput, pattern.password, message.password) &&
-  confirmPasswd() && validateCode() && validatePhoneCode() &&
+  confirmPasswd() && validateCode() &&
   agreeProtocol() && $('#signupForm').submit()
 }
+
 //为输入框注册失去焦点事件
+var mobileValid = false;
 mobileInput.blur(function() {
-  formCheck(mobileInput, pattern.mobile, message.mobile)
+  var valid = formCheck(mobileInput, pattern.mobile, message.mobile);
+  if(valid){
+    var mobile = $(this).val()
+    var inputParent = $(this).parent();
+    $.get('/findByMobile',{mobile: mobile}, function(res){
+      if(res.status == 1){
+        console.log(1)
+        inputParent.removeClass('valid').addClass('error').next('.alert')
+                    .html('<i class="fa fa-warning"></i>该手机号已注册，可直接登录').show();
+        mobileInput.focus()
+      }
+      if(res.status == 2){
+        mobileValid = true;
+      }
+    })
+  }else{
+    return false
+  }
+})
+mobileInput2.blur(function(){
+  formCheck(mobileInput, pattern.mobile, message.mobile);
 })
 passwdInput.blur(function() {
   if (formCheck(passwdInput, pattern.password, message.password)) {
@@ -85,7 +108,7 @@ function formCheck(element, pattern, msg) {
     $(element).focus();
     return false;
   } else {
-    inputParent.removeClass('error').addClass('valid').next('.alert').remove();
+    inputParent.removeClass('error').addClass('valid').next('.alert').hide();
     return true;
   }
 }
@@ -209,3 +232,28 @@ function agreeProtocol() {
     return false;
   }
 }
+//异步登录
+$('#btnSignIn').on('click',function(e){
+  e.preventDefault()
+  var mobile = $.trim($('#mobileIn').val());
+  var password = $.trim($('#passwordIn').val());
+  if(mobile && password){
+    $.ajax({
+        url: '/user/signin',
+        type: 'POST',
+        dataType: 'json',
+        data: {mobile: mobile, password: password},
+      })
+      .done(function(res) {
+        console.log("success");
+      })
+      .fail(function() {
+        console.log("error");
+      })
+    }
+ 
+  
+  // formCheck(mobileInput, pattern.mobile, message.mobile) && 
+  // formCheck(passwdInput, pattern.password, message.password) &&
+  validateCode() && $('#signinForm').submit()
+})
