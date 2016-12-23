@@ -104,10 +104,15 @@
   .line {
     margin: 0 10px;
   }
-  .forget-passwd {
+  .remember {
+    margin-top: -5px; 
+    color: #666;
   }
+  .remember input {
+    margin-right: 5px;
+  }
+
   /*注册协议 模态框*/
-  
   .protocol .modal-dialog {
     width: 800px;
   }

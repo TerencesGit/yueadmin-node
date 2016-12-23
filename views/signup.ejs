@@ -5,47 +5,46 @@
   <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
-  <div id="loginpage">
-    <div class="container animated fadeInDown">
-      <div class="login-heading">
-        <h2 class="page-header">欢迎注册</h2>
+  <div class="container animated fadeInDown">
+    <div class="login-heading">
+      <h2 class="page-header">欢迎注册</h2>
+    </div>
+    <form method="post" action="/user/signup" id="signupForm">
+      <div class="form-group">
+        <input type="text" name="user[mobile]" id="mobile" class="form-control" placeholder="请输入手机号码" maxlength="11" required />
+        <span class="fa fa-check"></span>
       </div>
-      <form method="post" action="/user/signup" id="signupForm" name="signupForm" >
-        <div class="form-group">
-          <input type="text" name="user[mobile]" id="mobileUp" class="form-control" placeholder="请输入手机号码" required />
-          <span class="fa fa-check"></span>
-        </div>
-        <div class="form-group">
-          <input type="password" name="user[password]" id="password" class="form-control" placeholder="设置密码" required />
-          <span class="fa fa-check"></span>
-        </div>
-        <div class="form-group">
-          <input type="password" name="confirm_password" id="password2" class="form-control" placeholder="确认密码" required disabled="true" /> 
-          <span class="fa fa-check"></span>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-8">
-            <input type="text" id="authcode" name="authcode" class="form-control" placeholder="请输入验证码" required />
-          </div>
-          <div class="col-md-4">
-            <canvas id="canvas" class="canvas-code" width="100%" height="35px" onClick="drawCode()"></canvas>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-8">
-            <input type="text" name="phonecode" id="phonecode" class="form-control" placeholder="请输入手机验证码" />
-          </div>
-          <button id="btnSendCode" class="btn btn-success btn-send">获取验证码</button>
-        </div>
-        <div class="form-group">
-          <input type="checkbox" id="agree" class="form-control" name="agree" required />
-          <label for="agree">我已阅读并同意</label> <a href="#myModal" data-toggle="modal">《用户注册协议》</a>
-        </div>
-        <button type="submit" id="btnSubmit" class="btn btn-primary btn-block">立即注册</button>
-      </form>
-      <div class="login-footer text-center">
-          <p>已有账号？<a href="/signin">立即登录</a></p>
+      <div class="form-group">
+        <input type="password" name="user[password]" id="passwd" class="form-control" placeholder="设置密码" maxlength="20" required />
+        <span class="fa fa-check"></span>
       </div>
+      <div class="form-group">
+        <input type="password" name="confirm_password" id="passwd2" class="form-control" placeholder="确认密码" maxlength="20" required disabled="true" /> 
+        <span class="fa fa-check"></span>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-8">
+          <input type="text" id="authcode" name="authcode" class="form-control" placeholder="请输入验证码" required />
+        </div>
+        <div class="col-md-4">
+          <canvas id="canvas" class="canvas-code" width="100%" height="35px" onClick="drawCode()"></canvas>
+        </div>
+      </div>
+      <input type="hidden" value="">
+      <div class="form-group row">
+        <div class="col-md-8">
+          <input type="text" name="phonecode" id="phonecode" class="form-control" placeholder="请输入手机验证码" />
+        </div>
+        <button id="btnSendCode" class="btn btn-success btn-send" data-status="1">获取验证码</button>
+      </div>
+      <div class="form-group">
+        <input type="checkbox" id="agree" class="form-control" name="agree" required />
+        <label for="agree">我已阅读并同意</label> <a href="#myModal" data-toggle="modal">《用户注册协议》</a>
+      </div>
+      <button type="submit" id="btnSignup" class="btn btn-primary btn-block">立即注册</button>
+    </form>
+    <div class="login-footer text-center">
+        <p>已有账号？<a href="/signin">立即登录</a></p>
     </div>
   </div>
   <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="protocol modal fade">

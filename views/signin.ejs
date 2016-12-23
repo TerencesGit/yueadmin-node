@@ -5,35 +5,35 @@
   <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
-	<div id="loginpage">
-    <div class="container animated fadeInDown">
-      <h2 class="page-header">欢迎登录</h2>
-      <form id="signinForm" action="/user/signin" method="post">
-        <div class="form-group">
-          <input type="text" id="mobileIn" name="user[mobile]" class="form-control" placeholder="手机号码/邮箱" required />
-          <span class="fa fa-check"></span>
-        </div>
-        <div class="form-group">
-          <input type="password" name="user[password]" id="passwordIn" class="form-control" placeholder="请输入密码" required />
-          <span class="fa fa-check"></span>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-8">
-            <input type="text" id="authcode" name="authcode" class="form-control" placeholder="请输入验证码" required />
-          </div>
-          <div class="col-md-4">
-            <canvas id="canvas" class="canvas-code" width="100%" height="35px" onClick="drawCode()"></canvas>
-          </div>
-        </div>
-        <button type="submit" id="btnSignIn" class="btn btn-primary btn-block">立即登录</button>
-      </form>
-      <div class="login-footer text-center">
-        <p>
-          <a href="/signup">尚未注册？</a>
-          <span class="line">|</span>
-          <a data-toggle="modal" href="signin.html#myModal">忘记密码</a>
-        </p>
+  <div class="container animated fadeInDown">
+    <h2 class="page-header">欢迎登录</h2>
+    <form id="signinForm" action="/user/signin" method="">
+      <div class="form-group">
+        <input type="text" name="user[username]" id="username" class="form-control" placeholder="用户名/手机号/邮箱" required />
       </div>
+      <div class="form-group">
+        <input type="password" name="user[password]" id="password" class="form-control" placeholder="请输入密码" required />
+      </div>
+      <div class="form-group row">
+        <div class="col-md-8">
+          <input type="text" id="authcode" name="authcode" class="form-control" placeholder="请输入验证码" required />
+        </div>
+        <div class="col-md-4">
+          <canvas id="canvas" class="canvas-code" width="100%" height="35px" onClick="drawCode()"></canvas>
+        </div>
+      </div>
+      <div class="form-group remember">
+        <input type="checkbox" id="remember" class="form-control" name="remember" required />
+        <label for="remember">记住密码</label> 
+      </div>
+      <button type="submit" id="btnSignIn" class="btn btn-primary btn-block">立即登录</button>
+    </form>
+    <div class="login-footer text-center">
+      <p>
+        <a href="/signup">尚未注册？</a>
+        <span class="line">|</span>
+        <a data-toggle="modal" href="signin.html#myModal">忘记密码</a>
+      </p>
     </div>
   </div>
   <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">

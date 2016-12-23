@@ -47,7 +47,10 @@
         <li class="dropdown personal-center">
             <a href="javascript:;" class="dropdown-toggle" id="personMenu" data-toggle="dropdown">
               <img src="/img/avatar.jpg" alt="头像">
-              <span class="username">悦视觉</span>
+              <span class="username">
+                <% if(user){%> <%= user.mobile %>
+                <% }else{ %> 未登录 <% } %>
+                </span>
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="personMenu">
@@ -60,7 +63,7 @@
                 </li>
                 <li role="presentation" class="divider"></li>
                 <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="/signin">退出</a>
+                    <a role="menuitem" tabindex="-1" href="/logout">退出</a>
                 </li>
             </ul>
         </li>

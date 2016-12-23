@@ -9,13 +9,16 @@ router.get('/', function(req, res, next) {
 });
 
 /* 登录注册 */
-
 router.get('/findByMobile', User.findByMobile);
 router.get('/signin', User.showSignin);
 router.get('/signup', User.showSignup);
 router.post('/user/signup', User.signup);
 router.post('/user/signin', User.signin);
-
+router.get('/user/signin', User.home)
+router.get('/logout', User.logout);
+router.get('/user/list', User.userlist);
+router.get('/user/delete', User.delete);
+router.post('/user/edit', User.edit);
 router.get('/ie', function(req, res, next) {
   res.render('ie.ejs');
 });
