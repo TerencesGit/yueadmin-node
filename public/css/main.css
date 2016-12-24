@@ -412,3 +412,23 @@ input[type="file"]{
         font-size: 50px;
         color: #0f0;
     }
+    .page-main {
+      background: #fff;
+      margin-top: 100px;
+      padding: 50px 0;
+    } 
+    .page-tip {
+      padding-top: 7px;
+    }
+    
+    .nav-account {
+      color: #fff;
+    }
+    
+    .fa-warning {
+      color: red;
+      margin-right: 5px;
+    }
+    .form-group.error input {
+      border-color: #d9534f
+    }

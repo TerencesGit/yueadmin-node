@@ -47,14 +47,17 @@ btnSendCode.on('click', function(e) {
 //注册按钮提交
 btnSignup.on('click',function(e) {
   e.preventDefault()
-  signupSubmit()
+  //signupSubmit()
+  formCheck(mobileInput, message.mobile, pattern.mobile) && 
+  formCheck(passwdInput, message.password, pattern.password) &&
+  signupForm.submit()
 })
 //注册表单逐步验证
 function signupSubmit() {
   formCheck(mobileInput, message.mobile, pattern.mobile) && 
   formCheck(passwdInput, message.password, pattern.password) &&
   confirmPasswd() && validateCode() && validatePhoneCode() &&
-  agreeProtocol() && alert('提交')
+  agreeProtocol() && signupForm.submit()
 }
 //为输入框注册失去焦点事件
 mobileInput.blur(function() {
@@ -210,8 +213,27 @@ function validatePhoneCode() {
 }
 //发送验证码
 function sendCode() {
-  var count = 10;
+  var count = 30;
   var timer;
+  var status = btnSendCode.attr('data-status');
+  if(!status == 2) return;
+  var number = mobileInput.val();
+  if(signupForm.children('.fail').length === 0){
+    signupForm.prepend('<p class="alert alert-success fail" style="display:none"></p>');
+  }
+  var failPrompt = signupForm.children('.fail');
+  $.ajax({
+    url: '/sendPhoneCode',
+    data: {mobile: number},
+  })
+  .done(function(res) {
+    failPrompt.html('手机号码'+number+'的验证码是'+'  '+res.code).show()
+    console.log("success");
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  
   btnSendCode.attr('disabled', 'true')
   timer = setInterval(function() {
     if (count === 0) {
@@ -239,15 +261,25 @@ function agreeProtocol() {
     return false;
   }
 }
+//登录表单验证
+function signinSubmit(){
+  formCheck(nameInput, message.username) && 
+  formCheck(passInput, message.password) && 
+  validateCode() && signinForm.submit()
+}
+//登录表单同步提交
+// $('#btnSignIn').on('click',function(e){
+//   signinSubmit()
+// })
 
-//登录表单提交
+//登录表单异步提交
 $('#btnSignIn').on('click',function(e){
   e.preventDefault();
   if(formCheck(nameInput, message.username) && formCheck(passInput, message.password)){
     var name = nameInput.val();
     var passwd = passInput.val();
     if(signinForm.children('.fail').length === 0){
-      signinForm.prepend('<p class="alert alert-warning fail"></p>');
+      signinForm.prepend('<p class="alert alert-warning fail" style="display:none"></p>');
     }
     var failPrompt = signinForm.children('.fail');
     $.ajax({
@@ -257,13 +289,13 @@ $('#btnSignIn').on('click',function(e){
       })
       .done(function(res) {
         if(res.status == 0){
-          failPrompt.html('<i class="fa fa-warning"></i>用户名不存在!')
+          failPrompt.html('<i class="fa fa-warning"></i>用户名不存在!').show()
         }
         if(res.status == 1){
-          failPrompt.html('<i class="fa fa-warning"></i>密码错误!')
+          failPrompt.html('<i class="fa fa-warning"></i>密码错误!').show()
         }
         if(res.status == 2){
-          //failPrompt.html('<i class="fa fa-warning"></i>登录成功!')
+          failPrompt.remove()
           signinForm.submit()
         }
       })

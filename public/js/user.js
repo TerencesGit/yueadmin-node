@@ -1,7 +1,7 @@
+//用户删除
 $('.btn-del').on('click', function(){
 	var $tr = $(this).parents('tr');
 	var name = $tr.children().eq(0).text();
-	console.log(name)
 	modalfadeIn()
 	var uid = $tr.attr('data-id');
 	var msg = confirm('确定删除用户' + name + '？')
@@ -25,6 +25,7 @@ $('.btn-del').on('click', function(){
 		return false
 	}
 })
+//用户编辑
 $('.btn-eidt').on('click', function(){
 	var $tr = $(this).parents('tr');
 	var uid = $tr.attr('data-id');
@@ -38,9 +39,44 @@ $('.btn-eidt').on('click', function(){
 	nameInput.val(name);
 	roleInput.val(role)
 })
+//信息提示
 function modalfadeIn(){
 	$('.mask').fadeIn().find('.mask-container').css({'transform': 'scale(1,1)'})
 	setTimeout(function(){
 		$('.mask').fadeOut().find('.mask-container').css({'transform': 'scale(0,0)'})
 	},1000)
 }
+//修改密码
+var oldPasswdInput = $('#oldPasswd'),
+    newPasswdInput = $('#newPasswd'),
+    confirmPasswdInput = $('#confirmPasswd'),
+    updateForm = $('#updateForm'),
+    btnSubmit = $('#btnSubmit');
+function checkForm(element){
+	var value = $.trim($(element).val());
+	var fromGroup = $(element).parents('.form-group');
+  if(value == '') {
+  	fromGroup.addClass('error');
+    $(element).focus();
+    return false;
+  }else{
+  	fromGroup.removeClass('error');
+    return true;
+  }
+}
+function confrimPasswd(){
+	var passwd = $.trim(newPasswdInput.val());
+	var passwd2 = $.trim(confirmPasswdInput.val());
+	if(passwd == '' || passwd2 == '' || passwd !== passwd2){
+		confirmPasswdInput.parents('.from-group').addClass('error')
+		return false
+	}else{
+		confirmPasswdInput.parents('.from-group').removeClass('error')
+		return true
+	}
+}
+btnSubmit.on('click', function(e){
+	//e.preventDefault();
+	checkForm(oldPasswdInput) && checkForm(newPasswdInput) && 
+	confrimPasswd() && updateForm.submit()
+})

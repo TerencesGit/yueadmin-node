@@ -18,10 +18,26 @@ exports.findByMobile = function(req, res, next){
 			}
 	})
 }
+//发送手机验证码
+var code;
+exports.sendPhoneCode = function(req, res){
+	var mobile = req.query.mobile;
+	console.log(mobile)
+	code = createCode();
+	res.json({code: code})
+}
+function createCode() {
+  const codeLength = 4;
+  const alphabet = '1234567890';
+  code = '';
+  for (var i = 0, len = alphabet.length; i < codeLength; i++) {
+    code += alphabet.charAt(Math.floor(Math.random() * len))
+  }
+  return code;
+}
 //注册功能
 exports.signup = function(req, res){
 	var _user = req.body.user;
-	console.log(_user)
 	_user.name = _user.mobile;
 	User.findOne({mobile: _user.mobile}, function(err, user){
 		if(err) console.log(err)
@@ -43,6 +59,7 @@ exports.signin = function(req, res){
 			if(!user){
 				return res.json({status: 0})
 			}
+			console.log(user)
 			user.comparePassword(passwd, function(err, isMatch){
 				if(err) console.log(err)
 				if(isMatch){
@@ -80,6 +97,7 @@ exports.delete = function(req, res){
 		})
 	}
 }
+//信息修改
 exports.edit = function edit(req, res){
 	var _user = req.body.user;
 	var uid = _user.id;
@@ -89,4 +107,47 @@ exports.edit = function edit(req, res){
 		if(err) return err;
 		res.redirect('/user/list')
 	})
+}
+exports.showUpdate = function(req, res){
+	res.render('update-password',{title: '修改密码'})
+}
+//修改密码
+exports.updatePassword = function(req, res){
+	var user = req.session.user;
+	var userObj = req.body.user;
+	var passwd = userObj.oldPasswd;
+	var newPasswd = userObj.newPasswd;
+	User.findOne({_id: user._id},function(err, user){
+		if(err) console.log(err)
+			if(!user){
+				return res.json({status: 0})
+			}
+			user.comparePassword(passwd, function(err, isMatch){
+				if(err) console.log(err)
+				if(isMatch){
+					user.password = newPasswd;
+					user.save(function(err, user){
+						if(err) console.log(err)
+		  			res.redirect('/')
+					})
+				}else{
+					console.log('密码不正确')
+				}
+			})
+	})
+}
+//登录验证
+exports.signinRequired = function(req, res, next){
+	var user = req.session.user;
+	if(!user){
+		return res.redirect('/signin')
+	}
+	next()
+}
+//权限控制
+exports.adminRequired = function(req, res, next){
+	var user = req.session.user;
+	if(user.role < 20){
+		return res.redirect('/signup')
+	}
 }
