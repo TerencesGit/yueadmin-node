@@ -432,3 +432,10 @@ input[type="file"]{
     .form-group.error input {
       border-color: #d9534f
     }
+  .avatar-upload{
+    margin-top: 20px;
+  }
+  .edit-avatar dt{
+    font-size: 18px;
+    margin-bottom: 15px;
+  }

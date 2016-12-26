@@ -41,11 +41,12 @@
       $this.parent().toggleClass('open');
       if(!e.data.multiple) {
         $element.find('.submenu').not($next).slideUp().parent().removeClass('open');
-      };
+      };  
     }
     new Accordion($('#accordion'));
     
  })(jQuery)
+ 
 //上传图片预览
 function uploadPreview(fileInput, $Image){
   if(fileInput.files && fileInput.files[0]){

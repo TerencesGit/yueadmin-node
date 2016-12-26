@@ -19,6 +19,9 @@ var userSchema = new mongoose.Schema({
 		type: Number,
 		default: 1
 	},
+	avatar: {
+		type: String
+	},
 	meta: {
 		createAt: {
 			type: Date,

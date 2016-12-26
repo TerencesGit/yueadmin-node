@@ -1,4 +1,6 @@
 var User = require('../models/user');
+var fs = require('fs');
+var path = require('path');
 
 exports.showSignup = function(req, res, next){
 	res.render('signup', {title: '欢迎注册'})
@@ -18,13 +20,18 @@ exports.findByMobile = function(req, res, next){
 			}
 	})
 }
+
 //发送手机验证码
 var code;
 exports.sendPhoneCode = function(req, res){
 	var mobile = req.query.mobile;
 	console.log(mobile)
 	code = createCode();
-	res.json({code: code})
+	console.log(code)
+	var interval = getRandom(3, 8) * 1000;
+	setTimeout(function(){
+		res.json({code: code})
+	},interval)
 }
 function createCode() {
   const codeLength = 4;
@@ -35,9 +42,14 @@ function createCode() {
   }
   return code;
 }
+//随机数范围
+function getRandom(min, max){;
+	return Math.floor(Math.random() * (max - min)) + min;
+}
 //注册功能
 exports.signup = function(req, res){
 	var _user = req.body.user;
+	var phoneCode = _user.
 	_user.name = _user.mobile;
 	User.findOne({mobile: _user.mobile}, function(err, user){
 		if(err) console.log(err)
@@ -109,7 +121,7 @@ exports.edit = function edit(req, res){
 	})
 }
 exports.showUpdate = function(req, res){
-	res.render('update-password',{title: '修改密码'})
+	res.render('account/update_passwd',{title: '修改密码'})
 }
 //修改密码
 exports.updatePassword = function(req, res){
@@ -128,6 +140,7 @@ exports.updatePassword = function(req, res){
 					user.password = newPasswd;
 					user.save(function(err, user){
 						if(err) console.log(err)
+						req.session.user = '';
 		  			res.redirect('/')
 					})
 				}else{
@@ -149,5 +162,35 @@ exports.adminRequired = function(req, res, next){
 	var user = req.session.user;
 	if(user.role < 20){
 		return res.redirect('/signup')
+	}
+}
+//账户信息编辑
+exports.showEdit = function(req, res){
+
+	res.render('account/account_info_edit', {title: '账户信息编辑'})
+}
+//头像上传
+exports.avatarUpload = function(req, res, next){
+	var user = req.session.user;
+	var avatarData = req.files.avatar;
+	console.log(avatarData)
+	var filePath = avatarData.path;
+	var originalFile =avatarData.originalFilename;
+	if(originalFile){
+		fs.readFile(filePath, function(err, data){
+			var timestamp = Date.now()
+			var type = avatarData.type.split('/')[1];
+			var avatar = timestamp + '.' +type;
+			var newPath = path.join(__dirname, '../', 'public/upload/' + avatar);
+			fs.writeFile(newPath, data, function(err){
+				User.update({_id: user._id},{'$set': {avatar: avatar}}, function(err, msg){
+					if(err) return err;
+					user.avatar = avatar;
+					res.redirect('/account/edit')
+				})
+			})
+		})
+	}else{
+		next()
 	}
 }
