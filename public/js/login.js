@@ -1,5 +1,12 @@
 $(function() {
-  drawCode()
+  //绘制验证码
+    drawCode();
+  //检测cookie是否保存用户登录信息
+  if($.cookie('remember') == 'true'){
+    $('#username').val(atob($.cookie('username')))
+    $('#password').val(atob($.cookie('password')))
+    $('#remember').prop('checked', true)
+  }
 })
 
 //保存注册表单Input对象
@@ -15,6 +22,7 @@ var mobileInput = $('#mobile'),
 //保存登录表单Input对象
 var nameInput = $('#username'),
     passInput = $('#password'),
+    rememberCheck = $('#remember'),
     btnSignIn = $('#btnSignIn'),
     signinForm = $('#signinForm');
 //手机号码、密码正则表达式   
@@ -47,10 +55,7 @@ btnSendCode.on('click', function(e) {
 //注册按钮提交
 btnSignup.on('click',function(e) {
   e.preventDefault()
-  //signupSubmit()
-  formCheck(mobileInput, message.mobile, pattern.mobile) && 
-  formCheck(passwdInput, message.password, pattern.password) &&
-  signupForm.submit()
+  signupSubmit()
 })
 //注册表单逐步验证
 function signupSubmit() {
@@ -267,15 +272,32 @@ function signinSubmit(){
   formCheck(passInput, message.password) && 
   validateCode() && signinForm.submit()
 }
+
 //登录表单同步提交
 // $('#btnSignIn').on('click',function(e){
 //   signinSubmit()
 // })
 
+//保存cookie 
+function saveCookie(){
+  var checked = rememberCheck.prop('checked');
+  if(checked){
+    var uname = btoa(nameInput.val());
+    var passwd = btoa(passInput.val());
+    $.cookie('remember', true, {expires: 7});
+    $.cookie('username', uname, {expires: 7});
+    $.cookie('password', passwd, {expires: 7});
+  }else{
+    $.cookie('remember', false, {expires: -1});
+    $.cookie('username', '', {expires: -1});
+    $.cookie('password', '', {expires: -1});
+  }
+}
 //登录表单异步提交
-$('#btnSignIn').on('click',function(e){
+btnSignIn.on('click',function(e){
   e.preventDefault();
-  if(formCheck(nameInput, message.username) && formCheck(passInput, message.password)){
+  if(formCheck(nameInput, message.username) && formCheck(passInput, message.password) &&
+    validateCode()){
     var name = nameInput.val();
     var passwd = passInput.val();
     if(signinForm.children('.fail').length === 0){
@@ -295,8 +317,9 @@ $('#btnSignIn').on('click',function(e){
           failPrompt.html('<i class="fa fa-warning"></i>密码错误!').show()
         }
         if(res.status == 2){
-          failPrompt.remove()
-          signinForm.submit()
+          failPrompt.remove();
+          saveCookie();
+          signinForm.submit();
         }
       })
       .fail(function() {

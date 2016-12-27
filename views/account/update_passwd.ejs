@@ -9,44 +9,57 @@
     <%- include('../header') %>
     <div id="main" class="main">
     	<div class="container-fluid">
-    		 <div class="page-main col-md-offset-2 col-md-8 ">
-          <h2 class="page-header">修改密码</h2>
-          <form method="post" action="/user/updatePassword" id="updateForm" class="form-horizontal" role="form">
-            <div class="form-group row">
-              <label for="oldPasswd" class="col-sm-2 control-label">旧密码：</label>
-              <div class="col-sm-6">
-                <input type="text" name="user[oldPasswd] "id="oldPasswd" class="form-control">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                 <h2 class="panel-title">修改密码</h2>
               </div>
-              <div class="col-sm-3 page-tip">
-                <i class="fa fa-warning"></i><span class="">请输入旧密码</span>
+              <div class="panel-body">
+                <form action="/user/updatePassword" method="post" class="form-horizontal" id="updataPasswdForm" role="form">
+                  <% if(user && user.error){ %>
+                  <div class="form-group">
+                    <p class="alert alert-danger col-sm-offset-3 col-sm-5"><%= user.error %></p>
+                  </div>
+                  <% } %>
+                  <div class="form-group">
+                    <label for="firstname" class="col-sm-offset-1 col-sm-2 control-label">旧密码：</label>
+                    <div class="col-sm-5">
+                      <input id="oldpwd" type="password" name="user[oldpasswd]" class="form-control" placeholder="请输入旧密码">
+                    </div>
+                    <div class="col-sm-3 page-tip tip1">
+                      <i class="fa fa-warning"></i><span class="">请输入旧密码</span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="lastname" class="col-sm-offset-1 col-sm-2 control-label">新密码：</label>
+                    <div class="col-sm-5">
+                      <input id="password1" type="password" name="user[newpasswd]" placeholder="请输入新密码" class="form-control">
+                    </div>
+                   <!--  <div > -->
+                      <span class="col-sm-3 page-tip tip2"><i class="fa fa-warning"></i>请输入8-20位的新密码</span>
+                    <!-- </div> -->
+                  </div>
+                  <div class="form-group">
+                    <label for="lastname" class="col-sm-offset-1 col-sm-2 control-label">新密码确认：</label>
+                    <div class="col-sm-5">
+                      <input id="password2" placeholder="请再次输入新密码" type="password" class="form-control">
+                    </div>
+                    <div class="col-sm-4 page-tip tip3">
+                      <i class="fa fa-warning"></i><span class="">密码输入不一致</span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-5">
+                      <button type="submit" id="btnConfirm" class="btn btn-default btn-primary btn-block">确认</button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
-            <div class="form-group row">
-              <label for="newPasswd" class="col-sm-2 control-label">新密码：</label>
-              <div class="col-sm-6">
-                <input type="text" name="user[newPasswd]" id="newPasswd" class="form-control">
-              </div>
-              <div class="col-sm-4 page-tip">
-                <i class="fa fa-warning"></i><span class="">请输入6-20位的新密码</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="confirmPasswd" class="col-sm-2 control-label">新密码确认：</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" id="confirmPasswd">
-              </div>
-              <div class="col-sm-4 page-tip">
-                <i class="fa fa-warning"></i><span class="">请再次输入新密码</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-6">
-                <button type="submit" id="btnSubmit" class="btn btn-primary btn-block">确认</button>
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
-    	</div>
+      </div>
     	<%- include('../footer') %>
     </div>
     <script src="/js/main.js"></script>

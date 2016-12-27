@@ -6,7 +6,7 @@ exports.showSignup = function(req, res, next){
 	res.render('signup', {title: '欢迎注册'})
 }
 exports.showSignin = function(req, res, next){
-	res.render('signin', {title: '欢迎登录'})
+	res.render('signin', {title: '欢迎登录', msg: ''})
 }
 //查询手机号
 exports.findByMobile = function(req, res, next){
@@ -25,9 +25,7 @@ exports.findByMobile = function(req, res, next){
 var code;
 exports.sendPhoneCode = function(req, res){
 	var mobile = req.query.mobile;
-	console.log(mobile)
 	code = createCode();
-	console.log(code)
 	var interval = getRandom(3, 8) * 1000;
 	setTimeout(function(){
 		res.json({code: code})
@@ -49,7 +47,14 @@ function getRandom(min, max){;
 //注册功能
 exports.signup = function(req, res){
 	var _user = req.body.user;
-	var phoneCode = _user.
+	var mobile = _user.mobile;
+	var phonecode = _user.phonecode;
+	console.log(phonecode)
+	console.log(code)
+	if(phonecode !== code){
+		_user.error = '手机验证码错误';
+		return res.render('signup', {title: '欢迎注册', user: _user, })
+	} 
 	_user.name = _user.mobile;
 	User.findOne({mobile: _user.mobile}, function(err, user){
 		if(err) console.log(err)
@@ -57,7 +62,7 @@ exports.signup = function(req, res){
 			var user = new User(_user);
 			user.save(function(err, user){
 				if(err) console.log(err)
-				res.render('signin',{title: '欢迎登录'})
+				res.render('signin',{title: '欢迎登录', msg: '注册成功，'})
 			})
 		}
 	})
@@ -127,12 +132,13 @@ exports.showUpdate = function(req, res){
 exports.updatePassword = function(req, res){
 	var user = req.session.user;
 	var userObj = req.body.user;
-	var passwd = userObj.oldPasswd;
-	var newPasswd = userObj.newPasswd;
+	var passwd = userObj.oldpasswd;
+	var newPasswd = userObj.newpasswd;
+	console.log(userObj)
 	User.findOne({_id: user._id},function(err, user){
 		if(err) console.log(err)
 			if(!user){
-				return res.json({status: 0})
+				return res.redirect('/signin')
 			}
 			user.comparePassword(passwd, function(err, isMatch){
 				if(err) console.log(err)
@@ -145,6 +151,8 @@ exports.updatePassword = function(req, res){
 					})
 				}else{
 					console.log('密码不正确')
+					userObj.error = '密码不正确';
+					return res.render('account/update_passwd',{title: '修改密码', user: userObj})
 				}
 			})
 	})
@@ -169,6 +177,7 @@ exports.showEdit = function(req, res){
 
 	res.render('account/account_info_edit', {title: '账户信息编辑'})
 }
+
 //头像上传
 exports.avatarUpload = function(req, res, next){
 	var user = req.session.user;

@@ -439,3 +439,20 @@ input[type="file"]{
     font-size: 18px;
     margin-bottom: 15px;
   }
+   .password-main {
+    background: #fff;
+  } 
+  .panel-heading{
+    margin-bottom: 50px;
+  }
+  .panel-default{
+    padding-bottom: 50px;
+  }
+  .page-tip {
+    padding-top: 7px;
+    display: none;
+  }
+  .fa-warning {
+    color: red;
+    margin-right: 5px;
+  }

@@ -6,7 +6,10 @@
 </head>
 <body>
   <div class="container animated fadeInDown">
-    <h2 class="page-header">欢迎登录</h2>
+    <h2 class="page-header">
+      <% if(msg){ %> <%= msg %> <% } %>
+      欢迎登录
+    </h2>
     <form id="signinForm" action="/user/signin" method="">
       <div class="form-group">
         <input type="text" name="user[username]" id="username" class="form-control" placeholder="用户名/手机号/邮箱" required />
@@ -23,7 +26,7 @@
         </div>
       </div>
       <div class="form-group remember">
-        <input type="checkbox" id="remember" class="form-control" name="remember" required />
+        <input type="checkbox" id="remember" class="form-control" name="user[remember]" required />
         <label for="remember">记住密码</label> 
       </div>
       <button type="submit" id="btnSignIn" class="btn btn-primary btn-block">立即登录</button>
@@ -55,6 +58,7 @@
           </div>
       </div>
   </div>
+  <script src="/js/jquery.cookie.js"></script>
   <script src="/js/login.js"></script>
 </body>
 </html>

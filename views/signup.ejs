@@ -11,11 +11,14 @@
     </div>
     <form method="post" action="/user/signup" id="signupForm">
       <div class="form-group">
-        <input type="text" name="user[mobile]" id="mobile" class="form-control" placeholder="请输入手机号码" maxlength="11" required />
+        <% if(user && user.error){%>
+        <p class="alert alert-warning"><i class="fa fa-warning"></i><%= user.error%></p>
+        <% } %>
+        <input type="text" name="user[mobile]" id="mobile" class="form-control" placeholder="请输入手机号码" maxlength="11" required value="<% if(user){ %> <%= user.mobile %> <% } %>"/>
         <span class="fa fa-check"></span>
       </div>
       <div class="form-group">
-        <input type="password" name="user[password]" id="passwd" class="form-control" placeholder="设置密码" maxlength="20" required />
+        <input type="password" name="user[password]" id="passwd" class="form-control" placeholder="设置密码" maxlength="20" required value="<% if(user){ %> <%= user.password %> <% } %>"/>
         <span class="fa fa-check"></span>
       </div>
       <div class="form-group">
@@ -30,10 +33,9 @@
           <canvas id="canvas" class="canvas-code" width="100%" height="35px" onClick="drawCode()"></canvas>
         </div>
       </div>
-      <input type="hidden" value="">
       <div class="form-group row">
         <div class="col-md-8">
-          <input type="text" name="phonecode" id="phonecode" class="form-control" placeholder="请输入手机验证码" />
+          <input type="text" name="user[phonecode]" id="phonecode" class="form-control" placeholder="请输入手机验证码" />
         </div>
         <button id="btnSendCode" class="btn btn-success btn-send" data-status="1">获取验证码</button>
       </div>

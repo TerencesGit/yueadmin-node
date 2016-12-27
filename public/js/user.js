@@ -80,3 +80,73 @@ btnSubmit.on('click', function(e){
 	checkForm(oldPasswdInput) && checkForm(newPasswdInput) && 
 	confrimPasswd() && updateForm.submit()
 })
+   var oldpwd = $('#oldpwd'),
+        passwdInput = $('#password1'),
+        passwdInput2 = $('#password2'),
+        btnConfirm = $('#btnConfirm');
+
+  //密码正则表达式   
+    var pattern = {
+        password: /^\w{8,20}$/
+    }
+    //注册表单提交
+    btnConfirm.on('click',function(e) {
+      e.preventDefault()
+      submitFrom()
+    })
+    //注册表单验证
+    function submitFrom() {
+      formCheck(oldpwd, pattern.password)&&
+      formCheck(passwdInput, pattern.password) &&
+      confirmPasswd() && $('#updataPasswdForm').submit()
+    }
+    //旧密码验证
+    oldpwd.blur(function() {
+      if(formCheck(oldpwd, pattern.password)){
+        $(".tip1").hide();
+      }else{
+        $(".tip1").show();
+      }
+    })
+    passwdInput.blur(function() {
+      if (formCheck(passwdInput, pattern.password)) {
+        passwdInput2.attr('disabled', false)
+      } else {
+        passwdInput2.attr('disabled', true)
+      }
+      if (!passwdInput2.val() == '') {
+        confirmPasswd()
+      }
+    })
+     function formCheck(element, pattern) {
+      var value = $.trim($(element).val());
+      if (value == '') {
+        $(element).parent().next(".page-tip").show()
+        $(element).focus();
+        return false;
+      } else if (!pattern.test(value)) {
+         $(element).parent().next(".page-tip").show()
+        $(element).focus();
+        return false;
+      } else {
+         $(element).parent().next(".page-tip").hide();
+        return true;
+      }
+    }
+   passwdInput2.blur(function() {
+        if (passwdInput.val() !== '' && passwdInput2.val() !== '') {
+          confirmPasswd()
+        }
+    })   
+    //判断两次密码输入是否一致
+    function confirmPasswd() {
+      var passwd = $.trim(passwdInput.val())
+      var passwd2 = $.trim(passwdInput2.val())
+      if (passwd == '' || passwd2 == '' || passwd !== passwd2) {
+        $(".tip3").show();
+        return false;
+      } else {
+        $(".tip3").hide();
+        return true;
+      }
+    }

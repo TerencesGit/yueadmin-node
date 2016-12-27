@@ -14,19 +14,21 @@
     		<h2 class="page-header"><%= title %></h2>
     		<table class="table table-bordered table-hover table-striped">
     			<tr>
-                    <th>用户名</th>
+            <th>用户名</th>
     				<th>手机号</th>
-                    <th>密码</th>
+            <th>密码</th>
     				<th>等级</th>
+            <th>头像</th>
     				<th>注册时间</th>
     				<th>操作</th>
     			</tr>
     			<% users.forEach(function(user){ %>
     				<tr data-id="<%= user._id%>">
-                        <td><%= user.name %></td>
+              <td><%= user.name %></td>
 	    				<td><%= user.mobile %></td>
-                        <td><%= user.password %></td>
-	    				<td><%= user.role %></td>
+              <td><%= user.password %></td>
+              <td><%= user.role %></td>
+	    				<td><img src="/upload/<%= user.avatar %>" alt="" width="30" height="30"></td>
 	    				<td><%= moment(user.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %></td>
 	    				<td>
 	    					<button class="btn btn-warning btn-eidt" data-toggle="modal" href="signin.html#myModal">编辑</button>

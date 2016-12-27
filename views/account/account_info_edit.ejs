@@ -57,8 +57,7 @@
                 <form id="uploadForm" method="post" action="/user/avatarUpload" enctype="multipart/form-data">
                   <input type="file" name="avatar" id="fileUp">
                   <% if(user && user.avatar){ %>  <img id="avatar" class="avatar rounded-2" src="/upload/<%= user.avatar %>" width="200" height="200" alt="头像上传"/>
-                  <% }else{ %> <img src="/img/avatar.jpg" width="200" height="200" alt="头像上传"> <% } %>
-                  <!-- <img id="avatar" class="avatar rounded-2" src="/public/<%= user.avatar %>" width="200" height="200" alt="头像上传"/> -->
+                  <% }else{ %> <img src="/img/avatar.jpg" id="avatar" class="avatar rounded-2" width="200" height="200" alt="头像上传"> <% } %>
                   <div class="avatar-upload">
                     <button type="submit" id="btnUpload" class="btn btn-info">上传图片</button>
                   </div>
