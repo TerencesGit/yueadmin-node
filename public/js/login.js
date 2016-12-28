@@ -251,6 +251,7 @@ function sendCode() {
     }
   }, 1000)
 }
+
 //是否同意注册协议
 function agreeProtocol() {
   var inputParent = agreeCheck.parent();
@@ -304,12 +305,17 @@ btnSignIn.on('click',function(e){
       signinForm.prepend('<p class="alert alert-warning fail" style="display:none"></p>');
     }
     var failPrompt = signinForm.children('.fail');
+    var dialog = null;
     $.ajax({
         url: '/user/signin',
         type: 'POST',
         data: {username: name, password: passwd},
+        beforeSend: function(){
+          dialog = $.dialog()
+        }
       })
       .done(function(res) {
+        dialog.destroy()
         if(res.status == 0){
           failPrompt.html('<i class="fa fa-warning"></i>用户名不存在!').show()
         }
@@ -319,7 +325,15 @@ btnSignIn.on('click',function(e){
         if(res.status == 2){
           failPrompt.remove();
           saveCookie();
-          signinForm.submit();
+          $.dialog({
+            message: '登录成功！',
+            type: 'ok',
+            delay: 2000,
+            maskOpcity: .6
+          })
+          setTimeout(function(){
+            signinForm.submit();
+          },1000)
         }
       })
       .fail(function() {

@@ -81,7 +81,9 @@ exports.signin = function(req, res){
 				if(err) console.log(err)
 				if(isMatch){
 					req.session.user = user;
-					res.json({status: 2})
+					setTimeout(function(){
+						res.json({status: 2})
+					},2000)
 				}else{
 					res.json({status: 1})
 				}
