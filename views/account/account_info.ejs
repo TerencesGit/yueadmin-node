@@ -1,51 +1,64 @@
-<div class="animated fadeInRight">
-    <div class="container-fluid">
-          <div class="col-lg-12">
-            <div class="page-main-introduction col-lg-3">
-              <dl class="page-introduction-header">
-                <dt class="page-introduction-dt"><img src="/img/profile-avatar.jpg"></dt>
-                <dd class="page-introduction-dd1">悦己视觉</dd>
-                <dd class="page-introduction-dd2">12345456@163.com</dd>
-              </dl>
-              <ul class="page-main-infor1">
-                <li class="page-main-active"><i class="fa fa-user"></i>账户基本信息</li>
-                <a href="/account/edit">
-                  <li><i class="fa fa-edit"></i>编辑账户信息</li>
-                </a>
-              </ul>
-              <ul class="page-main-infor2">
-                <li>
-                  <span class="page-infor2-span1">性别:</span>
-                  <span class="page-infor2-span2">男</span>
-                </li>
-                <li>
-                  <span class="page-infor2-span1">年龄:</span>
-                  <span class="page-infor2-span2">26</span>
-                </li>
-                <li>
-                  <span class="page-infor2-span1">学历:</span>
-                  <span class="page-infor2-span2">本科</span>
-                </li>
-                <li>
-                  <span class="page-infor2-span1">籍贯:</span>
-                  <span class="page-infor2-span2">北京</span>
-                </li>
-              </ul>
-            </div>
-            <div class="col-lg-1"></div>
-            <div class="page-main-content col-lg-8">
-              <div class="page-content-header">
-                <h3>自我介绍</h3>
-                <div class="page-header-introduce">
-                  “成功者永不放弃，放弃者不会胜利。“我有10年的经验和专业的网页设计，用户界面设计，交互设计方面，视觉设计和原型。我曾与著名的创业公司，包括珠江街道软件。
-                </div>
-              </div>
-              <div class="page-content-detailed">
-                <h3>账户详细信息</h3>
-                <ul class="page-detailed-infor3">
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+    <link rel="stylesheet" href="/css/main.css">
+  </head>
+  <body>
+    <%- include('../aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main">
+      <div class="container-fluid animated fadeInRight" data-id="account_info">
+            <div class="col-lg-12">
+              <div class="page-main-introduction col-lg-3">
+                <dl class="page-introduction-header">
+                  <dt class="page-introduction-dt"><img src="/img/profile-avatar.jpg"></dt>
+                  <dd class="page-introduction-dd1">悦己视觉</dd>
+                  <dd class="page-introduction-dd2">12345456@163.com</dd>
+                </dl>
+                <ul class="page-main-infor1">
+                  <li class="page-main-active"><i class="fa fa-user"></i>账户基本信息</li>
+                  <a href="/account/edit">
+                    <li><i class="fa fa-edit"></i>编辑账户信息</li>
+                  </a>
+                </ul>
+                <ul class="page-main-infor2">
+                  <li>
+                    <span class="page-infor2-span1">性别:</span>
+                    <span class="page-infor2-span2">男</span>
+                  </li>
+                  <li>
+                    <span class="page-infor2-span1">年龄:</span>
+                    <span class="page-infor2-span2">26</span>
+                  </li>
+                  <li>
+                    <span class="page-infor2-span1">学历:</span>
+                    <span class="page-infor2-span2">本科</span>
+                  </li>
+                  <li>
+                    <span class="page-infor2-span1">籍贯:</span>
+                    <span class="page-infor2-span2">北京</span>
+                  </li>
                 </ul>
               </div>
+              <div class="col-lg-1"></div>
+              <div class="page-main-content col-lg-8">
+                <div class="page-content-header">
+                  <h3>自我介绍</h3>
+                  <div class="page-header-introduce">
+                    “成功者永不放弃，放弃者不会胜利。“我有10年的经验和专业的网页设计，用户界面设计，交互设计方面，视觉设计和原型。我曾与著名的创业公司，包括珠江街道软件。
+                  </div>
+                </div>
+                <div class="page-content-detailed">
+                  <h3>账户详细信息</h3>
+                  <ul class="page-detailed-infor3">
+                  </ul>
+                </div>
+              </div>
             </div>
-          </div>
+      </div>
+    	<%- include('../footer') %>
     </div>
-</div>
+		<script src="/js/main.js"></script>
+  </body>
+</html>

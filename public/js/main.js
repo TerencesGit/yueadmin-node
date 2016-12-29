@@ -1,4 +1,9 @@
  (function() {
+  $(function(){
+    var pageId = $('#main').children('.container-fluid').attr('data-id');
+    var _link = $('a[data-href= '+pageId+' ]');
+    _link.parent('li').addClass('active').parents('li').addClass('open');
+  })
    var toggle = false;
    var speed = 200;
    var $aside = $('#aside'),
@@ -15,7 +20,7 @@
          $main.animate({ 'left': 240 }, speed)
          $header.animate({'left': 240}, speed)
        }
-       toggle = !toggle
+       toggle = !toggle 
     })
    //手风琴菜单
    var Accordion = function(element, multiple) {
@@ -43,8 +48,7 @@
         $element.find('.submenu').not($next).slideUp().parent().removeClass('open');
       };  
     }
-    new Accordion($('#accordion'));
-    
+    new Accordion($('#accordion'));  
  })(jQuery)
  
 //上传图片预览

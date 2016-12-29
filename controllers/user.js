@@ -174,6 +174,9 @@ exports.adminRequired = function(req, res, next){
 		return res.redirect('/signup')
 	}
 }
+exports.showAccountInfo = function(req, res){
+	res.render('account/account_info', {title: '账户信息'})
+}
 //账户信息编辑
 exports.showEdit = function(req, res){
 
@@ -205,3 +208,6 @@ exports.avatarUpload = function(req, res, next){
 		next()
 	}
 }
+exports.conpanyIofo = function(req, res){
+	res.render('company/company_info', {title: '企业信息'})
+}	

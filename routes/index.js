@@ -22,11 +22,14 @@ router.get('/user/signin', User.home);
 router.get('/user/list', User.signinRequired, User.userlist);
 router.get('/user/delete', User.signinRequired, User.delete);
 router.post('/user/edit', User.signinRequired, User.edit);
+router.get('/user/account_info', User.showAccountInfo)
 router.get('/user/showUpdate', User.signinRequired, User.showUpdate);
 router.post('/user/updatePassword', User.signinRequired, User.updatePassword);
 
 router.get('/account/edit', User.signinRequired,  User.showEdit);
 router.post('/user/avatarUpload', multipartMiddleware, User.avatarUpload);
+
+router.get('/company/company_info', User.conpanyIofo)
 //退出
 router.get('/logout', User.logout);
 

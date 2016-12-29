@@ -9,13 +9,13 @@
       <div class="divide-line"></div>
       <nav>
         <ul id="accordion" class="accordion">
-           <li class="open">
+           <li>
             <div class="link">
               <i class="fa fa-user"></i>账户管理<i class="fa fa-chevron-down"></i>
             </div>
             <ul class="submenu">
-              <li><a href="/">账户信息维护</a></li>
-              <li><a href="/user/showUpdate">修改账户密码</a></li>
+              <li><a href="/user/account_info" data-href="account_info">账户信息维护</a></li>
+              <li><a href="/user/showUpdate" data-href="update_passwd">修改账户密码</a></li>
               <li><a href="/">注册我的企业</a></li>
             </ul>
           </li>
@@ -25,10 +25,10 @@
               <i class="fa fa-chevron-down"></i>
             </div>
             <ul class="submenu">
-              <li><a href="company/departmentTree.html" target="main">组织部门管理</a></li>
-              <li><a href="company/staff_manage.html" target="main">员工管理</a></li>
+              <li><a href="/company/company_info" data-href="company_info">组织部门管理</a></li>
+              <li><a href="company/staff_manage.html">员工管理</a></li>
               <li><a href="#">部门权限管理</a></li>
-              <li><a href="company/company_info.html" target="main">企业信息维护</a></li>
+              <li><a href="company/company_info.html">企业信息维护</a></li>
               <li><a href="company/agent_register.html">账户代注册</a></li>
               <!-- <li><a href="#">岗位管理</a></li> -->
             </ul>
@@ -39,8 +39,8 @@
               <i class="fa fa-chevron-down"></i>
             </div>
             <ul class="submenu">
-              <li><a href="shop/shop_maintain.html" target="main">商家维护</a></li>
-              <li><a href="shop/shop_review.html" target="main">商家信息审核</a></li>
+              <li><a href="shop/shop_maintain.html">商家维护</a></li>
+              <li><a href="shop/shop_review.html">商家信息审核</a></li>
               <li><a href="shop/contract_manage.html">合同管理</a></li>
               <li><a href="shop/privilege_manage.html">权限管理</a></li>
             </ul>
@@ -51,10 +51,10 @@
               <i class="fa fa-chevron-down"></i>
             </div>
             <ul class="submenu">
-              <li><a href="system/systemTree.html" target="main">系统功能树管理</a></li>
-              <li><a href="system/role_manage.html" target="main">系统角色管理</a></li>
-              <li><a href="system/notice.html" target="main">公告信息维护</a></li>
-              <li><a href="system/account_manage.html" target="main">系统内账户维护</a></li>
+              <li><a href="system/systemTree.html">系统功能树管理</a></li>
+              <li><a href="system/role_manage.html">系统角色管理</a></li>
+              <li><a href="system/notice.html">公告信息维护</a></li>
+              <li><a href="system/account_manage.html">系统内账户维护</a></li>
             </ul>
           </li>
         </ul>
