@@ -2,29 +2,33 @@
 $('.btn-del').on('click', function(){
 	var $tr = $(this).parents('tr');
 	var name = $tr.children().eq(0).text();
-	modalfadeIn()
 	var uid = $tr.attr('data-id');
-	var msg = confirm('确定删除用户' + name + '？')
-	if(msg){
-		$.ajax({
-			url: '/user/delete',
-			data: {uid: uid},
-		})
-		.done(function(res) {
-			console.log(res.status);
-			if(res.status == 1){
-				if($tr.length === 1){
-					$tr.remove()
-				}
-			}
-		})
-		.fail(function() {
-			console.log("error");
-		})
-	}else{
-		return false
-	}
+  $.dialog({type: 'confirm', message: '确定删除用户', 
+    handlerConfirm: function(){ confirmDel() }, handlerCancel: function(){return false}})
+  function confirmDel(){
+    $.ajax({
+      url: '/user/delete',
+      data: {uid: uid},
+      beforeSend: function(){
+        var waiting = $.dialog({type: 'waiting',delay: 1000})
+      }
+    })
+    .done(function(res) {
+      waiting.destroy()
+      console.log(res.status);
+      if(res.status == 1){
+        if($tr.length === 1){
+          $.dialog({type: 'success', message: '删除成功',delay: 1000})
+          $tr.remove()
+        }
+      }
+    })
+    .fail(function() {
+      console.log("error");
+    })
+  }
 })
+
 //用户编辑
 $('.btn-eidt').on('click', function(){
 	var $tr = $(this).parents('tr');
@@ -39,13 +43,6 @@ $('.btn-eidt').on('click', function(){
 	nameInput.val(name);
 	roleInput.val(role)
 })
-//信息提示
-function modalfadeIn(){
-	$('.mask').fadeIn().find('.mask-container').css({'transform': 'scale(1,1)'})
-	setTimeout(function(){
-		$('.mask').fadeOut().find('.mask-container').css({'transform': 'scale(0,0)'})
-	},1000)
-}
 //修改密码
 var oldPasswdInput = $('#oldPasswd'),
     newPasswdInput = $('#newPasswd'),

@@ -29,7 +29,7 @@
               <td><%= user.password %></td>
               <td><%= user.role %></td>
 	    				<td><img src="/upload/<%= user.avatar %>" alt="" width="30" height="30"></td>
-	    				<td><%= moament(user.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %></td>
+	    				<td><%= moment(user.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %></td>
 	    				<td>
 	    					<button class="btn btn-warning btn-eidt" data-toggle="modal" href="signin.html#myModal">编辑</button>
 	    					<button class="btn btn-danger btn-del">删除</button>
@@ -68,11 +68,11 @@
                   </div>
               </div>
             </div>
-            <div class="mask">
+          <!--   <div class="mask">
                 <div class="mask-container">
                     <div class="mask-body">删除成功！</div>
                 </div>
-            </div>
+            </div> -->
     	</div>
     	<%- include('footer') %>
     </div>

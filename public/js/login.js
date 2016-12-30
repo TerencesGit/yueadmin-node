@@ -327,8 +327,8 @@ btnSignIn.on('click',function(e){
           saveCookie();
           $.dialog({
             message: '登录成功！',
-            type: 'ok',
-            delay: 2000,
+            type: 'success',
+            delay: 1000,
             maskOpcity: .6
           })
           setTimeout(function(){
