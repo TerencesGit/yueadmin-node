@@ -137,6 +137,7 @@ body {
   top: 0;
   left: 240px;
   right: 0;
+  height: 50px;
   background: #fff;
   border: 1px solid #e7e7e7;
   z-index: 999
@@ -230,21 +231,48 @@ body {
 /*主体区域*/
 .main {
   position: absolute;
-  top: 65px;
+  top: 50px;
   left: 240px;
   right: 0;
-  bottom: 0;
+  height: calc(100% - 50px);
 }
-
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin-bottom: -40px;
+}
+.warp-footer {
+  height: 40px;
+}
+.wrapper > .container-fluid {
+  padding: 20px;
+}
+@media (max-width: 900px){
+  .navbar-header {
+      display: none;
+  }
+}
 /*页脚区域*/
 .site-footer {
-  margin-top: 30px;
-  color: #fff;
-  line-height: 50px;
+  position: relative;
+  padding: 10px 0;
   text-align: center;
+  color: #fff;
   background: #5b6e84
 }
-
+.back-top {
+  float: right;
+  width: 20px;
+  height: 20px;
+  margin-right: 1%;
+  color: #72d0eb;
+  background: rgba(127,221,248,.5);
+  border-radius: 50%;
+}
+.back-top i {
+  color: #2A3542;
+}    
 /*面包屑导航*/
 .breadcrumb {
   background-color: #ddd;
@@ -253,7 +281,7 @@ input[type="file"]{
   display: none
 }
 
-.page-main-introduction {
+/*.page-main-introduction {
     margin: 20px;
     margin-bottom: 0;
     float: left;
@@ -375,43 +403,8 @@ input[type="file"]{
   .page-main-active {
     background: #eee;
     color: #fff;
-  }
-   .mask {
-        display: none;
-        position: fixed;
-        z-index: 9999;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, .5);
-    }
-    .mask-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 200px;
-        height: 150px;
-        margin: auto;
-        padding: 20px;
-        background: #fff;
-        border-radius: 10px;
-        transform: scale(0,0);
-        transition: all .3s cubic-bezier(0.43, 0.15, 0.81, 1.6);
-    }
-    .mask-body {
-        color: #333;
-        text-align: center;
-        font-size: 18px
-    }
-    .mask-body:before {
-        content: '\2714';
-        display: block;
-        font-size: 50px;
-        color: #0f0;
-    }
+  }*/
+ 
     .page-main {
       background: #fff;
       margin-top: 100px;

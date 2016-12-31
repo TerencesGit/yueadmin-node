@@ -1,6 +1,7 @@
  (function() {
   $(function(){
-    var pageId = $('#main').children('.container-fluid').attr('data-id');
+    //侧边导航菜单自动切换
+    var pageId = $('#main').attr('data-id');
     var _link = $('a[data-href= '+pageId+' ]');
     _link.parent('li').addClass('active').parents('li').addClass('open');
   })
@@ -14,14 +15,19 @@
        if (!toggle) {
          $aside.animate({ 'left': -240 }, speed)
          $main.animate({ 'left': 0 }, speed)
-         $header.animate({'left': 0}, speed)
+         $header.animate({'left': 0 }, speed)
        }else{
          $aside.animate({ 'left': 0 }, speed)
          $main.animate({ 'left': 240 }, speed)
-         $header.animate({'left': 240}, speed)
+         $header.animate({'left': 240 }, speed)
        }
        toggle = !toggle 
     })
+   // 返回顶部
+   var backTop = $('#backTop');
+   backTop.on('click', function(){
+    $('html, body').animate({'scrollTop': 0}, speed)
+   })
    //手风琴菜单
    var Accordion = function(element, multiple) {
      this.element = element || {};
