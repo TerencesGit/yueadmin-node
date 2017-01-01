@@ -8,10 +8,10 @@ exports.showSignup = function(req, res, next){
 exports.showSignin = function(req, res, next){
 	res.render('signin', {title: '欢迎登录', msg: ''})
 }
-//查询手机号
-exports.findByMobile = function(req, res, next){
-	var mobile = req.query.mobile;
-	User.findOne({mobile: mobile}, function(err, user){
+//查询邮箱号
+exports.findByEmail = function(req, res, next){
+	var email = req.query.email;
+	User.findOne({email: email}, function(err, user){
 		if(err) console.log(err)
 			if(user){
 				res.json({status: 1})
@@ -47,16 +47,16 @@ function getRandom(min, max){;
 //注册功能
 exports.signup = function(req, res){
 	var _user = req.body.user;
-	var mobile = _user.mobile;
-	var phonecode = _user.phonecode;
-	console.log(phonecode)
-	console.log(code)
-	if(phonecode !== code){
-		_user.error = '手机验证码错误';
-		return res.render('signup', {title: '欢迎注册', user: _user, })
-	} 
-	_user.name = _user.mobile;
-	User.findOne({mobile: _user.mobile}, function(err, user){
+	var email = _user.email;
+	//var phonecode = _user.phonecode;
+	// console.log(phonecode)
+	// console.log(code)
+	// if(phonecode !== code){
+	// 	_user.error = '手机验证码错误';
+	// 	return res.render('signup', {title: '欢迎注册', user: _user, })
+	// } 
+	_user.name = email;
+	User.findOne({email: email}, function(err, user){
 		if(err) console.log(err)
 		if(!user){
 			var user = new User(_user);
@@ -64,6 +64,8 @@ exports.signup = function(req, res){
 				if(err) console.log(err)
 				res.render('signin',{title: '欢迎登录', msg: '注册成功，'})
 			})
+		}else {
+			console.log('该邮箱号已注册')
 		}
 	})
 }
@@ -71,24 +73,49 @@ exports.signup = function(req, res){
 exports.signin = function(req, res){
 	var name = req.body.username;
 	var passwd = req.body.password;
-	User.findOne({mobile: name},function(err, user){
-		if(err) console.log(err)
-			if(!user){
-				return res.json({status: 0})
-			}
-			console.log(user)
-			user.comparePassword(passwd, function(err, isMatch){
-				if(err) console.log(err)
-				if(isMatch){
-					req.session.user = user;
-					setTimeout(function(){
-						res.json({status: 2})
-					},2000)
-				}else{
-					res.json({status: 1})
+	var emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+	if(!emailReg.test(name)){
+		User.findOne({mobile: name},function(err, user){
+			if(err) console.log(err)
+				if(!user){
+					return res.json({status: 0})
 				}
-			})
-	})
+				console.log(user)
+				user.comparePassword(passwd, function(err, isMatch){
+					if(err) console.log(err)
+					if(isMatch){
+						req.session.user = user;
+						setTimeout(function(){
+							return res.json({status: 2})
+						},2000)
+					}else{
+						return res.json({status: 1})
+					}
+				})
+		})
+	}else{
+		User.findOne({email: name},function(err, user){
+			if(err) console.log(err)
+				if(!user){
+					return res.json({status: 0})
+				}
+				console.log(user)
+				user.comparePassword(passwd, function(err, isMatch){
+					if(err) console.log(err)
+					if(isMatch){
+						req.session.user = user;
+						setTimeout(function(){
+							res.json({status: 2})
+						},2000)
+					}else{
+						res.json({status: 1})
+					}
+				})
+		})
+	}
+}
+function signin(filed, value){
+
 }
 exports.home = function(req, res){
 	res.redirect('/')
@@ -211,3 +238,6 @@ exports.avatarUpload = function(req, res, next){
 exports.conpanyIofo = function(req, res){
 	res.render('company/company_info', {title: '企业信息'})
 }	
+exports.departdment = function(req, res){
+	res.render('company/department', {title: '部门管理'})
+}

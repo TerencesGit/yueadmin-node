@@ -1,4 +1,5 @@
-/*样式初始化*/
+/** css reset **/
+
 ul,
 li {
   margin: 0;
@@ -8,6 +9,7 @@ li {
 li {
   list-style: none
 }
+
 a,
 a:link,
 a:visited,
@@ -16,12 +18,119 @@ a:active {
   text-decoration: none;
   outline: 0
 }
+
 body {
   background: #f0f3f4
 }
 
+/** animate **/
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  z-index: 100
+}
+
+.animated.infinite {
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite
+}
+
+.animated.hinge {
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s
+}
+@-webkit-keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(20px);
+    transform: translateX(20px)
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0)
+  }
+}
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(40px);
+    -ms-transform: translateX(40px);
+    transform: translateX(40px)
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0)
+  }
+}
+
+.fadeInRight {
+  -webkit-animation-name: fadeInRight;
+  animation-name: fadeInRight
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0
+  }
+  100% {
+    opacity: 1
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0
+  }
+  100% {
+    opacity: 1
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn
+}
+
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px)
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0)
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-20px);
+    -ms-transform: translateY(-20px);
+    transform: translateY(-20px)
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0)
+  }
+}
+
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown
+}
 /*左侧导航*/
-.sidebar-warp{
+
+.sidebar-warp {
   position: fixed;
   top: 0;
   left: 0;
@@ -31,6 +140,7 @@ body {
   overflow: hidden;
   background: #1c2b36;
 }
+
 .sidebar {
   position: absolute;
   width: 260px;
@@ -59,12 +169,16 @@ body {
   font-size: 0;
   background-color: #131e26;
 }
+
+
 /*手风琴菜单*/
+
 .accordion {
   width: 100%;
   max-width: 300px;
   margin: 0 auto 20px;
 }
+
 .accordion .link {
   display: block;
   position: relative;
@@ -80,9 +194,11 @@ body {
   background: #131e26;
   color: #fff;
 }
-.accordion .link a{
+
+.accordion .link a {
   color: #869fb1;
 }
+
 .accordion li i {
   position: absolute;
   top: 16px;
@@ -96,14 +212,17 @@ body {
   left: auto;
   font-size: 10px;
 }
-.accordion li.open{
+
+.accordion li.open {
   background: #131e26;
   border-left: 4px solid #19a9d5;
-  transition: all .4s 
+  transition: all .4s
 }
+
 .accordion li.open .link {
   color: #fff;
 }
+
 .accordion li.open i {
   color: #fff;
 }
@@ -111,9 +230,11 @@ body {
 .accordion li.open i.fa-chevron-down {
   transform: rotate(180deg);
 }
+
 .accordion li.open .submenu {
   display: block;
 }
+
 .submenu {
   display: none;
   font-size: 14px;
@@ -127,11 +248,12 @@ body {
   transition: all 0.25s ease;
 }
 
-.submenu li.active a, .submenu a:hover {
+.submenu li.active a,
+.submenu a:hover {
   color: #fff;
 }
-
 /*页头区域*/
+
 .header {
   position: fixed;
   top: 0;
@@ -142,9 +264,11 @@ body {
   border: 1px solid #e7e7e7;
   z-index: 999
 }
+
 .navbar-header {
   width: 400px;
 }
+
 .btn-toggle {
   padding: 5px 12px;
   margin: 10px 5px 5px 20px;
@@ -155,10 +279,12 @@ body {
   background-color: #23b7e5;
   border-color: #23b7e5;
 }
+
 .btn-toggle:hover,
 .btn-toggle:focus {
   color: #fff;
 }
+
 .navbar-form {
   display: inline-block;
 }
@@ -169,18 +295,22 @@ body {
   font-size: 14px;
   box-shadow: none
 }
+
 .navbar-form .form-control:focus {
   box-shadow: none;
   border-bottom: 1px solid #23b7e5;
 }
+
 .navbar-nav {
   margin-right: 20px;
 }
-.navbar-nav > li{
+
+.navbar-nav > li {
   display: inline-block;
   margin: 15px 0 0 10px;
 }
-.navbar-nav > li > a{
+
+.navbar-nav > li > a {
   position: relative;
   display: block;
   color: #666;
@@ -191,6 +321,7 @@ body {
   padding: 2px 6px;
   margin-right: 15px;
 }
+
 .count-info .label {
   position: absolute;
   top: -3px;
@@ -202,7 +333,8 @@ body {
 .navbar-nav .personal-center {
   margin-top: 8px;
 }
-.navbar-nav .personal-center > a{
+
+.navbar-nav .personal-center > a {
   padding: 5px 10px;
   color: #666;
   font-size: 16px;
@@ -210,25 +342,27 @@ body {
   border: 1px solid #f0f0f8;
   background: transparent;
 }
-.navbar-nav > li > a:hover{
+
+.navbar-nav > li > a:hover {
   background: #F1F2F7;
 }
+
 .personal-center > a > img {
   width: 25px;
   height: 25px;
 }
-/*.personal-center > .dropdown-menu {
-  left: -5%;
-}*/
-.dropdown-menu .divider{
+
+.dropdown-menu .divider {
   margin: 0;
 }
+
 .dropdown-menu > li > a {
   padding: 5px 20px;
   color: #a4abbb
 }
 
 /*主体区域*/
+
 .main {
   position: absolute;
   top: 50px;
@@ -236,24 +370,31 @@ body {
   right: 0;
   height: calc(100% - 50px);
 }
+
 .wrapper {
   min-height: 100%;
   height: auto !important;
   height: 100%;
   margin-bottom: -40px;
 }
+
 .warp-footer {
   height: 40px;
 }
+
 .wrapper > .container-fluid {
   padding: 20px;
 }
-@media (max-width: 900px){
+
+@media (max-width: 900px) {
   .navbar-header {
-      display: none;
+    display: none;
   }
 }
+
+
 /*页脚区域*/
+
 .site-footer {
   position: relative;
   padding: 10px 0;
@@ -261,191 +402,60 @@ body {
   color: #fff;
   background: #5b6e84
 }
+
 .back-top {
   float: right;
   width: 20px;
   height: 20px;
   margin-right: 1%;
   color: #72d0eb;
-  background: rgba(127,221,248,.5);
+  background: rgba(127, 221, 248, .5);
   border-radius: 50%;
 }
+
 .back-top i {
   color: #2A3542;
-}    
+}
+
+
 /*面包屑导航*/
+
 .breadcrumb {
   background-color: #ddd;
 }
-input[type="file"]{
+
+input[type="file"] {
   display: none
 }
 
-/*.page-main-introduction {
-    margin: 20px;
-    margin-bottom: 0;
-    float: left;
-  }
-  
-  .page-introduction-header {
-    height: 220px;
-    background: #207a94;
-    border-radius: 4px 4px 0 0;
-    color: #fff;
-    text-align: center;
-    padding-top: 20px;
-    margin: 0;
-  }
-  
-  .page-introduction-dt {
-    height: 120px;
-    border-radius: 20px;
-    background: #63a2b4;
-    margin: 0 50px;
-  }
-  
-  .page-introduction-dt img {
-    height: 100px;
-    margin: 10px;
-    border-radius: 20px;
-  }
-  
-  .page-introduction-dd1 {
-    font-size: 18px;
-    padding-top: 18px;
-  }
-  
-  .page-introduction-dd2 {
-    padding-top: 6px;
-  }
-  
-  .page-main-infor1 {
-    background: #fff;
-  }
-  
-  .page-main-infor1 li {
-    height: 60px;
-    line-height: 60px;
-    padding-left: 20px;
-    color: #89817f;
-    border-bottom: 1px solid #ebeae6;
-  }
-  
-  .page-main-infor1 li i {
-    margin-right: 15px;
-  }
-  
-  .page-main-infor2 {
-    margin-top: 20px;
-    background: #fff;
-  }
-  
-  .page-main-infor2 li {
-    height: 50px;
-    line-height: 50px;
-    color: #89817f;
-  }
-  
-  .page-infor2-span1 {
-    padding: 25px;
-  }
-  
-  .page-main-content {
-    padding: 0;
-    margin-right: 20px;
-    float: left;
-    margin-top: 20px;
-  }
-  
-  .page-content-header {
-    background: #fff;
-    height: 250px;
-  }
-  
-  .page-content-header h3 {
-    font-size: 24px;
-    color: #1d85a3;
-    line-height: 60px;
-    ;
-    margin: 0;
-    padding: 0;
-    padding-left: 25px;
-  }
-  
-  .page-header-introduce {
-    height: 150px;
-    background: #48aecb;
-    color: #fff;
-    margin-left: 30px;
-    line-height: 20px;
-    padding: 40px;
-  }
-  
-  .page-content-detailed {
-    background: #fff;
-    margin-top: 20px;
-  }
-  
-  .page-content-detailed h3 {
-    font-size: 24px;
-    color: #89817e;
-    line-height: 60px;
-    ;
-    margin: 0;
-    padding: 0;
-    padding-left: 25px;
-  }
-  
-  .nav-account {
-    color: #fff;
-  }
-  
-  .page-main-active {
-    background: #eee;
-    color: #fff;
-  }*/
- 
-    .page-main {
-      background: #fff;
-      margin-top: 100px;
-      padding: 50px 0;
-    } 
-    .page-tip {
-      padding-top: 7px;
-    }
-    
-    .nav-account {
-      color: #fff;
-    }
-    
-    .fa-warning {
-      color: red;
-      margin-right: 5px;
-    }
-    .form-group.error input {
-      border-color: #d9534f
-    }
-  .avatar-upload{
-    margin-top: 20px;
-  }
-  .edit-avatar dt{
-    font-size: 18px;
-    margin-bottom: 15px;
-  }
-   .password-main {
-    background: #fff;
-  } 
-  .panel-heading{
-    margin-bottom: 50px;
-  }
-  .panel-default{
-    padding-bottom: 50px;
-  }
-  .page-tip {
-    padding-top: 7px;
-    display: none;
-  }
-  .fa-warning {
-    color: red;
-    margin-right: 5px;
-  }
+.page-main {
+  background: #fff;
+  margin-top: 100px;
+  padding: 50px 0;
+}
+
+.page-tip {
+  padding-top: 7px;
+}
+
+.nav-account {
+  color: #fff;
+}
+
+.fa-warning {
+  /*color: red;*/
+  margin-right: 5px;
+}
+
+.form-group.error input {
+  border-color: #d9534f
+}
+
+.avatar-upload {
+  margin-top: 20px;
+}
+
+.edit-avatar dt {
+  font-size: 18px;
+  margin-bottom: 15px;
+}

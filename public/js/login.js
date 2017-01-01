@@ -10,7 +10,7 @@ $(function() {
 })
 
 //保存注册表单Input对象
-var mobileInput = $('#mobile'),
+var emailInput = $('#email'),
     passwdInput = $('#passwd'),
     passwdInput2 = $('#passwd2'),
     authCodeInput = $('#authcode'),
@@ -19,23 +19,27 @@ var mobileInput = $('#mobile'),
     agreeCheck = $('#agree'),
     btnSignup = $('#btnSignup'),
     signupForm = $('#signupForm');
+
 //保存登录表单Input对象
 var nameInput = $('#username'),
     passInput = $('#password'),
     rememberCheck = $('#remember'),
     btnSignIn = $('#btnSignIn'),
     signinForm = $('#signinForm');
-//手机号码、密码正则表达式   
+
+//邮箱、密码正则表达式   
 var pattern = {
-    mobile: /^(13|14|15|17|18)[0-9]{9}$/,
+    //mobile: /^(13|14|15|17|18)[0-9]{9}$/,
+    email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
     password: /^.{8,20}$/,
 }
+
 //错误信息提示
 var message = {
-    mobile: {
-      required: '请输入手机号码',
-      pattern: '手机号码格式不正确',
-      existed: '该手机号已注册，可直接登录'
+    email: {
+      required: '请输入邮箱号',
+      pattern: '邮箱格式不正确',
+      existed: '该邮箱号已注册，可直接登录'
     },
     password: {
       required: '请输入密码',
@@ -45,12 +49,13 @@ var message = {
       required: '请输入用户名'
     }
 }
+
 //发送验证码
 btnSendCode.on('click', function(e) {
   e.preventDefault()
   var status = $(this).attr('data-status');
   if(status == 0) return;
-  formCheck(mobileInput, message.mobile, pattern.mobile) && sendCode()
+  formCheck(emailInput, message.email, pattern.email) && sendCode()
 })
 //注册按钮提交
 btnSignup.on('click',function(e) {
@@ -59,15 +64,14 @@ btnSignup.on('click',function(e) {
 })
 //注册表单逐步验证
 function signupSubmit() {
-  formCheck(mobileInput, message.mobile, pattern.mobile) && 
+  formCheck(emailInput, message.email, pattern.email) && 
   formCheck(passwdInput, message.password, pattern.password) &&
-  confirmPasswd() && validateCode() && validatePhoneCode() &&
-  agreeProtocol() && signupForm.submit()
+  confirmPasswd() && validateCode() && agreeProtocol() && signupForm.submit()
 }
 //为输入框注册失去焦点事件
-mobileInput.blur(function() {
-  formCheck(mobileInput, message.mobile, pattern.mobile) &&
-  mobileQuery(mobileInput, message.mobile)
+emailInput.blur(function() {
+  formCheck(emailInput, message.email, pattern.email) &&
+  emailQuery(emailInput, message.email)
 })
 passwdInput.blur(function() {
   if (formCheck(passwdInput, message.password, pattern.password)) {
@@ -110,7 +114,7 @@ function formCheck(element, msg, pattern){
 }
 //异步查询手机号码
 var _number;//保存号码，防止相同号码多次触发ajax事件
-function mobileQuery(element, msg){
+function emailQuery(element, msg){
   var number = $(element).val();
   if(_number == number) return;
    _number = number;
@@ -119,8 +123,8 @@ function mobileQuery(element, msg){
     inputParent.after('<p class="alert alert-warning"></p>')
   }
   $.ajax({
-    url: '/findByMobile',
-    data: {mobile: number}
+    url: '/findByEmail',
+    data: {email: number}
   })
   .done(function(res){
       if(res.status == 1){
@@ -222,14 +226,14 @@ function sendCode() {
   var timer;
   var status = btnSendCode.attr('data-status');
   if(!status == 2) return;
-  var number = mobileInput.val();
+  var number = emailInput.val();
   if(signupForm.children('.fail').length === 0){
     signupForm.prepend('<p class="alert alert-success fail" style="display:none"></p>');
   }
   var failPrompt = signupForm.children('.fail');
   $.ajax({
     url: '/sendPhoneCode',
-    data: {mobile: number},
+    data: {email: number},
   })
   .done(function(res) {
     failPrompt.html('手机号码'+number+'的验证码是'+'  '+res.code).show()

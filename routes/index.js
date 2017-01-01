@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 /* 登录注册 */
 router.get('/signin', User.showSignin);
 router.get('/signup', User.showSignup);
-router.get('/findByMobile', User.findByMobile);
+router.get('/findByEmail', User.findByEmail);
 router.get('/sendPhoneCode', User.sendPhoneCode);
 router.post('/user/signup', User.signup);
 router.post('/user/signin', User.signin);
@@ -28,7 +28,7 @@ router.post('/user/updatePassword', User.signinRequired, User.updatePassword);
 
 router.get('/account/edit', User.signinRequired,  User.showEdit);
 router.post('/user/avatarUpload', multipartMiddleware, User.avatarUpload);
-
+router.get('/company/department', User.departdment)
 router.get('/company/company_info', User.conpanyIofo)
 //退出
 router.get('/logout', User.logout);

@@ -2,13 +2,13 @@
 <html>
   <head>
     <%- include('../link') %>
-    <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
     <%- include('../aside') %>
     <%- include('../header') %>
-    <div id="main" class="main">
-    	<div class="container-fluid" data-id="update_passwd">
+    <div id="main" class="main" data-id="update_passwd">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
@@ -60,9 +60,10 @@
           </div>
         </div>
       </div>
+      </div>
     	<%- include('../footer') %>
     </div>
-    <script src="/js/main.js"></script>
-		<script src="/js/user.js"></script>
+    <%- include('../script')%>
+    <script src="/js/user.js"></script>
   </body>
 </html>
