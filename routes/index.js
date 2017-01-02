@@ -25,7 +25,7 @@ router.post('/user/edit', User.signinRequired, User.edit);
 router.get('/user/account_info', User.showAccountInfo)
 router.get('/user/showUpdate', User.signinRequired, User.showUpdate);
 router.post('/user/updatePassword', User.signinRequired, User.updatePassword);
-
+router.post('/user/saveInfo', User.saveInfo)
 router.get('/account/edit', User.signinRequired,  User.showEdit);
 router.post('/user/avatarUpload', multipartMiddleware, User.avatarUpload);
 router.get('/company/department', User.departdment)

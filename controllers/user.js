@@ -1,7 +1,7 @@
 var User = require('../models/user');
 var fs = require('fs');
 var path = require('path');
-
+var _ = require('underscore');
 exports.showSignup = function(req, res, next){
 	res.render('signup', {title: '欢迎注册'})
 }
@@ -206,10 +206,31 @@ exports.showAccountInfo = function(req, res){
 }
 //账户信息编辑
 exports.showEdit = function(req, res){
-
 	res.render('account/account_info_edit', {title: '账户信息编辑'})
 }
-
+//信息设置
+exports.saveInfo = function(req, res){
+	var userObj = req.body.user;
+	console.log(userObj)
+	var id = req.session.user._id;
+	var _user;
+	if(id){
+		User.findById(id, function(err, user){
+			if(err) return err;
+			_user = _.extend(user, userObj);
+			console.log(_user)
+			console.log('--------------')
+			_user = _.omit(_user, 'password')
+			console.log(_user)
+			_user.save(function(err, user){
+				if(err) return err;
+				res.redirect('/account/edit')
+			})
+		})
+	}else {
+		res.redirect('/signin')
+	}
+}
 //头像上传
 exports.avatarUpload = function(req, res, next){
 	var user = req.session.user;

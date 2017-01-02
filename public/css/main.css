@@ -18,11 +18,27 @@ a:active {
   text-decoration: none;
   outline: 0
 }
-
+textarea {
+  resize: vertical;
+}
+input[type="file"] {
+  display: none
+}
 body {
   background: #f0f3f4
 }
-
+.m-t {
+  margin-top: 15px;
+}
+.m-b {
+  margin-bottom: 15px;
+}
+.m-l {
+  margin-left: 15px;
+}
+.m-r {
+  margin-right: 15px;
+}
 /** animate **/
 .animated {
   -webkit-animation-duration: 1s;
@@ -416,16 +432,20 @@ body {
 .back-top i {
   color: #2A3542;
 }
-
-
-/*面包屑导航*/
-
+/* 面包屑导航 */
 .breadcrumb {
   background-color: #ddd;
 }
 
-input[type="file"] {
-  display: none
+/* account_info_edit */
+.account-info {
+  padding-top: 20px;
+  background: #fff;
+  border-radius: 5px
+}
+.unbind {
+  display: inline-block;
+  padding-top: 5px;
 }
 
 .page-main {

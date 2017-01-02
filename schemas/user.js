@@ -30,6 +30,15 @@ var userSchema = new mongoose.Schema({
 	realname: {
 		type: String
 	},
+	address: {
+		type: String
+	},
+	signature: {
+		type: String
+	},
+	avatar: {
+		type: String
+	},
 	email_verified: {
 		type: Number,
 		default: 0
@@ -37,9 +46,6 @@ var userSchema = new mongoose.Schema({
 	role: {
 		type: Number,
 		default: 1
-	},
-	avatar: {
-		type: String
 	},
 	meta: {
 		createAt: {
@@ -56,11 +62,11 @@ userSchema.pre('save', function(next){
 	var user = this;
 	if(this.isNew){
 		this.meta.createAt = this.meta.updateAt = Date.now()
+		var hash = bcrypt.hashSync(user.password);
+		user.password = hash;
 	}else{
 		this.meta.updateAt = Date.now()
 	}
-	var hash = bcrypt.hashSync(user.password);
-	user.password = hash;
 	next()
 })
 userSchema.methods = {
