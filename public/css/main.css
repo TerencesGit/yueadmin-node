@@ -144,6 +144,7 @@ body {
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown
 }
+
 /*左侧导航*/
 
 .sidebar-warp {
@@ -439,15 +440,31 @@ body {
 
 /* account_info_edit */
 .account-info {
-  padding-top: 20px;
+  padding: 30px 20px;
   background: #fff;
   border-radius: 5px
 }
 .unbind {
   display: inline-block;
-  padding-top: 5px;
+  padding: 5px 10px;
+}
+.alert {
+  padding: 5px;
+  margin: 0;
+  text-indent: 2px;
 }
 
+.alert i.fa-warning {
+  margin-right: 5px
+}
+
+.has-error .control-label {
+  color: #333;
+}
+.control-label i {
+  padding-right: 10px;
+  color: #f20;
+}
 .page-main {
   background: #fff;
   margin-top: 100px;

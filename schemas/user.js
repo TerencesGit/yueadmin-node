@@ -62,11 +62,11 @@ userSchema.pre('save', function(next){
 	var user = this;
 	if(this.isNew){
 		this.meta.createAt = this.meta.updateAt = Date.now()
-		var hash = bcrypt.hashSync(user.password);
-		user.password = hash;
 	}else{
 		this.meta.updateAt = Date.now()
 	}
+	var hash = bcrypt.hashSync(user.password);
+	user.password = hash;
 	next()
 })
 userSchema.methods = {

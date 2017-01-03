@@ -67,3 +67,27 @@ function uploadPreview(fileInput, $Image){
     reader.readAsDataURL(fileInput.files[0])
   }
 }
+//输入框验证
+function checkInput(element, msg, pattern){
+  var length = arguments.length;
+  var value = $.trim($(element).val());
+  var formGroup = $(element).parents('.form-group');
+  console.log(formGroup)
+  if(formGroup.children('.alert').length === 0) {
+    formGroup.append('<p class="col-md-3 alert alert-danger"></p>')
+  }
+  if(value == '') {
+    formGroup.addClass('has-error').children('.alert').html('<i class="fa fa-warning"></i>' + msg);
+    $(element).focus();
+    return false;
+  }else{
+    if(length === 3){
+      if(!pattern.test(value)) {
+        formGroup.addClass('has-error').children('.alert').html('<i class="fa fa-warning"></i>' + msg);
+        return false;
+      }
+    }
+    formGroup.removeClass('has-error').children('.alert').remove();
+    return true;
+  }
+}

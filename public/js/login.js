@@ -55,7 +55,7 @@ btnSendCode.on('click', function(e) {
   e.preventDefault()
   var status = $(this).attr('data-status');
   if(status == 0) return;
-  formCheck(emailInput, message.email, pattern.email) && sendCode()
+  checkInput(emailInput, message.email, pattern.email) && sendCode()
 })
 //注册按钮提交
 btnSignup.on('click',function(e) {
@@ -64,17 +64,17 @@ btnSignup.on('click',function(e) {
 })
 //注册表单逐步验证
 function signupSubmit() {
-  formCheck(emailInput, message.email, pattern.email) && 
-  formCheck(passwdInput, message.password, pattern.password) &&
-  confirmPasswd() && validateCode() && agreeProtocol() && signupForm.submit()
+  checkInput(emailInput, message.email, pattern.email) && 
+  checkInput(passwdInput, message.password, pattern.password) &&
+  confirmPasswd() && checkCode() && agreeProtocol() && signupForm.submit()
 }
 //为输入框注册失去焦点事件
 emailInput.blur(function() {
-  formCheck(emailInput, message.email, pattern.email) &&
-  emailQuery(emailInput, message.email)
+  checkInput(emailInput, message.email, pattern.email) &&
+  queryEmail(emailInput, message.email)
 })
 passwdInput.blur(function() {
-  if (formCheck(passwdInput, message.password, pattern.password)) {
+  if (checkInput(passwdInput, message.password, pattern.password)) {
     passwdInput2.attr('disabled', false)
   } else {
     passwdInput2.attr('disabled', true)
@@ -89,38 +89,38 @@ passwdInput2.blur(function() {
   }
 })
 //表单验证方法
-function formCheck(element, msg, pattern){
+function checkInput(element, msg, pattern){
   var length = arguments.length;
   var value = $.trim($(element).val());
-  var inputParent = $(element).parent();
-  if(inputParent.next('.alert').length === 0) {
-    inputParent.after('<p class="alert alert-warning"></p>')
+  var formGroup = $(element).parent();
+  if(formGroup.next('.alert').length === 0) {
+    formGroup.after('<p class="alert alert-warning"></p>')
   }
   if(value == '') {
-    inputParent.removeClass('valid').addClass('error').next('.alert').html('<i class="fa fa-warning"></i>' + msg.required);
+    formGroup.removeClass('has-success').addClass('has-error').next('.alert').html('<i class="fa fa-warning"></i>' + msg.required);
     $(element).focus();
     return false;
   }else{
     if(length === 3){
       if(!pattern.test(value)) {
-        inputParent.removeClass('valid').addClass('error').next('.alert').html('<i class="fa fa-warning"></i>' + msg.pattern);
+        formGroup.removeClass('has-success').addClass('has-error').next('.alert').html('<i class="fa fa-warning"></i>' + msg.pattern);
         $(element).focus();
         return false;
       }
     }
-    inputParent.removeClass('error').addClass('valid').next('.alert').remove();
+    formGroup.removeClass('has-error').addClass('has-success').next('.alert').remove();
     return true;
   }
 }
 //异步查询手机号码
 var _number;//保存号码，防止相同号码多次触发ajax事件
-function emailQuery(element, msg){
+function queryEmail(element, msg){
   var number = $(element).val();
   if(_number == number) return;
    _number = number;
-  var inputParent = $(element).parent();
-  if(inputParent.next('.alert').length === 0) {
-    inputParent.after('<p class="alert alert-warning"></p>')
+  var formGroup = $(element).parent();
+  if(formGroup.next('.alert').length === 0) {
+    formGroup.after('<p class="alert alert-warning"></p>')
   }
   $.ajax({
     url: '/findByEmail',
@@ -128,12 +128,12 @@ function emailQuery(element, msg){
   })
   .done(function(res){
       if(res.status == 1){
-        inputParent.removeClass('valid').addClass('error').next('.alert')
+        formGroup.removeClass('has-success').addClass('has-error').next('.alert')
                    .html('<i class="fa fa-warning"></i>' + msg.existed ).show();
         btnSendCode.attr('data-status', 0)
       }
       if(res.status == 2){
-        inputParent.removeClass('error').addClass('valid').next('.alert').remove();
+        formGroup.removeClass('has-error').addClass('has-success').next('.alert').remove();
         btnSendCode.attr('data-status', 2)
       }
   })
@@ -145,15 +145,15 @@ function emailQuery(element, msg){
 function confirmPasswd() {
   var passwd = $.trim(passwdInput.val())
   var passwd2 = $.trim(passwdInput2.val())
-  var inputParent = passwdInput2.parent();
-  if (inputParent.next('.alert').length === 0) {
-    inputParent.after('<p class="alert alert-warning"></p>')
+  var formGroup = passwdInput2.parent();
+  if (formGroup.next('.alert').length === 0) {
+    formGroup.after('<p class="alert alert-warning"></p>')
   }
   if (passwd == '' || passwd2 == '' || passwd !== passwd2) {
-    inputParent.removeClass('valid').addClass('error').next('.alert').html('<i class="fa fa-warning"></i>' + '两次密码输入不一致');
+    formGroup.removeClass('has-success').addClass('has-error').next('.alert').html('<i class="fa fa-warning"></i>' + '两次密码输入不一致');
     return false;
   } else {
-    inputParent.removeClass('error').addClass('valid').next('.alert').remove();
+    formGroup.removeClass('has-error').addClass('has-success').next('.alert').remove();
     return true;
   }
 }
@@ -179,44 +179,44 @@ function createCode() {
   return code;
 }
 //校验验证码
-function validateCode() {
+function checkCode() {
   var inputCode = authCodeInput.val().toUpperCase();
-  var inputParent = authCodeInput.parents('.form-group');
+  var formGroup = authCodeInput.parents('.form-group');
   code = code.toUpperCase()
-  if (inputParent.next('.alert').length === 0) {
-    inputParent.after('<p class="alert alert-warning"></p>')
+  if (formGroup.next('.alert').length === 0) {
+    formGroup.after('<p class="alert alert-warning"></p>')
   }
   if (inputCode == '') {
-    inputParent.removeClass('valid').addClass('error').next('.alert').html('<i class="fa fa-warning"></i>请输入验证码');
+    formGroup.removeClass('has-success').addClass('has-error').next('.alert').html('<i class="fa fa-warning"></i>请输入验证码');
     authCodeInput.focus();
     return false;
   } else if (inputCode !== code) {
-    inputParent.removeClass('valid').addClass('error').next('.alert').html('<i class="fa fa-warning"></i>验证码错误');
+    formGroup.removeClass('has-success').addClass('has-error').next('.alert').html('<i class="fa fa-warning"></i>验证码错误');
     authCodeInput.val('').focus();
     drawCode();
     return false;
   } else {
-    inputParent.removeClass('error').addClass('valid').next('.alert').remove();
+    formGroup.removeClass('has-error').addClass('has-success').next('.alert').remove();
     return true;
   }
 }
 //判断手机验证码
-function validatePhoneCode() {
-  var inputParent = phoneCodeInput.parents('.form-group');
+function checkPhoneCode() {
+  var formGroup = phoneCodeInput.parents('.form-group');
   var phonecode = $.trim(phoneCodeInput.val());
-  if (inputParent.next('.alert').length === 0) {
-    inputParent.after('<p class="alert alert-warning"></p>')
+  if (formGroup.next('.alert').length === 0) {
+    formGroup.after('<p class="alert alert-warning"></p>')
   }
   if (phonecode == '') {
-    inputParent.removeClass('valid').addClass('error').next('.alert').html('<i class="fa fa-warning"></i>请输入手机验证码');
+    formGroup.removeClass('has-success').addClass('has-error').next('.alert').html('<i class="fa fa-warning"></i>请输入手机验证码');
     authCodeInput.focus();
     return false;
   } else if (phonecode.length < 4) {
-    inputParent.removeClass('valid').addClass('error').next('.alert').html('<i class="fa fa-warning"></i>验证码长度有误');
+    formGroup.removeClass('has-success').addClass('has-error').next('.alert').html('<i class="fa fa-warning"></i>验证码长度有误');
     authCodeInput.focus();
     return false;
   } else {
-    inputParent.removeClass('error').addClass('valid').next('.alert').remove()
+    formGroup.removeClass('has-error').addClass('has-success').next('.alert').remove()
     return true;
   }
 }
@@ -240,7 +240,7 @@ function sendCode() {
     console.log("success");
   })
   .fail(function() {
-    console.log("error");
+    console.log("has-error");
   })
   
   btnSendCode.attr('disabled', 'true')
@@ -258,24 +258,24 @@ function sendCode() {
 
 //是否同意注册协议
 function agreeProtocol() {
-  var inputParent = agreeCheck.parent();
+  var formGroup = agreeCheck.parent();
   var checked = agreeCheck.prop('checked');
-  if (inputParent.next('.alert').length === 0) {
-    inputParent.after('<p class="alert alert-warning"></p>')
+  if (formGroup.next('.alert').length === 0) {
+    formGroup.after('<p class="alert alert-warning"></p>')
   }
   if (checked) {
-    inputParent.removeClass('error').addClass('valid').next('.alert').remove();
+    formGroup.removeClass('has-error').addClass('has-success').next('.alert').remove();
     return true;
   } else {
-    inputParent.removeClass('valid').addClass('error').next('.alert').html('<i class="fa fa-warning"></i>请同意注册协议并勾选');
+    formGroup.removeClass('has-success').addClass('has-error').next('.alert').html('<i class="fa fa-warning"></i>请同意注册协议并勾选');
     return false;
   }
 }
 //登录表单验证
 function signinSubmit(){
-  formCheck(nameInput, message.username) && 
-  formCheck(passInput, message.password) && 
-  validateCode() && signinForm.submit()
+  checkInput(nameInput, message.username) && 
+  checkInput(passInput, message.password) && 
+  checkCode() && signinForm.submit()
 }
 
 //登录表单同步提交
@@ -301,8 +301,8 @@ function saveCookie(){
 //登录表单异步提交
 btnSignIn.on('click',function(e){
   e.preventDefault();
-  if(formCheck(nameInput, message.username) && formCheck(passInput, message.password) &&
-    validateCode()){
+  if(checkInput(nameInput, message.username) && checkInput(passInput, message.password) &&
+    checkCode()){
     var name = nameInput.val();
     var passwd = passInput.val();
     if(signinForm.children('.fail').length === 0){
@@ -341,7 +341,7 @@ btnSignIn.on('click',function(e){
         }
       })
       .fail(function() {
-        console.log("error");
+        console.log("has-error");
       })
   }else{
     return false;
