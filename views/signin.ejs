@@ -6,12 +6,12 @@
 </head>
 <body>
   <div class="container animated fadeInDown">
-    <h2 class="page-header">
-      <% if(msg){ %> <%= msg %> <% } %>
-      欢迎登录
-    </h2>
-    <form id="signinForm" action="/user/signin" method="">
+    <h2 class="page-header"><%= title %></h2>
+    <form id="signinForm" action="/user/signin" method="post">
       <div class="form-group">
+        <% if(user && user.error){%>
+        <p class="alert alert-danger"><i class="fa fa-warning"></i><%= user.error%></p>
+        <% } %>
         <input type="text" name="user[username]" id="username" class="form-control" placeholder="邮箱/手机号" required />
       </div>
       <div class="form-group">

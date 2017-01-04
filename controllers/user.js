@@ -2,15 +2,18 @@ var User = require('../models/user');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
+
+//注册页
 exports.showSignup = function(req, res, next){
 	res.render('signup', {title: '欢迎注册'})
 }
+//登录页
 exports.showSignin = function(req, res, next){
 	res.render('signin', {title: '欢迎登录', msg: ''})
 }
 //查询邮箱号
 exports.findByEmail = function(req, res, next){
-	var email = req.query.email;
+	var email = Trim(req.query.email);
 	User.findOne({email: email}, function(err, user){
 		if(err) console.log(err)
 			if(user){
@@ -31,6 +34,7 @@ exports.sendPhoneCode = function(req, res){
 		res.json({code: code})
 	},interval)
 }
+//验证码
 function createCode() {
   const codeLength = 4;
   const alphabet = '1234567890';
@@ -44,10 +48,14 @@ function createCode() {
 function getRandom(min, max){;
 	return Math.floor(Math.random() * (max - min)) + min;
 }
+//去除前后空格
+function Trim(str){ 
+  return str.replace(/(^\s*)|(\s*$)/g, ""); 
+}
 //注册功能
 exports.signup = function(req, res){
 	var _user = req.body.user;
-	var email = _user.email;
+	var email = Trim(_user.email);
 	//var phonecode = _user.phonecode;
 	// console.log(phonecode)
 	// console.log(code)
@@ -55,43 +63,48 @@ exports.signup = function(req, res){
 	// 	_user.error = '手机验证码错误';
 	// 	return res.render('signup', {title: '欢迎注册', user: _user, })
 	// } 
-	_user.name = email;
 	User.findOne({email: email}, function(err, user){
 		if(err) console.log(err)
 		if(!user){
+			_user.name = email;
 			var user = new User(_user);
 			user.save(function(err, user){
-				if(err) console.log(err)
-				res.render('signin',{title: '欢迎登录', msg: '注册成功，'})
+				if(err){
+					_user.error = '注册失败，系统错误';
+					return res.render('signup', {title: '欢迎注册', user: _user, })
+				}
+				req.session.user = user;
+				res.redirect('/')
 			})
 		}else {
-			console.log('该邮箱号已注册')
+			_user.error = '注册失败，该邮箱号已经被注册！';
+		  res.render('signup', {title: '欢迎注册', user: _user, })
 		}
 	})
 }
-//登录功能
-exports.signin = function(req, res){
-	var name = req.body.username;
-	var passwd = req.body.password;
+//异步登录功能
+exports.signinAsync = function(req, res){
+	var _user = req.body.user;
+	var name = _user.name,
+	    passwd = _user.passwd;
 	var emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 	if(!emailReg.test(name)){
 		User.findOne({mobile: name},function(err, user){
 			if(err) console.log(err)
-				if(!user){
-					return res.json({status: 0})
+			if(!user){
+				return res.json({status: 0})
+			}
+			user.comparePassword(passwd, function(err, isMatch){
+				if(err) console.log(err)
+				if(isMatch){
+					req.session.user = user;
+					setTimeout(function(){
+						return res.json({status: 2})
+					},2000)
+				}else{
+					return res.json({status: 1})
 				}
-				console.log(user)
-				user.comparePassword(passwd, function(err, isMatch){
-					if(err) console.log(err)
-					if(isMatch){
-						req.session.user = user;
-						setTimeout(function(){
-							return res.json({status: 2})
-						},2000)
-					}else{
-						return res.json({status: 1})
-					}
-				})
+			})
 		})
 	}else{
 		User.findOne({email: name},function(err, user){
@@ -99,7 +112,6 @@ exports.signin = function(req, res){
 				if(!user){
 					return res.json({status: 0})
 				}
-				console.log(user)
 				user.comparePassword(passwd, function(err, isMatch){
 					if(err) console.log(err)
 					if(isMatch){
@@ -114,8 +126,50 @@ exports.signin = function(req, res){
 		})
 	}
 }
-function signin(filed, value){
-
+//同步登录功能
+exports.signin = function(req, res){
+	var _user = req.body.user;
+	var name = _user.username,
+			passwd = _user.password;
+	console.log(_user);
+	var emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+	if(!emailReg.test(name)){
+		User.findOne({mobile: name}, function(err, user){
+			if(err) return err;
+			if(!user){
+				_user.error = '用户名不存在！'
+				return res.render('signin', {title: '欢迎登录', user: _user})
+			}
+			user.comparePassword(passwd, function(err, isMatch){
+				if(err) return err;
+				if(isMatch){
+					req.session.user = user;
+					res.redirect('/')
+				}else{
+					_user.error = '密码不正确！';
+					return res.render('signin', {title: '欢迎登录', user: _user})
+				}
+			})
+		})
+	}else{
+		User.findOne({email: name}, function(err, user){
+			if(err) return err;
+			if(!user){
+				_user.error = '用户名不存在！'
+				return res.render('signin', {title: '欢迎登录', user: _user})
+			}
+			user.comparePassword(passwd, function(err, isMatch){
+				if(err) return err;
+				if(isMatch){
+					req.session.user = user;
+					res.redirect('/')
+				}else{
+					_user.error = '密码不正确！';
+					return res.render('signin', {title: '欢迎登录', user: _user})
+				}
+			})
+		})
+	}
 }
 exports.home = function(req, res){
 	res.redirect('/')
@@ -251,6 +305,10 @@ exports.avatarUpload = function(req, res, next){
 	}else{
 		next()
 	}
+}
+//账号绑定
+exports.accountBind = function(req, res){
+	res.render('account/account_bind', {title: '账号绑定'})
 }
 exports.conpanyIofo = function(req, res){
 	res.render('company/company_info', {title: '企业信息'})

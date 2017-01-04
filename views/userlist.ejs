@@ -15,22 +15,30 @@
     		<table class="table table-bordered table-hover table-striped">
     			<tr>
             <th>用户名</th>
-    				<th>手机号</th>
-            <th>密码</th>
-    				<th>等级</th>
-            <th>头像</th>
-    				<th>注册时间</th>
+    				<th>Email</th>
+            <th>手机号</th>
+            <th>QQ</th>
+            <th>生日</th>
+            <th>地址</th>
+    				<th>身份证号</th>
+            <th>性别</th>
+            <th>注册时间</th>
+    				<th>角色</th>
     				<th>操作</th>
     			</tr>
     			<% users.forEach(function(user){ %>
     				<tr data-id="<%= user._id%>">
-              <td><%= user.name %></td>
+              <td class="name"><%= user.name %></td>
+              <td><%= user.email %></td>
 	    				<td><%= user.mobile %></td>
-              <td><%= user.password %></td>
-              <td><%= user.role %></td>
-	    				<td><img src="/upload/<%= user.avatar %>" alt="" width="30" height="30"></td>
+              <td><%= user.qq %></td>
+              <td><%= moment(user.birthday).format('YYYY-MM-DD') %></td>
+              <td><%= user.address %></td>
+              <td><%= user.idcard %></td>
+              <td><% if(user.gender == '0') {%> 男 <% }else{%> 女 <%}%></td>
 	    				<td><%= moment(user.meta.updateAt).format('YYYY-MM-DD HH:mm:ss') %></td>
-	    				<td>
+	    				<td class="role"><%= user.role %></td>
+              <td>
 	    					<button class="btn btn-warning btn-eidt" data-toggle="modal" href="signin.html#myModal">编辑</button>
 	    					<button class="btn btn-danger btn-del">删除</button>
 	    				</td>

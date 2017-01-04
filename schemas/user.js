@@ -6,8 +6,7 @@ var userSchema = new mongoose.Schema({
 		unique: true
 	},
 	password: {
-		type: String,
-		unique: true
+		type: String
 	},
 	name: {
 		type: String
@@ -19,7 +18,8 @@ var userSchema = new mongoose.Schema({
 		type: String
 	},
 	gender: {
-		type: String
+		type: Number,
+		default: 0
 	},
 	birthday: {
 		type: Date

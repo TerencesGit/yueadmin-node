@@ -40,7 +40,7 @@
   
   .alert {
     padding: 5px;
-    margin-top: -10px;
+    margin: -10px 0 20px 0;
     text-indent: 2px;
   }
   
@@ -60,7 +60,9 @@
     background: #f0f0f0;
     cursor: pointer;
   }
-  
+  .has-error .checkbox-inline {
+    color: #333;
+  }
   .login-footer {
     margin: 10px 0;
   }

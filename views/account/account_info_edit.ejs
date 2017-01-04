@@ -12,7 +12,7 @@
         <div class="container-fluid">
           <ol class="breadcrumb">
               <li><a href="#">账户管理</a></li>
-              <li class="active">信息维护</li>
+              <li class="active"><%= title%></li>
           </ol>
           <div class="row">
             <div class="col-md-2">
@@ -57,11 +57,12 @@
                 <div class="form-group">
                   <label class="col-md-3 control-label">邮箱</label>
                   <div class="col-md-6">
-                    <% if(user && user.email){ %> 
+                    <% if(user && user.email_verified == '1'){ %> 
                     <span><%= user.email %></span>
-                    <a href="javascript:;" class="unbind email">修改</a>
+                    <a href="/account/account_bind" class="unbind email">已验证</a>
                     <% }else{ %>
-                    <a href="javascript:;" class="unbind email">未绑定</a>
+                    <span><%= user.email %></span>
+                    <a href="/account/account_bind" class="unbind email">未验证</a>
                     <%}%>
                   </div>
                 </div>
@@ -71,7 +72,7 @@
                     <% if(user && user.mobile){ %> 
                     <input type="text" class="form-control" name="user[mobile]" value="<%= user.mobile %>">
                     <% }else{ %>
-                    <a href="javascript:;" class="unbind mobile">未绑定</a>
+                    <a href="/account/account_bind" class="unbind mobile">未绑定</a>
                     <%}%>
                   </div>
                 </div>

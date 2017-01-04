@@ -72,7 +72,6 @@ function checkInput(element, msg, pattern){
   var length = arguments.length;
   var value = $.trim($(element).val());
   var formGroup = $(element).parents('.form-group');
-  console.log(formGroup)
   if(formGroup.children('.alert').length === 0) {
     formGroup.append('<p class="col-md-3 alert alert-danger"></p>')
   }

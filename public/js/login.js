@@ -60,6 +60,8 @@ btnSendCode.on('click', function(e) {
 //注册按钮提交
 btnSignup.on('click',function(e) {
   e.preventDefault()
+  var status = $(this).attr('data-status');
+  if(status == '0') return;
   signupSubmit()
 })
 //注册表单逐步验证
@@ -92,49 +94,50 @@ passwdInput2.blur(function() {
 function checkInput(element, msg, pattern){
   var length = arguments.length;
   var value = $.trim($(element).val());
-  var formGroup = $(element).parent();
+  var formGroup = $(element).parents('.form-group');
+  var eleId = element.attr('id');
   if(formGroup.next('.alert').length === 0) {
-    formGroup.after('<p class="alert alert-warning"></p>')
+    formGroup.after('<p class="alert alert-warning hidden"></p>')
   }
   if(value == '') {
-    formGroup.removeClass('has-success').addClass('has-error').next('.alert').html('<i class="fa fa-warning"></i>' + msg.required);
+    formGroup.removeClass('has-success').addClass('has-error').next('.alert').removeClass('hidden').html('<i class="fa fa-warning"></i>' + msg.required);
     $(element).focus();
     return false;
   }else{
     if(length === 3){
       if(!pattern.test(value)) {
-        formGroup.removeClass('has-success').addClass('has-error').next('.alert').html('<i class="fa fa-warning"></i>' + msg.pattern);
+        formGroup.removeClass('has-success').addClass('has-error').next('.alert').removeClass('hidden').html('<i class="fa fa-warning"></i>' + msg.pattern);
         $(element).focus();
         return false;
       }
+    }
+    if(eleId == 'email'){
+      return true;
     }
     formGroup.removeClass('has-error').addClass('has-success').next('.alert').remove();
     return true;
   }
 }
-//异步查询手机号码
-var _number;//保存号码，防止相同号码多次触发ajax事件
+//异步查询邮箱号
+var _number;//保存邮箱号，防止多次触发ajax事件
 function queryEmail(element, msg){
-  var number = $(element).val();
+  var number = $.trim($(element).val());
   if(_number == number) return;
    _number = number;
-  var formGroup = $(element).parent();
-  if(formGroup.next('.alert').length === 0) {
-    formGroup.after('<p class="alert alert-warning"></p>')
-  }
+  var formGroup = $(element).parents('.form-group');
   $.ajax({
     url: '/findByEmail',
     data: {email: number}
   })
   .done(function(res){
       if(res.status == 1){
-        formGroup.removeClass('has-success').addClass('has-error').next('.alert')
-                   .html('<i class="fa fa-warning"></i>' + msg.existed ).show();
-        btnSendCode.attr('data-status', 0)
+        formGroup.removeClass('has-success').addClass('has-error').next('.alert').removeClass('hidden')
+                   .html('<i class="fa fa-warning"></i>' + msg.existed );
+        btnSignup.attr('data-status', 0)
       }
       if(res.status == 2){
         formGroup.removeClass('has-error').addClass('has-success').next('.alert').remove();
-        btnSendCode.attr('data-status', 2)
+        btnSignup.attr('data-status', 2)
       }
   })
   .fail(function(err){
@@ -145,7 +148,7 @@ function queryEmail(element, msg){
 function confirmPasswd() {
   var passwd = $.trim(passwdInput.val())
   var passwd2 = $.trim(passwdInput2.val())
-  var formGroup = passwdInput2.parent();
+  var formGroup = passwdInput2.parents('.form-group');
   if (formGroup.next('.alert').length === 0) {
     formGroup.after('<p class="alert alert-warning"></p>')
   }
@@ -258,7 +261,7 @@ function sendCode() {
 
 //是否同意注册协议
 function agreeProtocol() {
-  var formGroup = agreeCheck.parent();
+  var formGroup = agreeCheck.parents('.form-group');
   var checked = agreeCheck.prop('checked');
   if (formGroup.next('.alert').length === 0) {
     formGroup.after('<p class="alert alert-warning"></p>')
@@ -279,9 +282,10 @@ function signinSubmit(){
 }
 
 //登录表单同步提交
-// $('#btnSignIn').on('click',function(e){
-//   signinSubmit()
-// })
+btnSignIn.on('click', function(e){
+  e.preventDefault()
+  signinSubmit()
+})
 
 //保存cookie 
 function saveCookie(){
@@ -299,21 +303,25 @@ function saveCookie(){
   }
 }
 //登录表单异步提交
-btnSignIn.on('click',function(e){
+/*btnSignIn.on('click',function(e){
   e.preventDefault();
   if(checkInput(nameInput, message.username) && checkInput(passInput, message.password) &&
     checkCode()){
-    var name = nameInput.val();
-    var passwd = passInput.val();
+    var name = $.trim(nameInput.val()),
+        passwd = $.trim(passInput.val());
+    var user = {
+      name: name,
+      passwd: passwd
+    }
     if(signinForm.children('.fail').length === 0){
       signinForm.prepend('<p class="alert alert-warning fail" style="display:none"></p>');
     }
     var failPrompt = signinForm.children('.fail');
     var dialog = null;
     $.ajax({
-        url: '/user/signin',
+        url: '/user/signinAsync',
         type: 'POST',
-        data: {username: name, password: passwd},
+        data: {user: user},
         beforeSend: function(){
           dialog = $.dialog()
         }
@@ -346,4 +354,4 @@ btnSignIn.on('click',function(e){
   }else{
     return false;
   }
-})
+})*/

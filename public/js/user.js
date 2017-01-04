@@ -33,8 +33,8 @@ $('.btn-del').on('click', function(){
 $('.btn-eidt').on('click', function(){
 	var $tr = $(this).parents('tr');
 	var uid = $tr.attr('data-id');
-	var name = $tr.children().eq(0).text();
-	var role = $tr.children().eq(3).text();
+	var name = $tr.children('.name').text();
+	var role = $tr.children('.role').text();
 	var $modal = $('#myModal');
 	var IdInput = $modal.find('#uid')
 	var nameInput = $modal.find('.username');
@@ -43,6 +43,7 @@ $('.btn-eidt').on('click', function(){
 	nameInput.val(name);
 	roleInput.val(role)
 })
+
 //修改密码
 var oldPasswdInput = $('#oldPasswd'),
     newPasswdInput = $('#newPasswd'),
