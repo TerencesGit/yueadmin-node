@@ -56,7 +56,11 @@
     }
     new Accordion($('#accordion'));  
  })(jQuery)
- 
+
+//上传图片验证
+function checkImage(){
+
+}
 //上传图片预览
 function uploadPreview(fileInput, $Image){
   if(fileInput.files && fileInput.files[0]){
@@ -67,26 +71,80 @@ function uploadPreview(fileInput, $Image){
     reader.readAsDataURL(fileInput.files[0])
   }
 }
-//输入框验证
+//表单输入框验证
 function checkInput(element, msg, pattern){
+  var $element = element || {},
+      msg = msg || {},
+      msgRequired = msg.required || '不能为空！',
+      msgPattern = msg.pattern || '格式有误！',
+      pattern = pattern || {};
   var length = arguments.length;
-  var value = $.trim($(element).val());
-  var formGroup = $(element).parents('.form-group');
+  var value = $.trim($element.val());
+  var formGroup = $element.parents('.form-group');
   if(formGroup.children('.alert').length === 0) {
     formGroup.append('<p class="col-md-3 alert alert-danger"></p>')
   }
   if(value == '') {
-    formGroup.addClass('has-error').children('.alert').html('<i class="fa fa-warning"></i>' + msg);
-    $(element).focus();
+    formGroup.addClass('has-error').children('.alert').html('<i class="fa fa-warning"></i>'+msgRequired);
+    $element.focus();
     return false;
   }else{
     if(length === 3){
       if(!pattern.test(value)) {
-        formGroup.addClass('has-error').children('.alert').html('<i class="fa fa-warning"></i>' + msg);
+        formGroup.addClass('has-error').children('.alert').html('<i class="fa fa-warning"></i>'+msgPattern);
         return false;
       }
     }
     formGroup.removeClass('has-error').children('.alert').remove();
     return true;
   }
+}
+//判断输入框两次输入是否一致
+function confirmConsistent(element, target, msg) {
+  var $element = element || {},
+      $target = target || {},
+      msg = msg || '两次输入不一致';
+  var value = $.trim($element.val()),
+      targetValue = $.trim($target.val());
+  var formGroup = $element.parents('.form-group');
+  if (formGroup.children('.alert').length === 0) {
+    formGroup.append('<p class="col-md-3 alert alert-danger"></p>')
+  }
+  if (value == '' || targetValue == '' || value !== targetValue) {
+    formGroup.removeClass('has-success').addClass('has-error').children('.alert').html('<i class="fa fa-warning"></i>'+msg );
+    return false;
+  } else {
+    formGroup.removeClass('has-error').addClass('has-success').children('.alert').remove();
+    return true;
+  }
+}
+//异步查询某字段
+var _number;//保存号码，防止相同号码多次触发ajax事件
+function queryAccount(element, router, msg, target){
+  var $element = $(element) || {},
+      router = router || '',
+      msg = msg || '',
+      $target = target || {};
+  var number = $.trim($element.val());
+  if(_number == number) return;
+   _number = number;
+  var formGroup = $element.parents('.form-group');
+  $.ajax({
+    url: '/'+router,
+    data: {email: number}
+  })
+  .done(function(res){
+      if(res.status == 1){
+        formGroup.removeClass('has-success').addClass('has-error').next('.alert').removeClass('hidden')
+                   .html('<i class="fa fa-warning"></i>' + msg.existed );
+        $target.attr('data-status', 0)
+      }
+      if(res.status == 2){
+        formGroup.removeClass('has-error').addClass('has-success').next('.alert').remove();
+        $target.attr('data-status', 2)
+      }
+  })
+  .fail(function(err){
+    console.log(err)
+  })
 }

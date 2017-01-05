@@ -23,7 +23,18 @@ exports.findByEmail = function(req, res, next){
 			}
 	})
 }
-
+//查询手机号
+exports.findByEmail = function(req, res, next){
+	var mobile = Trim(req.query.mobile);
+	User.findOne({mobile: mobile}, function(err, user){
+		if(err) console.log(err)
+			if(user){
+				res.json({status: 1})
+			}else{
+				res.json({status: 2})
+			}
+	})
+}
 //发送手机验证码
 var code;
 exports.sendPhoneCode = function(req, res){
@@ -34,7 +45,7 @@ exports.sendPhoneCode = function(req, res){
 		res.json({code: code})
 	},interval)
 }
-//验证码
+//生成验证码
 function createCode() {
   const codeLength = 4;
   const alphabet = '1234567890';
@@ -52,17 +63,29 @@ function getRandom(min, max){;
 function Trim(str){ 
   return str.replace(/(^\s*)|(\s*$)/g, ""); 
 }
+//绑定手机号
+exports.bindMobile = function(req, res){
+	var _user = req.body.user;
+	var mobile = _user.mobile;
+	var phonecode = _user.phonecode;
+	var id = req.session.user._id;
+	if(phonecode !== code){
+		_user.error = '手机验证码错误';
+		return res.render('account/account_bind', {title: '账号绑定', tabIndex: 1,user: _user})
+	}
+	if(id){
+		User.update({_id: id}, {'$set': {mobile: mobile}}, function(err, msg){
+			if(err) return err;
+		  res.redirect('/account/account_bind')
+		})
+	}else {
+		res.redirect('/')
+	} 
+}
 //注册功能
 exports.signup = function(req, res){
 	var _user = req.body.user;
-	var email = Trim(_user.email);
-	//var phonecode = _user.phonecode;
-	// console.log(phonecode)
-	// console.log(code)
-	// if(phonecode !== code){
-	// 	_user.error = '手机验证码错误';
-	// 	return res.render('signup', {title: '欢迎注册', user: _user, })
-	// } 
+	var email = Trim(_user.email);	
 	User.findOne({email: email}, function(err, user){
 		if(err) console.log(err)
 		if(!user){
@@ -161,6 +184,7 @@ exports.signin = function(req, res){
 			user.comparePassword(passwd, function(err, isMatch){
 				if(err) return err;
 				if(isMatch){
+					console.log(user)
 					req.session.user = user;
 					res.redirect('/')
 				}else{
@@ -308,8 +332,9 @@ exports.avatarUpload = function(req, res, next){
 }
 //账号绑定
 exports.accountBind = function(req, res){
-	res.render('account/account_bind', {title: '账号绑定'})
+	res.render('account/account_bind', {title: '账号绑定', tabIndex: 1})
 }
+
 exports.conpanyIofo = function(req, res){
 	res.render('company/company_info', {title: '企业信息'})
 }	

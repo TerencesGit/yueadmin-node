@@ -451,48 +451,76 @@ body {
 .alert {
   padding: 5px;
   margin: 0;
-  text-indent: 2px;
 }
 
 .alert i.fa-warning {
   margin-right: 5px
 }
 
-.has-error .control-label {
+.has-success .control-label, .has-error .control-label {
   color: #333;
 }
 .control-label i {
   padding-right: 10px;
   color: #f20;
 }
-.page-main {
+/* account_bind */
+.account-panel .panel-default {
+  padding-bottom: 0
+}
+.account-panel .panel-heading {
+  margin-bottom: 0;
+}
+.account-panel .panel-body {
+  padding: 0;
+}
+.tab-content {
+  padding: 80px;
+}
+.tab-content .row {
+  margin: 30px 15px;
+}
+.account-panel .form-group {
+  margin: 20px 0;
+}
+.tab-list {
+  float: left;
+  height: 400px;
+  padding: 0;
+  border: 1px solid #dcdddd;
+  border-bottom: 0;   
+  background: #f4fafe;
+}
+.tab-list > li {
+  position: relative;
+  overflow: hidden;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  height: 60px;
+  line-height: 60px;
+  padding-left: 20px;
+  text-align: left;
+  background: #f4fafe;
+  cursor: pointer;
+}
+.tab-list .curr {
+  position: relative;
+  margin-right: -3px;
+  padding-left: 18px;
+  color: #27b3e9;
   background: #fff;
-  margin-top: 100px;
-  padding: 50px 0;
+  border-bottom: 1px solid #dcdcdc;
+  border-top: 1px solid #dcdcdc;
+  border-left: 2px solid #27b3e9;
 }
-
-.page-tip {
-  padding-top: 7px;
+.tabcont-list{
+  padding: 0;
+  margin: 0;    
+  background: #fff;
+  float: right;
+  height: 400px;
 }
-
-.nav-account {
-  color: #fff;
-}
-
-.fa-warning {
-  /*color: red;*/
-  margin-right: 5px;
-}
-
-.form-group.error input {
-  border-color: #d9534f
-}
-
-.avatar-upload {
-  margin-top: 20px;
-}
-
-.edit-avatar dt {
-  font-size: 18px;
-  margin-bottom: 15px;
+.tab-content{
+  display: none;
 }

@@ -14,8 +14,6 @@ var emailInput = $('#email'),
     passwdInput = $('#passwd'),
     passwdInput2 = $('#passwd2'),
     authCodeInput = $('#authcode'),
-    phoneCodeInput = $('#phonecode'),
-    btnSendCode = $('#btnSendCode'),
     agreeCheck = $('#agree'),
     btnSignup = $('#btnSignup'),
     signupForm = $('#signupForm');
@@ -51,12 +49,12 @@ var message = {
 }
 
 //发送验证码
-btnSendCode.on('click', function(e) {
-  e.preventDefault()
-  var status = $(this).attr('data-status');
-  if(status == 0) return;
-  checkInput(emailInput, message.email, pattern.email) && sendCode()
-})
+// btnSendCode.on('click', function(e) {
+//   e.preventDefault()
+//   var status = $(this).attr('data-status');
+//   if(status == 0) return;
+//   checkInput(emailInput, message.email, pattern.email) && sendCode()
+// })
 //注册按钮提交
 btnSignup.on('click',function(e) {
   e.preventDefault()
@@ -88,6 +86,12 @@ passwdInput.blur(function() {
 passwdInput2.blur(function() {
   if (passwdInput.val() !== '' && passwdInput2.val() !== '') {
     confirmPasswd()
+  }
+})
+authCodeInput.blur(function(){
+  var value = $.trim($(this).val());
+  if(!value == ''){
+    checkInput($(this), null)
   }
 })
 //表单验证方法
@@ -222,41 +226,6 @@ function checkPhoneCode() {
     formGroup.removeClass('has-error').addClass('has-success').next('.alert').remove()
     return true;
   }
-}
-//发送验证码
-function sendCode() {
-  var count = 30;
-  var timer;
-  var status = btnSendCode.attr('data-status');
-  if(!status == 2) return;
-  var number = emailInput.val();
-  if(signupForm.children('.fail').length === 0){
-    signupForm.prepend('<p class="alert alert-success fail" style="display:none"></p>');
-  }
-  var failPrompt = signupForm.children('.fail');
-  $.ajax({
-    url: '/sendPhoneCode',
-    data: {email: number},
-  })
-  .done(function(res) {
-    failPrompt.html('手机号码'+number+'的验证码是'+'  '+res.code).show()
-    console.log("success");
-  })
-  .fail(function() {
-    console.log("has-error");
-  })
-  
-  btnSendCode.attr('disabled', 'true')
-  timer = setInterval(function() {
-    if (count === 0) {
-      clearInterval(timer);
-      btnSendCode.removeAttr('disabled');
-      btnSendCode.text('重新发送验证码')
-    } else {
-      count--;
-      btnSendCode.text(count + '秒后重新获取')
-    }
-  }, 1000)
 }
 
 //是否同意注册协议
