@@ -38,25 +38,25 @@
                         </label>
                         <span class="col-md-5"><%= user.email%></span>
                         <% if(user && user.email_verified == '0'){ %>
-                        <a href="#" class="col-md-3 non-email-verified">未验证</a>
+                        <a href="#" class="col-md-3 email-bind">未验证</a>
                         <% }else{ %>
-                        <a href="#" class="col-md-3">已验证</a> 
+                        <a href="#" class="col-md-3 email-bind">已验证</a> 
                         <% } %>
                       </div>
                       <div class="row">
                         <label class="col-md-3">手机号码：</label>
                         <% if(user && user.mobile){ %>
                         <span class="col-md-5"><%= user.mobile%></span>
-                        <a href="/" class="unbind col-md-3">已绑定</a>
+                        <a href="javascript:;" class="col-md-3 mobile-bind">已绑定</a>
                         <% }else{ %>
                         <span class="col-md-5"></span>
-                        <a href="/" class="unbind col-md-3">未绑定</a>
+                        <a href="javascript:;" class="col-md-3 mobile-bind">未绑定</a>
                         <% } %>
                       </div>
                     </div>
                     <% if(user && user.mobile){ %>
                     <div class="tab-content modify-mobile">
-                      <form action="/account/bindMobile" method="post" id="modifyMobileForm" class="form-horizontal" role="form">
+                      <form action="/account/bind_mobile" method="post" id="modifyMobileForm" class="form-horizontal" role="form">
                         <% if(user && user.error){ %>
                         <div class="alert alert-danger alert-back alert-dismissable"><i class="fa fa-warning"></i><%= user.error %>  <button class="close" data-dismiss="alert">&times;</button></div>
                         <% } %>
@@ -91,7 +91,7 @@
                     </div>
                     <% }else{ %>
                     <div class="tab-content bind-mobile">
-                      <form action="/account/bindMobile" method="post" id="bindMobileForm" class="form-horizontal" role="form">
+                      <form action="/account/bind_mobile" method="post" id="bindMobileForm" class="form-horizontal" role="form">
                         <% if(user && user.error){ %>
                         <div class="alert alert-danger alert-back"><i class="fa fa-warning"></i><%= user.error %></div>
                         <% } %>
@@ -122,7 +122,7 @@
                     </div>
                     <% } %>
                     <div class="tab-content modify-email">
-                      <form class="form-horizontal" id="modifyEmailForm" role="form">
+                      <form action="/account/modify_email" method="get" id="modifyEmailForm" class="form-horizontal" role="form">
                         <div class="form-group">
                           <label class="col-md-3 control-label">当前邮箱：</label>
                           <span class="col-md-5 control-span"><%= user.email %></span>
@@ -133,7 +133,7 @@
                         <div class="form-group">
                           <label class="col-md-3 control-label">新邮箱：</label>
                           <div class="col-md-6">
-                            <input type="text" id="newEmail" class="form-control" placeholder="输入邮箱号" >
+                            <input type="text" name="email" id="newEmail" class="form-control" placeholder="输入邮箱号" >
                           </div>
                         </div>
                         <div class="form-group">

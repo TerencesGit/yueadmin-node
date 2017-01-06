@@ -227,6 +227,22 @@ exports.verifiedEmail = function(req, res){
 		}
 	})
 }
+//修改邮箱
+exports.modifyEmail = function(req, res){
+	var email = req.query.email;
+	var _user = req.session.user,
+	    id = _user._id;
+	if(id){
+		User.update({_id: id},{'$set': {email: email}}, function(err, msg){
+			if(err) return err;
+			_user.email = email;
+			req.session.user = _user;
+			res.redirect('/account/account_bind')
+		})
+	}else{
+		res.redirect('/signin')
+	}
+}
 //退出功能
 exports.logout = function(req, res){
  	delete req.session.user;
@@ -337,7 +353,7 @@ exports.accountBind = function(req, res){
 	var user = req.session.user;
 	user.error = '';
 	user.success = '';
-	res.render('account/account_bind', {title: '账号绑定', tabIndex: 1})
+	res.render('account/account_bind', {title: '账号绑定', tabIndex: 0})
 }
 
 exports.showBindMobile = function(req, res){

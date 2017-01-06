@@ -40,9 +40,10 @@ router.get('/account/editInfo', User.signinRequired, User.showEdit);
 
 //账号绑定
 router.get('/account/account_bind', User.accountBind);
-router.get('/account/bindMobile', User.showBindMobile);
-router.post('/account/bindMobile', User.bindMobile);
+router.get('/account/bind_mobile', User.showBindMobile);
+router.post('/account/bind_mobile', User.bindMobile);
 router.get('/account/verify_email', User.verifiedEmail);
+router.get('/account/modify_email', User.modifyEmail);
 
 
 router.get('/user/showUpdate', User.signinRequired, User.showUpdate);

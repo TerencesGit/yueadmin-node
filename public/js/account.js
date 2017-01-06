@@ -12,9 +12,13 @@
     $(this).addClass("curr").siblings().removeClass("curr");
     $tabCont.eq($(this).index()).show().siblings().hide();
   })
-  $('.non-email-verified').on('click', function(){
+  $('.mobile-bind').on('click', function(){
+    $tabItem.eq(1).click()
+  })
+  $('.email-bind').on('click', function(){
     $tabItem.eq(2).click()
   })
+ 
   //绑定手机号表单
   var mobileForm = $('#bindMobileForm'),
       mobileInput = $('#mobile'),
@@ -55,7 +59,8 @@
     },
     email: {
       required: '请输入邮箱号',
-      pattern: '邮箱格式不正确'
+      pattern: '邮箱格式不正确',
+      existed: '该邮箱号已被绑定'
     },
     password: {
       required: '请输入密码',
@@ -71,21 +76,26 @@
     checkInput(newMobileInput, msg.mobile, pattern.mobile) &&
     queryAccount(newMobileInput, 'findByMobile', msg.mobile, btnSendCode2)
   })
+  newEmailInput.blur(function(event){
+    checkInput(newEmailInput, msg.email, pattern.email) &&
+    queryAccount(newEmailInput, 'findByEmail', msg.email, btnModifyEmail)
+  })
   oldPasswd.blur(function(event){
     checkInput(oldPasswd, msg.password)
   })
   newPasswd.blur(function(event) {
-    checkInput(newPasswd, msg.password, pattern.password) && confirmPasswd.attr('disabled', false)
+    checkInput(newPasswd, msg.password, pattern.password) && 
+    confirmPasswd.attr('disabled', false);
     var value = $.trim(confirmPasswd.val());
     if(value == '') return;
-    confirmConsistent(confirmPasswd, $(this))
+    confirmConsistent(confirmPasswd, $(this));
   });
   confirmPasswd.blur(function(){
     var value = $.trim($(this).val());
     if(value == '') return;
     confirmConsistent($(this), newPasswd)
   })
-  //绑定手机获取验证码
+  //绑定手机号 获取验证码
   btnSendCode.on('click', function(e){
     e.preventDefault()
     checkInput(mobileInput, msg.mobile, pattern.mobile);
@@ -93,7 +103,7 @@
     if(status == 0) return;
     sendCode($(this), 20, mobileInput, mobileForm)
   })
-  //修改手机获取验证码
+  //修改手机号 获取验证码
   btnSendCode2.on('click', function(e){
     e.preventDefault()
     checkInput(newMobileInput, msg.mobile, pattern.mobile);
@@ -118,7 +128,10 @@
   //修改邮箱提交
   btnModifyEmail.on('click', function(e){
     e.preventDefault()
-    checkInput(newEmailInput, msg.email, pattern.email) 
+    var status = $(this).attr('data-status');
+    if(status == 0) return;
+    checkInput(newEmailInput, msg.email, pattern.email) &&
+    modifyEmailForm.submit()
   })
   //修改密码提交
   btnModifyPasswd.on('click', function(e){
@@ -164,4 +177,7 @@
       }
     }, 1000)
   }
+  function verify_email(){
+
+  } 
 })(jQuery)

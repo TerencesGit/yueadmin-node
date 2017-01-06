@@ -72,13 +72,10 @@ function uploadPreview(fileInput, $Image){
   }
 }
 //表单输入框验证
-function checkInput(element, msg, pattern){
-  var $element = element || {},
-      msg = msg || {},
-      msgRequired = msg.required || '不能为空！',
-      msgPattern = msg.pattern || '格式有误！',
-      pattern = pattern || {};
-  var length = arguments.length;
+function checkInput($element, msg, pattern){
+  if(!($element && msg)) throw new Error('至少两个参数！');
+  var msgRequired = msg.required || '不能为空！',
+      msgPattern = msg.pattern || '格式有误！';
   var value = $.trim($element.val());
   var formGroup = $element.parents('.form-group');
   if(formGroup.children('.alert').length === 0) {
@@ -89,7 +86,7 @@ function checkInput(element, msg, pattern){
     $element.focus();
     return false;
   }else{
-    if(length === 3){
+    if(pattern){
       if(!pattern.test(value)) {
         formGroup.addClass('has-error').children('.alert').html('<i class="fa fa-warning"></i>'+msgPattern);
         return false;
@@ -100,10 +97,9 @@ function checkInput(element, msg, pattern){
   }
 }
 //判断输入框两次输入是否一致
-function confirmConsistent(element, target, msg) {
-  var $element = element || {},
-      $target = target || {},
-      msg = msg || '两次输入不一致';
+function confirmConsistent($element, $target, msg) {
+  if(!($element && $target)) throw new Error('至少两个参数！');
+  var msg = msg || '两次输入不一致';
   var value = $.trim($element.val()),
       targetValue = $.trim($target.val());
   var formGroup = $element.parents('.form-group');
@@ -120,11 +116,9 @@ function confirmConsistent(element, target, msg) {
 }
 //异步查询号码
 var _number;//保存号码，防止相同号码多次触发ajax事件
-function queryAccount(element, router, msg, target){
-  var $element = $(element) || {},
-      router = router || '',
-      msgExied = msg.existed || '该号码已存在',
-      $target = target || {};
+function queryAccount($element, router, msg, $target){
+  if(!($element && router)) throw new Error('至少两个参数！');
+  var msgExisted = msg && msg.existed || '该号码已存在';
   var number = $.trim($element.val());
   if(_number == number) return;
    _number = number;
@@ -139,12 +133,12 @@ function queryAccount(element, router, msg, target){
   .done(function(res){
       if(res.status == 1){
         formGroup.removeClass('has-success').addClass('has-error').children('.alert').removeClass('hidden')
-                   .html('<i class="fa fa-warning"></i>' + msg.existed );
-        $target.attr('data-status', 0)
+                   .html('<i class="fa fa-warning"></i>'+msgExisted);
+        if($target) $target.attr('data-status', 0);
       }
       if(res.status == 2){
         formGroup.removeClass('has-error').addClass('has-success').children('.alert').remove();
-        $target.attr('data-status', 2)
+        if($target) $target.attr('data-status', 2);
       }
   })
   .fail(function(err){
