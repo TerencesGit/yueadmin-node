@@ -57,12 +57,12 @@
                 <div class="form-group">
                   <label class="col-md-3 control-label">邮箱</label>
                   <div class="col-md-6">
-                    <% if(user && user.email_verified == '1'){ %> 
-                    <span><%= user.email %></span>
-                    <a href="/account/account_bind" class="unbind email">已验证</a>
-                    <% }else{ %>
+                    <% if(user && user.email_verified == '0'){ %> 
                     <span><%= user.email %></span>
                     <a href="/account/account_bind" class="unbind email">未验证</a>
+                    <% }else{ %>
+                    <span><%= user.email %></span>
+                    <a href="/account/account_bind" class="unbind email">已验证</a>
                     <%}%>
                   </div>
                 </div>

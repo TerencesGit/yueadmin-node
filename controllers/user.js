@@ -39,7 +39,7 @@ exports.findByMobile = function(req, res, next){
 		}
 	})
 }
-//发送手机验证码
+//发送验证码
 exports.sendPhoneCode = function(req, res){
 	var user = req.session.user;
 	var mobile = req.query.mobile;
@@ -211,7 +211,22 @@ exports.bindMobile = function(req, res){
 		res.redirect('/signin')
 	} 
 }
-
+//验证邮箱
+exports.verifiedEmail = function(req, res){
+	var email = req.query.email;
+	User.findOne({email: email}, function(err, user){
+		if(user){
+			User.update({email: email}, {'$set': {email_verified: 1}}, function(err, msg){
+				if(err) return err;
+				console.log('邮箱验证成功！')
+				req.session.user = user;
+				res.redirect('/account/account_bind')
+			})
+		}else{
+			res.redirect('/account')
+		}
+	})
+}
 //退出功能
 exports.logout = function(req, res){
  	delete req.session.user;
@@ -354,7 +369,7 @@ exports.edit = function edit(req, res){
 	var uid = _user.id;
 	var name = _user.name;
 	var role = _user.role;
-	User.update({_id: uid}, {'$set': {name: name, role: role}},function(err, user){
+	User.update({_id: uid}, {'$set': {name: name, role: role}}, function(err, msg){
 		if(err) return err;
 		res.redirect('/user/list')
 	})

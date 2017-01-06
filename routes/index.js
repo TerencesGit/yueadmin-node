@@ -28,20 +28,21 @@ router.get('/user/list', User.signinRequired, User.userlist);
 router.get('/user/delete', User.signinRequired, User.delete);
 router.post('/user/edit', User.signinRequired, User.edit);
 
-/* 账户操作 */
-router.get('/account', User.accountHome)
+/* 账号操作 */
 router.get('/findByEmail', User.findByEmail);
 router.get('/findByMobile', User.findByMobile);
 router.get('/sendPhoneCode', User.sendPhoneCode);
 
-//账户信息
-router.get('/user/account_info', User.showAccountInfo);
+/* 账户信息 */
+router.get('/account', User.accountHome)
+router.get('/account/account_info', User.showAccountInfo);
 router.get('/account/editInfo', User.signinRequired, User.showEdit);
 
 //账号绑定
-router.get('/account/account_bind', User.accountBind)
+router.get('/account/account_bind', User.accountBind);
 router.get('/account/bindMobile', User.showBindMobile);
 router.post('/account/bindMobile', User.bindMobile);
+router.get('/account/verify_email', User.verifiedEmail);
 
 
 router.get('/user/showUpdate', User.signinRequired, User.showUpdate);

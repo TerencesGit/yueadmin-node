@@ -37,10 +37,10 @@
                          当前登录账号
                         </label>
                         <span class="col-md-5"><%= user.email%></span>
-                        <% if(user && user.email_verified == '1'){ %>
-                        <a href="#" class="col-md-3">已验证</a> 
-                        <% }else{ %>
+                        <% if(user && user.email_verified == '0'){ %>
                         <a href="#" class="col-md-3 non-email-verified">未验证</a>
+                        <% }else{ %>
+                        <a href="#" class="col-md-3">已验证</a> 
                         <% } %>
                       </div>
                       <div class="row">
@@ -127,7 +127,7 @@
                           <label class="col-md-3 control-label">当前邮箱：</label>
                           <span class="col-md-5 control-span"><%= user.email %></span>
                           <% if(user && user.email_verified == '0'){ %>
-                          <a href="#" class="verified">点击验证</a>
+                          <a href="/account/verify_email?email=<%= user.email %>" class="verified">点击验证</a>
                           <% } %>
                         </div>
                         <div class="form-group">
