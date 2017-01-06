@@ -11,35 +11,40 @@ exports.showSignup = function(req, res, next){
 exports.showSignin = function(req, res, next){
 	res.render('signin', {title: '欢迎登录', msg: ''})
 }
+//账户首页
+exports.accountHome = function(req, res){
+	res.redirect('/')
+}
 //查询邮箱号
 exports.findByEmail = function(req, res, next){
-	var email = Trim(req.query.email);
+	var email = Trim(req.query.number);
 	User.findOne({email: email}, function(err, user){
 		if(err) console.log(err)
-			if(user){
-				res.json({status: 1})
-			}else{
-				res.json({status: 2})
-			}
+		if(user){
+			res.json({status: 1})
+		}else{
+			res.json({status: 2})
+		}
 	})
 }
 //查询手机号
-exports.findByEmail = function(req, res, next){
-	var mobile = Trim(req.query.mobile);
+exports.findByMobile = function(req, res, next){
+	var mobile = Trim(req.query.number);
 	User.findOne({mobile: mobile}, function(err, user){
 		if(err) console.log(err)
-			if(user){
-				res.json({status: 1})
-			}else{
-				res.json({status: 2})
-			}
+		if(user){
+			res.json({status: 1})
+		}else{
+			res.json({status: 2})
+		}
 	})
 }
 //发送手机验证码
-var code;
 exports.sendPhoneCode = function(req, res){
+	var user = req.session.user;
 	var mobile = req.query.mobile;
-	code = createCode();
+	var code = createCode();
+	user.code = code;
 	var interval = getRandom(3, 8) * 1000;
 	setTimeout(function(){
 		res.json({code: code})
@@ -63,25 +68,7 @@ function getRandom(min, max){;
 function Trim(str){ 
   return str.replace(/(^\s*)|(\s*$)/g, ""); 
 }
-//绑定手机号
-exports.bindMobile = function(req, res){
-	var _user = req.body.user;
-	var mobile = _user.mobile;
-	var phonecode = _user.phonecode;
-	var id = req.session.user._id;
-	if(phonecode !== code){
-		_user.error = '手机验证码错误';
-		return res.render('account/account_bind', {title: '账号绑定', tabIndex: 1,user: _user})
-	}
-	if(id){
-		User.update({_id: id}, {'$set': {mobile: mobile}}, function(err, msg){
-			if(err) return err;
-		  res.redirect('/account/account_bind')
-		})
-	}else {
-		res.redirect('/')
-	} 
-}
+
 //注册功能
 exports.signup = function(req, res){
 	var _user = req.body.user;
@@ -198,39 +185,37 @@ exports.signin = function(req, res){
 exports.home = function(req, res){
 	res.redirect('/')
 }
-//用户列表
-exports.userlist = function(req, res){
-	User.fetch(function(err, users){
-		res.render('userlist', {
-			title: '用户列表',
-			users: users
+//绑定手机号
+exports.bindMobile = function(req, res){
+	var _user = req.body.user,
+	    mobile = _user.mobile,
+		  phonecode = Trim(_user.phonecode);
+	var userObj = req.session.user,
+		  id = userObj._id,
+		  usercode = userObj.code;
+	if(id){
+		if(phonecode !== usercode){
+			console.log( '手机验证码错误')
+			userObj.error = '手机验证码有误！';
+			return res.render('account/account_bind', {title: '账号绑定', tabIndex: 1, user: userObj})
+		}
+		User.update({_id: id}, {'$set': {mobile: mobile}}, function(err, msg){
+			if(err) return err;
+			userObj.mobile = mobile;
+			userObj.success = '手机号绑定成功！';
+			req.session.user = userObj;
+			console.log('绑定成功！')
+		  return res.render('account/account_bind', {title: '账号绑定', tabIndex: 1, user: userObj})
 		})
-	})
+	}else {
+		res.redirect('/signin')
+	} 
 }
-//用户登出
- exports.logout = function(req, res){
+
+//退出功能
+exports.logout = function(req, res){
  	delete req.session.user;
 	res.redirect('/signin')
- }
-exports.delete = function(req, res){
-	var uid = req.query.uid;
-	if(uid){
-		User.remove({_id: uid}, function(err, user){
-			if(err) console.log(err)
-			res.json({status: 1})
-		})
-	}
-}
-//信息修改
-exports.edit = function edit(req, res){
-	var _user = req.body.user;
-	var uid = _user.id;
-	var name = _user.name;
-	var role = _user.role;
-	User.update({_id: uid}, {'$set': {name: name, role: role}},function(err, user){
-		if(err) return err;
-		res.redirect('/user/list')
-	})
 }
 exports.showUpdate = function(req, res){
 	res.render('account/update_passwd',{title: '修改密码'})
@@ -264,6 +249,7 @@ exports.updatePassword = function(req, res){
 			})
 	})
 }
+
 //登录验证
 exports.signinRequired = function(req, res, next){
 	var user = req.session.user;
@@ -279,6 +265,7 @@ exports.adminRequired = function(req, res, next){
 		return res.redirect('/signup')
 	}
 }
+//账户信息
 exports.showAccountInfo = function(req, res){
 	res.render('account/account_info', {title: '账户信息'})
 }
@@ -286,7 +273,7 @@ exports.showAccountInfo = function(req, res){
 exports.showEdit = function(req, res){
 	res.render('account/account_info_edit', {title: '账户信息编辑'})
 }
-//信息设置
+//账户信息保存
 exports.saveInfo = function(req, res){
 	var userObj = req.body.user;
 	var id = req.session.user._id;
@@ -332,9 +319,46 @@ exports.avatarUpload = function(req, res, next){
 }
 //账号绑定
 exports.accountBind = function(req, res){
+	var user = req.session.user;
+	user.error = '';
+	user.success = '';
 	res.render('account/account_bind', {title: '账号绑定', tabIndex: 1})
 }
 
+exports.showBindMobile = function(req, res){
+	res.redirect('/account/account_bind')
+}
+
+//用户列表
+exports.userlist = function(req, res){
+	User.fetch(function(err, users){
+		res.render('userlist', {
+			title: '用户列表',
+			users: users
+		})
+	})
+}
+//用户删除
+exports.delete = function(req, res){
+	var uid = req.query.uid;
+	if(uid){
+		User.remove({_id: uid}, function(err, user){
+			if(err) console.log(err)
+			res.json({status: 1})
+		})
+	}
+}
+//用户信息修改
+exports.edit = function edit(req, res){
+	var _user = req.body.user;
+	var uid = _user.id;
+	var name = _user.name;
+	var role = _user.role;
+	User.update({_id: uid}, {'$set': {name: name, role: role}},function(err, user){
+		if(err) return err;
+		res.redirect('/user/list')
+	})
+}
 exports.conpanyIofo = function(req, res){
 	res.render('company/company_info', {title: '企业信息'})
 }	

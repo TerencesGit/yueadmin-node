@@ -13,9 +13,6 @@ router.get('/', function(req, res){
 router.get('/signin', User.showSignin);
 router.get('/signup', User.showSignup);
 
-router.get('/findByEmail', User.findByEmail);
-router.get('/sendPhoneCode', User.sendPhoneCode);
-
 router.post('/user/signup', User.signup);
 router.post('/user/signinAsync', User.signinAsync);
 
@@ -26,19 +23,33 @@ router.get('/user/signin', User.home);
 //退出
 router.get('/logout', User.logout);
 
-/* 账户操作 */
+/* 管理员操作 */
 router.get('/user/list', User.signinRequired, User.userlist);
 router.get('/user/delete', User.signinRequired, User.delete);
 router.post('/user/edit', User.signinRequired, User.edit);
 
-router.get('/user/account_info', User.showAccountInfo)
+/* 账户操作 */
+router.get('/account', User.accountHome)
+router.get('/findByEmail', User.findByEmail);
+router.get('/findByMobile', User.findByMobile);
+router.get('/sendPhoneCode', User.sendPhoneCode);
+
+//账户信息
+router.get('/user/account_info', User.showAccountInfo);
+router.get('/account/editInfo', User.signinRequired, User.showEdit);
+
+//账号绑定
+router.get('/account/account_bind', User.accountBind)
+router.get('/account/bindMobile', User.showBindMobile);
+router.post('/account/bindMobile', User.bindMobile);
+
+
 router.get('/user/showUpdate', User.signinRequired, User.showUpdate);
 router.post('/user/updatePassword', User.signinRequired, User.updatePassword);
 router.post('/user/saveInfo', User.saveInfo)
-router.get('/account/edit', User.signinRequired,  User.showEdit);
+
 router.post('/user/avatarUpload', multipartMiddleware, User.avatarUpload);
-//账号绑定
-router.get('/account/account_bind', User.accountBind)
+
 
 /* 企业管理 */
 router.get('/company/department', User.departdment)

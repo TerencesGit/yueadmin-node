@@ -524,3 +524,18 @@ body {
 .tab-content{
   display: none;
 }
+.alert-back {
+  width: 80%;
+  margin: auto
+}
+.alert-back .fa {
+  margin: 0 10px
+}
+.control-span {
+  display: inline-block;
+  padding-top: 5px;
+  /*font-size: 16px*/
+}
+.alert-dismissable .close {
+  right: 0; 
+}

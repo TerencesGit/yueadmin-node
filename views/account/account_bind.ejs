@@ -2,39 +2,6 @@
 <html>
   <head>
     <%- include('../link') %>
-    <style>
-    /*.container{
-      margin: 70px auto;
-      padding: 0;
-      border: 22px solid #e0e0de;
-    }
-    .tabTop{
-      height: 66px;
-      line-height: 66px;
-      padding-left: 20px;
-      font-size: 18px;
-      font-weight: bold;
-      border-bottom: 1px solid #dcdddd;
-    }*/
-   
-   /* .password-main {
-      background: #fff;
-    } 
-    .panel-heading{
-      margin-bottom: 50px;
-    }
-    .panel-default{
-      padding-bottom: 50px;
-    }
-    .page-tip {
-      padding-top: 7px;
-      display: none;
-    }
-    .fa-warning {
-      color: red;
-      margin-right: 5px;
-    }*/
-    </style>
   </head>
   <body>
     <%- include('../aside') %>
@@ -73,7 +40,7 @@
                         <% if(user && user.email_verified == '1'){ %>
                         <a href="#" class="col-md-3">已验证</a> 
                         <% }else{ %>
-                        <a href="#" class="col-md-3">未验证</a>
+                        <a href="#" class="col-md-3 non-email-verified">未验证</a>
                         <% } %>
                       </div>
                       <div class="row">
@@ -89,21 +56,27 @@
                     </div>
                     <% if(user && user.mobile){ %>
                     <div class="tab-content modify-mobile">
-                      <form class="form-horizontal" id="modifyMobileForm" role="form">
+                      <form action="/account/bindMobile" method="post" id="modifyMobileForm" class="form-horizontal" role="form">
+                        <% if(user && user.error){ %>
+                        <div class="alert alert-danger alert-back alert-dismissable"><i class="fa fa-warning"></i><%= user.error %>  <button class="close" data-dismiss="alert">&times;</button></div>
+                        <% } %>
+                        <% if(user && user.success){ %>
+                        <div class="alert alert-success alert-back alert-dismissable"><i class="fa fa-warning"></i><%= user.success %> <button class="close" data-dismiss="alert">&times;</button> </div>
+                        <% } %>
                         <div class="form-group">
                           <label class="col-md-3 control-label">当前手机号码：</label>
-                          <span class="col-md-5">13212345678</span>
+                          <span class="col-md-5 control-span"><%= user.mobile %></span>
                         </div>
                         <div class="form-group">
                           <label class="col-md-3 control-label">新手机号码：</label>
                           <div class="col-md-6">
-                            <input type="text" id="newMobile" class="form-control" placeholder="输入手机号码" >
+                            <input type="text" name="user[mobile]" id="newMobile" class="form-control" placeholder="输入手机号码" >
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="col-md-3 control-label">验证码：</label>
                           <div class="col-md-3">
-                            <input type="text" id="phoneCode2" class="form-control" placeholder="输入验证码">
+                            <input type="text" name="user[phonecode]" id="phoneCode2" class="form-control" placeholder="输入验证码">
                           </div>
                           <div class="col-md-3">
                             <button type="button" id="btnSendCode2" class="btn btn-success btn-block" data-status="0">获取验证码</button>
@@ -118,17 +91,23 @@
                     </div>
                     <% }else{ %>
                     <div class="tab-content bind-mobile">
-                      <form class="form-horizontal" id="bindMobileForm" role="form">
+                      <form action="/account/bindMobile" method="post" id="bindMobileForm" class="form-horizontal" role="form">
+                        <% if(user && user.error){ %>
+                        <div class="alert alert-danger alert-back"><i class="fa fa-warning"></i><%= user.error %></div>
+                        <% } %>
+                        <% if(user && user.success){ %>
+                        <div class="alert alert-success alert-back"><i class="fa fa-warning"></i><%= user.success %></div>
+                        <% } %>
                         <div class="form-group">
                           <label class="col-md-3 control-label">手机号码：</label>
                           <div class="col-md-6">
-                            <input type="text" id="mobile" class="form-control" placeholder="输入手机号码" >
+                            <input type="text" id="mobile" class="form-control" name="user[mobile]" placeholder="输入手机号码" >
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="col-md-3 control-label">验证码：</label>
                           <div class="col-md-3">
-                            <input type="text" id="phoneCode" class="form-control" placeholder="输入验证码">
+                            <input type="text" name="user[phonecode]" id="phoneCode" class="form-control" placeholder="输入验证码">
                           </div>
                           <div class="col-md-3">
                             <button type="button" id="btnSendCode" class="btn btn-success btn-block" data-status="0">获取验证码</button>
@@ -146,7 +125,10 @@
                       <form class="form-horizontal" id="modifyEmailForm" role="form">
                         <div class="form-group">
                           <label class="col-md-3 control-label">当前邮箱：</label>
-                          <span class="col-md-5"><%= user.email %></span>
+                          <span class="col-md-5 control-span"><%= user.email %></span>
+                          <% if(user && user.email_verified == '0'){ %>
+                          <a href="#" class="verified">点击验证</a>
+                          <% } %>
                         </div>
                         <div class="form-group">
                           <label class="col-md-3 control-label">新邮箱：</label>

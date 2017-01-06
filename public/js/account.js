@@ -1,9 +1,9 @@
 (function(){
-  $(function(){
-    //动态显示修改页
-    var $tabList = $('.tab-list'),
+  var $tabList = $('.tab-list'),
         $tabItem = $tabList.children('li'),
         $tabCont = $('.tab-content');
+  $(function(){
+    //动态显示修改页
     var index = $('.tab-list').find('.curr').index();
     $tabCont.eq(index).show().siblings().hide();
   })
@@ -11,6 +11,9 @@
   $tabItem.on('click', function(){
     $(this).addClass("curr").siblings().removeClass("curr");
     $tabCont.eq($(this).index()).show().siblings().hide();
+  })
+  $('.non-email-verified').on('click', function(){
+    $tabItem.eq(2).click()
   })
   //绑定手机号表单
   var mobileForm = $('#bindMobileForm'),
@@ -22,7 +25,7 @@
   var modifyMobileForm = $('#modifyMobileForm'),
       newMobileInput = $('#newMobile'),
       phoneCodeInput2 = $('#phoneCode2'),
-      btnSendCode2 = $('#btnSendCode'),
+      btnSendCode2 = $('#btnSendCode2'),
       btnModifyMobile = $('#btnModifyMobile');
   //修改邮箱号表单
   var modifyEmailForm = $('#modifyEmailForm'),
@@ -62,7 +65,11 @@
   //输入框失去焦点事件
   mobileInput.blur(function(event){
     checkInput(mobileInput, msg.mobile, pattern.mobile) &&
-    queryAccount(mobileInput, 'findByEmail', msg.existed, btnSendCode)
+    queryAccount(mobileInput, 'findByMobile', msg.mobile, btnSendCode)
+  })
+  newMobileInput.blur(function(event){
+    checkInput(newMobileInput, msg.mobile, pattern.mobile) &&
+    queryAccount(newMobileInput, 'findByMobile', msg.mobile, btnSendCode2)
   })
   oldPasswd.blur(function(event){
     checkInput(oldPasswd, msg.password)
@@ -78,24 +85,35 @@
     if(value == '') return;
     confirmConsistent($(this), newPasswd)
   })
-  //获取验证码
+  //绑定手机获取验证码
   btnSendCode.on('click', function(e){
     e.preventDefault()
+    checkInput(mobileInput, msg.mobile, pattern.mobile);
     var status = $(this).attr('data-status');
     if(status == 0) return;
-    sendCode($(this), 20)
+    sendCode($(this), 20, mobileInput, mobileForm)
+  })
+  //修改手机获取验证码
+  btnSendCode2.on('click', function(e){
+    e.preventDefault()
+    checkInput(newMobileInput, msg.mobile, pattern.mobile);
+    var status = $(this).attr('data-status');
+    if(status == 0) return;
+    sendCode($(this), 20, newMobileInput, modifyMobileForm)
   })
   //绑定手机号提交
   btnBindMobile.on('click', function(e){
     e.preventDefault()
     checkInput(mobileInput, msg.mobile, pattern.mobile) &&
-    checkInput(phoneCodeInput, msg.phoneCode)
+    checkInput(phoneCodeInput, msg.phoneCode) &&
+    bindMobileForm.submit()
   })
   //修改手机号提交
   btnModifyMobile.on('click', function(e){
     e.preventDefault()
     checkInput(newMobileInput, msg.mobile, pattern.mobile) &&
-    checkInput(phoneCodeInput, msg.phoneCode)
+    checkInput(phoneCodeInput2, msg.phoneCode) &&
+    modifyMobileForm.submit()
   })
   //修改邮箱提交
   btnModifyEmail.on('click', function(e){
@@ -110,28 +128,30 @@
     confirmConsistent(confirmPasswd, newPasswd) 
   })
   //发送验证码
-  function sendCode(target, interval) {
-    var $target = target || {};
-    var count = interval || 30;
+  function sendCode(target, interval, input, form) {
+    var $target = target || {},
+        count = interval || 30,
+        $input = input || {},
+        $form = form || {};
     var timer;
     var status = $target.attr('data-status');
-    if(!status == 2) return;
-    // var number = emailInput.val();
-    // if(signupForm.children('.fail').length === 0){
-    //   signupForm.prepend('<p class="alert alert-success fail" style="display:none"></p>');
-    // }
-    // var failPrompt = signupForm.children('.fail');
-    // $.ajax({
-    //   url: '/sendPhoneCode',
-    //   data: {email: number},
-    // })
-    // .done(function(res) {
-    //   failPrompt.html('手机号码'+number+'的验证码是'+'  '+res.code).show()
-    //   console.log("success");
-    // })
-    // .fail(function() {
-    //   console.log("has-error");
-    // })
+    if(!status == '2') return;
+    var number = $input.val();
+    if($form.children('.code-info').length === 0){
+      $form.prepend('<div class="alert alert-info code-info hidden"></div>');
+    }
+    var codeInfo = $form.children('.code-info');
+    $.ajax({
+      url: '/sendPhoneCode',
+      data: {email: number},
+    })
+    .done(function(res) {
+      codeInfo.html('信息！手机号 '+number+'的验证码是  '+res.code +', 10分钟内有效。').removeClass('hidden')
+      console.log("success");
+    })
+    .fail(function() {
+      console.log("error");
+    })
     $target.attr('disabled', 'true')
     timer = setInterval(function() {
       if (count === 0) {

@@ -118,29 +118,32 @@ function confirmConsistent(element, target, msg) {
     return true;
   }
 }
-//异步查询某字段
+//异步查询号码
 var _number;//保存号码，防止相同号码多次触发ajax事件
 function queryAccount(element, router, msg, target){
   var $element = $(element) || {},
       router = router || '',
-      msg = msg || '',
+      msgExied = msg.existed || '该号码已存在',
       $target = target || {};
   var number = $.trim($element.val());
   if(_number == number) return;
    _number = number;
   var formGroup = $element.parents('.form-group');
+  if (formGroup.children('.alert').length === 0) {
+    formGroup.append('<p class="col-md-3 alert alert-danger hidden"></p>')
+  }
   $.ajax({
     url: '/'+router,
-    data: {email: number}
+    data: {number: number}
   })
   .done(function(res){
       if(res.status == 1){
-        formGroup.removeClass('has-success').addClass('has-error').next('.alert').removeClass('hidden')
+        formGroup.removeClass('has-success').addClass('has-error').children('.alert').removeClass('hidden')
                    .html('<i class="fa fa-warning"></i>' + msg.existed );
         $target.attr('data-status', 0)
       }
       if(res.status == 2){
-        formGroup.removeClass('has-error').addClass('has-success').next('.alert').remove();
+        formGroup.removeClass('has-error').addClass('has-success').children('.alert').remove();
         $target.attr('data-status', 2)
       }
   })
