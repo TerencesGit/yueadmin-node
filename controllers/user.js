@@ -243,6 +243,37 @@ exports.modifyEmail = function(req, res){
 		res.redirect('/signin')
 	}
 }
+//修改密码
+exports.modifyPassword = function(req, res){
+	var _user = req.body.user,
+	    password = _user.oldpasswd,
+	    newPasswd = _user.newpasswd;
+	var userSession = req.session.user,
+			id = userSession._id,
+			email = userSession.email;
+	User.findOne({_id: id},function(err, user){
+		if(err) console.log(err)
+			if(!user){
+				return res.redirect('/signin')
+			}
+			user.comparePassword(password, function(err, isMatch){
+				if(err) console.log(err)
+				if(isMatch){
+					user.email = email;
+					user.password = newPasswd;
+					user.save(function(err, user){
+						if(err) console.log(err)
+						user.success = '密码修改成功！';	
+						req.session.user = user;
+		  			return res.render('account/account_bind', {title: '账号绑定', tabIndex: 3, user: user})
+					})
+				}else{
+					userSession.error = '原密码不正确';
+					return res.render('account/account_bind', {title: '账号绑定', tabIndex: 3, user: userSession})
+				}
+			})
+	})
+}
 //退出功能
 exports.logout = function(req, res){
  	delete req.session.user;
@@ -250,35 +281,6 @@ exports.logout = function(req, res){
 }
 exports.showUpdate = function(req, res){
 	res.render('account/update_passwd',{title: '修改密码'})
-}
-//修改密码
-exports.updatePassword = function(req, res){
-	var user = req.session.user;
-	var userObj = req.body.user;
-	var passwd = userObj.oldpasswd;
-	var newPasswd = userObj.newpasswd;
-	console.log(userObj)
-	User.findOne({_id: user._id},function(err, user){
-		if(err) console.log(err)
-			if(!user){
-				return res.redirect('/signin')
-			}
-			user.comparePassword(passwd, function(err, isMatch){
-				if(err) console.log(err)
-				if(isMatch){
-					user.password = newPasswd;
-					user.save(function(err, user){
-						if(err) console.log(err)
-						req.session.user = '';
-		  			res.redirect('/')
-					})
-				}else{
-					console.log('密码不正确')
-					userObj.error = '密码不正确';
-					return res.render('account/update_passwd',{title: '修改密码', user: userObj})
-				}
-			})
-	})
 }
 
 //登录验证

@@ -131,7 +131,7 @@ function queryEmail(element, msg){
   var formGroup = $(element).parents('.form-group');
   $.ajax({
     url: '/findByEmail',
-    data: {email: number}
+    data: {number: number}
   })
   .done(function(res){
       if(res.status == 1){

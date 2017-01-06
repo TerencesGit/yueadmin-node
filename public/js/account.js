@@ -36,7 +36,7 @@
       newEmailInput = $('#newEmail'),
       btnModifyEmail = $('#btnModifyEmail');
   //修改密码表单
-  var modifyPasswdForm = $('#modifyEmailForm'),
+  var modifyPasswdForm = $('#modifyPasswdForm'),
       oldPasswd = $('#oldPasswd'),
       newPasswd = $('#newPasswd'),
       confirmPasswd = $('#confirmPasswd'),
@@ -138,7 +138,8 @@
     e.preventDefault()
     checkInput(oldPasswd, msg.password) &&
     checkInput(newPasswd, msg.password, pattern.password) &&
-    confirmConsistent(confirmPasswd, newPasswd) 
+    confirmConsistent(confirmPasswd, newPasswd) &&  
+    modifyPasswdForm.submit()
   })
   //发送验证码
   function sendCode(target, interval, input, form) {
