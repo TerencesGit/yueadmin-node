@@ -274,6 +274,10 @@ exports.modifyPassword = function(req, res){
 			})
 	})
 }
+//重置密码
+exports.resetPassword = function(req, res){
+	res.render('reset_password',{title: '重置密码'})
+}
 //退出功能
 exports.logout = function(req, res){
  	delete req.session.user;
@@ -365,7 +369,7 @@ exports.showBindMobile = function(req, res){
 //用户列表
 exports.userlist = function(req, res){
 	User.fetch(function(err, users){
-		res.render('userlist', {
+		res.render('admin/userlist', {
 			title: '用户列表',
 			users: users
 		})
@@ -381,13 +385,14 @@ exports.delete = function(req, res){
 		})
 	}
 }
-//用户信息修改
+//用户信息编辑
 exports.edit = function edit(req, res){
-	var _user = req.body.user;
-	var uid = _user.id;
-	var name = _user.name;
-	var role = _user.role;
-	User.update({_id: uid}, {'$set': {name: name, role: role}}, function(err, msg){
+	var _user = req.body.user,
+		  uid = _user.id,
+	    name = _user.name, 
+	    email = _user.email,
+	 		role = _user.role;
+	User.update({_id: uid}, {'$set': {name: name, email: email, role: role}}, function(err, msg){
 		if(err) return err;
 		res.redirect('/user/list')
 	})

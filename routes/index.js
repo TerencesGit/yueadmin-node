@@ -45,7 +45,7 @@ router.post('/account/bind_mobile', User.bindMobile);
 router.get('/account/verify_email', User.verifiedEmail);
 router.get('/account/modify_email', User.modifyEmail);
 router.post('/account/modify_password', User.modifyPassword);
-
+router.get('/account/reset_password', User.resetPassword);
 // router.get('/user/showUpdate', User.signinRequired, User.showUpdate);
 // router.post('/user/updatePassword', User.signinRequired, User.updatePassword);
 router.post('/user/saveInfo', User.saveInfo)

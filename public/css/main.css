@@ -318,9 +318,9 @@ body {
   border-bottom: 1px solid #23b7e5;
 }
 
-.navbar-nav {
+/*.navbar-nav {
   margin-right: 20px;
-}
+}*/
 
 .navbar-nav > li {
   display: inline-block;
@@ -368,7 +368,9 @@ body {
   width: 25px;
   height: 25px;
 }
-
+.personal-center .dropdown-menu {
+  width: 90%;
+}
 .dropdown-menu .divider {
   margin: 0;
 }

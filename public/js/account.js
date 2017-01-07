@@ -121,6 +121,8 @@
   //修改手机号提交
   btnModifyMobile.on('click', function(e){
     e.preventDefault()
+    var status = $(this).attr('data-status');
+    if(status == 0) return;
     checkInput(newMobileInput, msg.mobile, pattern.mobile) &&
     checkInput(phoneCodeInput2, msg.phoneCode) &&
     modifyMobileForm.submit()
@@ -178,7 +180,4 @@
       }
     }, 1000)
   }
-  function verify_email(){
-
-  } 
 })(jQuery)
