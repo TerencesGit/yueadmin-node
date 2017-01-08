@@ -20,35 +20,35 @@
   })
  
   //绑定手机号表单
-  var mobileForm = $('#bindMobileForm'),
-      mobileInput = $('#mobile'),
-      phoneCodeInput = $('#phoneCode'),
-      btnSendCode = $('#btnSendCode'),
-      btnBindMobile = $('#btnBindMobile');
+  const mobileForm = $('#bindMobileForm'),
+        mobileInput = $('#mobile'),
+        phoneCodeInput = $('#phoneCode'),
+        btnSendCode = $('#btnSendCode'),
+        btnBindMobile = $('#btnBindMobile');
   //修改手机号表单
-  var modifyMobileForm = $('#modifyMobileForm'),
-      newMobileInput = $('#newMobile'),
-      phoneCodeInput2 = $('#phoneCode2'),
-      btnSendCode2 = $('#btnSendCode2'),
-      btnModifyMobile = $('#btnModifyMobile');
+  const modifyMobileForm = $('#modifyMobileForm'),
+        newMobileInput = $('#newMobile'),
+        phoneCodeInput2 = $('#phoneCode2'),
+        btnSendCode2 = $('#btnSendCode2'),
+        btnModifyMobile = $('#btnModifyMobile');
   //修改邮箱号表单
-  var modifyEmailForm = $('#modifyEmailForm'),
-      newEmailInput = $('#newEmail'),
-      btnModifyEmail = $('#btnModifyEmail');
+  const modifyEmailForm = $('#modifyEmailForm'),
+        newEmailInput = $('#newEmail'),
+        btnModifyEmail = $('#btnModifyEmail');
   //修改密码表单
-  var modifyPasswdForm = $('#modifyPasswdForm'),
-      oldPasswd = $('#oldPasswd'),
-      newPasswd = $('#newPasswd'),
-      confirmPasswd = $('#confirmPasswd'),
-      btnModifyPasswd = $('#btnModifyPasswd');
+  const modifyPasswdForm = $('#modifyPasswdForm'),
+        oldPasswd = $('#oldPasswd'),
+        newPasswd = $('#newPasswd'),
+        confirmPasswd = $('#confirmPasswd'),
+        btnModifyPasswd = $('#btnModifyPasswd');
   //正则表达式    
-  var pattern = {
-    mobile: /^(13|14|15|17|18)[0-9]{9}$/, 
-    email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-    password: /^.{8,20}$/,
+  const pattern = {
+      mobile: /^(13|14|15|17|18)[0-9]{9}$/, 
+      email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+      password: /^.{8,20}$/,
   }
   //错误信息提示
-  var msg = {
+  const msg = {
     mobile: {
       required: '请输入手机号',
       pattern: '请输入正确手机号',

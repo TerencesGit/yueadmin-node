@@ -36,19 +36,24 @@ router.get('/sendPhoneCode', User.sendPhoneCode);
 /* 账户信息 */
 router.get('/account', User.accountHome)
 router.get('/account/account_info', User.showAccountInfo);
-router.get('/account/editInfo', User.signinRequired, User.showEdit);
+router.get('/account/edit_info', User.signinRequired, User.showEdit);
 
-//账号绑定
+//账号设置
 router.get('/account/account_bind', User.accountBind);
 router.get('/account/bind_mobile', User.showBindMobile);
 router.post('/account/bind_mobile', User.bindMobile);
 router.get('/account/verify_email', User.verifiedEmail);
+router.get('/account/show_modify_email', User.showModifyEmail);
 router.get('/account/modify_email', User.modifyEmail);
+router.get('/account/modify_password', User.showModifyPassword);
 router.post('/account/modify_password', User.modifyPassword);
-router.get('/account/reset_password', User.resetPassword);
+
+router.get('/account/find_password', User.findPassword);
+router.get('/account/reset_password', User.showResetPassword);
+router.post('/account/reset_password', User.resetPassword);
 // router.get('/user/showUpdate', User.signinRequired, User.showUpdate);
 // router.post('/user/updatePassword', User.signinRequired, User.updatePassword);
-router.post('/user/saveInfo', User.saveInfo)
+router.post('/account/saveInfo', User.saveInfo)
 
 router.post('/user/avatarUpload', multipartMiddleware, User.avatarUpload);
 

@@ -1,6 +1,6 @@
 $(function() {
   //绘制验证码
-    drawCode()
+  if($('#canvasCode').length !== 0) drawCode()
   //检测cookie是否保存用户登录信息
   if($.cookie('remember') == 'true'){
     $('#username').val(atob($.cookie('username')))
@@ -10,33 +10,42 @@ $(function() {
 })
 
 //保存注册表单Input对象
-var signupForm = $('#signupForm'),
-    emailInput = $('#email'),
-    passwdInput = $('#passwd'),
-    passwdInput2 = $('#passwd2'),
-    authCodeInput = $('#authcode'),
-    agreeCheck = $('#agree'),
-    btnSignup = $('#btnSignup');
+const signupForm = $('#signupForm'),
+      emailInput = $('#email'),
+      passwdInput = $('#passwd'),
+      passwdInput2 = $('#passwd2'),
+      authCodeInput = $('#authcode'),
+      agreeCheck = $('#agree'),
+      btnSignup = $('#btnSignup');
 
 //保存登录表单Input对象
-var signinForm = $('#signinForm'),
-    nameInput = $('#username'),
-    passInput = $('#password'),
-    authCodeInput2 = $('#authcode2'),
-    rememberCheck = $('#remember'),
-    btnSignIn = $('#btnSignIn');
+const signinForm = $('#signinForm'),
+      nameInput = $('#username'),
+      passInput = $('#password'),
+      authCodeInput2 = $('#authcode2'),
+      rememberCheck = $('#remember'),
+      btnSignIn = $('#btnSignIn');
+
 // 忘记密码表单对象
-var findPasswdForm = $('#findPasswdForm'),
-    bindEmailInput = $('#bindEmail'),
-    btnFindPasswd = $('#btnFindPasswd');
+const findPasswdForm = $('#findPasswdForm'),
+      bindEmailInput = $('#bindEmail'),
+      authcodeInput3 = $('#authcode3'),
+      btnFindPasswd = $('#btnFindPasswd');
+
+//重置密码表单对象      
+const resetPasswdForm = $('#resetPasswdForm'),
+      resetPasswordInput = $('#resetPassword'),
+      resetPasswordInput2 = $('#resetPassword2'),
+      btnResetPasswd = $('#btnResetPasswd');
+
 //正则表达式   
-var pattern = {
-    email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-    password: /^.{8,20}$/,
+const pattern = {
+      email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+      password: /^.{8,20}$/,
 }
 
 //错误信息提示
-var message = {
+const message = {
     email: {
       required: '请输入邮箱号',
       pattern: '邮箱格式不正确',
@@ -91,12 +100,26 @@ btnSignIn.on('click', function(e){
   signinSubmit()
 })
 //找回密码表单提交
+function findPasswdSubmit(){
+  checkInput(bindEmailInput, message.email, pattern.email, true) &&
+  checkCode(authcodeInput3, message.authcode, true) &&
+  findPasswdForm.submit()
+}
 btnFindPasswd.on('click', function(e){
   e.preventDefault();
   var status = $(this).attr('data-status');
   if(status == '0') return;
-  bindEmailInput.blur()
-
+  findPasswdSubmit()
+})
+//重置密码表单提交
+function resetPasswdSubmit(){
+  checkInput(resetPasswordInput, message.password, pattern.password, true) &&
+  confirmConsistent(resetPasswordInput2, resetPasswordInput, message.password, true) && 
+  resetPasswdForm.submit()
+}
+btnResetPasswd.on('click', function(e){
+  e.preventDefault();
+  resetPasswdSubmit()
 })
 //为输入框注册失去焦点事件
 emailInput.blur(function() {
@@ -121,6 +144,14 @@ passwdInput2.blur(function() {
 bindEmailInput.blur(function(){
   checkInput($(this), message.email, pattern.email, true) &&
   queryAccount($(this), 'findByEmail', message.email, btnFindPasswd, true, true)
+})
+resetPasswordInput.blur(function(){
+  checkInput(resetPasswordInput, message.password, pattern.password, true)
+})
+resetPasswordInput2.blur(function(){
+  if (resetPasswordInput.val() !== '' && resetPasswordInput2.val() !== '') {
+    confirmConsistent(resetPasswordInput2, resetPasswordInput, message.password, true)
+  }
 })
 //保存cookie 
 function saveCookie(){

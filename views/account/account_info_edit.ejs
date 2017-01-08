@@ -7,11 +7,11 @@
   <body>
     <%- include('../aside') %>
     <%- include('../header') %>
-    <div id="main" class="main" data-id="account_info">
+    <div id="main" class="main" data-id="edit_info">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
           <ol class="breadcrumb">
-              <li><a href="#">账户管理</a></li>
+              <li><a href="/account">账户管理</a></li>
               <li class="active"><%= title%></li>
           </ol>
           <div class="row">
@@ -47,7 +47,7 @@
               </ul>
             </div>
             <div class="col-md-offset-1 col-md-5 account-info">
-              <form method="post" action="/user/saveInfo" id="infoForm" class="form-horizontal" role="form">        
+              <form method="post" action="/account/saveInfo" id="infoForm" class="form-horizontal" role="form">        
                 <div class="form-group">
                   <label class="col-md-3 control-label">昵称</label>
                   <div class="col-md-6">
@@ -57,13 +57,14 @@
                 <div class="form-group">
                   <label class="col-md-3 control-label">邮箱</label>
                   <div class="col-md-6">
+                    <span><%= user.email %></span>
+                    <a href="/account/show_modify_email" class="unbind email">
                     <% if(user && user.email_verified == '0'){ %> 
-                    <span><%= user.email %></span>
-                    <a href="/account/account_bind" class="unbind email">未验证</a>
+                    未验证
                     <% }else{ %>
-                    <span><%= user.email %></span>
-                    <a href="/account/account_bind" class="unbind email">已验证</a>
+                    已验证
                     <%}%>
+                    </a>
                   </div>
                 </div>
                 <div class="form-group">
@@ -71,9 +72,9 @@
                   <div class="col-md-6">
                     <% if(user && user.mobile){ %>
                     <span class="control-span"><%= user.mobile %></span>
-                    <a href="/account/account_bind" class="unbind mobile">修改</a> 
+                    <a href="/account/bind_mobile" class="unbind mobile">修改</a> 
                     <% }else{ %>
-                    <a href="/account/account_bind" class="unbind mobile">未绑定</a>
+                    <a href="/account/bind_mobile" class="unbind mobile">未绑定</a>
                     <%}%>
                   </div>
                 </div>

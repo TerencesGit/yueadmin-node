@@ -1,4 +1,4 @@
-/** css reset **/
+/**========== css reset ==========**/
 
 ul,
 li {
@@ -24,6 +24,12 @@ textarea {
 input[type="file"] {
   display: none
 }
+
+/**========== common css ==========**/
+html,
+body {
+  height: 100%;
+}
 body {
   background: #f0f3f4
 }
@@ -39,7 +45,12 @@ body {
 .m-r {
   margin-right: 15px;
 }
-/** animate **/
+/* 面包屑导航 */
+.breadcrumb {
+  background-color: #ddd;
+}
+
+/**========== animation start ==========**/
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -144,9 +155,116 @@ body {
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown
 }
+/**========== animation end ==========**/
 
-/*左侧导航*/
+/**========== 登录注册start ==========**/
+.login-page {
+    height: 100%;
+    background: url(../img/login_bg.jpg) fixed;
+    background-size: 100% 100%;
+    overflow: hidden
+  }
+  
+.login-page > .container {
+  width: 460px;
+  margin: 8% auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 5px
+}
 
+.page-header {
+  margin-top: 0
+}
+
+.form-group {
+  position: relative
+}
+
+.form-group .fa-check {
+  display: none
+}
+
+.form-group.has-success .fa-check {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  z-index: 2;
+  color: #3c763d;
+}
+
+.alert {
+  padding: 5px;
+  margin: -10px 0 10px 0;
+  text-indent: 2px;
+}
+
+.alert i.fa-warning {
+  margin-right: 10px
+}
+
+.form-group.row {
+  margin-right: 0
+}
+
+.btn-send {
+  padding: 5px 15px
+}
+
+.canvas-code {
+  background: #f0f0f0;
+  cursor: pointer;
+}
+.has-error .checkbox-inline {
+  color: #333;
+}
+.login-footer {
+  margin: 10px 0;
+}
+
+.line {
+  margin: 0 10px;
+}
+
+.remember {
+  margin-top: -5px;
+  color: #666;
+}
+
+.remember input {
+  margin-right: 5px;
+}
+/*注册协议 模态框*/
+
+.protocol .modal-dialog {
+  width: 800px;
+}
+
+.protocol .modal-body {
+  height: 500px;
+  overflow-y: scroll
+}
+/**========== 登录注册 end ==========**/
+/**========== 重置密码 start ==========**/
+.find-password {
+
+}
+.reset-password .panel {
+  margin: 6% auto;
+  min-height: 450px;
+}
+
+.reset-form {
+  width: 300px;
+  margin: 30px auto;
+}
+.reset-password .form-group {
+  margin-top: 20px;
+}
+/**========== 重置密码 start ==========**/
+
+/**========== 左侧导航start ===========**/
 .sidebar-warp {
   position: fixed;
   top: 0;
@@ -187,8 +305,7 @@ body {
   background-color: #131e26;
 }
 
-
-/*手风琴菜单*/
+/**手风琴菜单**/
 
 .accordion {
   width: 100%;
@@ -269,7 +386,9 @@ body {
 .submenu a:hover {
   color: #fff;
 }
-/*页头区域*/
+/**========== 左侧导航end ===========**/
+
+/**========== 页头区域start ===========**/
 
 .header {
   position: fixed;
@@ -379,8 +498,9 @@ body {
   padding: 5px 20px;
   color: #a4abbb
 }
+/**========== 页头区域end ===========**/
 
-/*主体区域*/
+/**========== 主体区域start ===========**/
 
 .main {
   position: absolute;
@@ -410,9 +530,9 @@ body {
     display: none;
   }
 }
+/**========== 主体区域end ===========**/
 
-
-/*页脚区域*/
+/**========== 页脚区域start ===========**/
 
 .site-footer {
   position: relative;
@@ -435,12 +555,10 @@ body {
 .back-top i {
   color: #2A3542;
 }
-/* 面包屑导航 */
-.breadcrumb {
-  background-color: #ddd;
-}
+/**========== 页脚区域end ===========**/
 
-/* account_info_edit */
+/**========== 账号信息编辑 start ===========**/
+
 .account-info {
   padding: 30px 20px;
   background: #fff;
@@ -466,7 +584,10 @@ body {
   padding-right: 10px;
   color: #f20;
 }
-/* account_bind */
+/**========== 账号信息编辑 end ===========**/
+
+/**========== 账号绑定 start ===========**/
+
 .account-panel .panel-default {
   padding-bottom: 0
 }
@@ -536,8 +657,8 @@ body {
 .control-span {
   display: inline-block;
   padding-top: 5px;
-  /*font-size: 16px*/
 }
 .alert-dismissable .close {
   right: 0; 
 }
+/**========== 账号绑定 end ===========**/

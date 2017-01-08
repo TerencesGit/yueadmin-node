@@ -227,6 +227,10 @@ exports.verifiedEmail = function(req, res){
 		}
 	})
 }
+//修改邮箱页
+exports.showModifyEmail = function(req, res){
+	res.render('account/account_bind', {title: '账号绑定', tabIndex: 2})
+}
 //修改邮箱
 exports.modifyEmail = function(req, res){
 	var email = req.query.email;
@@ -242,6 +246,10 @@ exports.modifyEmail = function(req, res){
 	}else{
 		res.redirect('/signin')
 	}
+}
+//修改密码页
+exports.showModifyPassword = function(req, res){
+	res.render('account/account_bind', {title: '账号绑定', tabIndex: 3})
 }
 //修改密码
 exports.modifyPassword = function(req, res){
@@ -274,10 +282,51 @@ exports.modifyPassword = function(req, res){
 			})
 	})
 }
-//重置密码
-exports.resetPassword = function(req, res){
-	res.render('reset_password',{title: '重置密码'})
+//找回密码
+exports.findPassword = function(req, res){
+	res.render('account/find_password',{title: '找回密码'})
 }
+//重置密码页
+exports.showResetPassword = function(req, res){
+	var email = req.query.email;
+	User.findOne({email: email}, function(err, user){
+		if(err) return err;
+		if(user){
+			res.render('account/reset_password', {title: '重置密码', user: user})
+		}else{
+			res.redirect('/signin')
+		}
+	})
+}
+//重置密码功能
+exports.resetPassword = function(req, res){
+	var _user = req.body.user;
+	var uid = Trim(_user.uid);
+	var newpasswd = Trim(_user.newpasswd);
+	User.findOne({_id: uid}, function(err, user){
+		if(err) console.log(err);
+		if(!user){
+			return redirect('/signin')
+		}
+		user.comparePassword(newpasswd, function(err, isMatch){
+			if(err) return err;
+			if(isMatch){
+				console.log('新密码不得与原密码重复')
+				user.error = '新密码不得与原密码重复';
+				return res.render('account/reset_password', {title: '重置密码', user: user})
+			}else{
+				user.password = newpasswd;
+				user.save(function(err, user){
+					if(err) return err;
+					console.log('密码修改成功！')
+					user.success = '密码修改成功！';
+					return res.render('account/reset_password', {title: '重置密码', user: user})
+				})
+			}
+		})
+	})
+}
+
 //退出功能
 exports.logout = function(req, res){
  	delete req.session.user;
@@ -323,7 +372,7 @@ exports.saveInfo = function(req, res){
 			var _user = _.assign(req.session.user, userObj);
 			req.session.user = _user;
 			console.log(_user)
-		  res.redirect('/account/edit')
+		  res.redirect('/account/editInfo')
 		})
 	}else {
 		res.redirect('/signin')
@@ -363,7 +412,7 @@ exports.accountBind = function(req, res){
 }
 
 exports.showBindMobile = function(req, res){
-	res.redirect('/account/account_bind')
+	res.render('account/account_bind', {title: '账号绑定', tabIndex: 1})
 }
 
 //用户列表
