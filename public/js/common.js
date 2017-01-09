@@ -1,9 +1,10 @@
 /* 公用方法 */
+
 //表单输入框验证
-var checkInput = function($element, msg, pattern, wrapShow){
+var checkInput = function($element, msg, regular, wrapShow){
   if(!($element && msg)) throw new Error('至少两个参数！');
   var msgRequired = msg.required || '不能为空！',
-      msgPattern = msg.pattern || '格式有误！';
+      msgregular = msg.regular || '格式有误！';
   var wrapShow = wrapShow || false;
   var value = $.trim($element.val());
   var formGroup = $element.parents('.form-group');
@@ -24,10 +25,10 @@ var checkInput = function($element, msg, pattern, wrapShow){
     $element.focus();
     return false;
   }else{
-    if(pattern){
-      if(!pattern.test(value)) {
+    if(regular){
+      if(!regular.test(value)) {
         formGroup.removeClass('has-success').addClass('has-error');
-        $alert.html('<i class="fa fa-warning"></i>'+msgPattern);
+        $alert.html('<i class="fa fa-warning"></i>'+msgregular);
         return false;
       }
     }
@@ -112,7 +113,7 @@ var queryAccount = function($element, router, msg, $target, wrapShow, contrary){
       	$target && $target.attr('data-status', 0);
     	}else{
     		formGroup.removeClass('has-error').addClass('has-success');
-      	$target && $alert.remove();
+      	$alert && $alert.remove();
       	$target && $target.attr('data-status', 2);
     	}
     }
@@ -205,22 +206,55 @@ var checkCheckbox = function($element, msg, wrapShow) {
     $alert.html('<i class="fa fa-warning"></i>'+ msgRequired);
     return false;
   } else {
-    if($alert) $alert.remove();
+    $alert && $alert.remove();
     return true;
   }
 }
 
-//上传图片验证
-var checkImage = function(){
-
-}
 //上传图片预览
-var uploadPreview = function(fileInput, $Image){
+var uploadPreview = function(fileInput, $image){
   if(fileInput.files && fileInput.files[0]){
     var reader = new FileReader();
     reader.onload = function(e){
-      $Image.attr('src', e.target.result)
+      $image.attr('src', e.target.result)
     }
     reader.readAsDataURL(fileInput.files[0])
   }
+}
+
+//上传图片验证
+var checkImage = function(fileInput, msg, regular, sizeLimit){
+	/*
+		$fileInput  //file类型的input对象  
+		msg         //错误信息提示
+		regular     //图片格式正则表达式 默认 gif|jpg|jpeg|png
+		sizeLimit   //图片尺寸大小限制   默认 1024K
+	*/
+	if(!(fileInput instanceof jQuery || fileInput.nodeType === 1)) 
+	throw new Error(fileInput + '不是DOM对象！');
+	var msgRequired = msg && msg.required || '请选择图片',
+	    msgRegular = msg && msg.regular || '只支持.gif/jpg/png格式',
+	 		msgSize = msg && msg.size || '大小不得超过1M',
+	 		regular = regular || /\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/,
+	 		sizeLimit = sizeLimit || 1024;
+	var formGroup = $(fileInput).parents('.form-group');
+	if(formGroup.next('.alert').length === 0) {
+    formGroup.after('<div class="alert alert-danger hidden"></div>')
+  }
+  var $alert = formGroup.next('.alert');
+  var fileObj = fileInput instanceof jQuery ? fileInput[0] : fileInput;
+	var fileValue = fileObj.value,
+	    fileSize = fileObj.files[0] && fileObj.files[0].size / 1024;
+	if(fileValue == ''){
+		$alert.removeClass('hidden').html('<i class="fa fa-warning"></i>'+ msgRequired);
+		return false;
+	}else if(!regular.test(fileValue)){
+		$alert.removeClass('hidden').html('<i class="fa fa-warning"></i>'+ msgRegular);
+		return false;
+	}else if(fileSize > sizeLimit){
+		$alert.removeClass('hidden').html('<i class="fa fa-warning"></i>'+ msgSize);
+		return false;
+	}
+	$alert && $alert.remove()
+	return true;
 }

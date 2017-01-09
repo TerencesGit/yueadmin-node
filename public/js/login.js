@@ -39,7 +39,7 @@ const resetPasswdForm = $('#resetPasswdForm'),
       btnResetPasswd = $('#btnResetPasswd');
 
 //正则表达式   
-const pattern = {
+const regular = {
       email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
       password: /^.{8,20}$/,
 }
@@ -48,13 +48,13 @@ const pattern = {
 const message = {
     email: {
       required: '请输入邮箱号',
-      pattern: '邮箱格式不正确',
+      regular: '邮箱格式不正确',
       existed: '该邮箱号已注册，可直接登录',
       notExisted: '该邮箱号未绑定'
     },
     password: {
       required: '请输入密码',
-      pattern: '密码长度在8-20位之间',
+      regular: '密码长度在8-20位之间',
       notMatch: '两次密码输入不一致'
     },
     authcode: {
@@ -79,8 +79,8 @@ btnSignup.on('click',function(e) {
 
 //注册表单逐步验证
 function signupSubmit() {
-  checkInput(emailInput, message.email, pattern.email, true) && 
-  checkInput(passwdInput, message.password, pattern.password, true) &&
+  checkInput(emailInput, message.email, regular.email, true) && 
+  checkInput(passwdInput, message.password, regular.password, true) &&
   confirmConsistent(passwdInput2, passwdInput, message.password, true) && 
   checkCode(authCodeInput, message.authcode, true) && 
   checkCheckbox(agreeCheck, message.agreeCheck, true) && signupForm.submit()
@@ -101,7 +101,7 @@ btnSignIn.on('click', function(e){
 })
 //找回密码表单提交
 function findPasswdSubmit(){
-  checkInput(bindEmailInput, message.email, pattern.email, true) &&
+  checkInput(bindEmailInput, message.email, regular.email, true) &&
   checkCode(authcodeInput3, message.authcode, true) &&
   findPasswdForm.submit()
 }
@@ -113,7 +113,7 @@ btnFindPasswd.on('click', function(e){
 })
 //重置密码表单提交
 function resetPasswdSubmit(){
-  checkInput(resetPasswordInput, message.password, pattern.password, true) &&
+  checkInput(resetPasswordInput, message.password, regular.password, true) &&
   confirmConsistent(resetPasswordInput2, resetPasswordInput, message.password, true) && 
   resetPasswdForm.submit()
 }
@@ -123,11 +123,11 @@ btnResetPasswd.on('click', function(e){
 })
 //为输入框注册失去焦点事件
 emailInput.blur(function() {
-  checkInput(emailInput, message.email, pattern.email, true, email) &&
+  checkInput(emailInput, message.email, regular.email, true, email) &&
   queryAccount(emailInput, 'findByEmail', message.email, btnSignup, true)
 })
 passwdInput.blur(function() {
-  if (checkInput(passwdInput, message.password, pattern.password, true)) {
+  if (checkInput(passwdInput, message.password, regular.password, true)) {
     passwdInput2.attr('disabled', false)
   } else {
     passwdInput2.attr('disabled', true)
@@ -142,11 +142,11 @@ passwdInput2.blur(function() {
   }
 })
 bindEmailInput.blur(function(){
-  checkInput($(this), message.email, pattern.email, true) &&
+  checkInput($(this), message.email, regular.email, true) &&
   queryAccount($(this), 'findByEmail', message.email, btnFindPasswd, true, true)
 })
 resetPasswordInput.blur(function(){
-  checkInput(resetPasswordInput, message.password, pattern.password, true)
+  checkInput(resetPasswordInput, message.password, regular.password, true)
 })
 resetPasswordInput2.blur(function(){
   if (resetPasswordInput.val() !== '' && resetPasswordInput2.val() !== '') {

@@ -15,8 +15,9 @@
                 <div class="panel-body text-center">
                   <dl>
                     <dt><img src="/img/profile_avatar.jpg"  class="img-circle"></dt>
-                    <dd>悦己视觉</dd>
-                    <dd>12345456@163.com</dd>
+                    <% if(user && user.name){ %> 
+                    <dd><%= user.name %></dd>
+                    <% } %>
                   </dl>
                   <ul class="list-group">
                     <li class="list-group-item active">
@@ -26,20 +27,32 @@
                       <a href="/account/edit_info"><i class="fa fa-edit"></i>编辑账户信息</a>
                     </li>
                     <li class="list-group-item">
+                      <span>邮箱:</span>
+                      <% if(user && user.email){ %> 
+                      <span><%= user.email %></span>
+                      <% } %>
+                    </li>
+                    <li class="list-group-item">
                       <span>性别:</span>
+                      <% if(user && user.gender == '0'){ %>
                       <span>男</span>
+                      <% }else{ %>
+                      <span>女</span>
+                      <%}%>
                     </li>
                     <li class="list-group-item">
                       <span>年龄:</span>
-                      <span>26</span>
-                    </li>
-                    <li class="list-group-item">
-                      <span>学历:</span>
-                      <span>本科</span>
+                      <% if(user && user.birthday){ %> 
+                      <span><%= moment(user.birthday).format('YYYY') - new Date().getFullYear()%></span>
+                      <% } %>
                     </li>
                     <li class="list-group-item">
                       <span>籍贯:</span>
-                      <span>北京</span>
+                      <% if(user && user.address){ %> 
+                      <span><%= user.address %></span>
+                      <% }else{ %>
+                      <span>未设置</span>
+                      <% } %>
                     </li>
                   </ul>
                 </div>

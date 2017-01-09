@@ -55,12 +55,18 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="personMenu">
+                <% if(user && user.role > 20){ %>
                 <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="/user/list">个人中心</a>
+                    <a role="menuitem" tabindex="-1" href="/user/list">用户列表</a>
+                </li>
+                <% } %>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="/account">个人中心</a>
                 </li>
                 <li role="presentation" class="divider"></li>
                 <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="#">设置</a>
+                    <a role="menuitem" tabindex="-1" href="/account/edit_info">账号设置</a>
                 </li>
                 <li role="presentation" class="divider"></li>
                 <li role="presentation">

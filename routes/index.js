@@ -6,7 +6,7 @@ var multipartMiddleware = multipart();
 
 /* GET home page. */
 router.get('/', function(req, res){
-	res.render('index', {title: '悦视觉'})
+	res.render('account/account_info', {title: '悦视觉'})
 });
 
 /* 登录注册 */

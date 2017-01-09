@@ -135,13 +135,18 @@
               </form>
             </div>
             <div class="col-md-offset-1 col-md-3 info-upload">
-              <dl class="form-group edit-avatar mr-4 float-right">
+              <dl class="edit-avatar mr-4 float-right">
                 <dt>个人头像</dt>
                 <dd class="avatar-upload-container clearfix">
                   <form id="uploadForm" method="post" action="/user/avatarUpload" enctype="multipart/form-data">
-                    <input type="file" name="avatar" id="fileUp">
-                    <% if(user && user.avatar){ %>  <img id="avatar" class="avatar rounded-2" src="/upload/<%= user.avatar %>" width="200" height="200" alt="头像上传"/>
-                    <% }else{ %> <img src="/img/avatar.jpg" id="avatar" class="avatar rounded-2" width="200" height="200" alt="头像上传"> <% } %>
+                    <div class="form-group">
+                      <input type="file" name="avatar" id="fileUp">
+                      <% if(user && user.avatar){ %>  
+                      <img id="avatar" class="avatar rounded-2" src="/upload/<%= user.avatar %>" width="200" height="200" alt="头像上传"/>
+                      <% }else{ %> 
+                      <img src="/img/avatar.jpg" id="avatar" class="avatar rounded-2" width="200" height="200" alt="头像上传"> 
+                      <% } %>
+                    </div>
                     <div class="avatar-upload">
                       <button type="submit" id="btnUpload" class="btn btn-info" style="width:200px">上传</button>
                     </div>
@@ -189,9 +194,7 @@
       var fileUp = $('#fileUp')[0];
       $('#btnUpload').on('click', function(e){
         e.preventDefault()
-        if(fileUp.files && fileUp.files[0]){
-          $('#uploadForm').submit()
-        }
+        checkImage($('#fileUp')) && $('#uploadForm').submit()
       })
       //个人资料编辑
       var infoForm = $('#infoForm'),
@@ -201,7 +204,7 @@
           addressInput = $('#address'),
           btnSubmit = $('#btnSubmit');
       //正则表达式
-      var pattern = {
+      var regular = {
         name: /^.{3,20}$/,
         qq: /[1-9][0-9]{4,}/,
         idcard: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
@@ -216,9 +219,9 @@
       //表单提交
       btnSubmit.on('click', function(e){
         e.preventDefault()
-        checkInput(nameInput, msg.name, pattern.name) &&
-        checkInput(qqInput, msg.qq, pattern.qq) &&
-        checkInput(idcardInput, msg.idcard, pattern.idcard) &&
+        checkInput(nameInput, msg.name, regular.name) &&
+        checkInput(qqInput, msg.qq, regular.qq) &&
+        checkInput(idcardInput, msg.idcard, regular.idcard) &&
         checkInput(addressInput, msg.address) && infoForm.submit()
       })
     </script>

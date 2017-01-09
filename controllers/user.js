@@ -372,7 +372,7 @@ exports.saveInfo = function(req, res){
 			var _user = _.assign(req.session.user, userObj);
 			req.session.user = _user;
 			console.log(_user)
-		  res.redirect('/account/editInfo')
+		  res.redirect('/account/edit_info')
 		})
 	}else {
 		res.redirect('/signin')
@@ -395,7 +395,7 @@ exports.avatarUpload = function(req, res, next){
 				User.update({_id: user._id},{'$set': {avatar: avatar}}, function(err, msg){
 					if(err) return err;
 					user.avatar = avatar;
-					res.redirect('/account/edit')
+					res.redirect('/account/edit_info')
 				})
 			})
 		})
