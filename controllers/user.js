@@ -362,6 +362,9 @@ exports.showEdit = function(req, res){
 //账户信息保存
 exports.saveInfo = function(req, res){
 	var userObj = req.body.user;
+	userObj.idcard = Trim(userObj.idcard);
+	userObj.address = Trim(userObj.address);
+	userObj.signature = Trim(userObj.signature);
 	var id = req.session.user._id;
 	if(id){
 		User.update({_id: id}, {'$set': userObj}, function(err, msg){
@@ -388,7 +391,7 @@ exports.avatarUpload = function(req, res, next){
 	if(originalFile){
 		fs.readFile(filePath, function(err, data){
 			var timestamp = Date.now()
-			var type = avatarData.type.split('/')[1];
+			var type = avatarData.name.split('.')[1];
 			var avatar = timestamp + '.' +type;
 			var newPath = path.join(__dirname, '../', 'public/upload/' + avatar);
 			fs.writeFile(newPath, data, function(err){

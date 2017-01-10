@@ -12,13 +12,13 @@
           <div class="row">
             <div class="col-md-3">
               <div class="panel panel-default">
-                <div class="panel-body text-center">
-                  <dl>
-                    <dt><img src="/img/profile_avatar.jpg"  class="img-circle"></dt>
+                <div class="panel-body">
+                  <div class="text-center">
+                    <img src="<%if(user && user.avatar){%>/upload/<%= user.avatar %><%}else{%> /img/avatar.gif <%}%>" class="img-circle" width="200" height="200" title="头像" alt="头像">
                     <% if(user && user.name){ %> 
-                    <dd><%= user.name %></dd>
+                    <p class="m-t"><%= user.name %></p>
                     <% } %>
-                  </dl>
+                  </div>
                   <ul class="list-group">
                     <li class="list-group-item active">
                       <i class="fa fa-user"></i>账户基本信息
@@ -27,27 +27,31 @@
                       <a href="/account/edit_info"><i class="fa fa-edit"></i>编辑账户信息</a>
                     </li>
                     <li class="list-group-item">
-                      <span>邮箱:</span>
+                      <label>邮箱:</label>
                       <% if(user && user.email){ %> 
                       <span><%= user.email %></span>
                       <% } %>
                     </li>
                     <li class="list-group-item">
-                      <span>性别:</span>
-                      <% if(user && user.gender == '0'){ %>
-                      <span>男</span>
+                      <label>qq:</label>
+                      <% if(user && user.qq){ %> 
+                      <span><%= user.qq %></span>
                       <% }else{ %>
-                      <span>女</span>
-                      <%}%>
-                    </li>
-                    <li class="list-group-item">
-                      <span>年龄:</span>
-                      <% if(user && user.birthday){ %> 
-                      <span><%= moment(user.birthday).format('YYYY') - new Date().getFullYear()%></span>
+                      <span>未设置</span>
                       <% } %>
                     </li>
                     <li class="list-group-item">
-                      <span>籍贯:</span>
+                      <label>性别:</label>
+                      <% if(user && user.gender == '0'){ %>
+                      <span>男</span>
+                      <% }else if(user && user.gender == '1'){ %>
+                      <span>女</span>
+                      <% }else{ %>
+                      <span>未知</span>
+                      <%}%>
+                    </li>
+                    <li class="list-group-item">
+                      <label>籍贯:</label>
                       <% if(user && user.address){ %> 
                       <span><%= user.address %></span>
                       <% }else{ %>
@@ -59,27 +63,101 @@
               </div>
             </div>
             <div class="col-md-9">
-              <div class="panel panel-success">
+              <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                        自我介绍
+                      <a href="#collapseOne" data-toggle="collapse">
+                        个性签名
                       </a>
                     </h3>
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in">
                   <div class="panel-body">
-                    <h4>
-                      “成功者永不放弃，放弃者不会胜利。“我有10年的经验和专业的网页设计，用户界面设计，交互设计方面，视觉设计和原型。我曾与著名的创业公司，包括珠江街道软件。
-                    </h4>
+                    <h4><%if(user && user.signature){%> <%= user.signature %> <%}%></h4>
                   </div>
                 </div>
               </div>
-              <div class="panel panel-success">
+              <div class="panel panel-primary">
                 <div class="panel-heading">
-                  账户详细信息
+                  <h3 class="panel-title">
+                    <a href="#collapseTwo" data-toggle="collapse">账户详细信息</a>
+                  </h3>
                 </div>
-                <div class="panel-body"></div>
+                <div id="collapseTwo" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>昵称</dt>
+                        <dd><%if(user && user.name){%><%= user.name%><%}%></dd>
+                      </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>邮箱</dt>
+                        <dd><%if(user && user.email){%><%= user.email%><%}%></dd>
+                      </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>手机号</dt>
+                        <dd><%if(user && user.mobile){%><%= user.mobile%><%}%></dd>
+                      </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>qq</dt>
+                        <dd><%if(user && user.qq){%><%= user.qq%><%}%></dd>
+                      </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>性别</dt>
+                        <dd>
+                        <% if(user && user.gender == '0'){ %> 男
+                        <% }else{ %> 女 <% } %>
+                        </dd>
+                      </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>生日</dt>
+                        <dd><%if(user && user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD')%><%}%></dd>
+                      </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>身份证号</dt>
+                        <dd><%if(user && user.idcard){%> <%= user.idcard%> <%}%></dd>
+                      </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>籍贯</dt>
+                        <dd><%if(user && user.address){%> <%= user.address %> <%}%></dd>
+                      </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>证件</dt>
+                        <dd>
+                          <img src="<%if(user && user.avatar){%>/upload/<%= user.avatar %><%}else{%> /img/profile_avatar.jpg <%}%>" class="img-thumbnail" style="width: 200px; height: 200px" title="头像" alt="头像">
+                        </dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <a href="#collapseThree" data-toggle="collapse">消息动态</a>
+                  </h3>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    消息动态
+                  </div>
+                </div>
               </div>
             </div>
           </div>

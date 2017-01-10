@@ -233,8 +233,8 @@ var checkImage = function(fileInput, msg, regular, sizeLimit){
 	if(!(fileInput instanceof jQuery || fileInput.nodeType === 1)) 
 	throw new Error(fileInput + '不是DOM对象！');
 	var msgRequired = msg && msg.required || '请选择图片',
-	    msgRegular = msg && msg.regular || '只支持.gif/jpg/png格式',
-	 		msgSize = msg && msg.size || '大小不得超过1M',
+	    msgRegular = msg && msg.regular || '图片格式有误',
+	 		msgSize = msg && msg.size || '图片大小超过限制',
 	 		regular = regular || /\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/,
 	 		sizeLimit = sizeLimit || 1024;
 	var formGroup = $(fileInput).parents('.form-group');

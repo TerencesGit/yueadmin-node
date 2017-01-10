@@ -41,11 +41,41 @@ body {
 .m-r {
   margin-right: 15px;
 }
-/* 面包屑导航 */
+.alert i.fa-warning {
+  margin-right: 5px
+}
+.form-group.row {
+  margin-right: 0
+}
+.has-success .control-label, .has-error .control-label {
+  color: #333;
+}
+.control-label i {
+  padding-right: 10px;
+  color: #f20;
+}
+.list-group .fa {
+  margin-right: 10px;
+}
+.control-text {
+  display: inline-block;
+  padding: 5px 10px;
+}
+/**========== bootstrap reset ==========**/
+.alert {
+  padding: 5px;
+  text-indent: 2px;
+  margin-bottom: 10px;
+}
 .breadcrumb {
   background-color: #ddd;
 }
-
+.dl-horizontal dt {
+    width: auto;
+}
+.dl-horizontal dd {
+    margin-left: 60px;
+}
 /**========== animation start ==========**/
 .animated {
   -webkit-animation-duration: 1s;
@@ -190,18 +220,8 @@ body {
   color: #3c763d;
 }
 
-.alert {
-  padding: 5px;
+.login-form .alert {
   margin: -10px 0 10px 0;
-  text-indent: 2px;
-}
-
-.alert i.fa-warning {
-  margin-right: 10px
-}
-
-.form-group.row {
-  margin-right: 0
 }
 
 .btn-send {
@@ -564,30 +584,11 @@ body {
 
 /**========== 账号信息编辑 start ===========**/
 
-.account-info {
-  padding: 30px 20px;
-  background: #fff;
-  border-radius: 5px
+.avatar-form {
+  width: 150px;
 }
-.unbind {
-  display: inline-block;
-  padding: 5px 10px;
-}
-.alert {
-  padding: 5px;
-  margin: 0;
-}
-
-.alert i.fa-warning {
-  margin-right: 5px
-}
-
-.has-success .control-label, .has-error .control-label {
-  color: #333;
-}
-.control-label i {
-  padding-right: 10px;
-  color: #f20;
+.preview-area {
+  cursor: pointer;
 }
 /**========== 账号信息编辑 end ===========**/
 

@@ -50,6 +50,7 @@
 	margin-bottom: 10px;
 }
 .hzw-city-picker .line{
+	display: none;
 	width: 372px;
 	margin: 0 auto;
 	margin-top: 8px;
@@ -62,6 +63,7 @@
 	width: 100%;
 	background: #fff;
 	padding: 9px;
+	display: none;
 }
 .hzw-city-picker .hzw-hot-wrap ul li{
 	width: 68px;

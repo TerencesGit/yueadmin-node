@@ -38,19 +38,19 @@
                         </label>
                         <span class="col-md-5"><%= user.email%></span>
                         <% if(user && user.email_verified == '0'){ %>
-                        <a href="#" class="col-md-3 email-bind">未验证</a>
+                        <a href="#" class="col-md-3">未验证</a>
                         <% }else{ %>
-                        <a href="#" class="col-md-3 email-bind">已验证</a> 
+                        <a href="#" class="col-md-3">已验证</a> 
                         <% } %>
                       </div>
                       <div class="row">
                         <label class="col-md-3">手机号码：</label>
                         <% if(user && user.mobile){ %>
                         <span class="col-md-5"><%= user.mobile%></span>
-                        <a href="javascript:;" class="col-md-3 mobile-bind">已绑定</a>
+                        <a href="javascript:;" class="col-md-3">已绑定</a>
                         <% }else{ %>
                         <span class="col-md-5"></span>
-                        <a href="javascript:;" class="col-md-3 mobile-bind">未绑定</a>
+                        <a href="javascript:;" class="col-md-3">未绑定</a>
                         <% } %>
                       </div>
                     </div>
@@ -181,6 +181,7 @@
               </div>
             </div>
           </div>
+          <div class="warp-footer"></div>
         </div>
       </div>
     	<%- include('../footer') %>

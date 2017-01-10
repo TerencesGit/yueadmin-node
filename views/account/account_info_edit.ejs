@@ -15,148 +15,224 @@
               <li class="active"><%= title%></li>
           </ol>
           <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-3">
               <ul class="list-group">
                   <li class="list-group-item active">个人信息</li>
                   <li class="list-group-item">
-                    <a href="#">基本信息</a>
+                    <a href="#baseInfo">基本信息</a>
                   </li>
                   <li class="list-group-item">
-                    <a href="#">基本信息</a>
+                    <a href="#avatarUpload">头像上传</a>
                   </li>
                   <li class="list-group-item">
-                    <a href="#">基本信息</a>
+                    <a href="#idcardUpload">个人证件</a>
                   </li>
                   <li class="list-group-item">
-                    <a href="#">基本信息</a>
-                  </li>
-                  <li class="list-group-item">
-                    <a href="#">基本信息</a>
-                  </li>
-                  <li class="list-group-item">
-                    <a href="#">自我介绍</a>
-                  </li>
-                  <li class="list-group-item">
-                    <a href="#">个人证件</a>
-                    <span class="badge">新</span>
-                  </li>
-                  <li class="list-group-item">
-                    <span class="badge">新</span>
+                    <span class="badge">待定</span>
                     <a href="#">备注</a>
                   </li>
               </ul>
             </div>
-            <div class="col-md-offset-1 col-md-5 account-info">
-              <form method="post" action="/account/saveInfo" id="infoForm" class="form-horizontal" role="form">        
-                <div class="form-group">
-                  <label class="col-md-3 control-label">昵称</label>
-                  <div class="col-md-6">
-                    <input type="text" id="name" class="form-control" name="user[name]" value="<%= user.name %>">
+            <div class="col-md-9">
+              <div id="baseInfo" class="panel panel-info">
+                <div class="panel-heading">
+                 <h3 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                    基本信息
+                  </a>
+                 </h3>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    <form method="post" action="/account/save_info" id="accountInfoForm" class="form-horizontal" role="form">        
+                      <div class="form-group">
+                        <label class="col-md-2 control-label"><i>*</i>昵称</label>
+                        <div class="col-md-6">
+                          <input type="text" id="nickname" class="form-control" name="user[name]" value="<%= user.name %>">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-2 control-label"><i>*</i>邮箱</label>
+                        <div class="col-md-6">
+                          <span><%= user.email %></span>
+                          <a href="/account/show_modify_email" class="control-text">
+                          <% if(user && user.email_verified == '0'){ %> 
+                          未验证
+                          <% }else{ %>
+                          已验证
+                          <%}%>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-2 control-label">手机号</label>
+                        <div class="col-md-6">
+                          <% if(user && user.mobile){ %>
+                          <span class="control-span"><%= user.mobile %></span>
+                          <a href="/account/bind_mobile" class="control-text">修改</a> 
+                          <% }else{ %>
+                          <a href="/account/bind_mobile" class="control-text">未绑定</a>
+                          <%}%>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-2 control-label">QQ</label>
+                        <div class="col-md-6">
+                          <input type="text" id="qq" class="form-control" name="user[qq]" value="<%if(user && user.qq){%><%= user.qq%><%}%>">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-2 control-label">性别</label>
+                        <div class="col-md-6">
+                          <% if(user && user.gender == '0'){ %> 
+                          <label class="checkbox-inline">
+                            <input type="radio" name="user[gender]" value="0" checked>男
+                          </label>
+                          <label class="checkbox-inline">
+                            <input type="radio" name="user[gender]" value="1">女
+                          </label>
+                          <% }else{ %>
+                          <label class="checkbox-inline">
+                            <input type="radio" name="user[gender]" value="0" >男
+                          </label>
+                          <label class="checkbox-inline">
+                            <input type="radio" name="user[gender]" value="1" checked>女
+                          </label>
+                          <%}%>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-2 control-label">生日</label>
+                        <div class="col-md-6">
+                          <input type="text" name="user[birthday]" id="birthday" class="form-control laydate-icon" value="<%if(user && user.birthday){%><%=moment(user.birthday).format('YYYY-MM-DD')%><%}%>">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-2 control-label"><i>*</i>身份证号</label>
+                        <div class="col-md-6">
+                           <input type="text" name="user[idcard]" id="idcard" class="form-control" value="<%if(user && user.idcard){%><%=user.idcard %><%}%>">
+                        </div>
+                      </div>
+                       <div class="form-group">
+                         <label class="col-md-2 control-label"><i>*</i>籍贯</label>
+                         <div class="col-md-6">
+                          <input type="text" name="user[address]" id="address" class="form-control" value="<%if(user && user.address){%><%= user.address%><%}%>">
+                         </div>
+                      </div>               
+                      <div class="form-group">
+                        <label class="col-md-2 control-label">个性签名</label>
+                        <div class="col-md-6">
+                          <textarea name="user[signature]" class="form-control" rows="5">   <%if(user && user.signature){%><%=user.signature %><%}%>
+                          </textarea>
+                        </div>
+                      </div>
+                      <div class="form-group text-center"> 
+                        <button type="submit" id="btnInfoSubmit" class="btn btn-success">保存</button>
+                        <button class="btn btn-default m-l">返回</button>
+                      </div>
+                    </form>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="col-md-3 control-label">邮箱</label>
-                  <div class="col-md-6">
-                    <span><%= user.email %></span>
-                    <a href="/account/show_modify_email" class="unbind email">
-                    <% if(user && user.email_verified == '0'){ %> 
-                    未验证
-                    <% }else{ %>
-                    已验证
-                    <%}%>
-                    </a>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-3 control-label">手机号</label>
-                  <div class="col-md-6">
-                    <% if(user && user.mobile){ %>
-                    <span class="control-span"><%= user.mobile %></span>
-                    <a href="/account/bind_mobile" class="unbind mobile">修改</a> 
-                    <% }else{ %>
-                    <a href="/account/bind_mobile" class="unbind mobile">未绑定</a>
-                    <%}%>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-3 control-label">QQ</label>
-                  <div class="col-md-6">
-                    <input type="text" id="qq" class="form-control" name="user[qq]" value="<%= user.qq %>">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-3 control-label">性别</label>
-                  <div class="col-md-6">
-                    <% if(user && user.gender == '0'){ %> 
-                    <label class="checkbox-inline">
-                      <input type="radio" name="user[gender]" value="0" checked>男
-                    </label>
-                    <label class="checkbox-inline">
-                      <input type="radio" name="user[gender]" value="1">女
-                    </label>
-                    <% }else{ %>
-                    <label class="checkbox-inline">
-                      <input type="radio" name="user[gender]" value="0" >男
-                    </label>
-                    <label class="checkbox-inline">
-                      <input type="radio" name="user[gender]" value="1" checked>女
-                    </label>
-                    <%}%>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-3 control-label">生日</label>
-                  <div class="col-md-6">
-                    <input type="text" name="user[birthday]" id="birthday" class="form-control laydate-icon" value="<% if(user && user.birthday){ %> <%= moment(user.birthday).format('YYYY-MM-DD') %> <% } %>">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-3 control-label"><i>*</i>身份证号</label>
-                  <div class="col-md-6">
-                     <input type="text" name="user[idcard]" id="idcard" class="form-control" value="<% if(user && user.idcard){ %> <%= user.idcard %> <% } %>">
-                  </div>
-                </div>
-                 <div class="form-group">
-                   <label class="col-md-3 control-label"><i>*</i>籍贯</label>
-                   <div class="col-md-6">
-                    <input type="text" name="user[address]" id="address" class="form-control" value="<% if(user && user.address){ %> <%= user.address %> <% } %>">
-                   </div>
-                </div>               
-                <div class="form-group">
-                  <label class="col-md-3 control-label">个性签名</label>
-                  <div class="col-md-6">
-                    <textarea class="form-control" name="user[signature]"><%if(user && user.signature){%><%= user.signature %><%}%></textarea>
-                  </div>
-                </div>
-                <div class="form-group text-center"> 
-                  <button type="submit" id="btnSubmit" class="btn btn-success">保存</button>
-                  <button class="btn btn-default m-l">返回</button>
-                </div>
-              </form>
-            </div>
-            <div class="col-md-offset-1 col-md-3 info-upload">
-              <dl class="edit-avatar mr-4 float-right">
-                <dt>个人头像</dt>
-                <dd class="avatar-upload-container clearfix">
-                  <form id="uploadForm" method="post" action="/user/avatarUpload" enctype="multipart/form-data">
-                    <div class="form-group">
-                      <input type="file" name="avatar" id="fileUp">
-                      <% if(user && user.avatar){ %>  
-                      <img id="avatar" class="avatar rounded-2" src="/upload/<%= user.avatar %>" width="200" height="200" alt="头像上传"/>
-                      <% }else{ %> 
-                      <img src="/img/avatar.jpg" id="avatar" class="avatar rounded-2" width="200" height="200" alt="头像上传"> 
-                      <% } %>
-                    </div>
-                    <div class="avatar-upload">
-                      <button type="submit" id="btnUpload" class="btn btn-info" style="width:200px">上传</button>
-                    </div>
-                  </form>
-                </dd>
-              </dl>
+              </div>
             </div>
           </div>
+          <div id="avatarUpload" class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a href="#collapseTwo" data-toggle="collapse">头像上传</a>
+              </h3>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse in">
+              <div class="panel-body clearfix">
+                <div class="col-md-6">
+                  <div class="alert text-warning">
+                    支持JPG、JPEG、PNG格式且大小不要超过1M！
+                  </div>
+                  <form action="/account/avatarUpload" method="post" id="uploadAvatarForm" class="avatar-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                      <input type="file" name="avatar" id="avatarFile">
+                      <div id="avatarPreview" class="preview-area">
+                        <img id="avatarImg" src="<%if(user && user.avatar){%>/upload/<%= user.avatar %><%}else{%> /img/avatar.gif <%}%>" alt="头像上传" width="150" height="150" title="选择本地图片">
+                        <a class="btn btn-link">选择本地图片</a>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <button type="submit" id="btnAvatarUpload" class="btn btn-primary btn-block">提交</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-offset-1 col-md-5 text-center">
+                  <h4>当前头像</h4>
+                  <% if(user && user.avatar){ %>  
+                  <img src="/upload/<%= user.avatar %>" class="img-rounded" width="150" height="150" alt="当前头像"/>
+                  <% }else{ %> 
+                  <img src="/img/avatar.jpg" width="200" height="200" alt="当前头像"> 
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="idcardUpload" class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a href="#collapseThree" data-toggle="collapse">证件上传</a>
+              </h3>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse in">
+              <div class="panel-body">
+                <div id="idcardUpload">
+                  <div class="col-md-6">
+                    <div class="alert hidden">
+                      支持JPG、JPEG、PNG格式且大小不要超过1M！
+                    </div>
+                    <form action="/user/idcardUpload" method="post" id="idcardUploadForm" enctype="multipart/form-data">
+                      <div class="form-group">
+                        <label class="col-md-4 control-label"><i>*</i>身份证正面：</label>
+                        <div class="col-md-6">
+                          <input type="file" name="idcard_positive" id="avatarFile">
+                          <div id="idcardPositivePreview" class="preview-area">
+                            <img id="idcardPositiveImg" src="/img/idcard_positive.png" alt="身份证上传" width="245" height="158" title="选择本地图片">
+                            <a class="btn btn-link">选择本地图片</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-4 control-label"><i>*</i>身份证反面：</label>
+                        <div class="col-md-6">
+                          <input type="file" name="idcard_positive" id="avatarFile">
+                          <div id="idcardPositivePreview" class="preview-area">
+                            <img id="idcardPositiveImg" src="/img/idcard_positive.png" alt="身份证上传" width="245" height="158" title="选择本地图片">
+                            <a class="btn btn-link">选择本地图片</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <button type="submit" id="btnAvatarUpload" class="btn btn-primary btn-block">提交</button>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-md-6 m-t">
+                    <div class="positive-example row">
+                      <label class="col-md-2 control-label">示例：</label>
+                      <div class="col-md-6">
+                        <img src="/img/idcard_positive_example.png" width="245" height="158" alt="身份证正面" title="身份证正面"> 
+                      </div>
+                      <p class="col-md-4 text-info">证件上文字清晰可识别</p>
+                    </div>
+                   <div class="opposite-example row m-t">
+                    <label class="col-md-2 control-label">示例：</label>
+                    <div class="col-md-6">
+                      <img src="/img/idcard_opposite_example.png" width="245" height="158" alt="身份证反面" title="身份证反面"> 
+                    </div>
+                    <p class="col-md-4 text-info">证件上文字清晰可识别</p>
+                   </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="warp-footer"></div>
         </div>
-        <div style="height: 500px"></div>
       </div>
     	<%- include('../footer') %>
     </div>
@@ -164,6 +240,7 @@
     <script src="/plugins/laydate/laydate.js"></script>
     <script src="/plugins/cityPicker/js/city-data.js"></script>
     <script src="/plugins/cityPicker/js/hzw-city-picker.min.js"></script>
+    <script src="/js/account.js"></script>
     <script>
       //出生日期选择
       laydate({elem: '#birthday', max: laydate.now(-1)});
@@ -183,47 +260,6 @@
         },
       });
       cityPicker.init();
-
-      //头像上传
-      $('#fileUp').change(function(){
-        uploadPreview(this, $('#avatar'))
-      })
-      $('#avatar').click(function(){
-        $('#fileUp').click()
-      })
-      var fileUp = $('#fileUp')[0];
-      $('#btnUpload').on('click', function(e){
-        e.preventDefault()
-        checkImage($('#fileUp')) && $('#uploadForm').submit()
-      })
-      //个人资料编辑
-      var infoForm = $('#infoForm'),
-          nameInput = $('#name'),
-          qqInput = $('#qq'),
-          idcardInput = $('#idcard'),
-          addressInput = $('#address'),
-          btnSubmit = $('#btnSubmit');
-      //正则表达式
-      var regular = {
-        name: /^.{3,20}$/,
-        qq: /[1-9][0-9]{4,}/,
-        idcard: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
-      }
-      // 错误信息提示
-      var msg = {
-        name: '不少于3位',
-        qq: '格式有误！',
-        idcard: '格式有误！',
-        address: '不能为空！'
-      }
-      //表单提交
-      btnSubmit.on('click', function(e){
-        e.preventDefault()
-        checkInput(nameInput, msg.name, regular.name) &&
-        checkInput(qqInput, msg.qq, regular.qq) &&
-        checkInput(idcardInput, msg.idcard, regular.idcard) &&
-        checkInput(addressInput, msg.address) && infoForm.submit()
-      })
     </script>
   </body>
 </html>
