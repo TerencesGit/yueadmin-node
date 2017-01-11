@@ -27,6 +27,12 @@ var userSchema = new mongoose.Schema({
 	idcard: {
 		type: String
 	},
+	idcard_front: {
+		type: String
+	},
+	idcard_back:{
+		type: String
+	},
 	realname: {
 		type: String
 	},

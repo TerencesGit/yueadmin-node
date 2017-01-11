@@ -385,15 +385,13 @@ exports.saveInfo = function(req, res){
 exports.avatarUpload = function(req, res, next){
 	var user = req.session.user;
 	var avatarData = req.files.avatar;
-	console.log(avatarData)
-	var filePath = avatarData.path;
-	var originalFile =avatarData.originalFilename;
-	if(originalFile){
+	if(avatarData && avatarData.originalFilename){
+		var filePath = avatarData.path;
 		fs.readFile(filePath, function(err, data){
-			var timestamp = Date.now()
+			var timestamp = Date.now();
 			var type = avatarData.name.split('.')[1];
-			var avatar = timestamp + '.' +type;
-			var newPath = path.join(__dirname, '../', 'public/upload/' + avatar);
+			var avatar = 'avatar_' + timestamp + '.' +type;
+			var newPath = path.join(__dirname, '../', 'public/upload/avatar/' + avatar);
 			fs.writeFile(newPath, data, function(err){
 				User.update({_id: user._id},{'$set': {avatar: avatar}}, function(err, msg){
 					if(err) return err;
@@ -406,6 +404,58 @@ exports.avatarUpload = function(req, res, next){
 		next()
 	}
 }
+//身份证正面上传
+exports.idcardFrontUpload = function(req, res, next){
+	var idcardData = req.files.idcard_front;
+	console.log(idcardData)
+	if(idcardData && idcardData.originalFilename){
+		var idcardPath = idcardData.path;
+		fs.readFile(idcardPath, function(err, data){
+			var timestamp = Date.now();
+			var type = idcardData.name.split('.')[1];
+			var idcardFront = 'idcard_front_' + timestamp + '.' + type;
+			var newPath = path.join(__dirname, '../', 'public/upload/idcard/' + idcardFront);
+			fs.writeFile(newPath, data, function(err){
+				req.idcardFront = idcardFront;
+				next()
+			})
+		})
+	}else{
+		next()
+	}
+}
+//身份证反面上传
+exports.idcardBackUpload = function(req, res, next){
+	var idcardData = req.files.idcard_back;
+	if(idcardData && idcardData.originalFilename){
+		var idcardPath = idcardData.path;
+		fs.readFile(idcardPath, function(err, data){
+			var timestamp = Date.now();
+			var type = idcardData.name.split('.')[1];
+			var idcardBack = 'idcard_back_' + timestamp + '.' + type;
+			var newPath = path.join(__dirname, '../', 'public/upload/idcard/' + idcardBack);
+			fs.writeFile(newPath, data, function(err){
+				req.idcardBack = idcardBack;
+				next()
+			})
+		})
+	}else{
+		next()
+	}
+}
+//身份证附件保存
+exports.idcardUpload = function(req, res){
+	var user = req.session.user,
+	    id = user._id;
+	var	idcardFront = req.idcardFront || user.idcard_front;
+	var	idcardBack = req.idcardBack || user.idcard_back;
+	User.update({_id: user._id}, {'$set': {idcard_front: idcardFront, idcard_back: idcardBack}}, function(err, msg){
+		if(err) return err;
+		user.idcard_front = idcardFront;
+		user.idcard_back = idcardBack;
+		res.redirect('/account/edit_info');
+	})
+}
 //账号绑定
 exports.accountBind = function(req, res){
 	var user = req.session.user;
@@ -417,7 +467,10 @@ exports.accountBind = function(req, res){
 exports.showBindMobile = function(req, res){
 	res.render('account/account_bind', {title: '账号绑定', tabIndex: 1})
 }
-
+//注册公司
+exports.showRegisteredCompany = function(req, res){
+	res.render('account/registered_company', {title: '注册我的公司'})
+}
 //用户列表
 exports.userlist = function(req, res){
 	User.fetch(function(err, users){

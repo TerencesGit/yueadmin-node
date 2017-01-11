@@ -6,7 +6,7 @@
 <body class="login-page">
   <div class="container animated fadeInDown">
     <form action="/user/signin" method="post" id="signinForm" class="login-form">
-      <h2 class="form-title page-header"><%= title %></h2>
+      <h2 class="page-header"><%= title %></h2>
       <div class="form-group">
         <% if(user && user.error){%>
         <p class="alert alert-danger"><i class="fa fa-warning"></i><%= user.error%></p>

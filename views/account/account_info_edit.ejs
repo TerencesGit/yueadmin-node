@@ -126,48 +126,48 @@
                           </textarea>
                         </div>
                       </div>
-                      <div class="form-group text-center"> 
-                        <button type="submit" id="btnInfoSubmit" class="btn btn-success">保存</button>
-                        <button class="btn btn-default m-l">返回</button>
+                      <div class="form-group"> 
+                        <button type="submit" id="btnInfoSubmit" class="col-md-offset-4 btn btn-success">保存</button>
+                        <a href="javascript:history.go(-1)" class="btn btn-default m-l">返回</a>
                       </div>
                     </form>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div id="avatarUpload" class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-                <a href="#collapseTwo" data-toggle="collapse">头像上传</a>
-              </h3>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse in">
-              <div class="panel-body clearfix">
-                <div class="col-md-6">
-                  <div class="alert text-warning">
-                    支持JPG、JPEG、PNG格式且大小不要超过1M！
-                  </div>
-                  <form action="/account/avatarUpload" method="post" id="uploadAvatarForm" class="avatar-form" enctype="multipart/form-data">
-                    <div class="form-group">
-                      <input type="file" name="avatar" id="avatarFile">
-                      <div id="avatarPreview" class="preview-area">
-                        <img id="avatarImg" src="<%if(user && user.avatar){%>/upload/<%= user.avatar %><%}else{%> /img/avatar.gif <%}%>" alt="头像上传" width="150" height="150" title="选择本地图片">
-                        <a class="btn btn-link">选择本地图片</a>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <button type="submit" id="btnAvatarUpload" class="btn btn-primary btn-block">提交</button>
-                    </div>
-                  </form>
+              <div id="avatarUpload" class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <a href="#collapseTwo" data-toggle="collapse">头像上传</a>
+                  </h3>
                 </div>
-                <div class="col-md-offset-1 col-md-5 text-center">
-                  <h4>当前头像</h4>
-                  <% if(user && user.avatar){ %>  
-                  <img src="/upload/<%= user.avatar %>" class="img-rounded" width="150" height="150" alt="当前头像"/>
-                  <% }else{ %> 
-                  <img src="/img/avatar.jpg" width="200" height="200" alt="当前头像"> 
-                  <% } %>
+                <div id="collapseTwo" class="panel-collapse collapse in">
+                  <div class="panel-body clearfix">
+                    <div class="col-md-6">
+                      <div class="alert text-warning">
+                        支持JPG、JPEG、PNG格式且大小不要超过1M！
+                      </div>
+                      <form action="/account/avatarUpload" method="post" id="uploadAvatarForm" class="avatar-form" enctype="multipart/form-data">
+                        <div class="form-group">
+                          <input type="file" name="avatar" id="avatarFile">
+                          <div id="avatarPreview" class="preview-area">
+                            <img id="avatarPic" src="<%if(user && user.avatar){%>/upload/avatar/<%= user.avatar %><%}else{%> /img/avatar.gif <%}%>" alt="头像上传" width="150" height="150" title="选择本地图片">
+                            <a class="btn btn-link">选择本地图片</a>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <button type="submit" id="btnAvatarUpload" class="btn btn-primary btn-block">提交</button>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="col-md-offset-1 col-md-5 text-center">
+                      <h4>当前头像</h4>
+                      <% if(user && user.avatar){ %>  
+                      <img src="/upload/avatar/<%= user.avatar %>" class="img-rounded" width="150" height="150" alt="当前头像"/>
+                      <% }else{ %> 
+                      <img src="/img/avatar.jpg" width="200" height="200" alt="当前头像"> 
+                      <% } %>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -180,53 +180,48 @@
             </div>
             <div id="collapseThree" class="panel-collapse collapse in">
               <div class="panel-body">
-                <div id="idcardUpload">
-                  <div class="col-md-6">
-                    <div class="alert hidden">
-                      支持JPG、JPEG、PNG格式且大小不要超过1M！
-                    </div>
-                    <form action="/user/idcardUpload" method="post" id="idcardUploadForm" enctype="multipart/form-data">
-                      <div class="form-group">
-                        <label class="col-md-4 control-label"><i>*</i>身份证正面：</label>
-                        <div class="col-md-6">
-                          <input type="file" name="idcard_positive" id="avatarFile">
-                          <div id="idcardPositivePreview" class="preview-area">
-                            <img id="idcardPositiveImg" src="/img/idcard_positive.png" alt="身份证上传" width="245" height="158" title="选择本地图片">
-                            <a class="btn btn-link">选择本地图片</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-md-4 control-label"><i>*</i>身份证反面：</label>
-                        <div class="col-md-6">
-                          <input type="file" name="idcard_positive" id="avatarFile">
-                          <div id="idcardPositivePreview" class="preview-area">
-                            <img id="idcardPositiveImg" src="/img/idcard_positive.png" alt="身份证上传" width="245" height="158" title="选择本地图片">
-                            <a class="btn btn-link">选择本地图片</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <button type="submit" id="btnAvatarUpload" class="btn btn-primary btn-block">提交</button>
-                      </div>
-                    </form>
-                  </div>
-                  <div class="col-md-6 m-t">
-                    <div class="positive-example row">
-                      <label class="col-md-2 control-label">示例：</label>
+                <div class="col-md-6">
+                  <form action="/account/idcardUpload" method="post" id="idcardUploadForm" class="idcard-form" enctype="multipart/form-data">
+                    <div class="form-group row">
+                      <label class="col-md-4 control-label"><i>*</i>身份证正面：</label>
                       <div class="col-md-6">
-                        <img src="/img/idcard_positive_example.png" width="245" height="158" alt="身份证正面" title="身份证正面"> 
+                        <input type="file" name="idcard_front" id="idcardFrontFile">
+                        <div id="idcardFrontPreview" class="preview-area">
+                          <img id="idcardFrontPic" src="<%if(user && user.idcard_front){%>/upload/idcard/<%= user.idcard_front %><%}else{%>/img/idcard_front.png<%}%>" alt="身份证上传" width="245" height="158" class="img-rounded" title="选择本地图片">
+                          <a class="btn btn-link">选择本地图片</a>
+                        </div>
                       </div>
-                      <p class="col-md-4 text-info">证件上文字清晰可识别</p>
                     </div>
-                   <div class="opposite-example row m-t">
+                    <div class="form-group row">
+                      <label class="col-md-4 control-label"><i>*</i>身份证反面：</label>
+                      <div class="col-md-6">
+                        <input type="file" name="idcard_back" id="idcardBackFile">
+                        <div id="idcardBackPreview" class="preview-area">
+                          <img id="idcardBackPic" src="<%if(user && user.idcard_back){%>/upload/idcard/<%= user.idcard_back %><%}else{%>/img/idcard_back.png <%}%>" alt="身份证上传" width="245" height="158" class="img-rounded" title="选择本地图片">
+                          <a class="btn btn-link">选择本地图片</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <button type="submit" id="btnIdcardUpload" class="col-md-offset-4 btn btn-primary btn-block">提交</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-6 m-t">
+                  <div class="front-example row">
                     <label class="col-md-2 control-label">示例：</label>
                     <div class="col-md-6">
-                      <img src="/img/idcard_opposite_example.png" width="245" height="158" alt="身份证反面" title="身份证反面"> 
+                      <img src="/img/idcard_front_example.png" width="245" height="158" alt="身份证正面" title="身份证正面"> 
                     </div>
                     <p class="col-md-4 text-info">证件上文字清晰可识别</p>
-                   </div>
                   </div>
+                 <div class="back-example row">
+                  <label class="col-md-2 control-label">示例：</label>
+                  <div class="col-md-6">
+                    <img src="/img/idcard_back_example.png" width="245" height="158" alt="身份证反面" title="身份证反面"> 
+                  </div>
+                  <p class="col-md-4 text-info">证件上文字清晰可识别</p>
+                 </div>
                 </div>
               </div>
             </div>

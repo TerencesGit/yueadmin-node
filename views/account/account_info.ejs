@@ -13,8 +13,8 @@
             <div class="col-md-3">
               <div class="panel panel-default">
                 <div class="panel-body">
-                  <div class="text-center">
-                    <img src="<%if(user && user.avatar){%>/upload/<%= user.avatar %><%}else{%> /img/avatar.gif <%}%>" class="img-circle" width="200" height="200" title="头像" alt="头像">
+                  <div class="text-center m-b">
+                    <img src="<%if(user && user.avatar){%>/upload/avatar/<%= user.avatar %><%}else{%> /img/avatar.gif <%}%>" class="img-circle" width="200" height="200" title="头像" alt="头像">
                     <% if(user && user.name){ %> 
                     <p class="m-t"><%= user.name %></p>
                     <% } %>
@@ -114,7 +114,8 @@
                         <dt>性别</dt>
                         <dd>
                         <% if(user && user.gender == '0'){ %> 男
-                        <% }else{ %> 女 <% } %>
+                        <% }else if(user && user.gender == '1'){ %> 女
+                        <% }else{ %>  <% } %>
                         </dd>
                       </dl>
                     </div>
@@ -138,9 +139,17 @@
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
-                        <dt>证件</dt>
+                        <dt>身份证正面</dt>
                         <dd>
-                          <img src="<%if(user && user.avatar){%>/upload/<%= user.avatar %><%}else{%> /img/profile_avatar.jpg <%}%>" class="img-thumbnail" style="width: 200px; height: 200px" title="头像" alt="头像">
+                          <img src="<%if(user && user.idcard_front){%>/upload/idcard/<%= user.idcard_front %><%}else{%> /img/idcard_front_example.png <%}%>" width="245" height="158" class="img-rounded m-l" title="身份证正面" alt="身份证正面">
+                        </dd>
+                      </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>身份证反面</dt>
+                        <dd>
+                          <img src="<%if(user && user.idcard_back){%>/upload/idcard/<%= user.idcard_back %><%}else{%> /img/idcard_back_example.png <%}%>" width="245" height="158" class="img-rounded m-l" title="身份证反面" alt="身份证反面">
                         </dd>
                       </dl>
                     </div>

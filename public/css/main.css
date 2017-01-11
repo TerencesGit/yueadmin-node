@@ -44,6 +44,9 @@ body {
 .alert i.fa-warning {
   margin-right: 5px
 }
+.col-md-3.alert {
+  margin-bottom: 0
+}
 .form-group.row {
   margin-right: 0
 }
@@ -197,14 +200,14 @@ body {
   border-radius: 5px
 }
 
-.form-title {
+.login-form .page-header {
   margin-top: 0;
 }
 
-.form-group {
+.login-form .form-group {
   position: relative
 }
-.form-group:last-child {
+.login-form .form-group:last-child {
   margin-bottom: 0
 }
 .form-group .fa-check {
@@ -260,9 +263,6 @@ body {
 }
 /**========== 登录注册 end ==========**/
 /**========== 重置密码 start ==========**/
-.find-password {
-
-}
 .reset-password .panel {
   margin: 6% auto;
   min-height: 450px;
@@ -287,9 +287,9 @@ body {
   background: #24c600;
 
 }
-/**========== 重置密码 start ==========**/
+/**========== 重置密码 end ==========**/
 
-/**========== 左侧导航start ===========**/
+/**========== 左侧导航 start ===========**/
 .sidebar-warp {
   position: fixed;
   top: 0;
@@ -411,9 +411,9 @@ body {
 .submenu a:hover {
   color: #fff;
 }
-/**========== 左侧导航end ===========**/
+/**========== 左侧导航 end ===========**/
 
-/**========== 页头区域start ===========**/
+/**========== 页头区域 start ===========**/
 
 .header {
   position: fixed;
@@ -461,10 +461,6 @@ body {
   box-shadow: none;
   border-bottom: 1px solid #23b7e5;
 }
-
-/*.navbar-nav {
-  margin-right: 20px;
-}*/
 
 .navbar-nav > li {
   display: inline-block;
@@ -555,9 +551,9 @@ body {
     display: none;
   }
 }
-/**========== 主体区域end ===========**/
+/**========== 主体区域 end ===========**/
 
-/**========== 页脚区域start ===========**/
+/**========== 页脚区域 start ===========**/
 
 .site-footer {
   position: relative;
@@ -580,7 +576,7 @@ body {
 .back-top i {
   color: #2A3542;
 }
-/**========== 页脚区域end ===========**/
+/**========== 页脚区域 end ===========**/
 
 /**========== 账号信息编辑 start ===========**/
 
@@ -589,6 +585,16 @@ body {
 }
 .preview-area {
   cursor: pointer;
+}
+.idcard-form .alert {
+  width: 245px;
+  margin-left: 33.33333333%;
+}
+.idcard-form .btn-primary {
+  width: 245px;
+}
+.back-example {
+  margin-top: 30px;
 }
 /**========== 账号信息编辑 end ===========**/
 

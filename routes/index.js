@@ -34,11 +34,12 @@ router.get('/findByMobile', User.findByMobile);
 router.get('/sendPhoneCode', User.sendPhoneCode);
 
 /* 账户信息 */
-router.get('/account', User.accountHome)
+router.get('/account', User.accountHome);
 router.get('/account/account_info', User.showAccountInfo);
 router.get('/account/edit_info', User.signinRequired, User.showEdit);
 router.post('/account/save_info', User.signinRequired, User.saveInfo);
 router.post('/account/avatarUpload', multipartMiddleware, User.avatarUpload);
+router.post('/account/idcardUpload', multipartMiddleware, User.idcardFrontUpload, User.idcardBackUpload, User.idcardUpload);
 
 //账号设置
 router.get('/account/account_bind', User.signinRequired, User.accountBind);
@@ -53,8 +54,9 @@ router.post('/account/modify_password', User.modifyPassword);
 router.get('/account/find_password', User.findPassword);
 router.get('/account/reset_password', User.showResetPassword);
 router.post('/account/reset_password', User.resetPassword);
-
-/* 企业管理 */
+//注册公司
+router.get('/account/show_registered_company', User.showRegisteredCompany)
+/* 公司管理 */
 router.get('/company/department', User.departdment)
 router.get('/company/company_info', User.conpanyIofo)
 

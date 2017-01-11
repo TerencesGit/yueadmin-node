@@ -13,13 +13,7 @@
     $(this).addClass("curr").siblings().removeClass("curr");
     $tabCont.eq($(this).index()).show().siblings().hide();
   })
-  $('.mobile-bind').on('click', function(){
-    $tabItem.eq(1).click()
-  })
-  $('.email-bind').on('click', function(){
-    $tabItem.eq(2).click()
-  })
- 
+
   //绑定手机号表单
   const mobileForm = $('#bindMobileForm'),
         mobileInput = $('#mobile'),
@@ -49,7 +43,7 @@
       password: /^.{8,20}$/,
       nickname: /^.{3,20}$/,
       qq: /[1-9][0-9]{4,}/,
-      idcard: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+      idcard: /(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
   }
   //错误信息提示
   const msg = {
@@ -74,9 +68,9 @@
       required: '不能为空',
       regular: '不少于3位',
     },
-    qq: '格式有误',
-    idcard: '格式有误',
-    address: '不能为空'
+    qq: 'qq格式有误',
+    idcard: '身份证号格式有误',
+    address: '籍贯不能为空'
   }
   //输入框失去焦点事件
   mobileInput.blur(function(event){
@@ -132,7 +126,7 @@
   //修改手机号提交
   btnModifyMobile.on('click', function(e){
     e.preventDefault()
-    var status = $(this).attr('data-status');
+    let status = $(this).attr('data-status');
     if(status == 0) return;
     checkInput(newMobileInput, msg.mobile, regular.mobile) &&
     checkInput(phoneCodeInput2, msg.phoneCode) &&
@@ -141,7 +135,7 @@
   //修改邮箱提交
   btnModifyEmail.on('click', function(e){
     e.preventDefault()
-    var status = $(this).attr('data-status');
+    let status = $(this).attr('data-status');
     if(status == 0) return;
     checkInput(newEmailInput, msg.email, regular.email) &&
     modifyEmailForm.submit()
@@ -155,11 +149,8 @@
     modifyPasswdForm.submit()
   })
   //发送验证码
-  function sendCode(target, interval, input, form) {
-    var $target = target || {},
-        count = interval || 30,
-        $input = input || {},
-        $form = form || {};
+  function sendCode($target, interval, $input, $form) {
+    var count = interval || 30;
     var timer;
     var status = $target.attr('data-status');
     if(!status == '2') return;
@@ -203,9 +194,16 @@
         uploadAvatarForm = $('#uploadAvatarForm'),
         avatarFile = $('#avatarFile'),
         avatarPreview = $('#avatarPreview'),
-        avatarImg = $('#avatarImg'),
-        btnAvatarUpload = $('#btnAvatarUpload');
-
+        avatarPic = $('#avatarPic'),
+        btnAvatarUpload = $('#btnAvatarUpload'),
+        idcardUploadForm = $('#idcardUploadForm'),
+        idcardFrontFile = $('#idcardFrontFile'),
+        idcardFrontPreview = $('#idcardFrontPreview'),
+        idcardFrontPic = $('#idcardFrontPic'),
+        idcardBackFile = $('#idcardBackFile'),
+        idcardBackPreview = $('#idcardBackPreview'),
+        idcardBackPic = $('#idcardBackPic'),
+        btnIdcardUpload = $('#btnIdcardUpload');
   //账户编辑表单提交
   btnInfoSubmit.on('click', function(e){
     e.preventDefault()
@@ -216,7 +214,7 @@
   })
   //头像预览
   avatarFile.change(function(){
-    checkImage(this) && uploadPreview(this, avatarImg)
+    checkImage(this) && uploadPreview(this, avatarPic)
   })
   avatarPreview.click(function(){
     avatarFile.click()
@@ -225,5 +223,26 @@
   btnAvatarUpload.on('click', function(e){
     e.preventDefault()
     checkImage(avatarFile) && uploadAvatarForm.submit()
+  })
+  //身份证正面预览
+  idcardFrontFile.change(function(){
+    checkImage(this) && uploadPreview(this, idcardFrontPic)
+  })
+  idcardFrontPreview.click(function(){
+    idcardFrontFile.click()
+  })
+  //身份证反面预览
+  idcardBackFile.change(function(){
+    checkImage(this) && uploadPreview(this, idcardBackPic)
+  })
+  idcardBackPreview.click(function(){
+    idcardBackFile.click()
+  })
+  //身份证上传
+  btnIdcardUpload.on('click', function(e){
+    e.preventDefault()
+    if(checkImage(idcardFrontFile) || checkImage(idcardBackFile)){
+      idcardUploadForm.submit()
+    } 
   })
 })(jQuery)
