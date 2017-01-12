@@ -1,13 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../controllers/user');
+var Message = require('../controllers/message');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
-/* GET home page. */
-router.get('/', function(req, res){
-	res.render('account/account_info', {title: '悦视觉'})
-});
+/* GET 账户首页 */
+router.get('/', User.signinRequired, User.showAccountInfo);
 
 /* 登录注册 */
 router.get('/signin', User.showSignin);
@@ -15,10 +14,7 @@ router.get('/signup', User.showSignup);
 
 router.post('/user/signup', User.signup);
 router.post('/user/signinAsync', User.signinAsync);
-
 router.post('/user/signin', User.signin);
-
-router.get('/user/signin', User.home);
 
 //退出
 router.get('/logout', User.logout);
@@ -34,9 +30,9 @@ router.get('/findByMobile', User.findByMobile);
 router.get('/sendPhoneCode', User.sendPhoneCode);
 
 /* 账户信息 */
-router.get('/account', User.accountHome);
+router.get('/account', User.showAccountInfo);
 router.get('/account/account_info', User.showAccountInfo);
-router.get('/account/edit_info', User.signinRequired, User.showEdit);
+router.get('/account/edit_info', User.signinRequired, User.showAccountEdit);
 router.post('/account/save_info', User.signinRequired, User.saveInfo);
 router.post('/account/avatarUpload', multipartMiddleware, User.avatarUpload);
 router.post('/account/idcardUpload', multipartMiddleware, User.idcardFrontUpload, User.idcardBackUpload, User.idcardUpload);
@@ -51,15 +47,22 @@ router.get('/account/modify_email', User.modifyEmail);
 router.get('/account/modify_password', User.showModifyPassword);
 router.post('/account/modify_password', User.modifyPassword);
 
+//重置密码
 router.get('/account/find_password', User.findPassword);
 router.get('/account/reset_password', User.showResetPassword);
 router.post('/account/reset_password', User.resetPassword);
-//注册公司
-router.get('/account/show_registered_company', User.showRegisteredCompany)
-/* 公司管理 */
-router.get('/company/department', User.departdment)
-router.get('/company/company_info', User.conpanyIofo)
 
+//注册商家
+router.get('/account/registered_partner', User.showRegisteredPartner);
+
+/* 组织管理 */
+router.get('/company/department', User.departdment);
+router.get('/company/company_info', User.conpanyIofo);
+
+/* 留言功能 */
+router.get('/message', Message.home);
+router.post('/message/save', Message.save);
+router.get('/message/delete', Message.delete);
 /* 404 */
 router.get('/404', function(req, res){
 	res.render('404')

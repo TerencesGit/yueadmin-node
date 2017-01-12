@@ -164,7 +164,31 @@
                 </div>
                 <div id="collapseThree" class="panel-collapse collapse in">
                   <div class="panel-body">
-                    消息动态
+                    <ul class="media-list">
+                      <% messages.forEach(function(message){ %>
+                      <li class="media">
+                        <div class="pull-left">
+                          <a href="/" class="media-avatar">
+                            <img src="/upload/avatar/<%= message.user.avatar %>" alt="" class=" img-rounded" width="30" height="30">
+                            <span><%= message.user.name%></span>
+                          </a>
+                        </div>
+                        <div class="media-body">
+                          <p class="pull-left">
+                            <%= message.content %>
+                          </p>
+                          <div class="pull-right relative">
+                            <% if(message.user._id == user._id){%>
+                            <a href="javascript:;" class="btn btn-link btn-delete" data-id="<%= message._id %>" >&times;</a>
+                            <%}%>
+                            <span>
+                              <%= moment(message.meta.createAt).format('MM-DD HH:mm:ss') %>
+                            </span>
+                          </div>
+                        </div>
+                      </li>
+                      <% }) %>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -176,5 +200,6 @@
     	<%- include('../footer') %>
     </div>
     <%- include('../script')%>
+    <script src="/js/message.js"></script>
   </body>
 </html>

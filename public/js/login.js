@@ -97,6 +97,7 @@ function signinSubmit(){
 //登录表单同步提交
 btnSignIn.on('click', function(e){
   e.preventDefault()
+  saveCookie()
   signinSubmit()
 })
 //找回密码表单提交
@@ -126,7 +127,7 @@ emailInput.blur(function() {
   checkInput(emailInput, message.email, regular.email, true, email) &&
   queryAccount(emailInput, 'findByEmail', message.email, btnSignup, true)
 })
-passwdInput.blur(function() {
+passwdInput[0].oninput = function() {
   if (checkInput(passwdInput, message.password, regular.password, true)) {
     passwdInput2.attr('disabled', false)
   } else {
@@ -135,7 +136,7 @@ passwdInput.blur(function() {
   if (!passwdInput2.val() == '') {
     confirmConsistent(passwdInput2, passwdInput, message.password, true)
   }
-})
+}
 passwdInput2.blur(function() {
   if (passwdInput.val() !== '' && passwdInput2.val() !== '') {
     confirmConsistent(passwdInput2, passwdInput, message.password, true)

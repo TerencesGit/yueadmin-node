@@ -1,4 +1,5 @@
 var User = require('../models/user');
+var Message = require('../models/message');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
@@ -10,10 +11,6 @@ exports.showSignup = function(req, res, next){
 //登录页
 exports.showSignin = function(req, res, next){
 	res.render('signin', {title: '欢迎登录', msg: ''})
-}
-//账户首页
-exports.accountHome = function(req, res){
-	res.redirect('/')
 }
 //查询邮箱号
 exports.findByEmail = function(req, res, next){
@@ -68,7 +65,6 @@ function getRandom(min, max){;
 function Trim(str){ 
   return str.replace(/(^\s*)|(\s*$)/g, ""); 
 }
-
 //注册功能
 exports.signup = function(req, res){
 	var _user = req.body.user;
@@ -115,7 +111,7 @@ exports.signinAsync = function(req, res){
 					return res.json({status: 1})
 				}
 			})
-		})
+		})	
 	}else{
 		User.findOne({email: name},function(err, user){
 			if(err) console.log(err)
@@ -181,9 +177,6 @@ exports.signin = function(req, res){
 			})
 		})
 	}
-}
-exports.home = function(req, res){
-	res.redirect('/')
 }
 //绑定手机号
 exports.bindMobile = function(req, res){
@@ -326,16 +319,11 @@ exports.resetPassword = function(req, res){
 		})
 	})
 }
-
 //退出功能
 exports.logout = function(req, res){
  	delete req.session.user;
 	res.redirect('/signin')
 }
-exports.showUpdate = function(req, res){
-	res.render('account/update_passwd',{title: '修改密码'})
-}
-
 //登录验证
 exports.signinRequired = function(req, res, next){
 	var user = req.session.user;
@@ -344,7 +332,7 @@ exports.signinRequired = function(req, res, next){
 	}
 	next()
 }
-//权限控制
+//管理员权限
 exports.adminRequired = function(req, res, next){
 	var user = req.session.user;
 	if(user.role < 20){
@@ -353,10 +341,15 @@ exports.adminRequired = function(req, res, next){
 }
 //账户信息
 exports.showAccountInfo = function(req, res){
-	res.render('account/account_info', {title: '账户信息'})
+	var user = req.session.user;
+	Message.find()
+				 .populate('user', 'avatar name')
+				 .exec(function(err, messages){
+				 		res.render('account/account_info', {title: '账户信息', messages: messages})
+				 })
 }
 //账户信息编辑
-exports.showEdit = function(req, res){
+exports.showAccountEdit = function(req, res){
 	res.render('account/account_info_edit', {title: '账户信息编辑'})
 }
 //账户信息保存
@@ -375,7 +368,7 @@ exports.saveInfo = function(req, res){
 			var _user = _.assign(req.session.user, userObj);
 			req.session.user = _user;
 			console.log(_user)
-		  res.redirect('/account/edit_info')
+		  res.redirect('/account')
 		})
 	}else {
 		res.redirect('/signin')
@@ -463,13 +456,13 @@ exports.accountBind = function(req, res){
 	user.success = '';
 	res.render('account/account_bind', {title: '账号绑定', tabIndex: 0})
 }
-
+//手机号绑定页
 exports.showBindMobile = function(req, res){
 	res.render('account/account_bind', {title: '账号绑定', tabIndex: 1})
 }
 //注册公司
-exports.showRegisteredCompany = function(req, res){
-	res.render('account/registered_company', {title: '注册我的公司'})
+exports.showRegisteredPartner = function(req, res){
+	res.render('account/registered_partner', {title: '注册商家'})
 }
 //用户列表
 exports.userlist = function(req, res){

@@ -125,12 +125,12 @@ var queryAccount = function($element, router, msg, $target, wrapShow, contrary){
 
 //生成验证码
 var code;  //保存验证码
-var createCode = function() {
-  const codeLength = 4;
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz1234567890';
+var createCode = function(codeLength) {
+  var codeLength = codeLength || 4;
+  const ALPHABET = 'abcdefghijklmnopqrstuvwxyz1234567890';
   code = '';
-  for (let i = 0, len = alphabet.length; i < codeLength; i++) {
-    code += alphabet.charAt(Math.floor(Math.random() * len))
+  for (let i = 0; i < codeLength; i++) {
+    code += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length))
   }
   return code;
 }

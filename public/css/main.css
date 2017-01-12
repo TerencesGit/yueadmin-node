@@ -64,7 +64,13 @@ body {
   display: inline-block;
   padding: 5px 10px;
 }
+.relative {
+  position: relative;
+}
 /**========== bootstrap reset ==========**/
+.page-header {
+  margin-top: 0;
+}
 .alert {
   padding: 5px;
   text-indent: 2px;
@@ -198,10 +204,6 @@ body {
   padding: 30px;
   background: #fff;
   border-radius: 5px
-}
-
-.login-form .page-header {
-  margin-top: 0;
 }
 
 .login-form .form-group {
@@ -674,3 +676,25 @@ body {
   right: 0; 
 }
 /**========== 账号绑定 end ===========**/
+.media-body p{
+  font-size: 18px;
+  margin: 0
+}
+.media-avatar span{
+  font-size: 16px;
+  vertical-align: top;
+}
+.btn-delete {
+  display: none;
+  position: absolute;
+  top: -4px;
+  left: -20px;
+  padding: 0;
+  font-size: 20px;
+}
+.btn-delete:hover {
+  text-decoration: none
+}
+.media:hover .btn-delete {
+  display: inline-block;
+}

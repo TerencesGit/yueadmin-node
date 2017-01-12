@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+  </head>
+  <body>
+    <%- include('../aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-id="account_info">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-success">
+          <div class="panel-heading">
+              <h3 class="panel-title">
+               注册我的企业
+              </h3>
+          </div>
+          <div class="panel-body">
+            <h4 class="page-header">请按照提示填写企业真实信息</h4> 
+            <form method="post" action="/" id="registeredPartnerForm" class="form-horizontal" role="form">        
+              <div class="form-group">
+                <label class="col-md-3 control-label"><i>*</i>企业名称</label>
+                <div class="col-md-6">
+                  <input type="text" id="partnerName" class="form-control" name="partner[name]" value="" placeholder="请输入企业名称">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label"><i>*</i>法定代表人</label>
+                <div class="col-md-6">
+                  <input type="text" id="corporation" class="form-control" name="partner[corporation]" value="" placeholder="请输入企业法定代表人">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label"><i>*</i>企业地址</label>
+                <div class="col-md-6">
+                  <input type="text" id="partnerAddress" class="form-control" name="partner[address]" value="" placeholder="请输入企业地址">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label"><i>*</i>联系人</label>
+                <div class="col-md-6">
+                  <input type="text" id="contactName" class="form-control" name="partner[contact_name]" value="" placeholder="请输入联系人姓名">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label"><i>*</i>联系电话</label>
+                <div class="col-md-6">
+                  <input type="text" id="contactMobile" class="form-control" name="partner[mobile]" value="" placeholder="请输入联系电话">
+                </div>
+                <div class="col-md-3 page-tip">
+                  <i class="fa fa-warning"></i><span class="">您输入的电话号码不正确</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">公司邮箱</label>
+                <div class="col-md-6">
+                  <input type="text" id="partnerEmail" class="form-control" name="partner[email]" value="" placeholder="请输入公司邮箱">
+                </div>
+                <div class="col-md-3 page-tip">
+                  <i class="fa fa-warning"></i><span class="">您输入的邮箱不正确</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label"><i>*</i>邮编</label>
+                <div class="col-md-6">
+                  <input type="text" id="postcode" class="form-control" name="partner[postcode]" value="" placeholder="请输入邮编号">
+                </div>
+                <div class="col-md-3 page-tip">
+                  <i class="fa fa-warning"></i><span class="">您输入的邮编不正确</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">企业备注</label>
+                <div class="col-md-6">
+                   <textarea id="remarks" class="form-control" name="partner[remarks]" placeholder="备注"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                 <h3 class="col-md-offset-1  col-md-10">上传企业LOGO</h3>
+              </div>
+              <div class="form-group">
+                 <label class="col-md-3 control-label"><i>*</i>企业LOGO：</label>
+              </div>    
+              <div class="form-group">
+                <div class="col-md-offset-3 col-md-3">
+                 <img src="public/img/idcard11.png" alt="企业LOGO" title="选择本地图片" width="150" height="150">
+                </div>
+                <label class="col-md-1 control-label">示例：</label>
+                <div class="col-md-3">
+                    <img src="public/img/logo.png" alt="企业LOGO" title="选择本地图片" width="150" height="150">
+                </div>
+                <div class="col-md-2">图片清晰可识别</div>
+              </div>
+              <div class="form-group">
+                 <label class="col-md-3 control-label"><i>*</i>营业执照:</label>
+              </div> 
+              <div class="form-group">
+                 <img src="" class="col-md-offset-3 col-md-6" alt="营业执照" title="选择本地图片" width="550" height="350">
+              </div>       
+              <!-- div class="form-group">
+                 <img src="public/img/license.png" class="col-md-offset-3 col-md-6" alt="身份证反面" title="选择本地图片" width="550" height="550">
+              </div>  -->          
+              <div class="form-group text-center"> 
+                <button type="submit" id="btnSubmit" class="btn btn-success">保存</button>
+                <button class="btn btn-default m-l" onClick="history.go(-1)">返回</button>
+              </div>
+            </form>            
+          </div>
+        </div>
+          <div class="warp-footer"></div>
+        </div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+  </body>
+</html>
