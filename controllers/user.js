@@ -311,9 +311,7 @@ exports.resetPassword = function(req, res){
 				user.password = newpasswd;
 				user.save(function(err, user){
 					if(err) return err;
-					console.log('密码修改成功！')
-					user.success = '密码修改成功！';
-					return res.render('account/reset_password', {title: '重置密码', user: user})
+					return res.render('account/reset_password_success', {title: '重置密码成功'})
 				})
 			}
 		})

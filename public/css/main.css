@@ -68,8 +68,9 @@ body {
   position: relative;
 }
 /**========== bootstrap reset ==========**/
-.page-header {
-  margin-top: 0;
+
+.control-label {
+  cursor: pointer;
 }
 .alert {
   padding: 5px;
@@ -200,12 +201,17 @@ body {
   
 .login-form {
   width: 430px;
-  margin: 10% auto;
+  margin: 10% auto 0;
   padding: 30px;
   background: #fff;
   border-radius: 5px
 }
-
+.login-form .page-header {
+  margin-top: 0;
+}
+.login-form .control-label{
+  padding-right: 0
+}
 .login-form .form-group {
   position: relative
 }
@@ -215,26 +221,36 @@ body {
 .form-group .fa-check {
   display: none
 }
-
 .form-group.has-success .fa-check {
   display: inline-block;
   position: absolute;
   top: 10px;
-  right: 15px;
+  right: 25px;
   z-index: 2;
   color: #3c763d;
 }
-
+.form-group.submit {
+  margin: 15px 0;
+}
 .login-form .alert {
-  margin: -10px 0 10px 0;
+  float: right;
+  width: 270px;
+  margin-top: -10px;
+  margin-bottom: 5px;
 }
-
-.btn-send {
+.agree-check +.alert {
+  float: none
+}
+.agree-check > .checkbox-inline {
+  margin-left: 15px;
+}
+/*.btn-send {
   padding: 5px 15px
-}
-
+}*/
 .canvas-code {
+  margin-left: -10px;
   background: #f0f0f0;
+  border-radius: 4px;
   cursor: pointer;
 }
 .has-error .checkbox-inline {
@@ -250,8 +266,9 @@ body {
   color: #666;
 }
 
-.remember input {
-  margin-right: 5px;
+.remember > .checkbox-inline {
+  float: right;
+  margin-right: 15px;
 }
 /*注册协议 模态框*/
 
@@ -269,25 +286,52 @@ body {
   margin: 6% auto;
   min-height: 450px;
 }
+.reset-password .page-header {
+  border-bottom: 0
+}
 .reset-form {
-  width: 300px;
-  margin: 30px auto;
+  width: 350px;
+  margin: 50px auto;
+}
+.reset-form .alert, .reset-form .btn{
+  float: right;
+  width: 255px
 }
 .reset-password .form-group {
   margin-top: 20px;
 }
-.form-title > em {
+
+.reset-password .page-header > em {
   display: inline-block;
-  font-style: normal;
   width: 20px;
   height: 20px;
   line-height: 20px;
-  margin-right: 15px;
+  margin-right: 10px;
   text-align: center;
   color: #fff;
   border-radius: 50%;
   background: #24c600;
-
+}
+.reset-success {
+  width: 500px;
+  margin: 10% auto 0;
+}
+.reset-success .panel-body {
+  padding: 80px 20px;
+}
+.success-info {
+  text-align: center
+}
+.success-info:before {
+  content: '\2714';
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  color: #0f0;
+  font-size: 30px
+}
+.success-info +p {
+  font-size: 16px
 }
 /**========== 重置密码 end ==========**/
 
@@ -588,6 +632,9 @@ body {
 .preview-area {
   cursor: pointer;
 }
+.preview-area img {
+  display: block;
+}
 .idcard-form .alert {
   width: 245px;
   margin-left: 33.33333333%;
@@ -673,9 +720,25 @@ body {
   padding-top: 5px;
 }
 .alert-dismissable .close {
+  top: 0;
   right: 0; 
 }
 /**========== 账号绑定 end ===========**/
+
+/**========== 注册我的企业 start ===========**/
+
+.form-group.logo-upload +.alert {
+    width: 130px;
+    margin-left: 25%;
+}
+.form-group.license-upload +.alert {
+  width: 500px;
+  margin-left: 25%;
+}
+/**========== 注册我的企业 end ===========**/
+
+/**========== 留言板 start ===========**/
+
 .media-body p{
   font-size: 18px;
   margin: 0
@@ -698,3 +761,4 @@ body {
 .media:hover .btn-delete {
   display: inline-block;
 }
+/**========== 留言板 end ===========**/

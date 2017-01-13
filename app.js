@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
-var dbUrl = '192.168.1.134:27017/yueadmin';
+var dbUrl = 'localhost:27017/yueadmin';
 var db = mongoose.connect(dbUrl);
 
 var routes = require('./routes/index');

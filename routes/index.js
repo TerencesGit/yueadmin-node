@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../controllers/user');
 var Message = require('../controllers/message');
+var Partner = require('../controllers/partner');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
@@ -30,8 +31,8 @@ router.get('/findByMobile', User.findByMobile);
 router.get('/sendPhoneCode', User.sendPhoneCode);
 
 /* 账户信息 */
-router.get('/account', User.showAccountInfo);
-router.get('/account/account_info', User.showAccountInfo);
+router.get('/account', User.signinRequired, User.showAccountInfo);
+router.get('/account/account_info', User.signinRequired, User.showAccountInfo);
 router.get('/account/edit_info', User.signinRequired, User.showAccountEdit);
 router.post('/account/save_info', User.signinRequired, User.saveInfo);
 router.post('/account/avatarUpload', multipartMiddleware, User.avatarUpload);
@@ -52,8 +53,9 @@ router.get('/account/find_password', User.findPassword);
 router.get('/account/reset_password', User.showResetPassword);
 router.post('/account/reset_password', User.resetPassword);
 
-//注册商家
+//注册企业
 router.get('/account/registered_partner', User.showRegisteredPartner);
+//router.post('/partner/register', multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.register);
 
 /* 组织管理 */
 router.get('/company/department', User.departdment);

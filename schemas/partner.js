@@ -1,14 +1,24 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
-var messageSchema = new Schema({
-	user: {type: ObjectId, ref: 'User'},
-	reply: [{
-		from: {type: ObjectId, ref: 'User'},
-		to: {type: ObjectId, ref: 'User'},
-		content: String
-	}],
-	content: String,
+var partnerSchema = new Schema({
+	admin: {type: ObjectId, ref: 'User'},
+	name: String,
+	corporation: String,
+	contact_name: String,
+	contact_mobile: String,
+	email: String,
+	mobile: String,
+	address: String,
+	post: String,
+	profile: String,
+	logo: String,
+	license: String,
+	is_verified: {
+		type: Number,
+		default: 0
+	},
+	reject_info: String,
 	meta: {
 		createAt: {
 			type: Date,
@@ -20,7 +30,7 @@ var messageSchema = new Schema({
 		}
 	}
 })
-messageSchema.pre('save',function(next){
+partnerSchema.pre('save',function(next){
 	if(this.isNew){
 		this.meta.createAt = this.meta.updateAt = Date.now();
 	}else{
@@ -28,7 +38,7 @@ messageSchema.pre('save',function(next){
 	}
 	next()
 })
-messageSchema.statics = {
+partnerSchema.statics = {
 	fetch: function(cb){
 		return this
 					.find({})
@@ -41,4 +51,4 @@ messageSchema.statics = {
 					.exec(cb)
 	}
 }
-module.exports = messageSchema;
+module.exports = partnerSchema;

@@ -5,38 +5,50 @@
 </head>
 <body class="login-page">
   <div class="container animated fadeInDown">
-    <form action="/user/signup" method="post" id="signupForm" class="login-form">
-      <h2 class="form-title page-header">欢迎注册</h2>
-      <div class="form-group">
-        <% if(user && user.error){%>
-        <p class="alert alert-danger"><i class="fa fa-warning"></i><%= user.error%></p>
-        <% } %>
-        <input type="text" name="user[email]" id="email" class="form-control" placeholder="请输入真实有效的邮箱号" required value="<%if(user){%><%=user.email%><%}%>"/>
-        <span class="fa fa-check"></span>
+    <form action="/user/signup" method="post" id="signupForm" class="login-form form-horizontal">
+      <h2 class="page-header">欢迎注册</h2>
+      <% if(user && user.error){%>
+      <div class="clearfix">
+        <div class="alert alert-danger"><i class="fa fa-warning"></i><%= user.error%></div>
       </div>
+      <% } %>
       <div class="form-group">
-        <input type="password" name="user[password]" id="passwd" class="form-control" placeholder="设置密码" maxlength="20" required value="<% if(user){ %> <%= user.password %> <% } %>"/>
-        <span class="fa fa-check"></span>
-      </div>
-      <div class="form-group">
-        <input type="password" name="confirm_password" id="passwd2" class="form-control" placeholder="确认密码" maxlength="20" required disabled="true" /> 
-        <span class="fa fa-check"></span>
-      </div>
-      <div class="form-group row">
-        <div class="col-md-8">
-          <input type="text" id="authcode" name="authcode" class="form-control" placeholder="请输入验证码" required />
-        </div>
-        <div class="col-md-4">
-          <canvas id="canvasCode" class="canvas-code" width="100%" height="35px" onClick="drawCode()"></canvas>
+        <label for="email" class="control-label col-md-3">邮箱号</label>
+        <div class="col-md-9">
+          <input type="text" name="user[email]" id="email" class="form-control" placeholder="请输入真实有效的邮箱号" required value="<%if(user){%><%=user.email%><%}%>"/>
+          <span class="fa fa-check"></span>
         </div>
       </div>
       <div class="form-group">
+        <label for="passwd" class="control-label col-md-3">密码</label>
+        <div class="col-md-9">
+          <input type="password" name="user[password]" id="passwd" class="form-control" placeholder="设置密码" maxlength="20" required value="<% if(user){ %> <%= user.password %> <% } %>"/>
+          <span class="fa fa-check"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="passwd2" class="control-label col-md-3">确认密码</label>
+        <div class="col-md-9">
+          <input type="password" name="confirm_password" id="passwd2" class="form-control" placeholder="确认密码" maxlength="20" required /> 
+          <span class="fa fa-check"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="authcode" class="control-label col-md-3">验证码</label>
+        <div class="col-md-6">
+          <input type="text" id="signupCode" name="authcode" class="form-control" placeholder="请输入验证码" required />
+        </div>
+        <div class="col-md-2">
+          <canvas id="canvasCode" class="canvas-code" width="80px" height="34px" onClick="drawCode()"></canvas>
+        </div>
+      </div>
+      <div class="form-group agree-check">
         <label class="checkbox-inline">
-          <input type="checkbox" id="agree" class="agree-check" <%if(user){ %> checked <% } %> /> 我已阅读并同意
+          <input type="checkbox" id="agree" <%if(user){ %> checked <% } %> /> 我已阅读并同意
           <a href="#myModal" data-toggle="modal">《用户注册协议》</a>
         </label>
       </div>
-      <div class="form-group">
+      <div class="form-group submit">
         <button type="submit" id="btnSignup" class="btn btn-primary btn-block">立即注册</button>
       </div>
       <div class="form-group text-center">

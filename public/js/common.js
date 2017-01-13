@@ -3,21 +3,21 @@
 //表单输入框验证
 var checkInput = function($element, msg, regular, wrapShow){
   if(!($element && msg)) throw new Error('至少两个参数！');
-  var msgRequired = msg.required || '不能为空！',
-      msgregular = msg.regular || '格式有误！';
+  var msgRequired = msg.required || '字段不能为空',
+      msgregular = msg.regular || '输入格式有误';
   var wrapShow = wrapShow || false;
   var value = $.trim($element.val());
   var formGroup = $element.parents('.form-group');
-  if(!wrapShow){
-  	if(formGroup.children('.alert').length === 0) {
+  if(wrapShow){
+  	if(formGroup.next('.alert').length === 0) {
+	    formGroup.after('<div class="col-md-offset-3 alert alert-danger"></div>')
+	  }
+	  $alert = formGroup.next('.alert');
+  }else {
+	  if(formGroup.children('.alert').length === 0) {
 	    formGroup.append('<div class="col-md-3 alert alert-danger"></div>')
 	  }
 	  $alert = formGroup.children('.alert');
-  }else {
-  	if(formGroup.next('.alert').length === 0) {
-	    formGroup.after('<div class="alert alert-danger"></div>')
-	  }
-	  $alert = formGroup.next('.alert');
   }
   if(value == '') {
     formGroup.removeClass('has-success').addClass('has-error');
@@ -45,16 +45,16 @@ var confirmConsistent = function($element, $target, msg, wrapShow) {
   var value = $.trim($element.val()),
       targetValue = $.trim($target.val());
   var formGroup = $element.parents('.form-group');
-  if(!wrapShow){
-  	if (formGroup.children('.alert').length === 0) {
+  if(wrapShow){
+  	if (formGroup.next('.alert').length === 0) {
+	    formGroup.after('<div class="col-md-offset-3 alert alert-danger"></div>');
+	  }
+	  $alert = formGroup.next('.alert');
+  }else{
+	  if (formGroup.children('.alert').length === 0) {
 	    formGroup.append('<div class="col-md-3 alert alert-danger"></div>');
 	  }
 	  $alert = formGroup.children('.alert');
-  }else{
-  	if (formGroup.next('.alert').length === 0) {
-	    formGroup.after('<div class="alert alert-danger"></div>');
-	  }
-	  $alert = formGroup.next('.alert');
   }
   if (value == '' || targetValue == '' || value !== targetValue) {
     formGroup.removeClass('has-success').addClass('has-error');
@@ -86,7 +86,7 @@ var queryAccount = function($element, router, msg, $target, wrapShow, contrary){
 	  $alert.addClass('hidden');
   }else {
   	if (formGroup.next('.alert').length === 0) {
-	    formGroup.after('<div class="alert alert-danger hidden"></div>')
+	    formGroup.after('<div class="col-md-offset-3 col-md-9 alert alert-danger hidden"></div>')
 	  }
 	  var $alert = formGroup.next('.alert');
 	  $alert.addClass('hidden');
@@ -161,19 +161,19 @@ var checkCode = function($element, msg, wrapShow) {
 	  var $alert = formGroup.children('.alert');
   }else{
   	if (formGroup.next('.alert').length === 0) {
-	    formGroup.after('<div class="alert alert-danger"></div>')
+	    formGroup.after('<div class="col-md-offset-3 alert alert-danger"></div>')
 	  }
 	  var $alert = formGroup.next('.alert');
   }
   if (inputCode == '') {
     formGroup.removeClass('has-success').addClass('has-error');
     $alert.html('<i class="fa fa-warning"></i>'+ msgRequired);
-    authCodeInput.focus();
+    $element.focus();
     return false;
   } else if (inputCode !== code) {
     formGroup.removeClass('has-success').addClass('has-error');
     $alert.html('<i class="fa fa-warning"></i>'+ msgError);
-    authCodeInput.val('').focus();
+    $element.val('').focus();
     drawCode();
     return false;
   } else {
@@ -257,4 +257,18 @@ var checkImage = function(fileInput, msg, regular, sizeLimit){
 	}
 	$alert && $alert.remove()
 	return true;
+}
+//倒计时 自动跳转到指定页
+var countDown = function($target, router, count){
+  var count = count || 5;
+  var timer;
+  timer = setInterval(function() {
+      if (count === 0) {
+        clearInterval(timer);
+        window.location.href = router;
+      } else {
+        count--;
+        $target.text(count)
+      }
+    }, 1000)
 }
