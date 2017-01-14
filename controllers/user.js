@@ -10,7 +10,7 @@ exports.showSignup = function(req, res, next){
 }
 //登录页
 exports.showSignin = function(req, res, next){
-	res.render('signin', {title: '欢迎登录', msg: ''})
+	res.render('signin', {title: '欢迎登录'})
 }
 //查询邮箱号
 exports.findByEmail = function(req, res, next){
@@ -63,7 +63,7 @@ function getRandom(min, max){;
 }
 //去除前后空格
 function Trim(str){ 
-  return str.replace(/(^\s*)|(\s*$)/g, ""); 
+  return str.replace(/(^\s*)|(\s*$)/g, ''); 
 }
 //注册功能
 exports.signup = function(req, res){
@@ -77,14 +77,14 @@ exports.signup = function(req, res){
 			user.save(function(err, user){
 				if(err){
 					_user.error = '注册失败，系统错误';
-					return res.render('signup', {title: '欢迎注册', user: _user, })
+					return res.render('signup', {title: '欢迎注册', user: _user})
 				}
 				req.session.user = user;
 				res.redirect('/')
 			})
 		}else {
 			_user.error = '注册失败，该邮箱号已经被注册！';
-		  res.render('signup', {title: '欢迎注册', user: _user, })
+		  res.render('signup', {title: '欢迎注册', user: _user})
 		}
 	})
 }
@@ -276,27 +276,33 @@ exports.modifyPassword = function(req, res){
 	})
 }
 //找回密码
-exports.findPassword = function(req, res){
+exports.showFindPassword = function(req, res){
 	res.render('account/find_password',{title: '找回密码'})
 }
-//重置密码页
-exports.showResetPassword = function(req, res){
-	var email = req.query.email;
+//发送邮件提示页
+exports.showSendEmail = function(req, res){
+	var email = req.body.email;
 	User.findOne({email: email}, function(err, user){
 		if(err) return err;
 		if(user){
-			res.render('account/reset_password', {title: '重置密码', user: user})
+			req.session.user = user;
+			res.render('account/reset_send_email', {title: '邮件发送成功', user: user})
 		}else{
 			res.redirect('/signin')
 		}
 	})
 }
+//重置密码页
+exports.showRestPassword = function(req, res){
+	res.render('account/reset_password', {title: '重置密码'})
+}
 //重置密码功能
 exports.resetPassword = function(req, res){
 	var _user = req.body.user;
-	var uid = Trim(_user.uid);
-	var newpasswd = Trim(_user.newpasswd);
-	User.findOne({_id: uid}, function(err, user){
+	var newpasswd = _user.newpasswd;
+	var user = req.session.user;
+	var id = user._id;
+	User.findOne({_id: id}, function(err, user){
 		if(err) console.log(err);
 		if(!user){
 			return redirect('/signin')
@@ -304,7 +310,6 @@ exports.resetPassword = function(req, res){
 		user.comparePassword(newpasswd, function(err, isMatch){
 			if(err) return err;
 			if(isMatch){
-				console.log('新密码不得与原密码重复')
 				user.error = '新密码不得与原密码重复';
 				return res.render('account/reset_password', {title: '重置密码', user: user})
 			}else{
@@ -458,10 +463,11 @@ exports.accountBind = function(req, res){
 exports.showBindMobile = function(req, res){
 	res.render('account/account_bind', {title: '账号绑定', tabIndex: 1})
 }
-//注册公司
+//注册我的企业
 exports.showRegisteredPartner = function(req, res){
-	res.render('account/registered_partner', {title: '注册商家'})
+	res.render('account/registered_partner', {title: '注册我的企业'})
 }
+
 //用户列表
 exports.userlist = function(req, res){
 	User.fetch(function(err, users){

@@ -3,7 +3,7 @@
 //表单输入框验证
 var checkInput = function($element, msg, regular, wrapShow){
   if(!($element && msg)) throw new Error('至少两个参数！');
-  var msgRequired = msg.required || '字段不能为空',
+  var msgRequired = msg.required || '该项不能为空',
       msgregular = msg.regular || '输入格式有误';
   var wrapShow = wrapShow || false;
   var value = $.trim($element.val());
@@ -142,7 +142,7 @@ var drawCode = function() {
   cxt.font = "24px Microsoft Yahei";
   cxt.backgroundColor = '#ccc';
   cxt.fillStyle = '#444';
-  cxt.fillText(createCode(), 10, 25)
+  cxt.fillText(createCode(), 8, 25)
 }
 
 //校验验证码

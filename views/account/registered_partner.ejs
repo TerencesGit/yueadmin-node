@@ -15,9 +15,9 @@
                注册我的企业
               </h3>
           </div>
-          <div class="panel-body p-20">
+          <div class="panel-body">
             <h4 class="page-header">请填写企业真实信息，*表示必填项</h4> 
-            <form method="post" action="/" id="registeredForm" class="form-horizontal" role="form">        
+            <form method="post" action="/partner/register" id="registeredForm" class="form-horizontal" role="form" enctype="multipart/form-data">        
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>企业名称</label>
                 <div class="col-md-6">
@@ -31,27 +31,15 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 control-label"><i>*</i>营业执照编号</label>
+                <label class="col-md-3 control-label"><i>*</i>营业执照注册号</label>
                 <div class="col-md-6">
-                  <input type="text" id="licenseId" class="form-control" name="partner[licenseId]" value="" placeholder="请输入营业执照编号">
+                  <input type="text" id="licenseId" class="form-control" name="partner[license_id]" value="" placeholder="请输入营业执照注册号">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>联系人</label>
                 <div class="col-md-6">
                   <input type="text" id="contactName" class="form-control" name="partner[contact_name]" value="" placeholder="请输入联系人姓名">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 control-label"><i>*</i>联系电话</label>
-                <div class="col-md-6">
-                  <input type="text" id="contactMobile" class="form-control" name="partner[mobile]" value="" placeholder="请输入联系电话">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 control-label">企业邮箱</label>
-                <div class="col-md-6">
-                  <input type="text" id="partnerEmail" class="form-control" name="partner[email]" value="" placeholder="请输入企业邮箱">
                 </div>
               </div>
               <div class="form-group row">
@@ -63,7 +51,25 @@
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>邮编</label>
                 <div class="col-md-6">
-                  <input type="text" id="postcode" class="form-control" name="partner[postcode]" value="" placeholder="请输入邮编号">
+                  <input type="text" id="postcode" class="form-control" name="partner[post]" value="" placeholder="请输入邮编号">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 control-label">联系电话</label>
+                <div class="col-md-6">
+                  <input type="text" id="contactTelephone" class="form-control" name="partner[telephone]" value="" placeholder="号码格式：区号-直播号码，例如：010-12345678">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 control-label">联系手机</label>
+                <div class="col-md-6">
+                  <input type="text" id="contactMobile" class="form-control" name="partner[mobile]" value="" placeholder="请输入手机号码">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 control-label">企业邮箱</label>
+                <div class="col-md-6">
+                  <input type="text" id="partnerEmail" class="form-control" name="partner[email]" value="" placeholder="请输入企业邮箱">
                 </div>
               </div>
               <div class="form-group row">
@@ -75,23 +81,23 @@
               <div class="form-group row logo-upload">
                 <label class="col-md-3 control-label"><i>*</i>企业LOGO</label>
                 <div class="col-md-3">
-                 <input type="file" name="partner[logo]" id="logoFile">
+                 <input type="file" name="logo" id="logoFile">
                  <div id="logoPreview" class="preview-area">
-                  <img src="public/img/idcard11.png" id="logoPic" class="part_logo" width="100" height="100" title="企业LOGO" alt="企业LOGO">
+                  <img src="" id="logoPic" class="part_logo" width="100" height="100" title="企业LOGO" alt="企业LOGO上传">
                   <a class="btn btn-link">选择本地图片</a>
                  </div>
                 </div>
                 <label class="col-md-1 control-label">示例：</label>
                 <div class="col-md-3">
-                    <img src="public/img/logo.png" alt="企业LOGO示例" title="企业LOGO示例" width="100" height="100">
+                    <img src="/img/logo.png" alt="企业LOGO示例" title="企业LOGO示例" width="100" height="100">
                 </div>
               </div>    
               <div class="form-group row license-upload">
                 <label class="col-md-3 control-label"><i>*</i>营业执照:</label>
                 <div class="col-md-9">
-                  <input type="file" name="partner[license]" id="licenseFile">
+                  <input type="file" name="license" id="licenseFile">
                   <div id="licensePreview" class="preview-area">
-                    <img src="public/img/idcard11.png" id="licensePic" class="part_license" width="500" height="150" title="营业执照" alt="营业执照">
+                    <img src="" id="licensePic" class="part_license" width="500" height="150" title="营业执照" alt="营业执照上传">
                     <a class="btn btn-link">选择本地图片</a>
                   </div>
                 </div>

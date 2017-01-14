@@ -49,13 +49,16 @@ router.get('/account/modify_password', User.showModifyPassword);
 router.post('/account/modify_password', User.modifyPassword);
 
 //重置密码
-router.get('/account/find_password', User.findPassword);
-router.get('/account/reset_password', User.showResetPassword);
+router.get('/account/find_password', User.showFindPassword);
+router.post('/account/show_send_email', User.showSendEmail);
+router.get('/account/show_reset_password', User.showRestPassword);
 router.post('/account/reset_password', User.resetPassword);
 
 //注册企业
 router.get('/account/registered_partner', User.showRegisteredPartner);
-//router.post('/partner/register', multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.register);
+router.post('/partner/register', multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.saveInfo);
+router.get('/partner/partner_info', Partner.showInfo)
+router.post('/partner/edit_info',multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.EditInfo)
 
 /* 组织管理 */
 router.get('/company/department', User.departdment);

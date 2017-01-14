@@ -5,6 +5,7 @@ var partnerSchema = new Schema({
 	admin: {type: ObjectId, ref: 'User'},
 	name: String,
 	corporation: String,
+	license_id: String,
 	contact_name: String,
 	contact_mobile: String,
 	email: String,
