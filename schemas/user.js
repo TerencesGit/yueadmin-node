@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
+var Schema = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId;
 var userSchema = new mongoose.Schema({
 	email: {
 		type: String,
@@ -53,6 +55,7 @@ var userSchema = new mongoose.Schema({
 		type: Number,
 		default: 1
 	},
+	partner: {type: ObjectId, ref: 'Partner'},
 	meta: {
 		createAt: {
 			type: Date,

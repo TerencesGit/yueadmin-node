@@ -14,10 +14,8 @@
               <div class="panel panel-default">
                 <div class="panel-body">
                   <div class="text-center m-b">
-                    <img src="<%if(user && user.avatar){%>/upload/avatar/<%= user.avatar %><%}else{%> /img/avatar.gif <%}%>" class="img-circle" width="200" height="200" title="头像" alt="头像">
-                    <% if(user && user.name){ %> 
+                    <img src="<%if(user.avatar){%>/upload/avatar/<%= user.avatar %><%}else{%> /img/avatar.gif <%}%>" class="img-circle" width="200" height="200" title="头像" alt="头像">
                     <p class="m-t"><%= user.name %></p>
-                    <% } %>
                   </div>
                   <ul class="list-group">
                     <li class="list-group-item active">
@@ -28,35 +26,29 @@
                     </li>
                     <li class="list-group-item">
                       <label>邮箱:</label>
-                      <% if(user && user.email){ %> 
                       <span><%= user.email %></span>
-                      <% } %>
                     </li>
                     <li class="list-group-item">
                       <label>qq:</label>
-                      <% if(user && user.qq){ %> 
-                      <span><%= user.qq %></span>
-                      <% }else{ %>
-                      <span>未设置</span>
-                      <% } %>
+                      <span>
+                        <% if(user.qq){%><%= user.qq %><% 
+                        }else{ %>未设置<%}%>
+                      </span>
                     </li>
                     <li class="list-group-item">
                       <label>性别:</label>
-                      <% if(user && user.gender == '0'){ %>
-                      <span>男</span>
-                      <% }else if(user && user.gender == '1'){ %>
-                      <span>女</span>
-                      <% }else{ %>
-                      <span>未知</span>
-                      <%}%>
+                      <span>
+                      <% if(user.gender == '0'){ %>男
+                      <% }else if(user.gender == '1'){ %>女
+                      <% }else{ %> 未知 <%}%>
+                      </span>
                     </li>
                     <li class="list-group-item">
                       <label>籍贯:</label>
-                      <% if(user && user.address){ %> 
-                      <span><%= user.address %></span>
-                      <% }else{ %>
-                      <span>未设置</span>
-                      <% } %>
+                      <span>
+                        <% if(user.address){ %><%= user.address %>
+                        <% }else{ %>未设置<%}%>
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -73,11 +65,11 @@
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in">
                   <div class="panel-body">
-                    <h4><%if(user && user.signature){%> <%= user.signature %> <%}%></h4>
+                    <h4><%if(user.signature){%> <%= user.signature %> <%}%></h4>
                   </div>
                 </div>
               </div>
-              <div class="panel panel-primary">
+              <div class="panel panel-primary account-info">
                 <div class="panel-heading">
                   <h3 class="panel-title">
                     <a href="#collapseTwo" data-toggle="collapse">账户详细信息</a>
@@ -88,60 +80,60 @@
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>昵称</dt>
-                        <dd><%if(user && user.name){%><%= user.name%><%}%></dd>
+                        <dd><%= user.name%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>邮箱</dt>
-                        <dd><%if(user && user.email){%><%= user.email%><%}%></dd>
+                        <dd><%= user.email%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>手机号</dt>
-                        <dd><%if(user && user.mobile){%><%= user.mobile%><%}%></dd>
+                        <dd><%if(user.mobile){%><%= user.mobile%><%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>qq</dt>
-                        <dd><%if(user && user.qq){%><%= user.qq%><%}%></dd>
+                        <dd><%if(user.qq){%><%= user.qq%><%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>性别</dt>
                         <dd>
-                        <% if(user && user.gender == '0'){ %> 男
-                        <% }else if(user && user.gender == '1'){ %> 女
-                        <% }else{ %>  <% } %>
+                        <% if(user.gender == '0'){ %> 男
+                        <% }else if(user.gender == '1'){ %> 女
+                        <% }else{ %> 未知 <% } %>
                         </dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>生日</dt>
-                        <dd><%if(user && user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD')%><%}%></dd>
+                        <dd><%if(user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD')%><%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>身份证号</dt>
-                        <dd><%if(user && user.idcard){%> <%= user.idcard%> <%}%></dd>
+                        <dd><%if(user.idcard){%> <%= user.idcard%> <%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>籍贯</dt>
-                        <dd><%if(user && user.address){%> <%= user.address %> <%}%></dd>
+                        <dd><%if(user.address){%> <%= user.address %> <%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>身份证正面</dt>
                         <dd>
-                          <img src="<%if(user && user.idcard_front){%>/upload/idcard/<%= user.idcard_front %><%}else{%> /img/idcard_front_example.png <%}%>" width="245" height="158" class="img-rounded m-l" title="身份证正面" alt="身份证正面">
+                          <img src="<%if(user.idcard_front){%>/upload/idcard/<%= user.idcard_front %><%}else{%> /img/idcard_front_example.png <%}%>" width="245" height="158" class="img-rounded" title="身份证正面" alt="身份证正面">
                         </dd>
                       </dl>
                     </div>
@@ -149,7 +141,7 @@
                       <dl class="dl-horizontal">
                         <dt>身份证反面</dt>
                         <dd>
-                          <img src="<%if(user && user.idcard_back){%>/upload/idcard/<%= user.idcard_back %><%}else{%> /img/idcard_back_example.png <%}%>" width="245" height="158" class="img-rounded m-l" title="身份证反面" alt="身份证反面">
+                          <img src="<%if(user.idcard_back){%>/upload/idcard/<%= user.idcard_back %><%}else{%> /img/idcard_back_example.png <%}%>" width="245" height="158" class="img-rounded" title="身份证反面" alt="身份证反面">
                         </dd>
                       </dl>
                     </div>

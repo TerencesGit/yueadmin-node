@@ -59,7 +59,9 @@ router.get('/account/registered_partner', User.showRegisteredPartner);
 router.post('/partner/register', multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.saveInfo);
 router.get('/partner/partner_info', Partner.showInfo)
 router.post('/partner/edit_info',multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.EditInfo)
-
+//企业审核
+router.get('/admin/partner_manage', User.partnerManage);
+router.get('/admin/show_partner', User.showPartner)
 /* 组织管理 */
 router.get('/company/department', User.departdment);
 router.get('/company/company_info', User.conpanyIofo);

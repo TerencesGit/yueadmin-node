@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var Message = require('../models/message');
+var Partner = require('../models/partner');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
@@ -465,9 +466,41 @@ exports.showBindMobile = function(req, res){
 }
 //注册我的企业
 exports.showRegisteredPartner = function(req, res){
-	res.render('account/registered_partner', {title: '注册我的企业'})
+	var user = req.session.user;
+	if(user){
+		Partner.find({admin: user._id}).exec(function(err, partner){
+				if(!partner[0]){
+					return res.render('account/registered_partner', {title: '注册我的企业'})
+				}
+				if(partner[0].is_verified == 0){
+					res.render('account/registered_partner_success',{title: '等待审核'})
+				}else{
+					res.redirect('/partner/partner_info')
+				}
+		})
+	}else{
+		res.redirect('/signin')
+	}
 }
+/* 管理员操作 */
 
+//商家管理
+exports.partnerManage = function(req, res){
+	Partner.find()
+				 .populate('admin', 'name')
+				 .exec(function(err, partners){
+						res.render('admin/partner_list',{title: '商家列表', partners: partners})
+				 })
+}
+//商家审核
+exports.showPartner = function(req, res){
+	var id = req.query.id;
+	console.log(id)
+	Partner.findOne({_id: id}, function(err, partner){
+		if(err) console.log(err);
+		res.render('admin/show_partner_info',{title: '商家审核', partner: partner})
+	})
+}
 //用户列表
 exports.userlist = function(req, res){
 	User.fetch(function(err, users){

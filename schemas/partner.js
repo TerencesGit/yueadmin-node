@@ -9,6 +9,7 @@ var partnerSchema = new Schema({
 	contact_name: String,
 	contact_mobile: String,
 	email: String,
+	telephone: String,
 	mobile: String,
 	address: String,
 	post: String,

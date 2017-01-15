@@ -103,15 +103,44 @@ licenseFile.change(function(){
 })
 /* 企业信息编辑 */
 var btnEdit = $('.btn-edit');
-var flag = true;
 btnEdit.on('click', function(){
-	var formGroup = $(this).parents('.form-group');
-	if(flag){
-		formGroup.find('p').hide().siblings('input').show()
-		$(this).html('取消')
+	if($(this).hasClass('cancel')){
+		$(this).removeClass('cancel').html('<i class="fa fa-edit"></i>编辑')
+					 .siblings('p').show().siblings('input, textarea').hide();
 	}else{
-		formGroup.find('p').show().siblings('input').hide()
+		$(this).html('取消').addClass('cancel')
+					 .siblings('p').hide().siblings('input, textarea').show();
+	}
+})
+//企业信息编辑表单对象
+var editPartInfoForm = $('#editPartInfoForm'),
+    btnEditInfo = $('#btnEditInfo');
+var $editBtn = $('#editBtn');
+var editable = true;
+$editBtn.on('click', function(e){
+	if(editable){
+		editPartInfoForm.addClass('edit')
+		$(this).html('<i class="fa fa-edit"></i>取消')
+	}else{
+		editPartInfoForm.removeClass('edit')
 		$(this).html('<i class="fa fa-edit"></i>编辑')
 	}
-	flag = !flag;	
+	editable = !editable;
 })
+btnEditInfo.on('click', function(e){
+	e.preventDefault();
+	($('.btn-edit.cancel').length || logoFile[0].files[0] || licenseFile[0].files[0]) &&
+	editInfoSubmit()
+})    
+function editInfoSubmit(){
+	checkInput(partnerName, msg.partnerName, regular.partnerName) &&
+	checkInput(corporation, msg.name, regular.name) &&
+	checkInput(licenseId, msg.licenseId, regular.licenseId) && 
+	checkInput(contactName, msg.name, regular.name) &&
+	checkInput(address, msg.address, regular.address) &&
+	checkInput(postcode, msg.post, regular.post) && 
+	checkNoEmptyInput(contactTelephone, msg.telephone, regular.telephone) &&
+	checkNoEmptyInput(contactMobile, msg.mobile, regular.mobile) &&
+	checkNoEmptyInput(partnerEmail, msg.email, regular.email) && 
+	editPartInfoForm.submit()
+}

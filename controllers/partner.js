@@ -1,7 +1,8 @@
 var Partner = require('../models/partner');
 var fs = require('fs');
 var path = require('path');
-//LOGO上传
+var User = require('../models/user');
+//企业LOGO上传
 exports.logoUpload = function(req, res, next){
 	var logoData = req.files.logo;
 	console.log(logoData)
@@ -46,7 +47,6 @@ exports.saveInfo = function(req, res){
 	var user = req.session.user;
 	var _partner = req.body.partner;
 	_partner.admin = user._id;
-	console.log(_partner)
 	if(req.logo && req.license){
 		_partner.logo = req.logo;
 		_partner.license = req.license;
@@ -57,7 +57,10 @@ exports.saveInfo = function(req, res){
 				partner.save(function(err, partner){
 					console.log('注册成功')
 					console.log(partner)
-					res.render('account/registered_partner_success',{title: '注册成功'})
+					User.update({_id: user._id},{$set: {partner: partner._id}}, function(err, msg){
+						user.partner = partner._id;
+						res.render('account/registered_partner_success',{title: '注册成功'})
+					})
 				})
 			}else{
 				console.log('该账号已经注册，不能重复注册！')
@@ -71,21 +74,24 @@ exports.saveInfo = function(req, res){
 //企业信息展示
 exports.showInfo = function(req, res){
 	var user = req.session.user;
-	Partner.find({admin: user._id})
+	if(user.partner){
+		Partner.find({admin: user._id})
 				 .populate('user', 'name')
 				 .exec(function(err, partner){
 				 		res.render('partner/partner_info',{title: '企业信息', partner: partner[0]})
 				 })
+	}else{
+		res.redirect('/account/registered_partner')
+	}
 }
 //企业信息编辑
 exports.EditInfo = function(req, res){
 	var _partner = req.body.partner;
-	console.log(_partner)
 	var id = _partner.id;
 	Partner.findOne({_id: id}, function(err, partner){
 		_partner.logo = req.logo || partner.logo;
 		_partner.license = req.license || partner.license;
-		Partner.update({_id: id}, {$set: { _partner }}, function(err, msg){
+		Partner.update({_id: id}, {$set: _partner }, function(err, msg){
 			if(err) console.log(err);
 			res.redirect('/partner/partner_info')
 		})

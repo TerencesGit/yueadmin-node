@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+    <style>
+      .table th {
+        min-width: 50px;
+        text-align: center
+      }
+      .table > tbody > tr > td {
+        vertical-align: middle;
+        text-align: center
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('../aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-id="partner_manage">
+      <div class="wrapper animated fadeInRight">
+         <div class="container-fluid">
+          <div class="panel panel-success">
+              <div class="panel-heading">
+                  <h3 class="panel-title">商家管理</h3>
+              </div>
+              <div class="panel-body">
+              <table class="table table-hover table-bordered table-condensed">
+                <thead>
+                  <tr class='danger'>
+                    <th>申请人</th>
+                    <th>企业名称</th>
+                    <th>申请时间</th>
+                    <th>状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%partners.forEach(function(partner){%>
+                  <tr>
+                    <td><%= partner.admin.name%></td>
+                    <td><%= partner.name%></td>
+                    <td><%= moment(partner.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %></td>
+                    <td>
+                    <a href="/admin/show_partner?id=<%= partner._id%>"><%if(partner.is_verified == 0){%>待审核<%}else{已审核}%></a></td>
+                  </tr>
+                  <%})%>
+                </tbody>
+              </table>
+              </div>
+          </div>       
+        </div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+  </body>
+</html>

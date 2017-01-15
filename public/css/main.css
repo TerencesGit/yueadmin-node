@@ -1,4 +1,4 @@
-/**========== css reset ==========**/
+/*========== css reset ==========**/
 
 ul,
 li {
@@ -80,12 +80,7 @@ body {
 .breadcrumb {
   background-color: #ddd;
 }
-.dl-horizontal dt {
-    width: auto;
-}
-.dl-horizontal dd {
-    margin-left: 60px;
-}
+
 /**========== animation start ==========**/
 .animated {
   -webkit-animation-duration: 1s;
@@ -649,7 +644,12 @@ body {
 /**========== 页脚区域 end ===========**/
 
 /**========== 账号信息编辑 start ===========**/
-
+.account-info .dl-horizontal dt {
+  width: 75px;
+}
+.account-info .dl-horizontal dd {
+  margin-left: 90px;
+}
 .avatar-form {
   width: 150px;
 }
@@ -762,21 +762,23 @@ body {
 .panel-success {
   min-height: 300px
 }
-.partner-info-edit .form-group input,
-.partner-info-edit .form-group textarea {
+/* 企业信息 */
+.partner-info .form-group input,
+.partner-info .form-group textarea,
+.partner-info .form-group button,
+.partner-info .form-group a {
   display: none
 }
 .partner-info .form-group .form-control {
   width: 80%;
 }
-.partner-info .btn-edit{
-  display: none
-}
-.partner-info .form-group > div:hover .btn-edit{
+.partner-info.edit .form-group a,
+.partner-info.edit .form-group button{
   display: inline-block
 }
-.partner-info .preview-area img {
-    display: inline-block;
+.check-partner {
+  width: 60%;
+  margin: auto;
 }
 /**========== 注册我的企业 end ===========**/
 
@@ -804,4 +806,4 @@ body {
 .media:hover .btn-delete {
   display: inline-block;
 }
-/**========== 留言板 end ===========**/
+/**========== 留言板 end ===========*
