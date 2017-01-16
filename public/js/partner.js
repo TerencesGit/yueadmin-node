@@ -19,6 +19,7 @@ const registeredForm = $('#registeredForm'),
 			licensePreview = $('#licensePreview'),
 			licensePic = $('#licensePic'),
 			btnRegistered = $('#btnRegistered');
+			btnRegistered2 = $('#btnRegistered2');
 //正则表达式   
 const regular = {
 		partnerName: /^[\u4E00-\u9FA5A-Za-z0-9]+$/,
@@ -60,10 +61,17 @@ const msg = {
 }			
 btnRegistered.on('click', function(e){
 	e.preventDefault()
-	registerSubmit()
+	checkForm() &&
+	checkImage(logoFile) &&
+	checkImage(licenseFile) &&
+	registeredForm.submit()
+})	
+btnRegistered2.on('click', function(e){
+	e.preventDefault()
+	checkForm() && registeredForm.submit()
 })			
-function registerSubmit(){
-	checkInput(partnerName, msg.partnerName, regular.partnerName) &&
+function checkForm(){
+	return checkInput(partnerName, msg.partnerName, regular.partnerName) &&
 	checkInput(corporation, msg.name, regular.name) &&
 	checkInput(licenseId, msg.licenseId, regular.licenseId) && 
 	checkInput(contactName, msg.name, regular.name) &&
@@ -71,10 +79,7 @@ function registerSubmit(){
 	checkInput(postcode, msg.post, regular.post) && 
 	checkNoEmptyInput(contactTelephone, msg.telephone, regular.telephone) &&
 	checkNoEmptyInput(contactMobile, msg.mobile, regular.mobile) &&
-	checkNoEmptyInput(partnerEmail, msg.email, regular.email) && 
-	checkImage(logoFile) &&
-	checkImage(licenseFile) &&
-	registeredForm.submit()
+	checkNoEmptyInput(partnerEmail, msg.email, regular.email)
 }
 function checkNoEmptyInput($element, msg, regular){
 	var value = $.trim($element.val());
@@ -130,17 +135,21 @@ $editBtn.on('click', function(e){
 btnEditInfo.on('click', function(e){
 	e.preventDefault();
 	($('.btn-edit.cancel').length || logoFile[0].files[0] || licenseFile[0].files[0]) &&
-	editInfoSubmit()
+	checkForm() && editPartInfoForm.submit()
 })    
-function editInfoSubmit(){
-	checkInput(partnerName, msg.partnerName, regular.partnerName) &&
-	checkInput(corporation, msg.name, regular.name) &&
-	checkInput(licenseId, msg.licenseId, regular.licenseId) && 
-	checkInput(contactName, msg.name, regular.name) &&
-	checkInput(address, msg.address, regular.address) &&
-	checkInput(postcode, msg.post, regular.post) && 
-	checkNoEmptyInput(contactTelephone, msg.telephone, regular.telephone) &&
-	checkNoEmptyInput(contactMobile, msg.mobile, regular.mobile) &&
-	checkNoEmptyInput(partnerEmail, msg.email, regular.email) && 
-	editPartInfoForm.submit()
-}
+//商家信息审核表单
+var verifiedPartnerForm = $('#verifiedPartnerForm'),
+		rejectInfo = $('#rejectInfo'),
+		btnVerified = $('#btnVerified');
+btnVerified.on('click', function(e){
+	e.preventDefault()
+	if($.trim(rejectInfo.val()).length >= 5){
+		verifiedPartnerForm.submit()
+	}else{
+		console.log($.trim(rejectInfo.val()).length)
+		rejectInfo.parents('.form-group').addClass('has-error')
+	}
+})
+rejectInfo.focus(function(){
+	$(this).parents('.form-group').removeClass('has-error')
+})

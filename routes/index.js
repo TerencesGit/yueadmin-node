@@ -56,20 +56,25 @@ router.post('/account/reset_password', User.resetPassword);
 
 //注册企业
 router.get('/account/registered_partner', User.showRegisteredPartner);
+router.get('/account/show_registered_partner', User.showRegistered);
 router.post('/partner/register', multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.saveInfo);
 router.get('/partner/partner_info', Partner.showInfo)
 router.post('/partner/edit_info',multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.EditInfo)
+
+//企业组织管理
+router.get('/partner/department_manage', Partner.departdment);
+
 //企业审核
-router.get('/admin/partner_manage', User.partnerManage);
-router.get('/admin/show_partner', User.showPartner)
-/* 组织管理 */
-router.get('/company/department', User.departdment);
-router.get('/company/company_info', User.conpanyIofo);
+router.get('/admin/manage_partner', Partner.managePartner);
+router.get('/admin/verify_partner', Partner.verifiedPartner);
+router.get('/admin/verify_partner_pass', Partner.verifiedPass);
+router.post('/admin/verify_partner_nopass', Partner.verifiedNoPass);
 
 /* 留言功能 */
 router.get('/message', Message.home);
 router.post('/message/save', Message.save);
 router.get('/message/delete', Message.delete);
+
 /* 404 */
 router.get('/404', function(req, res){
 	res.render('404')

@@ -55,7 +55,7 @@
                 <dt>联系电话</dt>
                 <dd>
                   <%if(partner.telephone){%><%= partner.telephone%>
-                  <%}else{%>未设置<%}%>
+                  <%}else{%>未填写<%}%>
                 </dd>
               </dl>
             </div>
@@ -64,7 +64,7 @@
                 <dt>联系手机</dt>
                 <dd>
                   <%if(partner.mobile){%><%= partner.mobile%>
-                  <%}else{%>未设置<%}%>
+                  <%}else{%>未填写<%}%>
                 </dd>
               </dl>
             </div>
@@ -73,7 +73,7 @@
                 <dt>企业邮箱</dt>
                 <dd>
                   <%if(partner.email){%><%= partner.email%>
-                  <%}else{%>未设置<%}%>
+                  <%}else{%>未填写<%}%>
                 </dd>
               </dl>
             </div>
@@ -82,7 +82,7 @@
                 <dt>企业简介</dt>
                 <dd>
                   <%if(partner.profile){%><%= partner.profile%>
-                  <%}else{%>未设置<%}%>
+                  <%}else{%>未填写<%}%>
                 </dd>
               </dl>
             </div>
@@ -102,15 +102,16 @@
                 </dd>
               </dl>
             </div>
-            <form action="/" mathod="post" id="checkPartnerForm" class="check-partner">
+            <form action="/admin/verify_partner_nopass" method="post" id="verifiedPartnerForm" class="check-partner">
               <h3 class="page-header">审核意见</h3>
-              <input type="hidden" name="partner[id]" value="partner._id">
+              <input type="hidden" name="partner[id]" value="<%=partner._id%>">
               <div class="form-group">
-                <textarea name="partner[reject_info]" id="" class="form-control" cols="30" rows="5"></textarea>
+                <label for="rejectInfo">如果不通过，请填写原因：</label>
+                <textarea name="partner[reject_info]" id="rejectInfo" class="form-control" cols="30" rows="5" placeholder="不少于5个字"></textarea>
               </div>
               <div class="form-group text-center">
-                <button class="btn btn-success">通过</button>
-                <button class="btn btn-warning m-l">不通过</button>
+                <a href="/admin/verify_partner_pass?id=<%= partner._id%>" class="btn btn-success">通过</a>
+                <button type="submit" id="btnVerified" class="btn btn-warning m-l">不通过</button>
               </div>
             </form>
           </div>

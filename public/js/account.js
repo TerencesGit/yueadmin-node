@@ -66,7 +66,7 @@
     },
     nickname: {
       required: '不能为空',
-      regular: '不少于3位',
+      //regular: '不少于3位',
     },
     qq: 'qq格式有误',
     idcard: '身份证号格式有误',
@@ -207,7 +207,7 @@
   //账户编辑表单提交
   btnInfoSubmit.on('click', function(e){
     e.preventDefault()
-    checkInput(nicknameInput, msg.nickname, regular.nickname) &&
+    checkInput(nicknameInput, msg.nickname) &&
     checkInput(qqInput, msg.qq, regular.qq) &&
     checkInput(idcardInput, msg.idcard, regular.idcard) &&
     checkInput(addressInput, msg.address) && accountInfoForm.submit()

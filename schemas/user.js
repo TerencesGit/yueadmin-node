@@ -97,6 +97,32 @@ userSchema.statics = {
 		return this
 					.findOne({_id: id})
 					.exec(cb)
+	},
+	findByPagination: function(obj, callback){
+		var query = obj.search || {};
+		var pageNumber = obj.page.number || 1;
+		var pageSize = obj.page.limit || 5;
+		var skipFrom = (pageNumber * pageSize) - pageSize;
+		var _this = this;
+		return this.find({})
+							 .sort('-meta.updateAt')
+							 .skip(skipFrom)
+							 .limit(pageSize)
+							 .exec(function(err, results){
+							 	if(err) {
+							 		console.log(err)
+							 	}else{
+							 		_this.count(query, function(err, count){
+							 			console.log(count)
+							 			if(err){
+							 				console.log(err)
+							 			}else{
+							 				var pageCount = Math.ceil(count / pageSize);
+							 				callback(null, pageNumber, pageCount, results)
+							 			}
+							 		})
+							 	}
+							 })
 	}
 }
 module.exports = userSchema;

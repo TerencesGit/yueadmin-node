@@ -67,6 +67,9 @@ body {
 .relative {
   position: relative;
 }
+.disabled {
+  pointer-events: none
+}
 /**========== bootstrap reset ==========**/
 
 .control-label {
@@ -553,6 +556,7 @@ body {
 }
 
 .navbar-nav .personal-center {
+  min-width: 160px;
   margin-top: 8px;
 }
 

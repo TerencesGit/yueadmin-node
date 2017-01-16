@@ -2,6 +2,7 @@
 <html>
   <head>
     <%- include('../link') %>
+    <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
     <style>
       .table th {
         min-width: 50px;
@@ -55,13 +56,11 @@
             <% })%>
           </table>
           <ul class="pagination">
-              <li><a href="#">&laquo;</a></li>
-              <li class="active"><a href="#">1</a></li>
-              <li class="disabled"><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">&raquo;</a></li>
+            <li class="<%if(pageIndex == 1){%>disabled<%}%>"><a href="/user/list?page=<%= pageIndex*1-1 == 0 ? 1 : pageIndex*1-1 %>">&laquo;</a></li>
+            <% for(var i = 1; i <= pageCount; i++){%>
+              <li class="<%if(pageIndex == i){%>active<%}%>"><a href="/user/list?page=<%=i%>"><%=i%></a></li>
+            <% }%>  
+            <li class="<%if(pageIndex == pageCount){%>disabled<%}%>"><a href="/user/list?page=<%= pageIndex*1 == pageCount ? pageCount : pageIndex*1+1 %>">&raquo;</a></li> 
           </ul>
           <div class="warp-footer"></div>
         </div>
@@ -107,5 +106,16 @@
     </div>
     <%- include('../script')%>
     <script src="/js/user.js"></script>
+    <script src="/js/bootstrap-paginator.min.js"></script>
+    <script>
+      $(function(){
+        var options = {
+          currentPage:2,
+          totalPages:5,
+          numberOfPages:5
+          }
+      $('#page1').bootstrapPaginator(options);
+      })
+    </script>
   </body>
 </html>

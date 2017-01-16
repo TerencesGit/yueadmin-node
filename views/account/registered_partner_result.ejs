@@ -11,14 +11,15 @@
         <div class="container-fluid">
           <div class="panel panel-success">
             <div class="panel-heading">
-              <h3 class="panel-title"><%= title%></h3>
+              <h3 class="panel-title">未通过审核</h3>
             </div>
             <div class="panel-body text-center">
               <div class="success">
-                <h3 class="success-info">企业注册信息提交成功！</h3>
+                <h3>抱歉，您的申请未通过审核。</h3>
                 <p class="m-t">
-                  请等待管理员审核... <a href="/">返回账户首页</a>
+                  原因：<%= partner.reject_info%>
                 </p>
+                <a href="/account/show_registered_partner">返回重新填写</a>
               </div>
             </div>
           </div>

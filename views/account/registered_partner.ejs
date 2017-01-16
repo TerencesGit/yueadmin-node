@@ -11,71 +11,70 @@
         <div class="container-fluid">
           <div class="panel panel-success">
           <div class="panel-heading">
-            <h3 class="panel-title">
-             注册我的企业
-            </h3>
+            <h3 class="panel-title">注册我的企业</h3>
           </div>
           <div class="panel-body">
             <h4 class="page-header">请填写企业真实信息，*表示必填项</h4> 
-            <form method="post" action="/partner/register" id="registeredForm" class="form-horizontal" role="form" enctype="multipart/form-data">        
+            <form method="post" action="/partner/register" id="registeredForm" class="form-horizontal " role="form" enctype="multipart/form-data"> 
+              <input type="hidden" name="partner[_id]" value="<%if(partner){%><%=partner._id%><%}%>">       
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>企业名称</label>
                 <div class="col-md-6">
-                  <input type="text" id="partnerName" class="form-control" name="partner[name]" value="" placeholder="请输入企业名称">
+                  <input type="text" id="partnerName" class="form-control" name="partner[name]" value="<%if(partner){%><%=partner.name%><%}%>" placeholder="请输入企业名称">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>法定代表人</label>
                 <div class="col-md-6">
-                  <input type="text" id="corporation" class="form-control" name="partner[corporation]" value="" placeholder="请输入企业法定代表人">
+                  <input type="text" id="corporation" class="form-control" name="partner[corporation]" value="<%if(partner){%><%=partner.corporation%><%}%>" placeholder="请输入企业法定代表人">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>营业执照注册号</label>
                 <div class="col-md-6">
-                  <input type="text" id="licenseId" class="form-control" name="partner[license_id]" value="" placeholder="请输入营业执照注册号">
+                  <input type="text" id="licenseId" class="form-control" name="partner[license_id]" value="<%if(partner){%><%=partner.license_id%><%}%>" placeholder="请输入营业执照注册号">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>联系人</label>
                 <div class="col-md-6">
-                  <input type="text" id="contactName" class="form-control" name="partner[contact_name]" value="" placeholder="请输入联系人姓名">
+                  <input type="text" id="contactName" class="form-control" name="partner[contact_name]" value="<%if(partner){%><%=partner.contact_name%><%}%>" placeholder="请输入联系人姓名">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>地址</label>
                 <div class="col-md-6">
-                  <input type="text" id="address" class="form-control" name="partner[address]" value="" placeholder="请输入企业地址">
+                  <input type="text" id="address" class="form-control" name="partner[address]" value="<%if(partner){%><%=partner.address%><%}%>" placeholder="请输入企业地址">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>邮编</label>
                 <div class="col-md-6">
-                  <input type="text" id="postcode" class="form-control" name="partner[post]" value="" placeholder="请输入邮编号">
+                  <input type="text" id="postcode" class="form-control" name="partner[post]" value="<%if(partner){%><%=partner.post%><%}%>" placeholder="请输入邮编号">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label">联系电话</label>
                 <div class="col-md-6">
-                  <input type="text" id="contactTelephone" class="form-control" name="partner[telephone]" value="" placeholder="号码格式：区号-直播号码，例如：010-12345678">
+                  <input type="text" id="contactTelephone" class="form-control" name="partner[telephone]" value="<%if(partner){%><%=partner.telephone%><%}%>" placeholder="号码格式：区号-直播号码，例如：010-12345678">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label">联系手机</label>
                 <div class="col-md-6">
-                  <input type="text" id="contactMobile" class="form-control" name="partner[mobile]" value="" placeholder="请输入手机号码">
+                  <input type="text" id="contactMobile" class="form-control" name="partner[mobile]" value="<%if(partner){%><%=partner.mobile%><%}%>" placeholder="请输入手机号码">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label">企业邮箱</label>
                 <div class="col-md-6">
-                  <input type="text" id="partnerEmail" class="form-control" name="partner[email]" value="" placeholder="请输入企业邮箱">
+                  <input type="text" id="partnerEmail" class="form-control" name="partner[email]" value="<%if(partner){%><%=partner.email%><%}%>" placeholder="请输入企业邮箱">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label">企业简介</label>
                 <div class="col-md-6">
-                   <textarea id="profile" class="form-control" name="partner[profile]" placeholder="企业简介" rows="5"></textarea>
+                   <textarea id="profile" class="form-control" name="partner[profile]" placeholder="企业简介" rows="5"><%if(partner){%><%=partner.profile%><%}%></textarea>
                 </div>
               </div>
               <div class="form-group row logo-upload">
@@ -83,7 +82,7 @@
                 <div class="col-md-3">
                  <input type="file" name="logo" id="logoFile">
                  <div id="logoPreview" class="preview-area">
-                  <img src="" id="logoPic" class="part_logo" width="100" height="100" title="企业LOGO" alt="企业LOGO上传">
+                  <img src="<%if(partner){%>/upload/logo/<%=partner.logo%><%}%>" id="logoPic" class="part_logo" width="100" height="100" title="企业LOGO" alt="企业LOGO上传">
                   <a class="btn btn-link">选择本地图片</a>
                  </div>
                 </div>
@@ -97,20 +96,19 @@
                 <div class="col-md-9">
                   <input type="file" name="license" id="licenseFile">
                   <div id="licensePreview" class="preview-area">
-                    <img src="" id="licensePic" class="part_license" width="500" height="150" title="营业执照" alt="营业执照上传">
+                    <img src="<%if(partner){%>/upload/license/<%=partner.license%><%}%>" id="licensePic" class="part_license" width="500" height="150" title="营业执照" alt="营业执照上传">
                     <a class="btn btn-link">选择本地图片</a>
                   </div>
                 </div>
               </div> 
               <div class="form-group text-center"> 
-                <button type="submit" id="btnRegistered" class="btn btn-success">提交</button>
+                <button type="submit" id="btnRegistered<%=partner.is_verified%>" class="btn btn-success">提交</button>
                 <button class="btn btn-default m-l" onClick="history.go(-1)">返回</button>
               </div>
             </form>            
           </div>
         </div>
-          <div class="warp-footer"></div>
-        </div>
+        <div class="warp-footer"></div>
       </div>
     	<%- include('../footer') %>
     </div>

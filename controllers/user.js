@@ -464,6 +464,15 @@ exports.accountBind = function(req, res){
 exports.showBindMobile = function(req, res){
 	res.render('account/account_bind', {title: '账号绑定', tabIndex: 1})
 }
+//
+exports.showRegistered = function(req, res){
+	var user = req.session.user;
+	if(user){
+		Partner.find({admin: user._id}).exec(function(err, partner){
+			return res.render('account/registered_partner', {title: '注册我的企业', partner: partner[0]})
+		})
+	}
+}
 //注册我的企业
 exports.showRegisteredPartner = function(req, res){
 	var user = req.session.user;
@@ -472,8 +481,10 @@ exports.showRegisteredPartner = function(req, res){
 				if(!partner[0]){
 					return res.render('account/registered_partner', {title: '注册我的企业'})
 				}
-				if(partner[0].is_verified == 0){
+				if(partner[0].is_verified == 0 || partner[0].is_verified == 3){
 					res.render('account/registered_partner_success',{title: '等待审核'})
+				}else if(partner[0].is_verified == 2){
+					res.render('account/registered_partner_result',{title: '未通过审核', partner: partner[0]})
 				}else{
 					res.redirect('/partner/partner_info')
 				}
@@ -484,31 +495,28 @@ exports.showRegisteredPartner = function(req, res){
 }
 /* 管理员操作 */
 
-//商家管理
-exports.partnerManage = function(req, res){
-	Partner.find()
-				 .populate('admin', 'name')
-				 .exec(function(err, partners){
-						res.render('admin/partner_list',{title: '商家列表', partners: partners})
-				 })
-}
-//商家审核
-exports.showPartner = function(req, res){
-	var id = req.query.id;
-	console.log(id)
-	Partner.findOne({_id: id}, function(err, partner){
-		if(err) console.log(err);
-		res.render('admin/show_partner_info',{title: '商家审核', partner: partner})
-	})
-}
 //用户列表
 exports.userlist = function(req, res){
-	User.fetch(function(err, users){
-		res.render('admin/userlist', {
-			title: '用户列表',
-			users: users
-		})
-	})
+	var page = {
+		number: req.query.page || 1,
+		limit: 2
+	}
+	var search = req.query.search || {};
+	if(req.query.page){
+		page.number = req.query.page < 1 ? 1 : req.query.page;
+	}
+	var model = {
+		page: page,
+	  search: search
+	}
+	User.findByPagination(model, function(err, pageIndex, pageCount, users){
+				res.render('admin/userlist', {
+					title: '用户列表',
+					users: users,
+					pageCount: pageCount,
+					pageIndex: pageIndex
+				})
+			})
 }
 //用户删除
 exports.delete = function(req, res){
@@ -523,18 +531,9 @@ exports.delete = function(req, res){
 //用户信息编辑
 exports.edit = function edit(req, res){
 	var _user = req.body.user,
-		  uid = _user.id,
-	    name = _user.name, 
-	    email = _user.email,
-	 		role = _user.role;
-	User.update({_id: uid}, {'$set': {name: name, email: email, role: role}}, function(err, msg){
+		  id = _user.id;
+	User.update({_id: id}, {'$set': _user}, function(err, msg){
 		if(err) return err;
 		res.redirect('/user/list')
 	})
-}
-exports.conpanyIofo = function(req, res){
-	res.render('company/company_info', {title: '企业信息'})
-}	
-exports.departdment = function(req, res){
-	res.render('company/department', {title: '部门管理'})
 }
