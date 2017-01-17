@@ -10,10 +10,10 @@
         background-position: -144px 0;
         vertical-align: top;
       }
-      form{
+      /*form{
         padding: 20px;
         background: #fff
-      }
+      }*/
     </style>
   </head>
   <body>
@@ -24,67 +24,184 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-3">
-              <h2 class="page-header">部门结构</h2>
-              <ul id="treeDemo" class="ztree"></ul>
-            </div>
-            <div class="col-md-5">
-              <h2 class="page-header">信息展示</h2>
-              <form action="#" class="form-horizontal" role="form">
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">员工编号</label>
-                  <div class="col-sm-10">
-                    <input type="text" id="departId" class="form-control">
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <a href="#collapseTree" data-toggle="collapse">
+                      部门组织结构
+                    </a>
+                  </h3>
+                </div>
+                <div id="collapseTree">
+                  <div class="panel-body organize-tree">
+                    <ul id="organizeTree" class="ztree" data-id="<%= partner._id%>"></ul>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">员工名称</label>
-                    <div class="col-sm-10">
-                      <input type="text" id="departName" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-9">
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">部门操作</h3>
+                </div>
+                <div class="panel-body">
+                  <ul class="organize-tools row">
+                    <li><a href=""><i class="fa fa-refresh"></i><br>刷新</a></li>
+                    <li>
+                      <a href="#myModal" id="newDepartment" data-toggle="modal">
+                        <i class="fa fa-plus-square"></i><br>新增
+                      </a>
+                    </li>
+                    <li><a href="javascript:;" class="edit-depart"><i class="fa fa-edit"></i><br>编辑</a></li>
+                    <li><a href=""><i class="fa fa-remove"></i><br>删除</a></li>
+                  </ul>
+                  <form action="#" id="organizeForm" class="form-horizontal" role="form">
+                    <h4 class="">部门信息</h4>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">部门名称：</label>
+                        <div class="col-md-8">
+                          <span class="control-text depart-name"></span>
+                          <input type="text" id="departName" class="form-control depart-name hidden">
+                        </div>
                     </div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">部门简介：</label>
+                      <div class="col-md-8">
+                        <p class="control-text depart-profile"></p>
+                        <input type="text" id="departProfile" class="form-control depart-profile hidden">
+                      </div>
+                    </div>
+                    <div class="form-group text-center">
+                      <button class="btn btn-primary">确定</button>
+                      <button class="btn btn-warning m-l">取消</button>
+                    </div>
+                  </form>
                 </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">部门编号</label>
-                  <div class="col-sm-10">
-                    <input type="text" id="parentId" class="form-control">
-                  </div>
+              </div>
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">部门员工</h3>
                 </div>
-                <div class="form-group">
-                  <div class="col-sm-offset-4 col-sm-6">
-                    <button class="btn btn-primary">确定</button>
-                   <!--  <button id="update" class="btn btn-warning">修改</button>
-                    <button id="remove" class="btn btn-danger">删除</button> -->
-                  </div>
+                <div class="panel-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>手机</th>
+                        <th>邮箱</th>
+                        <th>籍贯</th>
+                      </tr>
+                    </thead>
+                    <tbody class="staff-list">
+                    </tbody>
+                  </table>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <h2 class="page-header">JSON数据</h2>
-            <div class="col-md-8">
-               <textarea name="" id="output" class="form-control" cols="60" rows="10"></textarea>
-            </div>  
-          </div>
+          <!-- <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">JSON数据</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-8">
+                 <textarea name="" id="output" class="form-control" cols="60" rows="10"></textarea>
+              </div>
+            </div>
+          </div> -->
         </div>
         <div class="warp-footer"></div>
       </div>
     	<%- include('../footer') %>
     </div>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="/partner/new_organize" method="post" id="newOrganizeForm" class="form-horizontal">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h3 class="modal-title">新增部门</h3>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" id="orgParentId" name="organize[parent_id]" value="">
+                <div class="form-group row">
+                  <label for="" class="col-md-offset-1 col-md-2 control-label">部门名称</label>
+                  <div class="col-md-8">
+                    <input type="text" name="organize[name]" id="organizeName" class="form-control username">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="" class="col-md-offset-1 col-md-2 control-label">部门简介</label>
+                  <div class="col-md-8">
+                    <textarea name="organize[profile]" id="organizeProfile" class="form-control" rows="3" placeholder="选填"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="reset">取消</button>
+                <button type="submit" id="btnNewOrganize"class="btn btn-success">提交</button>
+              </div>
+            </form>
+          </div>
+      </div>
+    </div>
     <%- include('../script')%>
     <script src="/plugins/zTree/js/jquery.zTree.all.min.js"></script>
     <script>
+      $(function(){
+        var partnerId = $('#organizeTree').attr('data-id');
+        $.ajax({
+          type: 'get',
+          url: '/partner/getDepartmentTree?partnerId='+ partnerId,
+        })
+        .done(function(result){
+          console.log(result.organizes)
+          var organizes = result.organizes;
+          var users = result.users;
+          console.log(users)
+          var zNode = [];
+          for(let i = 0; i <organizes.length; i++){
+            var obj = {
+              id: organizes[i]._id,
+              pId: organizes[i].parent_id,
+              name: organizes[i].name,
+              profile: organizes[i].profile,
+              open: true
+            };
+            zNode.push(obj)
+          }
+          console.log(zNode)
+          var organizeTree = $.fn.zTree.init($('#organizeTree'), setting, zNode)
+          var tbodyHtml;
+          for(let i = 0; i < users.length; i++){
+            var num = i+1;
+            var gender = users[i].gender == '1' ? '女' : '男';
+            tbodyHtml += ('<tr><td>'+num+'</td><td>'+users[i].name+'</td>\
+              <td>'+gender+'</td><td>'+users[i].mobile+'</td>\
+              <td>'+users[i].email+'</td>\
+              <td>'+users[i].address+'</td></tr>')
+          }
+          $('.staff-list').append(tbodyHtml)
+        })
+        .fail(function(error){
+          console.log(error)
+        })
+      })
       var setting = {
         view: {
-          addHoverDom: addHoverDom,
-          removeHoverDom: removeHoverDom,
-          selectedMulti: true
+          // addHoverDom: addHoverDom,
+          // removeHoverDom: removeHoverDom,
+          // selectedMulti: true
         },
         edit: {
-          enable: true,
+          // enable: true,
           showRenameBtn: showRenameBtn,
           showRemoveBtn: showRemoveBtn,
-          drag: {
-            isMove: true
-          }
+          // drag: {
+          //   isMove: true
+          // }
         },
         data: {
           simpleData: {
@@ -92,7 +209,7 @@
           }
         },
         check: {
-          enable: true
+          // enable: true
         },
         callback: {
           beforeRemove: beforeRemove,
@@ -106,14 +223,14 @@
         }
       }
       function beforeRemove(treeId, treeNode) {
-        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        var zTree = $.fn.zTree.getZTreeObj("organizeTree");
         zTree.selectNode(treeNode);
         return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
       }
       function beforeRename(treeId, treeNode, newName, isCancel) {
         if (newName.length === 0) {
           setTimeout(function() {
-            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            var zTree = $.fn.zTree.getZTreeObj("organizeTree");
             zTree.cancelEditName();
             alert("节点名称不能为空");
           }, 0);
@@ -130,7 +247,7 @@
         sObj.after(addStr);
         var btn = $("#addBtn_"+treeNode.tId);
         if (btn) btn.bind("click", function(){
-          var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+          var zTree = $.fn.zTree.getZTreeObj("organizeTree");
           zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
           return false;
         });
@@ -147,47 +264,53 @@
       function triggerEvent(event, treeId, treeNode){
         $('#output').val(window.JSON.stringify(treeNode))
       }
+      //点击部门节点显示对应信息
       function HandlerClick(event, treeId, treeNode){
-        var id = treeNode.id;
         var name = treeNode.name;
-        var parentId = treeNode.parentTId;
-        $('#departId').val(id)
-        $('#departName').val(name)
-        $('#parentId').val(parentId)
+        var profile = treeNode.profile;
+        $('.depart-name').val(name).text(name)
+        $('.depart-profile').val(profile).text(profile)
       }
-      // var zNodes = [{
-      //   name: "部门1",
-      //   open: true,
-      //   children: [{
-      //     name: "员工1_1"
-      //   }, {
-      //     name: "员工1_2"
-      //   }]
-      // }, {
-      //   name: "部门2",
-      //   open: true,
-      //   children: [{
-      //     name: "员工2_1"
-      //   }, {
-      //     name: "员工2_2"
-      //   }]
-      // }];
-      var zNodes =[
-        { id:1, pId:0, name:"部门 1", open:false},
-        { id:11, pId:1, name:"员工 1-1"},
-        { id:12, pId:1, name:"员工 1-2"},
-        { id:13, pId:1, name:"员工 1-3"},
-        { id:2, pId:0, name:"部门 2", open:true},
-        { id:21, pId:2, name:"员工 2-1"},
-        { id:22, pId:2, name:"员工 2-2"},
-        { id:23, pId:2, name:"员工 2-3"},
-        { id:3, pId:0, name:"部门 3", open:true},
-        { id:31, pId:3, name:"员工 3-1"},
-        { id:32, pId:3, name:"员工 3-2"},
-        { id:33, pId:3, name:"员工 3-3"}
-      ];
-      $(function(){
-        $.fn.zTree.init($('#treeDemo'), setting, zNodes)
+      //新增部门按钮
+      $('#newDepartment').on('click', function(){
+        var treeObj = $.fn.zTree.getZTreeObj("organizeTree");
+        var nodes = treeObj.getSelectedNodes();
+        if(!nodes[0]){
+          alert('没有被选中的节点！')
+          return false;
+        }
+        var parentId = nodes[0].id;
+        var orgParentId =  $('#myModal').find('#orgParentId');
+        orgParentId.val(parentId)
+        console.log(nodes[0].id)
+      })
+      //新增部门表单
+      var newOrganizeForm = $('#newOrganizeForm'),
+          organizeName = $('#organizeName'),
+          btnNewOrganize = $('#btnNewOrganize');
+      btnNewOrganize.on('click', function(e){
+        e.preventDefault();
+        if($.trim(organizeName.val()) == ''){
+          organizeName.parents('.form-group').addClass('has-error')
+        }else{
+          newOrganizeForm.submit()
+        }
+      })
+      //编辑部门
+      var organizeForm = $('#organizeForm'),
+          departName = $('#departName'),
+          departProfile = $('#departProfile');
+      $('.edit-depart').on('click', function(){
+        var treeObj = $.fn.zTree.getZTreeObj("organizeTree");
+        var nodes = treeObj.getSelectedNodes();
+        if(!nodes[0]){
+          alert('没有被选中的节点！')
+          return false;
+        }
+        $('.depart-name').hide()
+        departName.removeClass('hidden').show()
+        $('.depart-profile').hide()
+        departProfile.removeClass('hidden').show()
       })
     </script>
   </body>

@@ -62,7 +62,7 @@ body {
 }
 .control-text {
   display: inline-block;
-  padding: 5px 10px;
+  padding: 7px 0 0;
 }
 .relative {
   position: relative;
@@ -810,4 +810,39 @@ body {
 .media:hover .btn-delete {
   display: inline-block;
 }
-/**========== 留言板 end ===========*
+/**========== 留言板 end ===========*/
+
+/**========== 部门组织管理 start ===========*/
+.organize-tree {
+  min-height: 500px;
+}
+.organize-tools {
+  padding: 0 0 5px 15px;
+  border-bottom: 1px solid #eee; 
+}
+.organize-tools li{
+  display: inline-block;
+  margin: 0 10px;
+  text-align: center
+} 
+.organize-tools li a{
+  color: #666;
+  font-size: 12px
+}
+.organize-tools li .fa{
+  font-size: 16px;
+}
+.fa-refresh{
+  color: #b0d93d;
+}
+.fa-plus-square{
+  color: #3699c3;
+}
+.fa-edit{
+  color: #c5ad57;
+}   
+.fa-remove{
+  color: #d75931;
+}
+
+/**========== 部门组织管理 end ===========*/

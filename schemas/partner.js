@@ -67,7 +67,6 @@ partnerSchema.statics = {
 							 		console.log(err)
 							 	}else{
 							 		_this.count(query, function(err, count){
-							 			console.log(count)
 							 			if(err){
 							 				console.log(err)
 							 			}else{

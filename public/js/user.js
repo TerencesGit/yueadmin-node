@@ -45,8 +45,8 @@ $btnDelete.on('click', function(){
         }
       }
     })
-    .fail(function() {
-      console.log("error");
+    .fail(function(error) {
+      console.log(error);
     })
   }
 })

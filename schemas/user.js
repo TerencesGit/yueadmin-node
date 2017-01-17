@@ -56,6 +56,7 @@ var userSchema = new mongoose.Schema({
 		default: 1
 	},
 	partner: {type: ObjectId, ref: 'Partner'},
+	organize_id: String,
 	meta: {
 		createAt: {
 			type: Date,

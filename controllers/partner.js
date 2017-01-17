@@ -1,7 +1,8 @@
 var Partner = require('../models/partner');
+var User = require('../models/user');
+var Organize = require('../models/organize');
 var fs = require('fs');
 var path = require('path');
-var User = require('../models/user');
 var _ = require('lodash');
 
 //去除前后空格
@@ -123,8 +124,67 @@ exports.EditInfo = function(req, res){
 	})
 }
 
+//组织部门管理
+exports.departdment = function(req, res){
+	var user = req.session.user;
+	var id = user._id;
+	Partner.findOne({admin: user._id}, function(err, partner){
+		if(!partner){
+			return res.render('account/registered_partner', {title: '注册我的企业'})
+		}
+		if(partner.is_verified == 0 || partner.is_verified == 3){
+			res.render('account/registered_partner_success',{title: '等待审核'})
+		}else if(partner.is_verified == 2){
+			res.render('account/registered_partner_result',{title: '未通过审核', partner: partner})
+		}else{
+			Organize.find({partner: partner._id}).exec(function(err, organizes){
+				res.render('partner/department_manage', {
+					title: '部门管理', 
+					partner: partner,
+					organizes: organizes
+				})
+			})
+		}
+	})
+}
+//获取部门组织树
+exports.getDepartmentTree = function(req, res){
+	var partnerId = req.query.partnerId;
+	var userId = req.session.user._id;
+	Organize.find({partner: partnerId}).exec(function(err, organizes){
+		User.find({_id: userId}, function(err, users){
+			if(err) console.log(err)
+			res.json({organizes: organizes, users: users})
+		})
+	})
+}
+//创建组织部门
+exports.newOrganize = function(req, res){
+	var _user = req.session.user;
+	var _organize = req.body.organize;
+	if(_user){
+		var uid = _user._id;
+		var partnerId = _user.partner;
+		_organize.admin = uid;
+		_organize.creator = uid;
+		_organize.partner = partnerId;
+		console.log(_organize)
+		var organize = new Organize(_organize);
+		organize.save(function(err, organize){
+			if(err){
+				console.log(err)
+			}else{
+				res.redirect('/partner/department_manage')
+			}
+		})
+	}else{
+		res.redirect('/signin')
+	}
+}
+
 /* 管理员操作 */
-//商家管理 条件查询加分页
+
+//商家列表 条件查询加分页
 exports.managePartner = function(req, res){
 	var search = req.query.search || {};
 	switch(search){
@@ -187,9 +247,23 @@ exports.verifiedPartner = function(req, res){
 //商家信息审核通过
 exports.verifiedPass = function(req, res){
 	var id = req.query.id;
+	var _organize = {};
 	if(id){
-		Partner.update({_id: id}, {$set: {is_verified: 1}}, function(err, msg){
-			res.redirect('/admin/manage_partner')
+		Partner.findById(id, function(err, partner){
+			_organize.partner = id;
+			_organize.admin = partner.admin;
+			_organize.name = partner.name;
+			_organize.is_partner_root = 1;
+			var organize = new Organize(_organize);
+			organize.save(function(err, organize){
+				if(err){
+					console.log(err)
+				}else{
+					Partner.update({_id: id}, {$set: {is_verified: 1}}, function(err, msg){
+						res.redirect('/admin/manage_partner')
+					})
+				}
+			})
 		})
 	}else{
 		res.redirect('/')
@@ -208,8 +282,4 @@ exports.verifiedNoPass = function(req, res){
 	}else{
 		res.redirect('/')
 	}    
-}
-//组织部门管理
-exports.departdment = function(req, res){
-	res.render('partner/department_manage', {title: '部门管理'})
 }

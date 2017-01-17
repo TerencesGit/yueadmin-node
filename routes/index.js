@@ -63,6 +63,8 @@ router.post('/partner/edit_info',multipartMiddleware, Partner.logoUpload, Partne
 
 //企业组织管理
 router.get('/partner/department_manage', Partner.departdment);
+router.get('/partner/getDepartmentTree', Partner.getDepartmentTree);
+router.post('/partner/new_organize', Partner.newOrganize);
 
 //企业审核
 router.get('/admin/manage_partner', Partner.managePartner);
