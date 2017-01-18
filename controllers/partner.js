@@ -123,7 +123,6 @@ exports.EditInfo = function(req, res){
 		})
 	})
 }
-
 //组织部门管理
 exports.departdment = function(req, res){
 	var user = req.session.user;
@@ -158,28 +157,72 @@ exports.getDepartmentTree = function(req, res){
 		})
 	})
 }
-//创建组织部门
+//创建修改组织部门
 exports.newOrganize = function(req, res){
-	var _user = req.session.user;
-	var _organize = req.body.organize;
-	if(_user){
-		var uid = _user._id;
-		var partnerId = _user.partner;
-		_organize.admin = uid;
-		_organize.creator = uid;
-		_organize.partner = partnerId;
-		console.log(_organize)
-		var organize = new Organize(_organize);
-		organize.save(function(err, organize){
-			if(err){
-				console.log(err)
-			}else{
+	var user = req.session.user;
+	if(!user){
+		return res.redirect('/signin')
+	}
+	var organzieObj = req.body.organize;
+	console.log(organzieObj)
+	var id = organzieObj.id;
+	var _organize;
+	if(id !== ''){
+		Organize.findById(id, function(err, organize){
+			_organize = _.extend(organize, organzieObj);
+			_organize.save(function(err, organize){
+				if(err) console.log(err)
 				res.redirect('/partner/department_manage')
+			})
+		})
+	}else{
+		var uid = user._id;
+		var partnerId = user.partner;
+		organzieObj.admin = uid;
+		organzieObj.creator = uid;
+		organzieObj.partner = partnerId;
+		organzieObj.parent_id = organzieObj.parentId;
+		var organize = new Organize(organzieObj);
+		organize.save(function(err, organize){
+			if(err) console.log(err)
+			res.redirect('/partner/department_manage')
+		})
+	}
+}
+//删除组织部门
+exports.removeOrganize = function(req, res){
+	var id = req.query.id;
+	if(id){
+		Organize.find({parent_id: id}).exec(function(err, organizes){
+			if(!organizes[0]){
+				Organize.remove({_id: id}, function(err, msg){
+					if(err) console.log(err)
+					res.json({status: 1})
+				})
+			}else{
+				res.json({status: 2})
 			}
 		})
 	}else{
-		res.redirect('/signin')
+		res.json({status: 0})
 	}
+}
+//员工管理
+exports.staffList = function(req, res){
+	var user = req.session.user;
+	var partnerId = user.partner;
+	User.find({partner: partnerId})
+			.populate('partner', 'name')
+			.populate('organize', 'name')
+			.exec(function(err, users){
+			  if(err) console.log(err)
+			  	console.log(users[0])
+			  res.render('partner/staff_manage',{title: '员工管理', users: users})
+			})
+}
+//账户代注册
+exports.agentRegister = function(req, res){
+	res.render('partner/agent_register', {title: '账户代注册'})
 }
 
 /* 管理员操作 */
@@ -208,7 +251,7 @@ exports.managePartner = function(req, res){
 	if(req.query.page){
 		pageIndex = req.query.page < 1 ? 1 : req.query.page;
 	}
-	var pageSize = 2;
+	var pageSize = 5;
 	var skipFrom = (pageIndex * pageSize) - pageSize;
 	Partner.find(search)
 				 .sort('-meta.createAt')

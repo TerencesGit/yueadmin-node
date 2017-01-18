@@ -69,7 +69,12 @@ function Trim(str){
 //注册功能
 exports.signup = function(req, res){
 	var _user = req.body.user;
-	var email = Trim(_user.email);	
+	var user  = req.session.user;
+	var email = Trim(_user.email);
+	if(user){
+		_user.partner = user.partner;
+		_user.organize = user.organize;
+	}	
 	User.findOne({email: email}, function(err, user){
 		if(err) console.log(err)
 		if(!user){
@@ -79,6 +84,9 @@ exports.signup = function(req, res){
 				if(err){
 					_user.error = '注册失败，系统错误';
 					return res.render('signup', {title: '欢迎注册', user: _user})
+				}
+				if(user){
+					return res.redirect('/partner/staff_manage')
 				}
 				req.session.user = user;
 				res.redirect('/')
@@ -477,14 +485,14 @@ exports.showRegistered = function(req, res){
 exports.showRegisteredPartner = function(req, res){
 	var user = req.session.user;
 	if(user){
-		Partner.find({admin: user._id}).exec(function(err, partner){
-				if(!partner[0]){
+		Partner.findOne({admin: user._id}, function(err, partner){
+				if(!partner){
 					return res.render('account/registered_partner', {title: '注册我的企业'})
 				}
-				if(partner[0].is_verified == 0 || partner[0].is_verified == 3){
+				if(partner.is_verified == 0 || partner.is_verified == 3){
 					res.render('account/registered_partner_success',{title: '等待审核'})
-				}else if(partner[0].is_verified == 2){
-					res.render('account/registered_partner_result',{title: '未通过审核', partner: partner[0]})
+				}else if(partner.is_verified == 2){
+					res.render('account/registered_partner_result',{title: '未通过审核', partner: partner})
 				}else{
 					res.redirect('/partner/partner_info')
 				}
@@ -499,7 +507,7 @@ exports.showRegisteredPartner = function(req, res){
 exports.userlist = function(req, res){
 	var page = {
 		number: req.query.page || 1,
-		limit: 2
+		limit: 5
 	}
 	var search = req.query.search || {};
 	if(req.query.page){

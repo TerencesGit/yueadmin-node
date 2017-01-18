@@ -199,7 +199,7 @@ body {
   
 .login-form {
   width: 430px;
-  margin: 10% auto 0;
+  margin: 8% auto 0;
   padding: 30px;
   background: #fff;
   border-radius: 5px
@@ -230,11 +230,14 @@ body {
 .form-group.submit {
   margin: 15px 0;
 }
-.login-form .alert {
+.login-form .alert-danger {
   float: right;
   width: 270px;
   margin-top: -10px;
   margin-bottom: 5px;
+}
+.login-form .alert-back {
+
 }
 .agree-check +.alert {
   float: none
@@ -816,33 +819,36 @@ body {
 .organize-tree {
   min-height: 500px;
 }
-.organize-tools {
+.tools-bar {
   padding: 0 0 5px 15px;
   border-bottom: 1px solid #eee; 
 }
-.organize-tools li{
+.tools-bar li{
   display: inline-block;
   margin: 0 10px;
   text-align: center
 } 
-.organize-tools li a{
+.tools-bar li a{
   color: #666;
   font-size: 12px
 }
-.organize-tools li .fa{
+.tools-bar li .fa{
   font-size: 16px;
 }
-.fa-refresh{
+.tools-bar .fa-refresh{
   color: #b0d93d;
 }
-.fa-plus-square{
+.tools-bar .fa-plus-square{
   color: #3699c3;
 }
-.fa-edit{
+.tools-bar .fa-edit{
   color: #c5ad57;
 }   
-.fa-remove{
+.tools-bar .fa-remove{
   color: #d75931;
+}
+.modal-dialog {
+  margin-top: 100px;
 }
 
 /**========== 部门组织管理 end ===========*/
