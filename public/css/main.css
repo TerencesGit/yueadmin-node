@@ -83,7 +83,9 @@ body {
 .breadcrumb {
   background-color: #ddd;
 }
-
+.modal-dialog {
+  margin-top: 100px;
+}
 /**========== animation start ==========**/
 .animated {
   -webkit-animation-duration: 1s;
@@ -847,8 +849,12 @@ body {
 .tools-bar .fa-remove{
   color: #d75931;
 }
-.modal-dialog {
-  margin-top: 100px;
+.organize-modal .modal-dialog {
+  width: 300px;
 }
-
+.organize-modal .modal-dialog .modal-body {
+  height: 240px;
+  max-height: 300px;
+  overflow-y: auto;
+}
 /**========== 部门组织管理 end ===========*/

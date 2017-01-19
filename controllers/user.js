@@ -69,12 +69,13 @@ function Trim(str){
 //注册功能
 exports.signup = function(req, res){
 	var _user = req.body.user;
-	var user  = req.session.user;
+	var sessionUser  = req.session.user;
+	var id = sessionUser._id;
 	var email = Trim(_user.email);
-	if(user){
-		_user.partner = user.partner;
-		_user.organize = user.organize;
-	}	
+	User.findById(id, function(err, userObj){
+		_user.partner = userObj.partner;
+		_user.organize = userObj.organize;
+	})
 	User.findOne({email: email}, function(err, user){
 		if(err) console.log(err)
 		if(!user){
@@ -85,7 +86,7 @@ exports.signup = function(req, res){
 					_user.error = '注册失败，系统错误';
 					return res.render('signup', {title: '欢迎注册', user: _user})
 				}
-				if(user){
+				if(sessionUser){
 					return res.redirect('/partner/staff_manage')
 				}
 				req.session.user = user;

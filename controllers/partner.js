@@ -123,89 +123,138 @@ exports.EditInfo = function(req, res){
 		})
 	})
 }
-//组织部门管理
-exports.departdment = function(req, res){
+//组织管理
+exports.organizeManage = function(req, res){
 	var user = req.session.user;
-	var id = user._id;
-	Partner.findOne({admin: user._id}, function(err, partner){
-		if(!partner){
-			return res.render('account/registered_partner', {title: '注册我的企业'})
-		}
-		if(partner.is_verified == 0 || partner.is_verified == 3){
-			res.render('account/registered_partner_success',{title: '等待审核'})
-		}else if(partner.is_verified == 2){
-			res.render('account/registered_partner_result',{title: '未通过审核', partner: partner})
-		}else{
-			Organize.find({partner: partner._id}).exec(function(err, organizes){
-				res.render('partner/department_manage', {
-					title: '部门管理', 
-					partner: partner,
-					organizes: organizes
-				})
+	if(!user) return res.redirect('/signin');
+	var partnerId = user.partner;
+	User.find({partner: partnerId})
+			.populate('partner', 'is_verified _id name')
+			.exec(function(err, users){
+				var user = users[0];
+				if(!user){
+					return res.render('account/registered_partner', {title: '注册我的企业'})
+				}
+				if(user.partner.is_verified == 0 || user.partner.is_verified == 3){
+					res.render('account/registered_partner_success',{title: '等待审核'})
+				}else if(user.partner.is_verified == 2){
+					res.render('account/registered_partner_result',{title: '未通过审核', partner: partner})
+				}else{
+					res.render('partner/organize_manage', {title: '部门管理', user: user})
+				}
 			})
-		}
-	})
 }
-//获取部门组织树
-exports.getDepartmentTree = function(req, res){
+//获取组织树
+exports.getOrganizeTree = function(req, res){
 	var partnerId = req.query.partnerId;
+	if(req.query.organizeId){
+		var organizeId = req.query.organizeId;
+	}
 	var userId = req.session.user._id;
 	Organize.find({partner: partnerId}).exec(function(err, organizes){
-		User.find({_id: userId}, function(err, users){
-			if(err) console.log(err)
-			res.json({organizes: organizes, users: users})
-		})
+		if(organizeId){
+			User.find({partner: partnerId, organize: organizeId})
+				.populate('organize', 'name')
+				.exec(function(err, users){
+					if(err) console.log(err)
+					res.json({organizes: organizes, users: users})
+				})
+		}else{
+			User.find({partner: partnerId})
+				.populate('organize', 'name')
+				.exec(function(err, users){
+					if(err) console.log(err)
+					res.json({organizes: organizes, users: users})
+				})
+		}
 	})
 }
-//创建修改组织部门
+//获取企业员工
+exports.getPartnerStaff = function(req, res){
+	var partnerId = req.query.partnerId;
+	User.find({partner: partnerId})
+			.populate('organize', 'name')
+			.exec(function(err, users){
+				if(err) console.log(err)
+				return res.json({users: users})
+			})
+}
+//获取部门员工
+exports.getOrganizeStaff = function(req, res){
+	var organizeId = req.query.organizeId;
+	User.find({organize: organizeId})
+			.populate('organize', 'name')
+			.exec(function(err, users){
+				if(err) console.log(err)
+				return res.json({users: users})
+			})
+}
+//创建组织节点
 exports.newOrganize = function(req, res){
 	var user = req.session.user;
 	if(!user){
-		return res.redirect('/signin')
+		return res.json({status: 0})
 	}
-	var organzieObj = req.body.organize;
-	console.log(organzieObj)
-	var id = organzieObj.id;
-	var _organize;
-	if(id !== ''){
-		Organize.findById(id, function(err, organize){
-			_organize = _.extend(organize, organzieObj);
-			_organize.save(function(err, organize){
-				if(err) console.log(err)
-				res.redirect('/partner/department_manage')
-			})
-		})
-	}else{
-		var uid = user._id;
-		var partnerId = user.partner;
-		organzieObj.admin = uid;
-		organzieObj.creator = uid;
-		organzieObj.partner = partnerId;
-		organzieObj.parent_id = organzieObj.parentId;
-		var organize = new Organize(organzieObj);
-		organize.save(function(err, organize){
-			if(err) console.log(err)
-			res.redirect('/partner/department_manage')
+	var _organize = req.body.organize;
+	var uid = user._id;
+	var partnerId = user.partner;
+	_organize.admin = uid;
+	_organize.creator = uid;
+	_organize.partner = partnerId;
+	var organize = new Organize(_organize);
+	organize.save(function(err, organize){
+		if(err) console.log(err);
+		res.json({status: 1})
+	})
+}
+//修改组织节点
+exports.editOrganize = function(req, res){
+	var user = req.session.user;
+	if(!user){
+		return res.json({status: 0})
+	}
+	var _organize = req.body.organize;
+	console.log(_organize)
+	var id = _organize.id;
+	if(id){
+		Organize.update({_id: id}, {$set: _organize }, function(err, msg){
+			if(err) {
+				console.log(err)
+				res.json({status: 2})
+			}else{
+				res.json({status: 1})
+			}
 		})
 	}
 }
-//删除组织部门
+//删除组织
 exports.removeOrganize = function(req, res){
 	var id = req.query.id;
-	if(id){
-		Organize.find({parent_id: id}).exec(function(err, organizes){
-			if(!organizes[0]){
-				Organize.remove({_id: id}, function(err, msg){
-					if(err) console.log(err)
-					res.json({status: 1})
-				})
-			}else{
-				res.json({status: 2})
-			}
+	if(id == '') return res.json({status: -1})
+	Organize.findById(id, function(err, organize){
+		if(organize.is_partner_root == 1){
+			return res.json({status: 0})
+		}else{
+			Organize.find({parent_id: id}).exec(function(err, organizes){
+				if(err) console.log(err);
+				if(organizes[0]){
+					res.json({status: 2})
+				}else{
+					User.find({organize: id}).exec(function(err, users){
+						if(err) console.log(err);
+						if(users[0]){
+							res.json({status: 3})
+						}else{
+							Organize.remove({_id: id}, function(err, msg){
+								if(err) console.log(err)
+								res.json({status: 1})
+							})
+						}
+					})
+				}
 		})
-	}else{
-		res.json({status: 0})
-	}
+		}
+	})
 }
 //员工管理
 exports.staffList = function(req, res){
@@ -217,8 +266,23 @@ exports.staffList = function(req, res){
 			.exec(function(err, users){
 			  if(err) console.log(err)
 			  	console.log(users[0])
-			  res.render('partner/staff_manage',{title: '员工管理', users: users})
+			  res.render('partner/staff_manage',{title: '员工管理', users: users, user: user})
 			})
+}
+//设置员工部门
+exports.setOrganize = function(req, res){
+	var user = req.body.user;
+	var userid = user.id,
+	    organizeId = user.organizeId;
+	if(userid){
+		User.update({_id: userid}, {$set: {organize: organizeId}}, function(err, msg){
+			if(err) console.log(err)
+			user.organize = organizeId;
+			res.redirect('/partner/staff_manage')
+		})
+	}else{
+		res.redirect('/signin')
+	}
 }
 //账户代注册
 exports.agentRegister = function(req, res){

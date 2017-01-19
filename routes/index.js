@@ -62,16 +62,22 @@ router.get('/partner/partner_info', Partner.showInfo)
 router.post('/partner/edit_info',multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.EditInfo)
 
 //企业组织管理
-router.get('/partner/department_manage', Partner.departdment);
-router.get('/partner/getDepartmentTree', Partner.getDepartmentTree);
+router.get('/partner/organize_manage', Partner.organizeManage);
+
+router.get('/partner/getOrganizeTree', Partner.getOrganizeTree);
+router.get('/partner/get_organize_staff', Partner.getOrganizeStaff);
+
 router.post('/partner/new_organize', Partner.newOrganize);
+router.post('/partner/edit_organize', Partner.editOrganize);
 router.get('/partner/remove_organize', Partner.removeOrganize);
 
 //员工管理
-router.get('/partner/staff_manage', Partner.staffList)
+router.get('/partner/staff_manage', Partner.staffList);
+router.post('/partner/set_organize', Partner.setOrganize);
 
 //账户代注册
 router.get('/partner/agent_register', Partner.agentRegister)
+
 //企业审核
 router.get('/admin/manage_partner', Partner.managePartner);
 router.get('/admin/verify_partner', Partner.verifiedPartner);
