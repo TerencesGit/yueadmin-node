@@ -86,6 +86,13 @@ body {
 .modal-dialog {
   margin-top: 100px;
 }
+.table > thead > tr > th, 
+.table > tbody > tr > td {
+  min-width: 50px;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
 /**========== animation start ==========**/
 .animated {
   -webkit-animation-duration: 1s;

@@ -140,6 +140,7 @@ exports.organizeManage = function(req, res){
 				}else if(user.partner.is_verified == 2){
 					res.render('account/registered_partner_result',{title: '未通过审核', partner: partner})
 				}else{
+					if(err) console.log(err);
 					res.render('partner/organize_manage', {title: '部门管理', user: user})
 				}
 			})
@@ -207,7 +208,7 @@ exports.newOrganize = function(req, res){
 		res.json({status: 1})
 	})
 }
-//修改组织节点
+//编辑组织节点
 exports.editOrganize = function(req, res){
 	var user = req.session.user;
 	if(!user){

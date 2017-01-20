@@ -12,13 +12,30 @@
         <div class="container-fluid">
           <div class="panel panel-info">
             <div class="panel-heading clearfix">
-              <h3 class="panel-title pull-left">部门员工</h3>
+              <h3 class="panel-title pull-left">员工管理</h3>
               <a href="/partner/agent_register" class="pull-right">
               <i class="fa fa-plus-square"></i>添加新员工</a>
             </div>
             <div class="panel-body">
-              <div class="tools-bar row">
-                <dl class="dl-horizontal col-md-4">
+              <div class="row form-horizontal m-b">
+                <label for="" class="col-md-1 control-label">性别：</label>
+                <div class="col-md-2">
+                  <select name="" id="" class="form-control">
+                    <option value="0">不限</option>
+                    <option value="0">男</option>
+                    <option value="0">女</option>
+                  </select>
+                </div>
+                <label for="" class="col-md-2 control-label">注册时间：</label>
+                <div class="col-md-2">
+                  <input type="text" class="form-control" placeholder="">
+                </div>
+                 <label for="" class="col-md-1 control-label">姓名：</label>
+                <div class="col-md-2">
+                  <input type="text" class="form-control" placeholder="姓名">
+                </div>
+                <button class="btn btn-warning">搜索</button>
+                <!-- <dl class="dl-horizontal col-md-4">
                   <dt>查询条件：</dt>
                   <dd>
                     <form action="" method="get"> 
@@ -39,7 +56,7 @@
                     </div>
                     <button class="btn btn-warning scarch-btn">查询</button>
                   </dd>
-                </dl>                      
+                </dl> -->                      
               </div>
               <table class="table table-bordered">
                 <thead>
@@ -63,8 +80,8 @@
                     <td><%= moment(user.meta.createAt).format('YYYY-MM-DD') %></td>
                     <td><%if(user.organize && user.organize.name){%><%= user.organize.name %><%}%></td>
                     <td style="min-width: 115px">
-                      <button class="btn btn-warning btn-set" data-toggle="modal" href="#setOrganizeModal">部门设置</button>
-                      <!-- <button class="btn btn-danger btn-sm btn-del">删除</button> -->
+                      <button class="btn btn-info btn-set" data-toggle="modal" href="#setOrganizeModal">部门设置</button>
+                      <button class="btn btn-success">权限设置</button>
                     </td>
                   </tr>
                   <% })%>

@@ -519,13 +519,13 @@ exports.userlist = function(req, res){
 	  search: search
 	}
 	User.findByPagination(model, function(err, pageIndex, pageCount, users){
-				res.render('admin/userlist', {
-					title: '用户列表',
-					users: users,
-					pageCount: pageCount,
-					pageIndex: pageIndex
-				})
+		res.render('admin/userlist', {
+				title: '用户列表',
+				users: users,
+				pageCount: pageCount,
+				pageIndex: pageIndex
 			})
+	})
 }
 //用户删除
 exports.delete = function(req, res){

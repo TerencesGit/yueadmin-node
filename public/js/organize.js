@@ -1,5 +1,6 @@
 const organizeTree = $('#organizeTree');
 const partnerId = organizeTree.attr('data-id');
+let isFirst = true;
 $(function(){
   renderTree(organizeTree)
 })
@@ -13,6 +14,10 @@ function HandlerClick(event, treeId, treeNode){
 //判断父节点
 function isParent(treeNode){
 	return treeNode.isParent;
+}
+//判断根节点
+function isRoot(treeNode){
+	return !treeNode.pId;
 }
 //获取被选中的单个节点
 function getSeletedNode(){
@@ -34,7 +39,9 @@ function renderTree(organizeTree){
   .done(function(result){
     var organizes = result.organizes;
     var setting = {
-    	selectedMulti: false,
+    	view: {
+    		selectedMulti: false,
+    	},
     	data: {
         simpleData: {
           enable: true
@@ -57,13 +64,21 @@ function renderTree(organizeTree){
       zNode.push(treeObj)
     }
     $.fn.zTree.init(organizeTree, setting, zNode);
-    var treeObj = $.fn.zTree.getZTreeObj("organizeTree");
-		var nodes = treeObj.getNodes();
-		if (nodes.length > 0) {
-			treeObj.selectNode(nodes[0]);
-		}
+    //仅在加载页面时执行
+    if(isFirst){
+    	isFirst = false;
+    	let treeObj = $.fn.zTree.getZTreeObj("organizeTree");
+			let nodes = treeObj.getNodes();
+			if (nodes.length > 0) {
+				treeObj.selectNode(nodes[0]);
+			}
+			if(getSeletedNode){
+				let organizeId = getSeletedNode().id;
+				renderStaff(organizeId)
+			}
+    }
   })
-  .fail(function(error){
+  .fail(function(error){ 
     console.log(error)
   })
 }
@@ -74,18 +89,17 @@ function renderStaff(organizeId){
     url: '/partner/get_organize_staff?organizeId='+ organizeId,
   })
   .done(function(result){
-    var users = result.users;
-    var tbodyHtml = '';
+    let users = result.users;
+    let staffList = '';
     for(let i = 0; i < users.length; i++){
-      var num = i+1;
-      var gender = users[i].gender == '1' ? '女' : '男';
-      tbodyHtml += ('<tr><td>'+num+'</td><td>'+users[i].name+'</td>\
+      let num = i+1;
+      let gender = users[i].gender == '1' ? '女' : '男';
+      staffList += ('<tr><td>'+num+'</td><td>'+users[i].name+'</td>\
         <td>'+gender+'</td><td>'+users[i].mobile+'</td>\
         <td>'+users[i].email+'</td><td>'+users[i].organize.name+'</td>\
         <td><a href="/partner/staff_manage" class="btn btn-warning">编辑</a></td></tr>')
     }
-    $('.staff-list').empty()
-    $('.staff-list').append(tbodyHtml)
+    $('.staff-list').empty().append(staffList);
   })
   .fail(function(error){
     console.log(error)
@@ -112,6 +126,9 @@ var organizeName = $('#organizeName'),
 var msg = {
 	required: '名称不能为空'
 }
+//弹出框延迟时间
+const DELAY_TIME = 800;
+
 //新增组织节点
 $btnNew.on('click', function(e){
 	e.preventDefault();
@@ -127,6 +144,8 @@ $btnNew.on('click', function(e){
   	var newTreeBtn = $('<button id="newTreeBtn" class="btn btn-success" data-dismiss="modal">提交</button>');
   	newTreeBtn.appendTo(modalFooter);
   }
+  //标志位，避免多次提交事件
+  let flag = true;
   $('#newTreeBtn').on('click', function(e){
 		e.preventDefault()
 		if(!checkInput(organizeName, msg)) return false;
@@ -135,35 +154,47 @@ $btnNew.on('click', function(e){
 			name: $.trim(organizeName.val()),
 	  	profile: $.trim(organizeProfile.val())
 		}
-		$.ajax({
-			type: 'post',
-			url: '/partner/new_organize',
-			data: {organize: organize},
-		})
-		.done(function(res) {
-			console.log(res)
-			if(res.status == 1){
-				$.dialog({type: 'success', message: '添加成功', delay: 2000})
-				setTimeout(function(){
-					renderTree(organizeTree)
-				}, 2000)
-			}else if(res.status == 2){
-				$.dialog({type: 'warning', message: '添加失败', delay: 2000})
-			}
-		})
-		.fail(function(err) {
-			console.log(err);
-		})
+		if(flag){
+			flag = false;
+			$.ajax({
+				type: 'post',
+				url: '/partner/new_organize',
+				data: {organize: organize},
+			})
+			.done(function(res) {
+				console.log(res)
+				if(res.status == 1){
+					$.dialog({type: 'success', message: '添加成功', delay: DELAY_TIME})
+					setTimeout(function(){
+						renderTree(organizeTree)
+					}, DELAY_TIME)
+				}else if(res.status == 2){
+					$.dialog({type: 'warning', message: '添加失败', delay: DELAY_TIME})
+				}
+			})
+			.fail(function(err) {
+				console.log(err);
+			})
+		}
+		
 	})
 })
-//修改组织节点
+//编辑组织节点
 $btnEdit.on('click', function(e){
 	e.preventDefault();
   if(!getSeletedNode()) return false;
  	var node = getSeletedNode();
+ 	if(isRoot(node)){
+ 		modalTitle.text('编辑公司名称(仅在组织树上生效)');
+ 		$('.organize-name').text('公司名称');
+ 		$('.organize-profile').hide();
+ 	}else{
+ 		modalTitle.text('部门编辑');
+	 	$('.organize-name').text('部门名称');
+	 	$('.organize-profile').show();
+ 	}
  	var name = node.name,
  	    profile = node.profile;
- 	modalTitle.text('部门编辑');
  	organizeName.val(name);
  	organizeProfile.val(profile);
   if(organizeModal.find('#newTreeBtn').length > 0){
@@ -173,6 +204,8 @@ $btnEdit.on('click', function(e){
   	var editTreeBtn = $('<button id="editTreeBtn" class="btn btn-success" data-dismiss="modal">提交</button>');
   	editTreeBtn.appendTo(modalFooter);
   }
+  //标志位，避免多次提交事件
+  let flag = true;
   $('#editTreeBtn').on('click', function(e){
 		e.preventDefault()
 		if(!checkInput(organizeName, msg)) return false;
@@ -181,25 +214,28 @@ $btnEdit.on('click', function(e){
 			name: $.trim(organizeName.val()),
 	  	profile: $.trim(organizeProfile.val())
 		}
-		$.ajax({
-			type: 'post',
-			url: '/partner/edit_organize',
-			data: {organize: organize},
-		})
-		.done(function(res) {
-			console.log(res)
-			if(res.status == 1){
-				$.dialog({type: 'success', message: '编辑成功', delay: 2000})
-				setTimeout(function(){
-					renderTree(organizeTree)
-				}, 2000)
-			}else if(res.status == 2){
-				$.dialog({type: 'warning', message: '编辑失败', delay: 2000})
-			}
-		})
-		.fail(function(err) {
-			console.log(err);
-		})
+		if(flag){
+			flag = false;
+			$.ajax({
+				type: 'post',
+				url: '/partner/edit_organize',
+				data: {organize: organize},
+			})
+			.done(function(res) {
+				console.log(res)
+				if(res.status == 1){
+					$.dialog({type: 'success', message: '编辑成功', delay: DELAY_TIME})
+					setTimeout(function(){
+						renderTree(organizeTree)
+					}, DELAY_TIME)
+				}else if(res.status == 2){
+					$.dialog({type: 'warning', message: '编辑失败', delay: DELAY_TIME})
+				}
+			})
+			.fail(function(err) {
+				console.log(err);
+			})
+		}
 	})
 })
 //删除组织节点
@@ -209,6 +245,10 @@ $btnRemove.on('click', function(e){
 	var node = getSeletedNode();
 	var id = node.id,
 	    name = node.name;
+	if(isRoot(node)){
+		alert('该节点不可删除！');
+		return false;
+	}
 	if(isParent(node)){
 		alert('该部门有下属部门，不可删除！');
 		return false;
@@ -220,18 +260,18 @@ $btnRemove.on('click', function(e){
 		})
 		.done(function(res){
 			if(res.status == 1){
-				$.dialog({type: 'success', message: '删除成功', delay: 2000})
+				$.dialog({type: 'success', message: '删除成功', delay: DELAY_TIME})
 				setTimeout(function(){
 					renderTree(organizeTree)
-				}, 2000)
+				}, DELAY_TIME)
 			}else if(res.status == 2){
-				$.dialog({type: 'warning', message: '该部门有下属部门，不可删除', delay: 2000})
+				$.dialog({type: 'warning', message: '该部门有下属部门，不可删除', delay: DELAY_TIME})
 			}else if(res.status == 3){
-				$.dialog({type: 'warning', message: '该部门有员工，不可删除', delay: 2000})
+				$.dialog({type: 'warning', message: '该部门有员工，不可删除'})
 			}else if(res.status == 0){
-				$.dialog({type: 'warning', message: '企业节点禁止删除', delay: 2000})
+				$.dialog({type: 'warning', message: '企业节点禁止删除', delay: DELAY_TIME})
 			}else{
-				$.dialog({type: 'warning', message: '删除失败，请稍后重试', delay: 2000})
+				$.dialog({type: 'warning', message: '删除失败，请稍后重试', delay: DELAY_TIME})
 			}
 		})
 		.fail(function(error){

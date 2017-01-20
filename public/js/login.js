@@ -1,8 +1,8 @@
 $(function() {
   //绘制验证码
-  if($('#canvasCode').length !== 0) drawCode()
+  if($('#canvasCode').length !== 0) drawCode();
   //检测cookie是否保存用户登录信息
-  if($.cookie('remember') == 'true'){
+  if($.cookie && $.cookie('remember') == 'true'){
     $('#username').val(atob($.cookie('username')))
     $('#password').val(atob($.cookie('password')))
     $('#remember').prop('checked', true)

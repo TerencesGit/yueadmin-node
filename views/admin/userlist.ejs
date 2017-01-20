@@ -3,16 +3,6 @@
   <head>
     <%- include('../link') %>
     <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
-    <style>
-      .table th {
-        min-width: 50px;
-        text-align: center
-      }
-      .table > tbody > tr > td {
-        vertical-align: middle;
-        text-align: center
-      }
-    </style>
   </head>
   <body>
     <%- include('../aside') %>
@@ -22,38 +12,46 @@
         <div class="container-fluid">
           <h2 class="page-header">用户列表</h2>
           <table class="table table-bordered table-hover table-striped">
-            <tr>
-              <th>用户名</th>
-              <th>Email</th>
-              <th>手机号</th>
-              <th>QQ</th>
-              <th>生日</th>
-              <th>地址</th>
-              <th>身份证号</th>
-              <th>性别</th>
-              <th>注册时间</th>
-              <th>角色</th>
-              <th>操作</th>
-            </tr>
-            <% users.forEach(function(user){ %>
-              <tr data-id="<%= user._id%>">
-                <td class="name"><%= user.name %></td>
-                <td class="email"><%= user.email %></td>
-                <td><%= user.mobile %></td>
-                <td><%= user.qq %></td>
-                <td><% if(user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD') %><%}%></td>
-                <td><%= user.address %></td>
-                <td><%= user.idcard %></td>
-                <td><% if(user.gender == '0') {%> 男 <% }else{%> 女 <%}%></td>
-                <!-- <%= moment(user.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %> -->
-                <td><%= moment(user.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %></td>
-                <td class="role"><%= user.role %></td>
-                <td style="min-width: 115px">
-                  <button class="btn btn-warning btn-sm btn-edit" data-toggle="modal" href="#myModal">编辑</button>
-                  <button class="btn btn-danger btn-sm btn-del">删除</button>
-                </td>
+            <thead>
+              <tr class="success">
+                <th>用户名</th>
+                <th>Email</th>
+                <th>手机号</th>
+                <th>QQ</th>
+                <th>生日</th>
+                <th>地址</th>
+                <th>身份证号</th>
+                <th>性别</th>
+                <th>注册时间</th>
+                <th>公司</th>
+                <th>部门</th>
+                <th>角色</th>
+                <th>操作</th>
               </tr>
-            <% })%>
+            </thead>
+            <tbody>
+              <% users.forEach(function(user){ %>
+                <tr data-id="<%= user._id%>">
+                  <td class="name"><%= user.name %></td>
+                  <td class="email"><%= user.email %></td>
+                  <td><%= user.mobile %></td>
+                  <td><%= user.qq %></td>
+                  <td><% if(user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD') %><%}%></td>
+                  <td><%= user.address %></td>
+                  <td><%= user.idcard %></td>
+                  <td><% if(user.gender == '0') {%> 男 <% }else{%> 女 <%}%></td>
+                  <!-- <%= moment(user.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %> -->
+                  <td><%= moment(user.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %></td>
+                  <td><%if(user.partner){%><%= user.partner.name %><%}%></td>
+                  <td><%if(user.organize){%><%= user.organize.name %><%}%></td>
+                  <td class="role"><%= user.role %></td>
+                  <td style="min-width: 115px">
+                    <button class="btn btn-warning btn-sm btn-edit" data-toggle="modal" href="#myModal">编辑</button>
+                    <button class="btn btn-danger btn-sm btn-del">删除</button>
+                  </td>
+                </tr>
+              <% })%>
+            </tbody>
           </table>
           <ul class="pagination">
             <li class="<%if(pageIndex == 1){%>disabled<%}%>"><a href="/user/list?page=<%= pageIndex*1-1 == 0 ? 1 : pageIndex*1-1 %>">&laquo;</a></li>

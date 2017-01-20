@@ -109,6 +109,8 @@ userSchema.statics = {
 							 .sort('-meta.updateAt')
 							 .skip(skipFrom)
 							 .limit(pageSize)
+							 .populate('partner', 'name')
+							 .populate('organize', 'name')
 							 .exec(function(err, results){
 							 	if(err) {
 							 		console.log(err)

@@ -31,7 +31,8 @@
               <div class="panel panel-info">
                 <div class="panel-heading">
                   <h3 class="panel-title">
-                    <a href="#collapseDepart" data-toggle="collapse"><span id="departmentName"><%= user.partner.name%></span>&nbsp;(管理员：<%= user.name%>)</a>
+                    <a href="#collapseDepart" data-toggle="collapse"><span id="departmentName"><%= user.partner.name%></span>&nbsp;
+                    (管理员：<%= user.name%></span>)</a>
                   </h3>
                 </div>
                 <div id="collapseDepart" class="panel-collapse collapse in">
@@ -96,16 +97,14 @@
                   <h4 class="modal-title">新增部门</h4>
               </div>
               <div class="modal-body">
-                <input type="hidden" id="orgParentId" name="organize[parentId]" value="">
-                <input type="hidden" id="organizeId" name="organize[id]" value="">
                 <div class="form-group row">
-                  <label for="" class="col-md-offset-1 col-md-2 control-label">部门名称</label>
+                  <label for="organizeName" class="col-md-offset-1 col-md-2 control-label organize-name">部门名称</label>
                   <div class="col-md-6">
-                    <input type="text" name="organize[name]" id="organizeName" class="form-control username">
+                    <input type="text" name="organize[name]" id="organizeName" class="form-control">
                   </div>
                 </div>
-                <div class="form-group row">
-                  <label for="" class="col-md-offset-1 col-md-2 control-label">部门简介</label>
+                <div class="form-group row organize-profile">
+                  <label for="organizeProfile" class="col-md-offset-1 col-md-2 control-label">部门简介</label>
                   <div class="col-md-6">
                     <textarea name="organize[profile]" id="organizeProfile" class="form-control" rows="3" placeholder="选填"></textarea>
                   </div>
