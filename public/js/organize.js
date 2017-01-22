@@ -1,6 +1,8 @@
 const organizeTree = $('#organizeTree');
 const partnerId = organizeTree.attr('data-id');
 let isFirst = true;
+let flag = true;
+
 $(function(){
   renderTree(organizeTree)
 })
@@ -116,12 +118,20 @@ var $btnRefresh = $('.btn-refresh'),
 $btnRefresh.on('click', function(){
 	renderTree(organizeTree)
 })
-//组织树表单模态框
-var organizeModal = $('#organizeModal'),
-    modalTitle = organizeModal.find('.modal-title'),
-    modalFooter = organizeModal.find('.modal-footer');
-var organizeName = $('#organizeName'),
-    organizeProfile = $('#organizeProfile');
+//新增组织模态框表单
+var newOrganizeModal = $('#newOrganizeModal'),
+    newModalTitle = newOrganizeModal.find('.modal-title'),
+    newOrganizeName = $('#newOrganizeName'),
+    newOrganizeProfile = $('#newOrganizeProfile'),
+    newOrganizeBtn = $('#newOrganizeBtn');
+
+//编辑组织模态框表单
+var editOrganizeModal = $('#editOrganizeModal'),
+		editModalTitle = editOrganizeModal.find('.modal-title'),
+    editOrganizeName = $('#editOrganizeName'),
+    editOrganizeProfile = $('#editOrganizeProfile'),
+    editOrganizeBtn = $('#editOrganizeBtn');
+
 //信息提示    
 var msg = {
 	required: '名称不能为空'
@@ -134,50 +144,45 @@ $btnNew.on('click', function(e){
 	e.preventDefault();
   if(!getSeletedNode()) return false;
   var node = getSeletedNode();
-  modalTitle.html('新增<a>'+node.name+'</a>的下属部门');
-  organizeName.val('');
-  organizeProfile.val('');
-  if(organizeModal.find('#editTreeBtn').length > 0){
-  	$('#editTreeBtn').remove()
-  }
-  if(organizeModal.find('#newTreeBtn').length === 0){
-  	var newTreeBtn = $('<button id="newTreeBtn" class="btn btn-success" data-dismiss="modal">提交</button>');
-  	newTreeBtn.appendTo(modalFooter);
-  }
-  //标志位，避免多次提交事件
-  let flag = true;
-  $('#newTreeBtn').on('click', function(e){
-		e.preventDefault()
-		if(!checkInput(organizeName, msg)) return false;
-		var organize = {
-			parent_id: node.id,
-			name: $.trim(organizeName.val()),
-	  	profile: $.trim(organizeProfile.val())
-		}
-		if(flag){
-			flag = false;
-			$.ajax({
-				type: 'post',
-				url: '/partner/new_organize',
-				data: {organize: organize},
-			})
-			.done(function(res) {
-				console.log(res)
-				if(res.status == 1){
-					$.dialog({type: 'success', message: '添加成功', delay: DELAY_TIME})
-					setTimeout(function(){
-						renderTree(organizeTree)
-					}, DELAY_TIME)
-				}else if(res.status == 2){
-					$.dialog({type: 'warning', message: '添加失败', delay: DELAY_TIME})
-				}
-			})
-			.fail(function(err) {
-				console.log(err);
-			})
-		}
-		
-	})
+  newModalTitle.html('新增<a>'+node.name+'</a>的下属部门');
+  newOrganizeName.val('');
+  newOrganizeProfile.val('');
+})
+
+//新增组织表单提交
+newOrganizeBtn.on('click', function(e){
+	e.preventDefault()
+	if(!getSeletedNode()) return false;
+  var node = getSeletedNode();
+	if(!checkInput(newOrganizeName, msg)) return false;
+	var organize = {
+		parent_id: node.id,
+		name: $.trim(newOrganizeName.val()),
+  	profile: $.trim(newOrganizeProfile.val())
+	}
+	if(flag){
+		flag = false;
+		$.ajax({
+			type: 'post',
+			url: '/partner/new_organize',
+			data: {organize: organize},
+		})
+		.done(function(res) {
+			console.log(res)
+			if(res.status == 1){
+				$.dialog({type: 'success', message: '添加成功', delay: DELAY_TIME})
+				setTimeout(function(){
+					renderTree(organizeTree)
+				}, DELAY_TIME)
+			}else if(res.status == 2){
+				$.dialog({type: 'warning', message: '添加失败', delay: DELAY_TIME})
+			}
+			flag = true;
+		})
+		.fail(function(err) {
+			console.log(err);
+		})
+	}
 })
 //编辑组织节点
 $btnEdit.on('click', function(e){
@@ -185,58 +190,52 @@ $btnEdit.on('click', function(e){
   if(!getSeletedNode()) return false;
  	var node = getSeletedNode();
  	if(isRoot(node)){
- 		modalTitle.text('编辑公司名称(仅在组织树上生效)');
+ 		editModalTitle.text('编辑公司名称(仅在组织树上生效)');
  		$('.organize-name').text('公司名称');
  		$('.organize-profile').hide();
  	}else{
- 		modalTitle.text('部门编辑');
+ 		editModalTitle.text('部门编辑');
 	 	$('.organize-name').text('部门名称');
 	 	$('.organize-profile').show();
  	}
  	var name = node.name,
  	    profile = node.profile;
- 	organizeName.val(name);
- 	organizeProfile.val(profile);
-  if(organizeModal.find('#newTreeBtn').length > 0){
-  	$('#newTreeBtn').remove()
-  }
-  if(organizeModal.find('#editTreeBtn').length === 0){
-  	var editTreeBtn = $('<button id="editTreeBtn" class="btn btn-success" data-dismiss="modal">提交</button>');
-  	editTreeBtn.appendTo(modalFooter);
-  }
-  //标志位，避免多次提交事件
-  let flag = true;
-  $('#editTreeBtn').on('click', function(e){
-		e.preventDefault()
-		if(!checkInput(organizeName, msg)) return false;
-		var organize = {
-			id: node.id,
-			name: $.trim(organizeName.val()),
-	  	profile: $.trim(organizeProfile.val())
-		}
-		if(flag){
-			flag = false;
-			$.ajax({
-				type: 'post',
-				url: '/partner/edit_organize',
-				data: {organize: organize},
-			})
-			.done(function(res) {
-				console.log(res)
-				if(res.status == 1){
-					$.dialog({type: 'success', message: '编辑成功', delay: DELAY_TIME})
-					setTimeout(function(){
-						renderTree(organizeTree)
-					}, DELAY_TIME)
-				}else if(res.status == 2){
-					$.dialog({type: 'warning', message: '编辑失败', delay: DELAY_TIME})
-				}
-			})
-			.fail(function(err) {
-				console.log(err);
-			})
-		}
-	})
+ 	editOrganizeName.val(name);
+ 	editOrganizeProfile.val(profile);
+})
+//编辑组织表单提交
+editOrganizeBtn.on('click', function(e){
+	e.preventDefault()
+	if(!getSeletedNode()) return false;
+ 	var node = getSeletedNode();
+	if(!checkInput(editOrganizeName, msg)) return false;
+	var organize = {
+		id: node.id,
+		name: $.trim(editOrganizeName.val()),
+  	profile: $.trim(editOrganizeProfile.val())
+	}
+	if(flag){
+		$.ajax({
+			type: 'post',
+			url: '/partner/edit_organize',
+			data: {organize: organize},
+		})
+		.done(function(res) {
+			console.log(res)
+			if(res.status == 1){
+				$.dialog({type: 'success', message: '编辑成功', delay: DELAY_TIME})
+				setTimeout(function(){
+					renderTree(organizeTree)
+				}, DELAY_TIME)
+			}else if(res.status == 2){
+				$.dialog({type: 'warning', message: '编辑失败', delay: DELAY_TIME})
+			}
+			flag = true;
+		})
+		.fail(function(err) {
+			console.log(err);
+		})
+	}
 })
 //删除组织节点
 $btnRemove.on('click', function(e){
@@ -247,6 +246,7 @@ $btnRemove.on('click', function(e){
 	    name = node.name;
 	if(isRoot(node)){
 		alert('该节点不可删除！');
+		//$.dialog({type: 'confirm', message: '确定删除'})
 		return false;
 	}
 	if(isParent(node)){
@@ -292,6 +292,7 @@ $('.btn-set').on('click', function(){
   var userid = $tr.attr('data-id');
   userId.val(userid);
 })
+
 //提交按钮
 setOrganizeBtn.on('click', function(e){
   e.preventDefault();

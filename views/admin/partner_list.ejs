@@ -35,7 +35,7 @@
                   <tr>
                     <td><%= partner.admin.name%></td>
                     <td><%= partner.name%></td>
-                    <td><%= moment(partner.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %></td>
+                    <td><%= moment(partner.meta.updateAt).format('YYYY-MM-DD HH:mm:ss') %></td>
                     <td>
                     <%if(partner.is_verified == 0){%> 
                     <a href="/admin/verify_partner?id=<%= partner._id%>">待审核</a>

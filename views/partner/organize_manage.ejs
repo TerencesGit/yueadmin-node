@@ -42,12 +42,12 @@
                         <a href="javascript:;" class="btn-refresh"><i class="fa fa-refresh"></i><br>刷新</a> 
                       </li>
                       <li>
-                        <a href="#organizeModal" class="btn-new" data-toggle="modal">
+                        <a href="#newOrganizeModal" class="btn-new" data-toggle="modal">
                           <i class="fa fa-plus-square"></i><br>新增
                         </a>
                       </li>
                       <li>
-                        <a href="#organizeModal" class="btn-edit" data-toggle="modal"><i class="fa fa-edit"></i><br>编辑</a> 
+                        <a href="#editOrganizeModal" class="btn-edit" data-toggle="modal"><i class="fa fa-edit"></i><br>编辑</a> 
                       </li>
                       <li>
                         <a href="javascript:;" class="btn-remove"><i class="fa fa-remove"></i><br>删除</a> 
@@ -88,7 +88,7 @@
       </div>
     	<%- include('../footer') %>
     </div>
-    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="organizeModal" class="modal fade">
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="newOrganizeModal" class="modal fade">
       <div class="modal-dialog">
           <div class="modal-content">
             <form class="form-horizontal">
@@ -100,18 +100,49 @@
                 <div class="form-group row">
                   <label for="organizeName" class="col-md-offset-1 col-md-2 control-label organize-name">部门名称</label>
                   <div class="col-md-6">
-                    <input type="text" name="organize[name]" id="organizeName" class="form-control">
+                    <input type="text" name="organize[name]" id="newOrganizeName" class="form-control">
                   </div>
                 </div>
-                <div class="form-group row organize-profile">
+                <div class="form-group row">
                   <label for="organizeProfile" class="col-md-offset-1 col-md-2 control-label">部门简介</label>
                   <div class="col-md-6">
-                    <textarea name="organize[profile]" id="organizeProfile" class="form-control" rows="3" placeholder="选填"></textarea>
+                    <textarea name="organize[profile]" id="newOrganizeProfile" class="form-control" rows="3" placeholder="选填"></textarea>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-default" type="reset">取消</button>
+                <button id="newOrganizeBtn" class="btn btn-success" data-dismiss="modal">提交</button>
+              </div>
+            </form>
+          </div>
+      </div>
+    </div>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editOrganizeModal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <form class="form-horizontal">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">部门编辑</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <label for="organizeName" class="col-md-offset-1 col-md-2 control-label organize-name">部门名称</label>
+                  <div class="col-md-6">
+                    <input type="text" name="organize[name]" id="editOrganizeName" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row organize-profile">
+                  <label for="organizeProfile" class="col-md-offset-1 col-md-2 control-label">部门简介</label>
+                  <div class="col-md-6">
+                    <textarea name="organize[profile]" id="editOrganizeProfile" class="form-control" rows="3" placeholder="选填"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="reset">取消</button>
+                <button id="editOrganizeBtn" class="btn btn-success" data-dismiss="modal">提交</button>
               </div>
             </form>
           </div>

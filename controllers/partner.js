@@ -319,7 +319,7 @@ exports.managePartner = function(req, res){
 	var pageSize = 5;
 	var skipFrom = (pageIndex * pageSize) - pageSize;
 	Partner.find(search)
-				 .sort('-meta.createAt')
+				 .sort('-meta.updateAt')
 				 .limit(pageSize)
 				 .skip(skipFrom)
 				 .populate('admin', 'name')
