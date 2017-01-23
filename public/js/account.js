@@ -190,20 +190,20 @@
         qqInput = $('#qq'),
         idcardInput = $('#idcard'),
         addressInput = $('#address'),
-        btnInfoSubmit = $('#btnInfoSubmit'),
-        uploadAvatarForm = $('#uploadAvatarForm'),
+        //uploadAvatarForm = $('#uploadAvatarForm'),
         avatarFile = $('#avatarFile'),
         avatarPreview = $('#avatarPreview'),
         avatarPic = $('#avatarPic'),
-        btnAvatarUpload = $('#btnAvatarUpload'),
-        idcardUploadForm = $('#idcardUploadForm'),
+        //btnAvatarUpload = $('#btnAvatarUpload'),
+        //idcardUploadForm = $('#idcardUploadForm'),
         idcardFrontFile = $('#idcardFrontFile'),
         idcardFrontPreview = $('#idcardFrontPreview'),
         idcardFrontPic = $('#idcardFrontPic'),
         idcardBackFile = $('#idcardBackFile'),
         idcardBackPreview = $('#idcardBackPreview'),
         idcardBackPic = $('#idcardBackPic'),
-        btnIdcardUpload = $('#btnIdcardUpload');
+        //btnIdcardUpload = $('#btnIdcardUpload');
+        btnInfoSubmit = $('#btnInfoSubmit');
   //账户编辑表单提交
   btnInfoSubmit.on('click', function(e){
     e.preventDefault()

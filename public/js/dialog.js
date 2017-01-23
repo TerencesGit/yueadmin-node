@@ -1,116 +1,122 @@
 (function($){
-	var Dialog = function(config){
+	var Dialog = function(){
 		//默认设置
 		this.config = {
 			width: 'auto',
 			height: 'auto',
+			title: '系统提示',
 			message: '',
-			type: 'loading',
-			buttons: null,
 			delay: null,
-			maskOpacity: null,
-			maskClose: true,
-			callback: null,
-			handlerConfirm: null,
-			handlerCancel: null,
-			effect: true
-		}
-		//判断是否传参并且是纯对象
-		if(this.config && $.isPlainObject(config)){
-			$.extend(this.config, config)
-		}else{
-			this.isConfig = true
-		}
-		this.render()
+			effect: false,
+		};
+		this.handlers = {};
 	}
-	Dialog.prototype = {
-		//渲染组件
-		render: function(){
-			var _this = this,
-			    config = this.config;
-			this.modal = $('<div class="dialog-modal"></div>');
-			this.dialog = $('<div class="dialog-container"></div>');
-			var header = $('<div class="dialog-header"></div>'),
-			    body = $('<div class="dialog-body"></div>');
-			    footer = null;
-			if(this.isConfig){
-				this.dialog.addClass('waiting').append(header);
-			}else{
-				this.modal.css({
-					background: 'rgba(0,0,0,'+config.maskOpcity+')'
-				})
-				this.dialog.width(config.width);
-				this.dialog.height(config.height);
-				this.dialog.addClass(config.type).append(header);
-				if(config.message){
-					this.dialog.append(body.html(config.message));
+	Dialog.prototype = $.extend({}, {
+		on: function(type, handler){
+			if(typeof this.handlers[type] == 'undefined'){
+				this.handlers[type] = [];
+			}
+			this.handlers[type].push(handler);
+			return this;
+		},
+		fire: function(type, data){
+			if(this.handlers[type] instanceof Array){
+				var handlers = this.handlers[type];
+				for(var i = 0,len = handlers.length;i<len;i++){
+					handlers[i](data);
 				}
-				if(config.type == 'confirm'){
-					footer = $('<div class="dialog-footer">\
-						<button id="confirm" class="btn btn-success btn-confirm">确定</button>\
-						<button class="btn btn-danger btn-cancel">取消</button>\
-						</div>');
-					this.dialog.append(footer)
-				}
-			}
-			this.modal.append(this.dialog).appendTo($('body'))
-			//阻止dialog冒泡事件
-			this.dialog.on('click',function(e){
-				e.stopPropagation()
-			})
-			//动画
-			if(config.effect){
-				_this.animate()
-			}
-			//设定时间自动销毁
-			if(config.delay){
-				window.setTimeout(function(){
-					_this.destroy()
-					config.callback && config.callback()
-				},config.delay)
-			}
-			//点击遮罩销毁
-			if(config.maskClose){
-				this.modal.click(function(e){
-					e.stopPropagation();
-					_this.destroy()
-				})
-			}
-			//确认事件处理
-			if(config.handlerConfirm){
-				$('.btn-confirm').on('click', function(){
-					config.handlerConfirm();
-					_this.destroy()
-				})
-			}
-			//取消事件处理
-			if(config.handlerCancel){
-				$('.btn-cancel').on('click', function(){
-					config.handlerCancel();
-					_this.destroy()
-				})
 			}
 		},
-		//动画效果
+		render: function(){
+			var config = this.config,
+					that = this;
+			var header = $(' <div class="modal-header"><a class="close">×</a>\
+									 <h4 class="modal-title">'+config.title+'</h4></div>'),
+				  body = $('<div class="modal-body"><div class="modal-icon"></div>\
+              		<div class="modal-message">'+config.message+'</div></div>'),
+				  footer = $('<div class="modal-footer">\
+                	 <button type="button" class="btn btn-info cancel">确定</button></div>');
+			switch(config.type){
+				case 'alert':
+				  body = $('<div class="modal-body"><div class="modal-message">'+config.message+'</div></div>');
+					break;
+				case 'confirm':
+					footer = $('<div class="modal-footer">\
+                	 <button type="button" class="btn btn-success confirm">确定</button>\
+                	 <button type="button" class="btn btn-danger cancel">取消</button></div>');
+					break;
+				case 'success':
+				  body.addClass('success');
+				  footer = '';
+				 break;
+				case 'fail':
+					body.addClass('fail');
+				 break;
+			};
+			this.mask = $('<div class="modal mask"></div>');
+			this.dialog = $('<div class="modal-dialog"></div>');
+			this.content = $('<div class="modal-content"></div>');
+			this.content.append(header, body, footer).appendTo(this.dialog);
+			this.mask.append(this.dialog).appendTo($('body'));
+			if(config.delay){
+				var _mask = this.mask;
+				var _dialog = this.mask.find('.modal-dialog');
+				setTimeout(function(){
+					_dialog.find('.btn').off();
+					_dialog.css({'transform': 'scale(0, 0)'});
+					setTimeout(function(){
+						_mask.remove()
+					}, 500)
+				}, config.delay)
+			}
+			if(config.effect){
+				that.animate()
+			}
+			//事件绑定
+			this.mask.delegate('.close', 'click',function(){
+				that.fire('close');
+				that.destroy();
+			}).delegate('.confirm', 'click',function(){
+				that.fire('confirm');
+				that.destroy();
+			}).delegate('.cancel', 'click',function(){
+				that.fire('cancel');
+				that.destroy();
+			});
+		},
+		//动画
 		animate: function(){
 				var _this = this.dialog;
-				_this.css({'transform': 'translate(-50%, -50%) scale(0,0)'})
-				window.setTimeout(function(){
-					_this.css({'transform': 'translate(-50%, -50%) scale(1,1)'})
-				},200)
+				_this.css({'transform': 'scale(0,0)'})
+				setTimeout(function(){
+					_this.css({'transform': 'scale(1,1)'})
+				}, 200)
 		},
-		//销毁方法
+		//销毁
 		destroy: function(){
-			var _modal = this.modal;
-			var _dialog = this.dialog;
-			_dialog.find('.btn').off();
-			_dialog.css({'transform': 'translate(-50%, -50%) scale(0,0)'})
-			window.setTimeout(function(){
-				_modal && _modal.remove();
-			},200)
+			this.mask && this.mask.find('.btn').off() && this.mask.remove()
+		},
+		alert: function(config){
+			$.extend(this.config, config, {type: 'alert'});
+			this.render();
+			return this;
+		},
+		confirm: function(config){
+			$.extend(this.config, config, {type: 'confirm'});
+			this.render();
+			return this;
+		},
+		success: function(config){
+			$.extend(this.config, config, {type: 'success', effect: true});
+			this.render();
+			return this;
+		},
+		fail: function(config){
+			$.extend(this.config, config, {type: 'fail'});
+			this.render();
+			return this;
 		}
-	}
-	window.Dialog = Dialog;
+	})
 	$.dialog = function(config){
 		return new Dialog(config)
 	}

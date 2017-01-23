@@ -26,7 +26,8 @@ function getSeletedNode(){
 	var treeObj = $.fn.zTree.getZTreeObj("organizeTree");
   var node = treeObj.getSelectedNodes()[0];
   if(!node){
-    alert('请选择要操作的部门！');
+  	$.dialog().alert({message: '请选择要操作的部门！'})
+    //alert('请选择要操作的部门！');
     return false;
   }
  	return node;
@@ -245,41 +246,45 @@ $btnRemove.on('click', function(e){
 	var id = node.id,
 	    name = node.name;
 	if(isRoot(node)){
-		alert('该节点不可删除！');
-		//$.dialog({type: 'confirm', message: '确定删除'})
+		$.dialog().alert({message: '企业节点不可删除！'});
 		return false;
 	}
 	if(isParent(node)){
-		alert('该部门有下属部门，不可删除！');
+		$.dialog().alert({message: '该部门有下属部门，不可删除！'});
 		return false;
 	}
-	if(confirm('确定删除 '+name+ ' ?此操作不可恢复')){
-		$.ajax({
-			type: 'get',
-			url: '/partner/remove_organize?id=' + id,
-		})
-		.done(function(res){
-			if(res.status == 1){
-				$.dialog({type: 'success', message: '删除成功', delay: DELAY_TIME})
-				setTimeout(function(){
-					renderTree(organizeTree)
-				}, DELAY_TIME)
-			}else if(res.status == 2){
-				$.dialog({type: 'warning', message: '该部门有下属部门，不可删除', delay: DELAY_TIME})
-			}else if(res.status == 3){
-				$.dialog({type: 'warning', message: '该部门有员工，不可删除'})
-			}else if(res.status == 0){
-				$.dialog({type: 'warning', message: '企业节点禁止删除', delay: DELAY_TIME})
-			}else{
-				$.dialog({type: 'warning', message: '删除失败，请稍后重试', delay: DELAY_TIME})
-			}
-		})
-		.fail(function(error){
-			console.log(error)
-		})
-	}
+	$.dialog().confirm({message: '确定删除 '+name+ ' ? 此操作不可恢复'})
+	.on('confirm', function(){
+		removeOrganize(id)
+	})
+	.on('cancel', function(){
+	})
 })
-
+function removeOrganize(id){
+	$.ajax({
+		type: 'get',
+		url: '/partner/remove_organize?id=' + id,
+	})
+	.done(function(res){
+		if(res.status == 1){
+			$.dialog().success({message: '删除成功', delay: DELAY_TIME})
+			setTimeout(function(){
+				renderTree(organizeTree)
+			}, DELAY_TIME)
+		}else if(res.status == 2){
+			$.dialog().fail({message: '该部门有下属部门，不可删除'})
+		}else if(res.status == 3){
+			$.dialog().fail({message: '该部门有员工，不可删除'})
+		}else if(res.status == 0){
+			$.dialog().fail({message: '企业节点禁止删除'})
+		}else{
+			$.dialog().fail({message: '删除失败，请稍后重试'})
+		}
+	})
+	.fail(function(error){
+		console.log(error)
+	})
+}
 /* 员工操作 */
 
 //设置员工部门

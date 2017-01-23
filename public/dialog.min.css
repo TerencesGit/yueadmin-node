@@ -1,0 +1,88 @@
+.dialog-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5)
+}
+
+.dialog-container {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  padding: 20px 40px;
+  text-align: center;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 1px 1px 8px #333;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s cubic-bezier(0.43, 0.15, 0.81, 1.6);
+}
+
+.dialog-container.waiting {
+  background: rgba(0, 0, 0, 0.5)
+}
+
+.dialog-header {
+  width: 50px;
+  height: 50px;
+  margin: auto
+}
+
+.dialog-header:before {
+  display: block;
+  margin-top: -15px;
+  text-align: center;
+  font-size: 50px
+}
+
+.waiting .dialog-header {
+  background: url(../img/loading.gif) no-repeat;
+  background-size: 50px
+}
+
+/*.success .dialog-header:before {
+  content: '\2714';
+  color: #0f0
+}*/
+.success .dialog-header {
+  background: url(../img/success.png);
+  background-size: 50px;
+}
+.warning .dialog-header {
+  background: url(../img/fail.png);
+  background-size: 50px;
+}
+/*.warning .dialog-header:before {
+  content: '!';
+  color: #f50;
+  font-family: 'Microsoft Yahei'
+}*/
+
+.confirm .dialog-header:before {
+  content: '？';
+  color: #f50;
+  font-family: 'Microsoft Yahei'
+}
+
+.dialog-body {
+  min-width: 80px;
+  padding: 15px 0 0;
+  color: #444;
+  font-size: 14px;
+  letter-spacing: 3px;
+  font-weight: bold
+}
+
+.dialog-footer {
+  padding: 20px 10px 0
+}
+
+.dialog-footer .btn {
+  margin: 5px
+}
+
+
+/*# sourceMappingURL=dialog.css.map */
