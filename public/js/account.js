@@ -65,12 +65,10 @@
       regular: '密码长度在8-20位之间',
     },
     nickname: {
-      required: '不能为空',
-      //regular: '不少于3位',
+      required: '昵称不能为空',
     },
     qq: 'qq格式有误',
     idcard: '身份证号格式有误',
-    address: '籍贯不能为空'
   }
   //输入框失去焦点事件
   mobileInput.blur(function(event){
@@ -100,6 +98,29 @@
     if(value == '') return;
     confirmConsistent($(this), newPasswd)
   })
+  //验证邮箱
+  var verifyEmailBtn = $('#verifyEmailBtn');
+  verifyEmailBtn.on('click', function(e){
+    var email = $(this).attr('data-id');
+    $.ajax({
+      url: '/account/verify_email',
+      type: 'post',
+      data: {email: email},
+    })
+    .done(function(res) {
+      if(res.status == 1){
+        $.dialog().alert({message: '邮箱验证信息已发送至'+email+'邮箱,请注意查收'})
+      }else if(res.status == 2){
+        $.dialog().fail({message: '您的邮箱存在问题,请核实'})
+      }else{
+        $.dialog().alert({message: '系统错误，请重试'})
+      }
+    })
+    .fail(function() {
+      $.dialog().alert({message: '发送失败'})
+    })
+  })
+
   //绑定手机号 获取验证码
   btnSendCode.on('click', function(e){
     e.preventDefault()
@@ -190,39 +211,23 @@
         qqInput = $('#qq'),
         idcardInput = $('#idcard'),
         addressInput = $('#address'),
-        //uploadAvatarForm = $('#uploadAvatarForm'),
         avatarFile = $('#avatarFile'),
         avatarPreview = $('#avatarPreview'),
         avatarPic = $('#avatarPic'),
-        //btnAvatarUpload = $('#btnAvatarUpload'),
-        //idcardUploadForm = $('#idcardUploadForm'),
         idcardFrontFile = $('#idcardFrontFile'),
         idcardFrontPreview = $('#idcardFrontPreview'),
         idcardFrontPic = $('#idcardFrontPic'),
         idcardBackFile = $('#idcardBackFile'),
         idcardBackPreview = $('#idcardBackPreview'),
         idcardBackPic = $('#idcardBackPic'),
-        //btnIdcardUpload = $('#btnIdcardUpload');
         btnInfoSubmit = $('#btnInfoSubmit');
-  //账户编辑表单提交
-  btnInfoSubmit.on('click', function(e){
-    e.preventDefault()
-    checkInput(nicknameInput, msg.nickname) &&
-    checkInput(qqInput, msg.qq, regular.qq) &&
-    checkInput(idcardInput, msg.idcard, regular.idcard) &&
-    checkInput(addressInput, msg.address) && accountInfoForm.submit()
-  })
+  
   //头像预览
   avatarFile.change(function(){
     checkImage(this) && uploadPreview(this, avatarPic)
   })
   avatarPreview.click(function(){
     avatarFile.click()
-  })
-  //头像上传
-  btnAvatarUpload.on('click', function(e){
-    e.preventDefault()
-    checkImage(avatarFile) && uploadAvatarForm.submit()
   })
   //身份证正面预览
   idcardFrontFile.change(function(){
@@ -238,11 +243,17 @@
   idcardBackPreview.click(function(){
     idcardBackFile.click()
   })
-  //身份证上传
-  btnIdcardUpload.on('click', function(e){
+
+  //账户编辑表单提交
+  btnInfoSubmit.on('click', function(e){
     e.preventDefault()
-    if(checkImage(idcardFrontFile) || checkImage(idcardBackFile)){
-      idcardUploadForm.submit()
-    } 
+    checkInput(nicknameInput, msg.nickname) &&
+    checkInputValue(qqInput, msg.qq, regular.qq) &&
+    checkInputValue(idcardInput, msg.idcard, regular.idcard) &&
+    checkImageValue(avatarFile) &&
+    checkImageValue(idcardFrontFile) &&
+    checkImageValue(idcardBackFile) &&
+    alert(234)
+    //accountInfoForm.submit()
   })
 })(jQuery)

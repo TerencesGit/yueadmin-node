@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+  </head>
+  <body>
+    <%- include('../aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-id="account_security">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-info account-modify">
+            <div class="panel-heading">
+              <h3 class="panel-title">修改手机号码</h3>
+            </div> 
+            <div class="panel-body">
+              <form action="/account/bind_mobile" method="post" id="modifyMobileForm" class="form-horizontal" role="form">
+                <div class="form-group">
+                  <label class="col-md-4 control-label">当前手机号码：</label>
+                  <div class="col-md-4">
+                    <span class="control-text"><%= user.mobile %></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label">新手机号码：</label>
+                  <div class="col-md-4">
+                    <input type="text" name="user[mobile]" id="newMobile" class="form-control" placeholder="输入手机号码" >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label">验证码：</label>
+                  <div class="col-md-2">
+                    <input type="text" name="user[phonecode]" id="phoneCode2" class="form-control" placeholder="输入验证码">
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" id="btnSendCode2" class="btn btn-success btn-block" data-status="0">获取验证码</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-offset-4 col-md-4 m-t">
+                    <button type="submit" id="btnModifyMobile" class="btn btn-primary btn-block">确定</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="warp-footer"></div>
+        </div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+    <script src="/js/account.js"></script>
+  </body>
+</html>

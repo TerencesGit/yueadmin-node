@@ -200,7 +200,7 @@ exports.bindMobile = function(req, res){
 		if(phonecode !== usercode){
 			console.log( '手机验证码错误')
 			userObj.error = '手机验证码有误！';
-			return res.render('account/account_bind', {title: '账号绑定', tabIndex: 1, user: userObj})
+			return res.render('account/account_bind', {title: '账号安全', tabIndex: 1, user: userObj})
 		}
 		User.update({_id: id}, {'$set': {mobile: mobile}}, function(err, msg){
 			if(err) return err;
@@ -208,7 +208,7 @@ exports.bindMobile = function(req, res){
 			userObj.success = '手机号绑定成功！';
 			req.session.user = userObj;
 			console.log('绑定成功！')
-		  return res.render('account/account_bind', {title: '账号绑定', tabIndex: 1, user: userObj})
+		  return res.render('account/account_bind', {title: '账号安全', tabIndex: 1, user: userObj})
 		})
 	}else {
 		res.redirect('/signin')
@@ -216,23 +216,24 @@ exports.bindMobile = function(req, res){
 }
 //验证邮箱
 exports.verifiedEmail = function(req, res){
-	var email = req.query.email;
+	var email = req.body.email;
+	console.log(email)
 	User.findOne({email: email}, function(err, user){
 		if(user){
 			User.update({email: email}, {'$set': {email_verified: 1}}, function(err, msg){
 				if(err) return err;
 				console.log('邮箱验证成功！')
 				req.session.user = user;
-				res.redirect('/account/account_bind')
+				res.json({status: 1})
 			})
 		}else{
-			res.redirect('/account')
+			res.json({status: 0})
 		}
 	})
 }
 //修改邮箱页
 exports.showModifyEmail = function(req, res){
-	res.render('account/account_bind', {title: '账号绑定', tabIndex: 2})
+	res.render('account/account_bind', {title: '账号安全', tabIndex: 2})
 }
 //修改邮箱
 exports.modifyEmail = function(req, res){
@@ -252,7 +253,8 @@ exports.modifyEmail = function(req, res){
 }
 //修改密码页
 exports.showModifyPassword = function(req, res){
-	res.render('account/account_bind', {title: '账号绑定', tabIndex: 3})
+	res.render('account/modify_password', {title: '账号安全'})
+	//res.render('account/account_bind', {title: '账号安全', tabIndex: 3})
 }
 //修改密码
 exports.modifyPassword = function(req, res){
@@ -276,11 +278,11 @@ exports.modifyPassword = function(req, res){
 						if(err) console.log(err)
 						user.success = '密码修改成功！';	
 						req.session.user = user;
-		  			return res.render('account/account_bind', {title: '账号绑定', tabIndex: 3, user: user})
+		  			return res.render('account/account_bind', {title: '账号安全', tabIndex: 3, user: user})
 					})
 				}else{
 					userSession.error = '原密码不正确';
-					return res.render('account/account_bind', {title: '账号绑定', tabIndex: 3, user: userSession})
+					return res.render('account/account_bind', {title: '账号安全', tabIndex: 3, user: userSession})
 				}
 			})
 	})
@@ -365,28 +367,6 @@ exports.showAccountInfo = function(req, res){
 exports.showAccountEdit = function(req, res){
 	res.render('account/account_info_edit', {title: '账户信息编辑'})
 }
-//账户信息保存
-exports.saveInfo = function(req, res){
-	var userObj = req.body.user;
-	userObj.idcard = Trim(userObj.idcard);
-	userObj.address = Trim(userObj.address);
-	userObj.signature = Trim(userObj.signature);
-	var id = req.session.user._id;
-	if(id){
-		User.update({_id: id}, {'$set': userObj}, function(err, msg){
-			if(err) return err;
-			console.log(msg)
-			console.log(userObj)
-			console.log(req.session.user)
-			var _user = _.assign(req.session.user, userObj);
-			req.session.user = _user;
-			console.log(_user)
-		  res.redirect('/account')
-		})
-	}else {
-		res.redirect('/signin')
-	}
-}
 //头像上传
 exports.avatarUpload = function(req, res, next){
 	var user = req.session.user;
@@ -399,11 +379,13 @@ exports.avatarUpload = function(req, res, next){
 			var avatar = 'avatar_' + timestamp + '.' +type;
 			var newPath = path.join(__dirname, '../', 'public/upload/avatar/' + avatar);
 			fs.writeFile(newPath, data, function(err){
-				User.update({_id: user._id},{'$set': {avatar: avatar}}, function(err, msg){
-					if(err) return err;
-					user.avatar = avatar;
-					res.redirect('/account/edit_info')
-				})
+				// User.update({_id: user._id},{'$set': {avatar: avatar}}, function(err, msg){
+				// 	if(err) return err;
+				// 	user.avatar = avatar;
+				// 	res.redirect('/account/edit_info')
+				// })
+				req.avatar = avatar;
+				next()
 			})
 		})
 	}else{
@@ -449,29 +431,49 @@ exports.idcardBackUpload = function(req, res, next){
 		next()
 	}
 }
-//身份证附件保存
-exports.idcardUpload = function(req, res){
-	var user = req.session.user,
-	    id = user._id;
-	var	idcardFront = req.idcardFront || user.idcard_front;
-	var	idcardBack = req.idcardBack || user.idcard_back;
-	User.update({_id: user._id}, {'$set': {idcard_front: idcardFront, idcard_back: idcardBack}}, function(err, msg){
-		if(err) return err;
-		user.idcard_front = idcardFront;
-		user.idcard_back = idcardBack;
-		res.redirect('/account/edit_info');
-	})
+//账户信息保存
+exports.saveInfo = function(req, res){
+	var userObj = req.body.user;
+	userObj.idcard = Trim(userObj.idcard);
+	userObj.address = Trim(userObj.address);
+	userObj.signature = Trim(userObj.signature);
+	if(req.avatar){
+		userObj.avatar = req.avatar;
+	}
+	if(req.idcardFront){
+		userObj.idcard_front = req.idcardFront;
+	}
+	if(req.idcardBack){
+		userObj.idcard_back = req.idcardBack;
+	}
+	var id = req.session.user._id;
+	if(id){
+		User.update({_id: id}, {'$set': userObj}, function(err, msg){
+			if(err) return err;
+			var _user = _.assign(req.session.user, userObj);
+			req.session.user = _user;
+			console.log(_user)
+		  res.redirect('/')
+		})
+	}else {
+		res.redirect('/signin')
+	}
 }
-//账号绑定
+
+//账号安全
 exports.accountBind = function(req, res){
 	var user = req.session.user;
 	user.error = '';
 	user.success = '';
-	res.render('account/account_bind', {title: '账号绑定', tabIndex: 0})
+	res.render('account/account_security', {title: '账号安全', tabIndex: 0})
 }
 //手机号绑定页
 exports.showBindMobile = function(req, res){
-	res.render('account/account_bind', {title: '账号绑定', tabIndex: 1})
+	res.render('account/bind_mobile', {title: '手机绑定'})
+}
+//手机号修改页
+exports.showModifyMobile = function(req, res){
+	res.render('account/modify_mobile', {title: '手机号修改'})
 }
 //
 exports.showRegistered = function(req, res){

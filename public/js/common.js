@@ -4,7 +4,7 @@
 var checkInput = function($element, msg, regular, wrapShow){
   if(!($element && msg)) throw new Error('至少两个参数！');
   var msgRequired = msg.required || '该项不能为空',
-      msgregular = msg.regular || '输入格式有误';
+      msgRegular = msg.regular || '输入格式有误';
   var wrapShow = wrapShow || false;
   var value = $.trim($element.val());
   var formGroup = $element.parents('.form-group');
@@ -28,7 +28,7 @@ var checkInput = function($element, msg, regular, wrapShow){
     if(regular){
       if(!regular.test(value)) {
         formGroup.removeClass('has-success').addClass('has-error');
-        $alert.html('<i class="fa fa-warning"></i>'+msgregular);
+        $alert.html('<i class="fa fa-warning"></i>'+msgRegular);
         return false;
       }
     }
@@ -37,6 +37,36 @@ var checkInput = function($element, msg, regular, wrapShow){
     return true;
   }
 }
+//判断输入框是否有值
+var hasValue = function($element){
+  return $.trim($element.val()).length;
+}
+//输入框有值时验证
+var checkInputValue = function($element, msg, regular){
+  if(!hasValue($element)) return true;
+  return checkInput($element, msg, regular);
+};
+//输入框不能为空验证
+var checkInputEmpty = function($element, msgRequired){
+  if(hasValue($element)) return true;
+  var msgRequired = msg.required || '不能为空';
+  var formGroup = $element.parents('.form-group');
+  formGroup.removeClass('has-success').addClass('has-error');
+  $alert.html('<i class="fa fa-warning"></i>'+msgRequired);
+  $element.focus();
+  return false;
+}
+//输入框正则验证
+var checkInputRegular = function($element, regular, msg){
+  var msgRegular = msg.regular || '输入格式有误';
+  var value = $.trim($element.val());
+  var formGroup = $element.parents('.form-group');
+  if(regular.test(value)) return true;
+  formGroup.removeClass('has-success').addClass('has-error');
+  $alert.html('<i class="fa fa-warning"></i>'+msgRegular);
+  return false;
+}
+//
 //判断输入框两次输入是否一致
 var confirmConsistent = function($element, $target, msg, wrapShow) {
   if(!($element && $target)) throw new Error('至少两个参数！');
@@ -211,44 +241,58 @@ var checkCheckbox = function($element, msg, wrapShow) {
   }
 }
 
-//上传图片预览
-var uploadPreview = function(fileInput, $image){
-  if(fileInput.files && fileInput.files[0]){
-    var reader = new FileReader();
-    reader.onload = function(e){
-      $image.attr('src', e.target.result)
-    }
-    reader.readAsDataURL(fileInput.files[0])
-  }
+//判断是否上传文件
+var hasFile = function(fileInput){
+  fileInput = fileInput instanceof jQuery ? fileInput[0] : fileInput;
+  return fileInput.files && fileInput.files[0];
 }
 
-//上传图片验证
-var checkImage = function(fileInput, msg, regular, sizeLimit){
+//上传图片预览
+var uploadPreview = function(fileInput, $image){
+  if(!hasFile(fileInput)) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    $image.attr('src', e.target.result)
+  }
+  reader.readAsDataURL(fileInput.files[0])
+}
+
+//图片不为空验证
+var checkImageNotNull = function(fileInput, msg){
+  if(hasFile(fileInput)) return true;
+  var msgRequired = msg && msg.required || '请选择图片';
+  var formGroup = fileInput.parent();
+  if(formGroup.children('.alert').length === 0) {
+    formGroup.append('<div class="alert alert-danger hidden"></div>')
+  }
+  var $alert = formGroup.children('.alert');
+  $alert.removeClass('hidden').html('<i class="fa fa-warning"></i>'+ msgRequired);
+  return false;
+}
+
+//图片格式大小验证
+var checkImageRugular = function(fileInput, msg, regular, sizeLimit){
 	/*
-		$fileInput  //file类型的input对象  
+		fileInput   //file对象  
 		msg         //错误信息提示
 		regular     //图片格式正则表达式 默认 gif|jpg|jpeg|png
 		sizeLimit   //图片尺寸大小限制   默认 1024K
 	*/
 	if(!(fileInput instanceof jQuery || fileInput.nodeType === 1)) 
-	throw new Error(fileInput + '不是DOM对象！');
-	var msgRequired = msg && msg.required || '请选择图片',
-	    msgRegular = msg && msg.regular || '图片格式有误',
+	throw new Error(fileInput + '不是DOM或jQuery对象！');
+	var msgRegular = msg && msg.regular || '图片格式有误',
 	 		msgSize = msg && msg.size || '图片大小超过限制',
 	 		regular = regular || /\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/,
 	 		sizeLimit = sizeLimit || 1024;
-	var formGroup = $(fileInput).parents('.form-group');
-	if(formGroup.next('.alert').length === 0) {
-    formGroup.after('<div class="alert alert-danger hidden"></div>')
+	var formGroup = $(fileInput).parent();
+	if(formGroup.children('.alert').length === 0) {
+    formGroup.append('<div class="alert alert-danger hidden"></div>')
   }
-  var $alert = formGroup.next('.alert');
+  var $alert = formGroup.children('.alert');
   var fileObj = fileInput instanceof jQuery ? fileInput[0] : fileInput;
 	var fileValue = fileObj.value,
 	    fileSize = fileObj.files[0] && fileObj.files[0].size / 1024;
-	if(fileValue == ''){
-		$alert.removeClass('hidden').html('<i class="fa fa-warning"></i>'+ msgRequired);
-		return false;
-	}else if(!regular.test(fileValue)){
+	if(!regular.test(fileValue)){
 		$alert.removeClass('hidden').html('<i class="fa fa-warning"></i>'+ msgRegular);
 		return false;
 	}else if(fileSize > sizeLimit){
@@ -258,6 +302,19 @@ var checkImage = function(fileInput, msg, regular, sizeLimit){
 	$alert && $alert.remove()
 	return true;
 }
+
+//验证图片(不可为空)
+var checkImage = function(fileInput, msg, regular, sizeLimit){
+  return checkImageNotNull(fileInput, msg) && 
+  checkImageRugular(fileInput, msg, regular, sizeLimit)
+}
+
+//验证图片(可为空)
+var checkImageValue = function(fileInput, msg, regular, sizeLimit){
+  if(!hasFile(fileInput)) return true;
+  return checkImageRugular(fileInput, msg, regular, sizeLimit);
+}
+
 //倒计时 自动跳转到指定页
 var countDown = function($target, router, count){
   var count = count || 5;

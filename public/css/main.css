@@ -50,7 +50,8 @@ body {
 .form-group.row {
   margin-right: 0
 }
-.has-success .control-label, .has-error .control-label {
+.has-success .control-label, 
+.has-error .control-label {
   color: #333;
 }
 .control-label i {
@@ -69,6 +70,17 @@ body {
 }
 .disabled {
   pointer-events: none
+}
+.alert-back {
+  width: 80%;
+  margin: auto
+}
+.alert-back .fa {
+  margin: 0 10px
+}
+.alert-dismissable .close {
+  top: 0;
+  right: 0; 
 }
 /**========== bootstrap reset ==========**/
 
@@ -688,80 +700,24 @@ body {
 /**========== 账号信息编辑 end ===========**/
 
 /**========== 账号绑定 start ===========**/
-
-.account-panel .panel-default {
-  padding-bottom: 0
-}
-.account-panel .panel-heading {
-  margin-bottom: 0;
-}
 .account-panel .panel-body {
-  padding: 0;
+  padding: 0 15px;
 }
-.tab-content {
-  padding: 80px;
+.panel-item {
+  padding: 25px 25px 20px 25px;
+  border-bottom: 1px solid #eee;
 }
-.tab-content .row {
-  margin: 30px 15px;
+.panel-item:hover {
+  background: #fbfbfb
 }
-.account-panel .form-group {
-  margin: 20px 0;
+.panel-item:last-child {
+  border-bottom: 0
 }
-.tab-list {
-  float: left;
-  height: 400px;
-  padding: 0;
-  border: 1px solid #dcdddd;
-  border-bottom: 0;   
-  background: #f4fafe;
+.panel-item .item-title {
+  font-size: 18px
 }
-.tab-list > li {
-  position: relative;
-  overflow: hidden;
-  color: #333;
-  font-size: 16px;
-  font-weight: bold;
-  height: 60px;
-  line-height: 60px;
-  padding-left: 20px;
-  text-align: left;
-  background: #f4fafe;
-  cursor: pointer;
-}
-.tab-list .curr {
-  position: relative;
-  margin-right: -3px;
-  padding-left: 18px;
-  color: #27b3e9;
-  background: #fff;
-  border-bottom: 1px solid #dcdcdc;
-  border-top: 1px solid #dcdcdc;
-  border-left: 2px solid #27b3e9;
-}
-.tabcont-list{
-  padding: 0;
-  margin: 0;    
-  background: #fff;
-  float: right;
-  height: 400px;
-}
-.tab-content{
-  display: none;
-}
-.alert-back {
-  width: 80%;
-  margin: auto
-}
-.alert-back .fa {
-  margin: 0 10px
-}
-.control-span {
-  display: inline-block;
-  padding-top: 5px;
-}
-.alert-dismissable .close {
-  top: 0;
-  right: 0; 
+.account-modify .panel-body {
+  padding: 50px;
 }
 /**========== 账号绑定 end ===========**/
 

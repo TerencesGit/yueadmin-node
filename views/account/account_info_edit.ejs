@@ -25,33 +25,9 @@
                     <h3 class="col-md-2 control-label">基本信息编辑</h3>       
                   </div>
                   <div class="form-group">
-                    <label class="col-md-2 control-label"><i>*</i>昵称</label>
+                    <label class="col-md-2 control-label">昵称</label>
                     <div class="col-md-6">
                       <input type="text" id="nickname" class="form-control" name="user[name]" value="<%= user.name %>">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-md-2 control-label"><i>*</i>邮箱</label>
-                    <div class="col-md-6">
-                      <span><%= user.email %></span>
-                      <a href="/account/show_modify_email" class="control-text">
-                      <% if(user && user.email_verified == '0'){ %> 
-                      未验证
-                      <% }else{ %>
-                      已验证
-                      <%}%>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-md-2 control-label">手机号</label>
-                    <div class="col-md-6">
-                      <% if(user && user.mobile){ %>
-                      <span class="control-span"><%= user.mobile %></span>
-                      <a href="/account/bind_mobile" class="control-text">修改</a> 
-                      <% }else{ %>
-                      <a href="/account/bind_mobile" class="control-text">未绑定</a>
-                      <%}%>
                     </div>
                   </div>
                   <div class="form-group">
@@ -87,13 +63,13 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-md-2 control-label"><i>*</i>身份证号</label>
+                    <label class="col-md-2 control-label">身份证号</label>
                     <div class="col-md-6">
                        <input type="text" name="user[idcard]" id="idcard" class="form-control" value="<%if(user && user.idcard){%><%=user.idcard %><%}%>">
                     </div>
                   </div>
                   <div class="form-group">
-                     <label class="col-md-2 control-label"><i>*</i>籍贯</label>
+                     <label class="col-md-2 control-label">籍贯</label>
                      <div class="col-md-6">
                       <input type="text" name="user[address]" id="address" class="form-control" value="<%if(user && user.address){%><%= user.address%><%}%>">
                      </div>
@@ -106,8 +82,8 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <h3 class="col-md-2 control-label">附件上传</h3>
-                    <p class="alert text-warning control-text">
+                    <h3 class="col-md-2 control-label m-t">附件上传</h3>
+                    <p class="alert text-warning m-t">
                       支持JPG、JPEG、PNG格式且大小不要超过1M！
                     </p>
                   </div>

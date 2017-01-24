@@ -34,19 +34,20 @@ router.get('/sendPhoneCode', User.sendPhoneCode);
 router.get('/account', User.signinRequired, User.showAccountInfo);
 router.get('/account/account_info', User.signinRequired, User.showAccountInfo);
 router.get('/account/edit_info', User.signinRequired, User.showAccountEdit);
-router.post('/account/save_info', User.signinRequired, User.saveInfo);
-router.post('/account/avatarUpload', multipartMiddleware, User.avatarUpload);
-router.post('/account/idcardUpload', multipartMiddleware, User.idcardFrontUpload, User.idcardBackUpload, User.idcardUpload);
+router.post('/account/save_info', User.signinRequired, multipartMiddleware, User.avatarUpload, User.idcardFrontUpload, User.idcardBackUpload, User.saveInfo);
+//router.post('/account/avatarUpload', multipartMiddleware, User.avatarUpload);
 
 //账号设置
-router.get('/account/account_bind', User.signinRequired, User.accountBind);
+router.get('/account/account_security', User.signinRequired, User.accountBind);
 router.get('/account/bind_mobile', User.showBindMobile);
 router.post('/account/bind_mobile', User.bindMobile);
-router.get('/account/verify_email', User.verifiedEmail);
+//router.get('/account/verify_email', User.verifiedEmail);
+router.post('/account/verify_email', User.verifiedEmail);
 router.get('/account/show_modify_email', User.showModifyEmail);
 router.get('/account/modify_email', User.modifyEmail);
 router.get('/account/modify_password', User.showModifyPassword);
 router.post('/account/modify_password', User.modifyPassword);
+router.get('/account/modify_mobile', User.showModifyMobile);
 
 //重置密码
 router.get('/account/find_password', User.showFindPassword);
