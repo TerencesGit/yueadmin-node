@@ -81,8 +81,8 @@
                     <td><%= moment(user.meta.createAt).format('YYYY-MM-DD') %></td>
                     <td><%if(user.organize && user.organize.name){%><%= user.organize.name %><%}%></td>
                     <td><a href="#">查看</a></td>
-                    <td style="min-width: 115px">
-                      <a class="btn btn-link btn-set" data-toggle="modal" href="#setOrganizeModal">部门设置</a>
+                    <td>
+                      <a href="#setOrganizeModal" class="btn btn-link btn-set" data-toggle="modal">部门设置</a>
                     </td>
                   </tr>
                   <% })%>

@@ -14,8 +14,8 @@ exports.save = function(req, res){
 	console.log(_message)
 	var message = new Message(_message);
 	message.save(function(err, message){
-		if(err) return err;
-		res.redirect('/')
+		if(err) console.log(err);
+		res.json({status: 1})
 	})
 }
 exports.delete = function(req, res){

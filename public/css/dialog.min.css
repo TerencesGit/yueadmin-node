@@ -1,5 +1,5 @@
 .mask {
-  display: block;
+  display: block !important;
   background: rgba(0, 0, 0, 0.3)
 }
 

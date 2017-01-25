@@ -358,6 +358,7 @@ exports.adminRequired = function(req, res, next){
 exports.showAccountInfo = function(req, res){
 	var user = req.session.user;
 	Message.find()
+				 .sort('-meta.createAt')
 				 .populate('user', 'avatar name')
 				 .exec(function(err, messages){
 				 		res.render('account/account_info', {title: '账户信息', messages: messages})
@@ -503,6 +504,13 @@ exports.showRegisteredPartner = function(req, res){
 	}else{
 		res.redirect('/signin')
 	}
+}
+/* 系统功能树 */
+exports.showSystemFunction = function(req, res){
+	res.render('system/system_function',{title: '系统功能树'})
+}
+exports.noticeManage = function(req, res){
+	res.render('system/notice_manage', {title: '公告信息维护'})
 }
 /* 管理员操作 */
 

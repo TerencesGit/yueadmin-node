@@ -66,7 +66,18 @@ var checkInputRegular = function($element, regular, msg){
   $alert.html('<i class="fa fa-warning"></i>'+msgRegular);
   return false;
 }
-//
+//输入框简单验证
+var simpleCheckInput = function($element){
+  var value = $.trim($element.val());
+  var formGroup = $element.parents('.form-group');
+  if(value == ''){
+    formGroup.removeClass('has-success').addClass('has-error');
+    return false;
+  }else{
+    formGroup.removeClass('has-error').addClass('has-success');
+    return true;
+  }
+}
 //判断输入框两次输入是否一致
 var confirmConsistent = function($element, $target, msg, wrapShow) {
   if(!($element && $target)) throw new Error('至少两个参数！');

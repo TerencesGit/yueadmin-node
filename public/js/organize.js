@@ -100,7 +100,7 @@ function renderStaff(organizeId){
       staffList += ('<tr><td>'+num+'</td><td>'+users[i].name+'</td>\
         <td>'+gender+'</td><td>'+users[i].mobile+'</td>\
         <td>'+users[i].email+'</td><td>'+users[i].organize.name+'</td>\
-        <td><a href="/partner/staff_manage" class="btn btn-warning">编辑</a></td></tr>')
+        <td><a href="/partner/staff_manage" class="btn btn-link">设置</a></td></tr>')
     }
     $('.staff-list').empty().append(staffList);
   })
@@ -224,12 +224,12 @@ editOrganizeBtn.on('click', function(e){
 		.done(function(res) {
 			console.log(res)
 			if(res.status == 1){
-				$.dialog({type: 'success', message: '编辑成功', delay: DELAY_TIME})
+				$.dialog().success({message: '编辑成功', delay: DELAY_TIME})
 				setTimeout(function(){
 					renderTree(organizeTree)
 				}, DELAY_TIME)
 			}else if(res.status == 2){
-				$.dialog({type: 'warning', message: '编辑失败', delay: DELAY_TIME})
+				$.dialog().fail({message: '编辑失败'})
 			}
 			flag = true;
 		})

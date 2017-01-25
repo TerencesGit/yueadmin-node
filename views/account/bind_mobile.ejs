@@ -10,36 +10,36 @@
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
           <div  class="panel panel-info account-modify">
-              <div class="panel-heading">
-                <h3 class="panel-title">
-                绑定手机号码
-                </h3>
-              </div> 
-              <div class="panel-body">
-                <form action="/account/bind_mobile" method="post" id="bindMobileForm" class="form-horizontal" role="form">
-                    <div class="form-group">
-                      <label class="col-md-4 control-label">手机号码：</label>
-                      <div class="col-md-4">
-                        <input type="text" id="mobile" class="form-control" name="user[mobile]" placeholder="输入手机号码" >
-                      </div>
+            <div class="panel-heading">
+              <h3 class="panel-title">
+              绑定手机号码
+              </h3>
+            </div> 
+            <div class="panel-body">
+              <form action="/account/bind_mobile" method="post" id="bindMobileForm" class="form-horizontal" role="form">
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">手机号码：</label>
+                    <div class="col-md-4">
+                      <input type="text" id="mobile" class="form-control" name="user[mobile]" placeholder="输入手机号码" >
                     </div>
-                    <div class="form-group">
-                      <label class="col-md-4 control-label">验证码：</label>
-                      <div class="col-md-2">
-                        <input type="text" name="user[phonecode]" id="phoneCode" class="form-control" placeholder="输入验证码">
-                      </div>
-                      <div class="col-md-2">
-                        <button type="button" id="btnSendCode" class="btn btn-success btn-block" data-status="0">获取验证码</button>
-                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">验证码：</label>
+                    <div class="col-md-2">
+                      <input type="text" name="user[phonecode]" id="phoneCode" class="form-control" placeholder="输入验证码">
                     </div>
-                    <div class="form-group">
-                      <div class="col-md-offset-4 col-md-4 m-t">
-                        <button type="submit" id="btnBindMobile" class="btn btn-primary btn-block">确定</button>
-                      </div>
+                    <div class="col-md-2">
+                      <button type="button" id="btnSendCode" class="btn btn-success btn-block" data-status="0">获取验证码</button>
                     </div>
-                </form>
-              </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-offset-4 col-md-4 m-t">
+                      <button type="submit" id="btnBindMobile" class="btn btn-primary btn-block">确定</button>
+                    </div>
+                  </div>
+              </form>
             </div>
+          </div>
           <div class="warp-footer"></div>
         </div>
       </div>
