@@ -40,6 +40,9 @@ function getFunctionTree(){
     	view: {
     		selectedMulti: false,
     	},
+    	check: {
+    		enable: true
+    	},
     	data: {
         simpleData: {
           enable: true
@@ -244,3 +247,84 @@ function romoveFunctionNode(id){
 		console.log("error");
 	})
 }
+//角色创建
+var btnCreate = $('.btn-create'),
+		btnDel = $('.btn-del'),
+		btnSet = $('.btn-set');
+
+var newRoleForm = $('#newRoleForm'),
+	  newRoleName = $('#newRoleName'),
+	  newRoleDesc = $('#newRoledesc'),
+	  newRoleBtn = $('#newRoleBtn');
+
+newRoleBtn.on('click', function(e){
+	e.preventDefault();
+	if(!simpleCheckInput(newRoleName)) return false;
+	newRoleForm.submit()
+})
+
+//角色删除
+btnDel.on('click', function(e){
+	e.preventDefault();
+	var $tr = $(this).parents('tr');
+	var id = $tr.attr('data-id');
+	var name = $tr.children('td').eq(0).text();
+	$.dialog().confirm({message: '确定删除<a>'+name+'</a>, 此操作不可恢复'})
+   .on('confirm', function(){
+   	removeRole(id, $tr)
+   })
+})
+function removeRole(id, $tr){
+	$.ajax({
+		url: '/system/role_remove?id='+ id,
+	})
+	.done(function(res) {
+		if(res.status == 1){
+			$.dialog().success({message: '删除成功', delay: 1000})
+			setTimeout(function(){
+				if($tr.length === 1){
+					$tr.remove()
+				}
+			}, 1000)
+		}else{
+			$.dialog().alert({message: '删除失败，请稍后重试'})
+		}
+	})
+	.fail(function() {
+		console.log("error");
+	})
+}
+var roleId;
+btnSet.on('click', function(e){
+	var $tr = $(this).parents('tr');
+	roleId = $tr.attr('data-id');
+	console.log(roleId)
+})
+$('#setRoleBtn').on('click', function(e){
+	var treeObj = $.fn.zTree.getZTreeObj("functionTree");
+	var nodes = treeObj.getCheckedNodes(true);
+	console.log(nodes)
+	if(nodes.length === 0) return false;
+	var funcArr = [];
+	nodes.forEach(function(node){
+		if(node.check_Child_State === -1){
+			funcArr.push(node.id)
+		}
+	})
+	var role_func = {
+		roleId: roleId,
+		funcArr: funcArr
+	}
+	$.ajax({
+		url: '/system/assign_function',
+		type: 'POST',
+		data: {role_func: role_func},
+	})
+	.done(function(res) {
+
+		console.log(res);
+	})
+	.fail(function() {
+		console.log("error");
+	})
+})

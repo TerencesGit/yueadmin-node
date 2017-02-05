@@ -89,13 +89,21 @@ router.post('/admin/verify_partner_nopass', Partner.verifiedNoPass);
 /* 系统管理 */
 
 //系统功能树
-router.get('/system/function_manage', User.showSystemFunction);
+router.get('/system/function_manage', System.showFunctionTree);
 router.post('/system/new_function', System.newFunction);
-router.get('/system/notice_manage', User.noticeManage);
 router.get('/system/get_function_tree', System.getFunctionTree);
 router.post('/system/edit_function', System.editFunction);
 router.get('/system/remove_function', System.removeFunction);
 router.get('/system/get_function_node', System.getFunctionNode);
+
+//角色管理
+router.get('/system/role_manage', System.showRoleManage);
+router.post('/system/new_role', System.newRole);
+router.get('/system/role_remove', System.removeRole);
+router.post('/system/assign_function', System.assignFunction);
+
+//公告发布
+router.get('/system/notice_manage', System.noticeManage);
 
 /* 留言功能 */
 router.get('/message', Message.home);

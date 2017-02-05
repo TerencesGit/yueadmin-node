@@ -505,13 +505,7 @@ exports.showRegisteredPartner = function(req, res){
 		res.redirect('/signin')
 	}
 }
-/* 系统功能树 */
-exports.showSystemFunction = function(req, res){
-	res.render('system/system_function',{title: '系统功能树'})
-}
-exports.noticeManage = function(req, res){
-	res.render('system/notice_manage', {title: '公告信息维护'})
-}
+
 /* 管理员操作 */
 
 //用户列表

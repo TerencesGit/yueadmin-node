@@ -1,4 +1,17 @@
 var System = require('../models/function');
+var Role = require('../models/role');
+
+/* 系统功能树 */
+
+//功能树管理页
+exports.showFunctionTree = function(req, res){
+	res.render('system/system_function_tree', {title: '系统功能树'})
+}
+
+//公告信息发布页
+exports.noticeManage = function(req, res){
+	res.render('system/notice_manage', {title: '公告信息维护'})
+}
 
 //新增功能节点
 exports.newFunction = function(req, res){
@@ -77,4 +90,50 @@ exports.removeFunction = function(req, res){
 			}
 		})
 	}
+}
+//角色管理页
+exports.showRoleManage = function(req, res){
+	Role.find({})
+			.sort('meta.createAt')
+			.populate('creator', 'name')
+			.exec(function(err, roles){
+				if(err) console.log(err);
+				res.render('system/role_manage', {title: '角色管理', roles: roles})
+			})
+}
+
+//角色创建
+exports.newRole = function(req, res){
+	var user = req.session.user;
+	var role = req.body.role;
+	role.creator = user._id;
+	console.log(role)
+	var _role = new Role(role);
+	_role.save(function(err, role){
+		if(err) console.log(err);
+		res.redirect('/system/role_manage')
+	})
+}
+
+//角色删除
+exports.removeRole = function(req, res){
+	var id = req.query.id;
+	if(id){
+		Role.remove({_id: id}, function(err, msg){
+			if(err) {
+				console.log(err);
+				res.json({status: 0})
+			}else{
+				res.json({status: 1})
+			}
+		})
+	}else{
+		res.json({status: 0})
+	}
+}
+
+//分配功能
+exports.assignFunction = function(req, res){
+	var role = req.body.role;
+	console.log(role)
 }
