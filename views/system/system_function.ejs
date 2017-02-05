@@ -16,13 +16,13 @@
                 <div class="panel-heading">
                   <h3 class="panel-title">
                     <a href="#collapseTree" data-toggle="collapse">
-                      部门组织结构
+                      系统功能树
                     </a>
                   </h3>
                 </div>
                 <div id="collapseTree" class="panel-collapse collapse in">
                   <div class="panel-body organize-tree">
-                    <ul id="organizeTree" class="ztree" data-id="<%= user.partner._id%>"></ul>
+                    <ul id="functionTree" class="ztree" data-id="<%= user.partner._id%>"></ul>
                   </div>
                 </div>
               </div>
@@ -47,12 +47,28 @@
                         </a>
                       </li>
                       <li>
-                        <a href="#editOrganizeModal" class="btn-edit" data-toggle="modal"><i class="fa fa-edit"></i><br>编辑</a> 
+                        <a href="#editFunctionModal" class="btn-edit" data-toggle="modal"><i class="fa fa-edit"></i><br>编辑</a> 
                       </li>
                       <li>
                         <a href="javascript:;" class="btn-remove"><i class="fa fa-remove"></i><br>删除</a> 
                       </li>
                     </ul>
+                    <h3 class="page-header">功能点详情</h3>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr class="info">
+                          <th>名称</th>
+                          <th>路由</th>
+                          <th>描述</th>
+                          <th>备注</th>
+                          <th>创建者</th>
+                          <th>修改者</th>
+                          <th>创建时间</th>
+                        </tr>
+                      </thead>
+                      <tbody class="func-detail">
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -69,55 +85,79 @@
             <form class="form-horizontal">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title">新增功能</h4>
+                  <h4 id="newFunctionTitle" class="modal-title">新增功能模块</h4>
               </div>
               <div class="modal-body">
                 <div class="form-group row">
-                  <label for="organizeName" class="col-md-offset-1 col-md-2 control-label organize-name">功能名称</label>
+                  <label class="col-md-offset-1 col-md-2 control-label organize-name">功能名称</label>
                   <div class="col-md-6">
-                    <input type="text" name="organize[name]" id="newFunctionName" class="form-control">
+                    <input type="text" id="newFunctionName" class="form-control" placeholder="必填">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="organizeProfile" class="col-md-offset-1 col-md-2 control-label">部门描述</label>
+                  <label class="col-md-offset-1 col-md-2 control-label organize-name">路由地址</label>
                   <div class="col-md-6">
-                    <textarea name="organize[profile]" id="newFunctionDesc" class="form-control" rows="3" placeholder=""></textarea>
+                    <input type="text" id="newFunctionRouter" class="form-control" placeholder="必填">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-offset-1 col-md-2 control-label">功能描述</label>
+                  <div class="col-md-6">
+                    <textarea id="newFunctionDesc" class="form-control" rows="3" placeholder="必填"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-offset-1 col-md-2 control-label">备注</label>
+                  <div class="col-md-6">
+                    <textarea id="newFunctionNote" class="form-control" rows="2" placeholder="选填"></textarea>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
-                <button data-dismiss="modal" class="btn btn-default" type="reset">取消</button>
+                <button type="reset" id="btnReset" data-dismiss="modal" class="btn btn-default">取消</button>
                 <button id="newFunctionBtn" class="btn btn-success" data-dismiss="modal">提交</button>
               </div>
             </form>
           </div>
       </div>
     </div>
-    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editOrganizeModal" class="modal fade">
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editFunctionModal" class="modal fade">
       <div class="modal-dialog">
           <div class="modal-content">
             <form class="form-horizontal">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title">部门编辑</h4>
+                  <h4 class="modal-title">编辑功能模块</h4>
               </div>
               <div class="modal-body">
                 <div class="form-group row">
-                  <label for="organizeName" class="col-md-offset-1 col-md-2 control-label organize-name">部门名称</label>
+                  <label class="col-md-offset-1 col-md-2 control-label organize-name">功能名称</label>
                   <div class="col-md-6">
-                    <input type="text" name="organize[name]" id="editOrganizeName" class="form-control">
+                    <input type="text" id="editFunctionName" class="form-control" placeholder="必填">
                   </div>
                 </div>
-                <div class="form-group row organize-profile">
-                  <label for="organizeProfile" class="col-md-offset-1 col-md-2 control-label">部门简介</label>
+                <div class="form-group row">
+                  <label class="col-md-offset-1 col-md-2 control-label organize-name">路由地址</label>
                   <div class="col-md-6">
-                    <textarea name="organize[profile]" id="editOrganizeProfile" class="form-control" rows="3" placeholder="选填"></textarea>
+                    <input type="text" id="editFunctionRouter" class="form-control" placeholder="必填">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-offset-1 col-md-2 control-label">功能描述</label>
+                  <div class="col-md-6">
+                    <textarea id="editFunctionDesc" class="form-control" rows="3" placeholder="必填"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-offset-1 col-md-2 control-label">备注</label>
+                  <div class="col-md-6">
+                    <textarea id="editFunctionNote" class="form-control" rows="2" placeholder="选填"></textarea>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-default" type="reset">取消</button>
-                <button id="editOrganizeBtn" class="btn btn-success" data-dismiss="modal">提交</button>
+                <button id="editFunctionBtn" class="btn btn-success" data-dismiss="modal">提交</button>
               </div>
             </form>
           </div>

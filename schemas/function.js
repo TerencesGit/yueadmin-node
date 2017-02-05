@@ -5,6 +5,7 @@ var functionSchema = new Schema({
 	creator: {type: ObjectId, ref: 'User'},
 	updater: {type: ObjectId, ref: 'User'},
 	name: String,
+	router: String,
 	desc: String,
 	parent_id: String,
 	level: {
@@ -13,7 +14,12 @@ var functionSchema = new Schema({
 	type: {
 		type: Number
 	},
+	note: String,
 	viewname: String,
+	is_function_root: {
+		type: Number,
+		default: 0
+	},
 	meta: {
 		createAt: {
 			type: Date,

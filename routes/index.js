@@ -3,7 +3,7 @@ var router = express.Router();
 var User = require('../controllers/user');
 var Message = require('../controllers/message');
 var Partner = require('../controllers/partner');
-var Functions = require('../controllers/function');
+var System = require('../controllers/System');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
@@ -85,12 +85,17 @@ router.get('/admin/manage_partner', Partner.managePartner);
 router.get('/admin/verify_partner', Partner.verifiedPartner);
 router.get('/admin/verify_partner_pass', Partner.verifiedPass);
 router.post('/admin/verify_partner_nopass', Partner.verifiedNoPass);
+
 /* 系统管理 */
 
 //系统功能树
-router.get('/system/function_manage', User.showSystemFunction)
-router.post('/system/new_function', Functions.newFunction)
-router.get('/system/notice_manage', User.noticeManage)
+router.get('/system/function_manage', User.showSystemFunction);
+router.post('/system/new_function', System.newFunction);
+router.get('/system/notice_manage', User.noticeManage);
+router.get('/system/get_function_tree', System.getFunctionTree);
+router.post('/system/edit_function', System.editFunction);
+router.get('/system/remove_function', System.removeFunction);
+router.get('/system/get_function_node', System.getFunctionNode);
 
 /* 留言功能 */
 router.get('/message', Message.home);
