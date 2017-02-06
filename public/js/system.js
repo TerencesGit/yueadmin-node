@@ -305,15 +305,15 @@ $('#setRoleBtn').on('click', function(e){
 	var nodes = treeObj.getCheckedNodes(true);
 	console.log(nodes)
 	if(nodes.length === 0) return false;
-	var funcArr = [];
+	var funcList = [];
 	nodes.forEach(function(node){
 		if(node.check_Child_State === -1){
-			funcArr.push(node.id)
+			funcList.push(node.id)
 		}
 	})
 	var role_func = {
 		roleId: roleId,
-		funcArr: funcArr
+		funcList: funcList
 	}
 	$.ajax({
 		url: '/system/assign_function',
@@ -321,8 +321,7 @@ $('#setRoleBtn').on('click', function(e){
 		data: {role_func: role_func},
 	})
 	.done(function(res) {
-
-		console.log(res);
+		console.log(res.status);
 	})
 	.fail(function() {
 		console.log("error");

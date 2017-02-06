@@ -101,6 +101,7 @@ router.get('/system/role_manage', System.showRoleManage);
 router.post('/system/new_role', System.newRole);
 router.get('/system/role_remove', System.removeRole);
 router.post('/system/assign_function', System.assignFunction);
+router.get('/system/role_func_list', System.roleFuncList);
 
 //公告发布
 router.get('/system/notice_manage', System.noticeManage);
@@ -119,8 +120,10 @@ router.get('/404', function(req, res){
 router.get('/500', function(req, res){
 	res.render('500')
 })
+
 /*ie9以下显示*/
 router.get('/ie', function(req, res, next) {
   res.render('ie');
 });
+
 module.exports = router;

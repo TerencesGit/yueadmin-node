@@ -1,5 +1,6 @@
 var System = require('../models/function');
 var Role = require('../models/role');
+var RoleFunc = require('../models/role_func');
 
 /* 系统功能树 */
 
@@ -132,8 +133,48 @@ exports.removeRole = function(req, res){
 	}
 }
 
-//分配功能
+//为角色分配功能
 exports.assignFunction = function(req, res){
-	var role = req.body.role;
-	console.log(role)
+	var user = req.session.user;
+	var roleFunc = req.body.role_func;
+	var funcList = roleFunc.funcList;
+	roleFunc.role = roleFunc.roleId;
+	roleFunc.creator = user._id;
+	var temp = [];
+	var _funcList = [];
+	RoleFunc.find({role: roleFunc.role}).exec(function(err, roleFuncs){
+		if(err){ console.log(err) }
+		for(var i = 0; i < roleFuncs.length; i++){
+			console.log(roleFuncs[i].func)
+			temp[roleFuncs[i].func] = true;
+
+		}
+		for(var i = 0; i < funcList.length; i++){
+			if(!temp[funcList[i]]){
+				_funcList.push(funcList[i])
+			}
+		}
+		console.log(_funcList)
+	})
+	var _roleFunc;
+	// funcList.forEach(function(func){
+	// 	roleFunc.func = func;
+ //  	_roleFunc = new RoleFunc(roleFunc);
+ //  	_roleFunc.save(function(err, role_func){
+ //  		if(err) {
+ //  			console.log(err)
+ //  			return res.json({status: 0})
+ //  		}
+ //  	})
+	// })
+	res.json({status: 1})
+}
+
+//角色功能列表
+exports.roleFuncList = function(req, res){
+	RoleFunc.fetch(function(err, role_func){
+		if(err) console.log(err);
+		console.log(role_func)
+		res.redirect('/system/role_manage')
+	})
 }
