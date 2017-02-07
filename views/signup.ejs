@@ -13,7 +13,7 @@
       <div class="form-group">
         <label for="email" class="control-label col-md-3">邮箱号</label>
         <div class="col-md-9">
-          <input type="text" name="user[email]" id="email" class="form-control" placeholder="请输入真实有效的邮箱号" required value="<%if(user user && user.error){%><%=user.email%><%}%>"/>
+          <input type="text" name="user[email]" id="email" class="form-control" placeholder="请输入真实有效的邮箱号" required value="<%if(user &&  user.error){%><%=user.email%><%}%>"/>
           <span class="fa fa-check"></span>
         </div>
       </div>

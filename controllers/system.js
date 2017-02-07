@@ -125,7 +125,15 @@ exports.removeRole = function(req, res){
 				console.log(err);
 				res.json({status: 0})
 			}else{
-				res.json({status: 1})
+				RoleFunc.find({role: id}).exec(function(err, roleFuncs){
+					if(err) console.log(err)
+					roleFuncs.forEach(function(roleFunc){
+						RoleFunc.remove({_id: roleFunc._id}, function(err, msg){
+							if(err) console.log(err)
+								res.json({status: 1})
+						})
+					})
+				})
 			}
 		})
 	}else{
@@ -138,36 +146,70 @@ exports.assignFunction = function(req, res){
 	var user = req.session.user;
 	var roleFunc = req.body.role_func;
 	var funcList = roleFunc.funcList;
-	roleFunc.role = roleFunc.roleId;
+	var roleId = roleFunc.roleId
+	roleFunc.role = roleId;
 	roleFunc.creator = user._id;
+	var tempArr = [];
+	var cancelFuncList = [];
 	var temp = [];
 	var _funcList = [];
-	RoleFunc.find({role: roleFunc.role}).exec(function(err, roleFuncs){
-		if(err){ console.log(err) }
+	
+	RoleFunc.find({role: roleId}).exec(function(err, roleFuncs){
+		if(err) console.log(err)
+		//获取取消选中的功能点
+    for(var i = 0; i < funcList.length; i++){
+    	tempArr[funcList[i]] = true;
+    }
+    for(var i = 0; i < roleFuncs.length; i++){
+    	if(!tempArr[roleFuncs[i].func]){
+    		cancelFuncList.push(roleFuncs[i].func)
+    	}
+    }
+		//删除取消选中的功能点
+		if(cancelFuncList.length !== 0){
+			for(var i = 0; i < cancelFuncList.length; i++){
+	    	RoleFunc.remove({role: roleId, func: cancelFuncList[i]}, function(err, msg){
+	    		if(err) console.log(err)
+	    	})
+	    }
+		}
+	  //获取新添加的功能点
 		for(var i = 0; i < roleFuncs.length; i++){
-			console.log(roleFuncs[i].func)
 			temp[roleFuncs[i].func] = true;
-
 		}
 		for(var i = 0; i < funcList.length; i++){
 			if(!temp[funcList[i]]){
 				_funcList.push(funcList[i])
 			}
 		}
-		console.log(_funcList)
+		//保存新添加的功能点
+		if(_funcList.length !== 0) {
+			var _roleFunc;
+			_funcList.forEach(function(func){
+				roleFunc.func = func;
+		  	_roleFunc = new RoleFunc(roleFunc);
+		  	_roleFunc.save(function(err, role_func){
+		  		if(err) {
+		  			console.log(err)
+		  			return res.json({status: 0})
+		  		}
+		  	})
+			})
+		}
+		res.json({status: 1})
 	})
-	var _roleFunc;
-	// funcList.forEach(function(func){
-	// 	roleFunc.func = func;
- //  	_roleFunc = new RoleFunc(roleFunc);
- //  	_roleFunc.save(function(err, role_func){
- //  		if(err) {
- //  			console.log(err)
- //  			return res.json({status: 0})
- //  		}
- //  	})
-	// })
-	res.json({status: 1})
+}
+
+//获取单个角色的功能点
+exports.getRoleFunc = function(req, res){
+	var roleId = req.query.id;
+	console.log(roleId)
+	RoleFunc.find({role: roleId, status: 1}).exec(function(err, role_funcs){
+		if(err){
+			console.log(err)
+		}
+		res.json({role_funcs: role_funcs})
+	})
 }
 
 //角色功能列表

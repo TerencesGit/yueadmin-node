@@ -1,6 +1,7 @@
 var Partner = require('../models/partner');
 var User = require('../models/user');
 var Organize = require('../models/organize');
+var Role = require('../models/role');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
@@ -141,7 +142,9 @@ exports.organizeManage = function(req, res){
 					res.render('account/registered_partner_result',{title: '未通过审核', partner: partner})
 				}else{
 					if(err) console.log(err);
-					res.render('partner/organize_manage', {title: '部门管理', user: user})
+					Role.fetch(function(err, roles){
+						res.render('partner/organize_manage', {title: '部门管理', user: user, roles: roles})
+					})
 				}
 			})
 }

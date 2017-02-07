@@ -113,7 +113,8 @@ function renderStaff(organizeId){
 var $btnRefresh = $('.btn-refresh'),
  		$btnNew = $('.btn-new'),
 	  $btnEdit = $('.btn-edit'),
-	  $btnRemove = $('.btn-remove');
+	  $btnRemove = $('.btn-remove'),
+	  $btnCog = $('.btn-cog');
 
 //刷新操作    
 $btnRefresh.on('click', function(){
@@ -305,4 +306,85 @@ setOrganizeBtn.on('click', function(e){
   var node = getSeletedNode();
   orgId.val(node.id);
   setOrganizeForm.submit()
+})
+
+//设置权限
+$btnCog.on('click', function(e){
+	e.preventDefault()
+	if(!getSeletedNode()) return false;
+ 	var node = getSeletedNode();
+
+})
+var roleList = $('#roleList');
+var roleItem = roleList.children('li');
+var roleName = roleList.find('.role');
+roleName.on('click', function(e){
+	e.stopPropagation();
+	var roleId = $(this).attr('data-id');
+	console.log(roleId)
+	getFunctionTree()
+})
+//获取角色对应的功能点
+function getFuncByRole(roleId){
+  $.ajax({
+  	url: '/partner/get_function_tree?id='+ roleId,
+  })
+  .done(function(res) {
+  	console.log("success");
+  })
+  .fail(function() {
+  	console.log("error");
+  })
+}
+const functionTree = $('#functionTree');
+//获取功能树
+function getFunctionTree(){
+	$.ajax({
+		url: '/system/get_function_tree',
+		type: 'GET',
+	})
+	.done(function(res) {
+		var functions = res.functions;
+		var setting = {
+    	view: {
+    		selectedMulti: false,
+    	},
+    	check: {
+    		enable: true
+    	},
+    	data: {
+        simpleData: {
+          enable: true
+        }
+      },
+		  callback: {
+		    onClick: HandlerClick,
+		  }
+		}
+    var zNode = [];
+    var treeObj;
+    functions.forEach(function(func){
+      treeObj = {
+        id: func._id,
+        pId: func.parent_id,
+        name: func.name,
+        router: func.router,
+        desc: func.desc,
+        note: func.note,
+        open: true
+      };
+      zNode.push(treeObj)
+    })
+    $.fn.zTree.init(functionTree, setting, zNode);
+	})
+	.fail(function() {
+		console.log("error");
+	})
+}
+roleItem.on('click', function(){
+	if($(this).hasClass('checked')){
+		$(this).removeClass('checked').children('.check').hide()
+	}else{
+		$(this).addClass('checked').children('.check').show()
+	}
 })

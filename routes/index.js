@@ -102,6 +102,7 @@ router.post('/system/new_role', System.newRole);
 router.get('/system/role_remove', System.removeRole);
 router.post('/system/assign_function', System.assignFunction);
 router.get('/system/role_func_list', System.roleFuncList);
+router.get('/system/get_role_func', System.getRoleFunc);
 
 //公告发布
 router.get('/system/notice_manage', System.noticeManage);

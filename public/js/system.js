@@ -36,7 +36,7 @@ function getFunctionTree(){
 	})
 	.done(function(res) {
 		var functions = res.functions;
-		 var setting = {
+		var setting = {
     	view: {
     		selectedMulti: false,
     	},
@@ -299,7 +299,39 @@ btnSet.on('click', function(e){
 	var $tr = $(this).parents('tr');
 	roleId = $tr.attr('data-id');
 	console.log(roleId)
+	getFuncByRole(roleId)
 })
+//获取角色对应的功能点
+function getFuncByRole(roleId){
+	$.ajax({
+		url: '/system/get_role_func?id='+ roleId,
+	})
+	.done(function(res) {
+		var roleFuncs = res.role_funcs;
+    var treeObj = $.fn.zTree.getZTreeObj("functionTree");
+		var nodes = treeObj.transformToArray(treeObj.getNodes());
+		for (let i = 0; i < nodes.length; i++) {
+			treeObj.checkNode(nodes[i], false, true);
+		}
+    var temp = [];
+    var targetNodes = [];
+    for(let i = 0; i < roleFuncs.length; i++){
+    	temp[roleFuncs[i].func] = true;
+    	console.log(roleFuncs[i].func)
+    }
+    for(let i = 0; i < nodes.length; i++){
+    	if(temp[nodes[i].id]){
+    		targetNodes.push(nodes[i])
+    	}
+    }
+		for (let i = 0; i < targetNodes.length; i++) {
+			treeObj.checkNode(targetNodes[i], true, true);
+		}
+	})
+	.fail(function() {
+		console.log("error");
+	})
+}
 $('#setRoleBtn').on('click', function(e){
 	var treeObj = $.fn.zTree.getZTreeObj("functionTree");
 	var nodes = treeObj.getCheckedNodes(true);
@@ -321,7 +353,11 @@ $('#setRoleBtn').on('click', function(e){
 		data: {role_func: role_func},
 	})
 	.done(function(res) {
-		console.log(res.status);
+		if(res.status == 1){
+			$.dialog().success({message: '配置成功', delay: 1000})
+		}else{
+			$.dialog().alert({message: '配置失败，请稍后重试'})
+		}
 	})
 	.fail(function() {
 		console.log("error");
