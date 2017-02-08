@@ -150,6 +150,16 @@ resetPasswordInput2.blur(function(){
     confirmConsistent(resetPasswordInput2, resetPasswordInput, msg.password, true)
   }
 })
+//企业代注册表单
+const agentRegForm = $('#agentRegForm'),
+      realName = $('#realName'),
+      agentRegBtn = $('#agentRegBtn');
+agentRegBtn.on('click', function(e){
+  e.preventDefault();
+  checkInput(realName, null, null, true) 
+  //checkInput(emailInput, emailInput.msg, emailInput.regular) && 
+  //checkInput(password, password.msg, password.regular)
+})
 //保存cookie 
 function saveCookie(){
   var checked = rememberCheck.prop('checked');

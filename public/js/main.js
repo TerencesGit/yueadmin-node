@@ -1,8 +1,8 @@
  (function() {
   $(function(){
     //侧边导航菜单自动切换
-    var pageId = $('#main').attr('data-id');
-    var _link = $('a[data-href= '+pageId+' ]');
+    var dataPage = $('#main').attr('data-page');
+    var _link = $('a[data-href= '+dataPage+' ]');
     _link.parent('li').addClass('active').parents('li').addClass('open');
   })
    var toggle = false;

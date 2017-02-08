@@ -489,18 +489,19 @@ exports.showRegistered = function(req, res){
 exports.showRegisteredPartner = function(req, res){
 	var user = req.session.user;
 	if(user){
-		Partner.findOne({admin: user._id}, function(err, partner){
-				if(!partner){
-					return res.render('account/registered_partner', {title: '注册我的企业'})
-				}
-				if(partner.is_verified == 0 || partner.is_verified == 3){
-					res.render('account/registered_partner_success',{title: '等待审核'})
-				}else if(partner.is_verified == 2){
-					res.render('account/registered_partner_result',{title: '未通过审核', partner: partner})
-				}else{
-					res.redirect('/partner/partner_info')
-				}
-		})
+		return res.render('account/registered_partner', {title: '注册我的企业'})
+		// Partner.findOne({admin: user._id}, function(err, partner){
+		// 		if(!partner){
+		// 			return res.render('account/registered_partner', {title: '注册我的企业'})
+		// 		}
+		// 		if(partner.is_verified == 0 || partner.is_verified == 3){
+		// 			res.render('account/registered_partner_success',{title: '等待审核'})
+		// 		}else if(partner.is_verified == 2){
+		// 			res.render('account/registered_partner_result',{title: '未通过审核', partner: partner})
+		// 		}else{
+		// 			res.redirect('/partner/partner_info')
+		// 		}
+		// })
 	}else{
 		res.redirect('/signin')
 	}

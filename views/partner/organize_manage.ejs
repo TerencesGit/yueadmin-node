@@ -7,7 +7,7 @@
   <body>
     <%- include('../aside') %>
     <%- include('../header') %>
-    <div id="main" class="main" data-id="organize_manage">
+    <div id="main" class="main" data-page="organize_manage">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
           <div class="row">
@@ -54,6 +54,9 @@
                       </li>
                       <li>
                         <a href="#setRoleModal" class="btn-cog" data-toggle="modal"><i class="fa fa-cog"></i><br>设置</a> 
+                      </li>
+                      <li>
+                        <a href="/partner/agent_register" class="btn-new-staff" data-toggle="modal"><i class="fa fa-user"></i><br>注册员工</a> 
                       </li>
                     </ul>
                     <h3 class="page-header">企业员工</h3>
@@ -161,7 +164,7 @@
               </div>
               <div class="modal-body">
                 <div class="row">
-                  <div class="col-md-6">
+                  <di v class="col-md-6">
                     <ul id="roleList" class="list-group">
                       <li class="list-group-item active">
                       权限列表

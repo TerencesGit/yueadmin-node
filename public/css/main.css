@@ -735,18 +735,11 @@ body {
   min-height: 300px
 }
 /* 企业信息 */
-.partner-info .form-group input,
-.partner-info .form-group textarea,
-.partner-info .form-group button,
-.partner-info .form-group a {
-  display: none
+.partner-info .dl-horizontal dd{
+  font-size: 16px
 }
 .partner-info .form-group .form-control {
   width: 80%;
-}
-.partner-info.edit .form-group a,
-.partner-info.edit .form-group button{
-  display: inline-block
 }
 .check-partner {
   width: 60%;

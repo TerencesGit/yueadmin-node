@@ -111,6 +111,18 @@ exports.showInfo = function(req, res){
 		res.redirect('/account/registered_partner')
 	}
 }
+
+//企业信息编辑页
+exports.showInfoEdit = function(req, res){
+	var user = req.session.user;
+	if(user.partner){
+		Partner.find({admin: user._id})
+				 .populate('user', 'name')
+				 .exec(function(err, partner){
+				 		res.render('partner/partner_info_edit', {title: '企业信息编辑', partner: partner[0]})
+				 })
+	}
+}
 //企业信息编辑
 exports.EditInfo = function(req, res){
 	var _partner = req.body.partner;
@@ -123,6 +135,10 @@ exports.EditInfo = function(req, res){
 			res.redirect('/partner/partner_info')
 		})
 	})
+}
+//企业岗位管理页
+exports.showTitleManage = function(req, res){
+	res.render('partner/title_manage', {title: '企业岗位管理'})
 }
 //组织管理
 exports.organizeManage = function(req, res){
@@ -260,6 +276,18 @@ exports.removeOrganize = function(req, res){
 		}
 	})
 }
+//权限设置
+//获取角色对应的功能点
+exports.getFuncByRole = function(req, res){
+	var roleId = req.query.roleId;
+	RoleFunc.find({role: roleId})
+					.populate('func', 'name')
+					.exec(function(err, role_funcs){
+						if(err) console.log(err);
+
+					})
+}
+
 //员工管理
 exports.staffList = function(req, res){
 	var user = req.session.user;

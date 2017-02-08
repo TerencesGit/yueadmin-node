@@ -7,12 +7,12 @@
   <body>
     <%- include('../aside') %>
     <%- include('../header') %>
-    <div id="main" class="main" data-page="staff_manage">
+    <div id="main" class="main" data-id="title_manage">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
           <div class="panel panel-info">
             <div class="panel-heading clearfix">
-              <h3 class="panel-title pull-left">员工管理</h3>
+              <h3 class="panel-title pull-left">岗位管理</h3>
               <a href="/partner/agent_register" class="pull-right">
               <i class="fa fa-plus-square"></i>添加新员工</a>
             </div>
@@ -72,20 +72,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                   <% users.forEach(function(user, index){ %>
-                  <tr data-id="<%= user._id%>">
-                    <td><%= index+1%></td>
-                    <td><%= user.name%></td>
-                    <td><% if(user.gender == '0') {%> 男 <% }else{%> 女 <%}%></td>
-                    <td><%= user.email%></td>
-                    <td><%= moment(user.meta.createAt).format('YYYY-MM-DD') %></td>
-                    <td><%if(user.organize && user.organize.name){%><%= user.organize.name %><%}%></td>
-                    <td><a href="#">查看</a></td>
-                    <td>
-                      <a href="#setOrganizeModal" class="btn btn-link btn-set" data-toggle="modal">部门设置</a>
-                    </td>
-                  </tr>
-                  <% })%>
+                  
                 </tbody>
               </table>
               <ul class="pagination">
