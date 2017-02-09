@@ -2,6 +2,7 @@ var Partner = require('../models/partner');
 var User = require('../models/user');
 var Organize = require('../models/organize');
 var Role = require('../models/role');
+var Title = require('../models/title');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
@@ -135,10 +136,6 @@ exports.EditInfo = function(req, res){
 			res.redirect('/partner/partner_info')
 		})
 	})
-}
-//企业岗位管理页
-exports.showTitleManage = function(req, res){
-	res.render('partner/title_manage', {title: '企业岗位管理'})
 }
 //组织管理
 exports.organizeManage = function(req, res){
@@ -287,7 +284,6 @@ exports.getFuncByRole = function(req, res){
 
 					})
 }
-
 //员工管理
 exports.staffList = function(req, res){
 	var user = req.session.user;
@@ -318,9 +314,56 @@ exports.setOrganize = function(req, res){
 }
 //账户代注册
 exports.agentRegister = function(req, res){
-	res.render('partner/agent_register', {title: '账户代注册'})
+	var orgId = req.query.orgId;
+	console.log(orgId)
+	res.render('partner/agent_register', {title: '账户代注册', organize: orgId})
 }
 
+//岗位管理页
+exports.showTitleManage = function(req, res){
+	Title.fetch(function(err, titles){
+		if(err) console.log(err);
+		res.render('partner/title_manage', {title: '企业岗位管理', titles: titles})
+	})
+}
+//新增岗位
+exports.newTitle = function(req, res){
+	var titleObj = req.body.title;
+	console.log(titleObj)
+	var _title = new Title(titleObj);
+	_title.save(function(err, title){
+		if(err) console.log(err)
+			res.redirect('/partner/title_manage')
+	})
+}
+//岗位编辑
+exports.editTitle = function(req, res){
+	var titleObj = req.body.title;
+	var tId = titleObj._id;
+	console.log(titleObj)
+	var _title;
+	Title.findById(tId, function(err, title){
+		_title = _.extend(title, titleObj);
+		_title.save(function(err, title){
+			if(err) console.log(err)
+				res.redirect('/partner/title_manage')
+		})
+	})
+}
+//岗位删除
+exports.removeTitle = function(req, res){
+	var id = req.query.id;
+	if(id){
+		Title.remove({_id: id}, function(err, msg){
+			if(err) {
+				console.log(err)
+				res.json({status: 0})
+			}else{
+				res.json({status: 1})
+			}
+		})
+	}
+}
 /* 管理员操作 */
 
 //商家列表 条件查询加分页

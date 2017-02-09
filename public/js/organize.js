@@ -12,6 +12,7 @@ function HandlerClick(event, treeId, treeNode){
   $('#departmentName').text(name);
   var organizeId = treeNode.id;
  	renderStaff(organizeId);
+ 	$('#orgId').val(organizeId);
 }
 //判断父节点
 function isParent(treeNode){
@@ -68,18 +69,18 @@ function renderTree(organizeTree){
     }
     $.fn.zTree.init(organizeTree, setting, zNode);
     //仅在加载页面时执行
-    if(isFirst){
-    	isFirst = false;
-    	let treeObj = $.fn.zTree.getZTreeObj("organizeTree");
-			let nodes = treeObj.getNodes();
-			if (nodes.length > 0) {
-				treeObj.selectNode(nodes[0]);
-			}
-			if(getSeletedNode){
-				let organizeId = getSeletedNode().id;
-				renderStaff(organizeId)
-			}
-    }
+   //  if(isFirst){
+   //  	isFirst = false;
+   //  	let treeObj = $.fn.zTree.getZTreeObj("organizeTree");
+			// let nodes = treeObj.getNodes();
+			// if (nodes.length > 0) {
+			// 	treeObj.selectNode(nodes[0]);
+			// }
+			// if(getSeletedNode){
+			// 	let organizeId = getSeletedNode().id;
+			// 	renderStaff(organizeId)
+			// }
+   //  }
   })
   .fail(function(error){ 
     console.log(error)
@@ -114,7 +115,8 @@ var $btnRefresh = $('.btn-refresh'),
  		$btnNew = $('.btn-new'),
 	  $btnEdit = $('.btn-edit'),
 	  $btnRemove = $('.btn-remove'),
-	  $btnCog = $('.btn-cog');
+	  $btnCog = $('.btn-cog'),
+    $btnStaff = $('.btn-new-staff');
 
 //刷新操作    
 $btnRefresh.on('click', function(){
@@ -387,4 +389,11 @@ roleItem.on('click', function(){
 	}else{
 		$(this).addClass('checked').children('.check').show()
 	}
+})
+$btnStaff.on('click', function(e){
+	e.preventDefault()
+	if(!getSeletedNode()) return false;
+ 	var node = getSeletedNode();
+ 	if($('#orgId').val() == '') return;
+ 	$('#regStaffForm').submit()
 })

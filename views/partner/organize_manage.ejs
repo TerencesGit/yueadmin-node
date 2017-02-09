@@ -56,7 +56,10 @@
                         <a href="#setRoleModal" class="btn-cog" data-toggle="modal"><i class="fa fa-cog"></i><br>设置</a> 
                       </li>
                       <li>
-                        <a href="/partner/agent_register" class="btn-new-staff" data-toggle="modal"><i class="fa fa-user"></i><br>注册员工</a> 
+                        <form action="/partner/agent_register" method="get" id="regStaffForm" onClick="return false">
+                          <input type="hidden" name="orgId" id="orgId" value="">
+                          <a href="javascript:;" class="btn-new-staff" data-toggle="modal"><i class="fa fa-user"></i><br>注册员工</a> 
+                        </form>
                       </li>
                     </ul>
                     <h3 class="page-header">企业员工</h3>
@@ -156,38 +159,38 @@
     </div>
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="setRoleModal" class="modal fade">
       <div class="modal-dialog">
-          <div class="modal-content">
-            <form class="form-horizontal">
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title">权限设置</h4>
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <di v class="col-md-6">
-                    <ul id="roleList" class="list-group">
-                      <li class="list-group-item active">
-                      权限列表
-                      </li>
-                      <% roles.forEach(function(role){%>
-                      <li class="list-group-item checked">
-                        <a href="javascript:;" class="check"><i class="fa fa-check pull-right"></i></a>
-                        <a href="javascript:;" class="role" data-id="<%= role._id%>"><%= role.name%></a>
-                      </li>
-                      <%})%>
-                    </ul>
-                  </div>
-                  <div class="col-md-6">
-                    <ul id="functionTree" class="ztree"></ul>
-                  </div>
-                </div> 
-              </div>
-              <div class="modal-footer">
-                <button type="reset" data-dismiss="modal" class="btn btn-default">取消</button>
-                <button id="setRoleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
-              </div>
-            </form>
-          </div>
+        <div class="modal-content">
+          <form class="form-horizontal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">权限设置</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <ul id="roleList" class="list-group">
+                    <li class="list-group-item active">
+                    权限列表
+                    </li>
+                    <% roles.forEach(function(role){%>
+                    <li class="list-group-item checked">
+                      <a href="javascript:;" class="check"><i class="fa fa-check pull-right"></i></a>
+                      <a href="javascript:;" class="role" data-id="<%= role._id%>"><%= role.name%></a>
+                    </li>
+                    <%})%>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <ul id="functionTree" class="ztree"></ul>
+                </div>
+              </div> 
+            </div>
+            <div class="modal-footer">
+              <button type="reset" data-dismiss="modal" class="btn btn-default">取消</button>
+              <button id="setRoleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     <%- include('../script')%>

@@ -69,13 +69,16 @@ function Trim(str){
 //注册功能
 exports.signup = function(req, res){
 	var _user = req.body.user;
-	var sessionUser  = req.session.user;
-	var id = sessionUser._id;
 	var email = Trim(_user.email);
-	User.findById(id, function(err, userObj){
-		_user.partner = userObj.partner;
-		_user.organize = userObj.organize;
-	})
+	var sessionUser  = req.session.user;
+	if(sessionUser){
+		var id = sessionUser._id;
+		User.findById(id, function(err, userObj){
+			_user.partner = userObj.partner;
+		})
+	}
+	console.log('----------_user--------------')
+	console.log(_user)
 	User.findOne({email: email}, function(err, user){
 		if(err) console.log(err)
 		if(!user){

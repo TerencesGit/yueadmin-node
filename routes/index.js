@@ -63,7 +63,6 @@ router.post('/partner/register', multipartMiddleware, Partner.logoUpload, Partne
 router.get('/partner/partner_info', Partner.showInfo)
 router.get('/partner/partner_info_edit', Partner.showInfoEdit)
 router.post('/partner/edit_info',multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.EditInfo)
-router.get('/partner/title_manage', Partner.showTitleManage)
 
 //企业组织管理
 router.get('/partner/organize_manage', Partner.organizeManage);
@@ -81,6 +80,13 @@ router.post('/partner/set_organize', Partner.setOrganize);
 
 //账户代注册
 router.get('/partner/agent_register', Partner.agentRegister)
+router.post('/partner/agent_register', User.signup)
+
+//岗位管理
+router.get('/partner/title_manage', Partner.showTitleManage)
+router.post('/partner/new_title', Partner.newTitle)
+router.post('/partner/edit_title', Partner.editTitle)
+router.get('/partner/remove_title', Partner.removeTitle)
 
 //企业审核
 router.get('/admin/manage_partner', Partner.managePartner);

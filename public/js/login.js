@@ -49,7 +49,7 @@ const msg = {
     email: {
       required: '请输入邮箱号',
       regular: '邮箱格式不正确',
-      existed: '该邮箱号已注册，可直接登录',
+      existed: '该邮箱号已被占用',
       notExisted: '该邮箱号未绑定'
     },
     password: {
@@ -149,16 +149,6 @@ resetPasswordInput2.blur(function(){
   if (resetPasswordInput.val() !== '' && resetPasswordInput2.val() !== '') {
     confirmConsistent(resetPasswordInput2, resetPasswordInput, msg.password, true)
   }
-})
-//企业代注册表单
-const agentRegForm = $('#agentRegForm'),
-      realName = $('#realName'),
-      agentRegBtn = $('#agentRegBtn');
-agentRegBtn.on('click', function(e){
-  e.preventDefault();
-  checkInput(realName, null, null, true) 
-  //checkInput(emailInput, emailInput.msg, emailInput.regular) && 
-  //checkInput(password, password.msg, password.regular)
 })
 //保存cookie 
 function saveCookie(){

@@ -41,6 +41,15 @@ body {
 .m-r {
   margin-right: 15px;
 }
+.letter-space-half {
+  letter-spacing: .5em;
+}
+.letter-space {
+  letter-spacing: 1em;
+}
+.letter-space-2 {
+  letter-spacing: 2em;
+}
 .alert i.fa-warning {
   margin-right: 5px
 }
@@ -229,7 +238,8 @@ body {
   margin-top: 0;
 }
 .login-form .control-label{
-  padding-right: 0
+  padding-right: 0;
+  text-align: left;
 }
 .login-form .form-group {
   position: relative
@@ -292,6 +302,7 @@ body {
 
 .protocol .modal-dialog {
   width: 800px;
+  margin-top: 30px;
 }
 
 .protocol .modal-body {

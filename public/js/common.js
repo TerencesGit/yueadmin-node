@@ -37,6 +37,7 @@ var checkInput = function($element, msg, regular, wrapShow){
     return true;
   }
 }
+
 //输入框有值时验证
 var checkInputValue = function($element, msg, regular, wrapShow){
   if($.trim($element.val()) == '') {
@@ -48,7 +49,8 @@ var checkInputValue = function($element, msg, regular, wrapShow){
     return true;
   }
   return checkInput($element, msg, regular, wrapShow);
-};
+}
+
 //输入框简单验证
 var simpleCheckInput = function($element){
   var value = $.trim($element.val());
