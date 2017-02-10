@@ -25,6 +25,7 @@ router.get('/logout', User.logout);
 router.get('/user/list', User.signinRequired, User.userlist);
 router.get('/user/delete', User.signinRequired, User.delete);
 router.post('/user/edit', User.signinRequired, User.edit);
+router.get('/user/user_detail', User.signinRequired, User.userDetail);
 
 /* 账号操作 */
 router.get('/findByEmail', User.findByEmail);
@@ -112,8 +113,13 @@ router.post('/system/assign_function', System.assignFunction);
 router.get('/system/role_func_list', System.roleFuncList);
 router.get('/system/get_role_func', System.getRoleFunc);
 
-//公告发布
+//公告管理
 router.get('/system/notice_manage', System.noticeManage);
+router.get('/system/notice_release', System.noticeRelease);
+router.post('/system/save_notice', multipartMiddleware, System.noticeFileUpload, System.saveNotice);
+router.get('/system/notice_detail', System.noticeDetail);
+router.get('/system/notice_edit', System.noticeEdit);
+router.get('/system/notice_remove', System.noticeRemove);
 
 /* 留言功能 */
 router.get('/message', Message.home);

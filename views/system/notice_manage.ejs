@@ -2,179 +2,70 @@
 <html>
   <head>
     <%- include('../link') %>
-    <link rel="stylesheet" href="/css/style.css">
-    <link href="/plugins/summernote/summernote.css" rel="stylesheet">
-    <link href="/plugins/summernote/summernote-bs3.css" rel="stylesheet">
     <style>
-      .modal-backdrop{
-        display: none
-      }
-      .summernote, .note-editable{
-        min-height: 150px
-      }
-      .site-footer {
-        bottom: -2px;
+      .panel-title {
+        padding-top: 10px;
       }
     </style>
   </head>
   <body>
     <%- include('../aside') %>
     <%- include('../header') %>
-    <div id="main" class="main" data-id="notice_manage">
+    <div id="main" class="main" data-page="notice_manage">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5 class="hidden">富文本编辑器</h5>
-                        <h5>公告信息</h5>
-                        <button class="btn btn-primary btn-xs m-l-sm editnote">编辑</button>
-                        <button class="btn btn-primary btn-xs savenote">保存</button>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                              <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="form_editors.html#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="form_editors.html#">选项1</a>
-                                </li>
-                                <li><a href="form_editors.html#">选项2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content no-padding">
-                      <div class="summernote">
-                      </div>
-                    </div>
-                </div>
-                <div class="pull-right">
-                  <button id="commit" class="btn btn-primary">提交</button>
-                  <button id="clear" class="btn btn-danger">清空</button>
-                </div>
+          <div class="panel panel-info">
+            <div class="panel-heading clearfix">
+              <h3 class="panel-title pull-left">公告管理</h3>
+              <a href="/system/notice_release" class="btn btn-success pull-right">发布公告</a>
+            </div>
+            <table class="table table-hover">
+              <caption class="h3">公告列表</caption>
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>公告标题</th>
+                  <th>发布者</th>
+                  <th>修改者</th>
+                  <th>发布时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% notices.forEach(function(notice, index){ %>
+                <tr data-id="<%= notice._id%>">
+                  <td><%= index+1 %></td>
+                  <td><%= notice.title %></td>
+                  <td><%= notice.creator.name%></td>
+                  <td><%if(notice.updater){%><%= notice.updater.name%><%}else{%>暂无<%}%></td>
+                  <td><%= moment(notice.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %></td>
+                  <td>
+                    <a href="/system/notice_detail?id=<%= notice._id%>" class="btn btn-success">查看</a>
+                    <a href="/system/notice_edit?id=<%= notice._id%>" class="btn btn-warning">编辑</a>
+                    <button class="btn btn-danger btn-remove-notice">删除</button>
+                  </td>
+                </tr>
+                <%})%>
+              </tbody>
+            </table>
+            <div class="clearfix m-t m-r">
+              <ul class="pagination pull-right">
+                <li><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+              </ul>
             </div>
           </div>
-          
-          <!-- <div class="row">
-              <div class="col-sm-12">
-                  <div class="ibox float-e-margins">
-                      <div class="ibox-title">
-                          <h5>编辑/保存为html代码示例</h5>
-                          <button id="edit" class="btn btn-primary btn-xs m-l-sm" onclick="edit()" type="button">编辑</button>
-                          <button id="save" class="btn btn-primary  btn-xs" onclick="save()" type="button">保存</button>
-                          <div class="ibox-tools">
-                              <a class="collapse-link">
-                                  <i class="fa fa-chevron-up"></i>
-                              </a>
-                              <a class="dropdown-toggle" data-toggle="dropdown" href="form_editors.html#">
-                                  <i class="fa fa-wrench"></i>
-                              </a>
-                              <ul class="dropdown-menu dropdown-user">
-                                  <li><a href="form_editors.html#">选项1</a>
-                                  </li>
-                                  <li><a href="form_editors.html#">选项2</a>
-                                  </li>
-                              </ul>
-                              <a class="close-link">
-                                  <i class="fa fa-times"></i>
-                              </a>
-                          </div>
-                      </div>
-                      <div class="ibox-content" id="eg">
-
-                          <div class="click2edit wrapper">
-                              <h3>你好，子涵 </h3>
-                              <p>H+是一个完全响应式，基于Bootstrap3.3.6最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术，她提供了诸多的强大的可以重新组合的UI组件，并集成了最新的jQuery版本(v2.1.1)，当然，也集成了很多功能强大，用途广泛的就jQuery插件，她可以用于所有的Web应用程序，如<b>网站管理后台</b>，<b>网站会员中心</b>，<b>CMS</b>，<b>CRM</b>，<b>OA</b>等等，当然，您也可以对她进行深度定制，以做出更强系统。</p>
-                              </p>
-                          </div>
-
-                      </div>
-                  </div>
-              </div>
-          </div> -->
         </div>
         <div class="warp-footer"></div>
       </div>
     	<%- include('../footer') %>
     </div>
     <%- include('../script')%>
-    <script src="/plugins/summernote/summernote.min.js"></script>
-    <script src="/plugins/summernote/summernote-zh-CN.js"></script>
-    <script>
-      $(document).ready(function () {
-          $('.summernote').summernote({
-              lang: 'zh-CN'
-          });
-      });
-      var edit = function () {
-          $("#eg").addClass("no-padding");
-          $('.click2edit').summernote({
-              lang: 'zh-CN',
-              focus: true
-          });
-      };
-      var save = function () {
-          $("#eg").removeClass("no-padding");
-          var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
-          $('.click2edit').destroy();
-          console.log(aHTML)
-      };
-      $('.editnote').on('click', function(){
-        $('.ibox-content').addClass('no-padding');
-        $('.summernote').summernote({
-              lang: 'zh-CN',
-              focus: true
-          });
-      })
-      $('.savenote').on('click', function(){
-        $('.ibox-content').removeClass('no-padding')
-        $('.summernote').destroy()
-      })
-      $('#commit').on('click', function(){
-        if($('.ibox-content').hasClass('no-padding')){
-          $.dialog().alert({message: '请点击保存再提交'})
-          return false;
-        }
-        var text = $.trim($('.summernote').text());
-        if(text == ''){
-          $.dialog().alert({message: '请填写内容'})
-          return false;
-        }
-        var code = $('.summernote').code();
-        $('.ibox-content').removeClass('no-padding')
-        $('.summernote').destroy()
-        var message = {
-          content: code
-        }
-        $.ajax({
-          url: '/message/save',
-          type: 'post',
-          data: {message: message},
-        })
-        .done(function(res) {
-          if(res.status == 1){
-            $.dialog().success({message: '发表成功', delay: 800})
-            $('.summernote').html('')
-          }else if(res.status == 0){
-            $.dialog().fail({message: '发表失败'})
-          }
-          console.log("success");
-        })
-        .fail(function(error) {
-          $.dialog().fail({message: '发表失败'})
-          console.log("error");
-        })
-      })
-      $('#clear').on('click', function(){
-        $('.summernote').text('')
-        $('.note-editable').text('')
-      })
-    </script>
+    <script src="/js/notice.js"></script>
   </body>
 </html>

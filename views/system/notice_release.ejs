@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+  </head>
+  <body>
+    <%- include('../aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="notice_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">公告发布</h3>
+            </div>
+            <div class="panel-body">
+              <form action="/system/save_notice" method="post" id="noticeForm" class="form-horizontal m-t" role="form" enctype="multipart/form-data">
+                <input type="hidden" name="notice[id]" value="<%=notice._id%>">
+                <div class="form-group row">
+                  <label for="noticeTitle" class="control-label col-md-2">公告标题</label>
+                  <div class="col-md-7">
+                    <input type="text" name="notice[title]" id="noticeTitle" class="form-control" placeholder="请输入公告标题" value="<%=notice.title%>"/>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="noticeCont" class="control-label col-md-2">公告内容</label>
+                  <div class="col-md-7">
+                   <textarea name="notice[content]" id="noticeCont" rows="10" class="form-control" placeholder="请输入公告内容"><%=notice.content%></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="" class="control-label col-md-2">添加图片</label>
+                  <div class="col-md-7">
+                    <input type="file" name="noticeFile" id="noticeFile">
+                    <div id="noticePicPreview" class="preview-area clearfix">
+                      <img src="<%if(notice.pic){%>/upload/notice/<%= notice.pic%><%}%>" id="noticePic" class="pic-preview" title="选择图片" alt="选择本地图片">
+                      <a href="javascript:;" id="removeFileBtn" class="btn-remove">删除</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group text-center">
+                  <button type="submit" id="noticeSubmit" class="btn btn-primary">提交</button>
+                  <button class="btn btn-default m-l" onClick="history.go(-1)">返回</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+    <script src="/js/notice.js"></script>
+  </body>
+</html>

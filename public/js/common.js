@@ -252,7 +252,16 @@ var uploadPreview = function(fileInput, $image){
   }
   reader.readAsDataURL(fileInput.files[0])
 }
-
+//清空上传控件的值
+var clearFile = function($fileInput){
+  var fileParent = $fileInput.parent();
+  fileParent.append('<form></form>');
+  var fileForm = fileParent.children('form');
+  fileForm.append($fileInput)
+  fileForm[0].reset()
+  fileParent.prepend($fileInput)
+  fileForm.remove()
+}
 //图片必选
 var checkImageRequired = function(fileInput, msg){
   if(hasFile(fileInput)) return true;
@@ -296,6 +305,7 @@ var checkImageRugular = function(fileInput, msg, regular, sizeLimit){
 		$alert.removeClass('hidden').html('<i class="fa fa-warning"></i>'+ msgSize);
 		return false;
 	}
+  console.log($alert)
 	$alert && $alert.remove()
 	return true;
 }

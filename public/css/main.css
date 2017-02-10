@@ -50,6 +50,24 @@ body {
 .letter-space-2 {
   letter-spacing: 2em;
 }
+.text-indent {
+  text-indent: 2em
+}
+.border-bottom {
+  border-bottom: 1px solid #ccc
+}
+.min-height-3 {
+  min-height: 300px;
+}
+.min-height-4 {
+  min-height: 400px;
+}
+.min-height-5 {
+  min-height: 500px;
+}
+.none {
+  display: none
+}
 .alert i.fa-warning {
   margin-right: 5px
 }
@@ -682,6 +700,28 @@ body {
 }
 /**========== 页脚区域 end ===========**/
 
+/** 图片上传预览区域 start **/
+.preview-area {
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.preview-area > img,
+.preview-area > a {
+  float: left;
+  padding-top: 7px
+}
+.preview-area .btn-remove {
+  display: none;
+  margin-left: 10px;
+}
+.preview-area.show:hover .btn-remove {
+  display: inline
+}
+.preview-area > .pic-preview {
+  width: 60%;
+}
+/** 图片上传预览区域 end **/
+
 /**========== 账号信息编辑 start ===========**/
 .account-info .dl-horizontal dt {
   width: 75px;
@@ -691,12 +731,6 @@ body {
 }
 .avatar-form {
   width: 150px;
-}
-.preview-area {
-  cursor: pointer;
-}
-.preview-area img {
-  display: block;
 }
 .idcard-form .alert {
   width: 245px;

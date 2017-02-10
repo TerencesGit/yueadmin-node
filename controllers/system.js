@@ -1,19 +1,17 @@
 var System = require('../models/function');
 var Role = require('../models/role');
 var RoleFunc = require('../models/role_func');
+var Message = require('../models/message');
+var Notice = require('../models/notice');
+var fs = require('fs');
+var path = require('path');
+var _ = require('lodash');
 
 /* 系统功能树 */
-
 //功能树管理页
 exports.showFunctionTree = function(req, res){
 	res.render('system/system_function_tree', {title: '系统功能树'})
 }
-
-//公告信息发布页
-exports.noticeManage = function(req, res){
-	res.render('system/notice_manage', {title: '公告信息维护'})
-}
-
 //新增功能节点
 exports.newFunction = function(req, res){
 	var user = req.session.user;
@@ -219,4 +217,95 @@ exports.roleFuncList = function(req, res){
 		console.log(role_func)
 		res.redirect('/system/role_manage')
 	})
+}
+
+//公告信息管理
+exports.noticeManage = function(req, res){
+	Notice.find()
+			  .sort('-meta.updateAt')
+			  .populate('creator', 'name')
+			  .populate('updater', 'name')
+			  .exec(function(err, notices){
+			 		res.render('system/notice_manage', {title: '公告信息维护', notices: notices})
+			  })
+}
+//公告信息发布
+exports.noticeRelease = function(req, res){
+	var notice = {};
+	res.render('system/notice_release', {title: '公告发布', notice: notice})
+}
+//公告文件上传
+exports.noticeFileUpload = function(req, res, next){
+	var fileData = req.files.noticeFile;
+	console.log(fileData)
+	if(fileData && fileData.originalFilename){
+		var filePath = fileData.path;
+		fs.readFile(filePath, function(err, data){
+			var timestamp = Date.now();
+			var type = fileData.name.split('.')[1];
+			var notice_pic = 'notice_' + timestamp + '.' +type;
+			var newPath = path.join(__dirname, '../', 'public/upload/notice/' + notice_pic);
+			fs.writeFile(newPath, data, function(err){
+				req.notice_pic = notice_pic;
+				next()
+			})
+		})
+	}else{
+		next()
+	}
+}
+//公告信息保存
+exports.saveNotice = function(req, res){
+	var noticeObj = req.body.notice;
+	var user = req.session.user;
+	if(req.notice_pic){
+		noticeObj.pic = req.notice_pic;
+	}
+	var id = noticeObj.id;
+	if(id){
+		noticeObj.updater = user._id;
+		Notice.findById(id, function(err, notice){
+			if(err) console.log(err)
+			var _notice = _.extend(notice, noticeObj)
+			_notice.save(function(err, notice){
+				if(err) console.log(err)
+				res.redirect('/system/notice_manage')
+			})
+		})
+	}else{
+		noticeObj.creator = user._id;
+		var _notice = new Notice(noticeObj);
+		_notice.save(function(err, notice){
+			if(err) console.log(err);
+			res.redirect('/system/notice_manage')
+		})
+	}
+}
+//公告信息详情
+exports.noticeDetail = function(req, res){
+	var id = req.query.id;
+	Notice.find({_id: id})
+				.populate('creator', 'name')
+				.exec(function(err, notices){
+					if(err) console.log(err);
+					res.render('system/notice_detail', {title: '公告详情', notice: notices[0]})
+				})
+}
+//公告信息编辑
+exports.noticeEdit = function(req, res){
+	var id = req.query.id;
+	Notice.findById(id, function(err, notice){
+		if(err) console.log(err);
+		res.render('system/notice_release', {title: '公告编辑', notice: notice})
+	})
+}
+//公告信息删除
+exports.noticeRemove = function(req, res){
+	var id = req.query.id;
+	if(id){
+		Notice.remove({_id: id}, function(err, msg){
+			if(err) console.log(err);
+			res.json({status: 1})
+		})
+	}
 }

@@ -550,7 +550,16 @@ exports.edit = function edit(req, res){
 	var _user = req.body.user,
 		  id = _user.id;
 	User.update({_id: id}, {'$set': _user}, function(err, msg){
-		if(err) return err;
+		if(err) console.log(err);
 		res.redirect('/user/list')
+	})
+}
+//用户详情
+exports.userDetail = function(req, res){
+	var id = req.query.id;
+	User.findById(id, function(err, user){
+		if(err) console.log(err);
+		var messages = [];
+		res.render('account/account_info', {title: '账户信息', user: user, messages: messages})
 	})
 }

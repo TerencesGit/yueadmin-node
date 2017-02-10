@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+  </head>
+  <body>
+    <%- include('../aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="notice_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">公告详情
+                <a href="javascript:history.go(-1)" class="pull-right">返回列表</a>
+              </h3>
+            </div>
+            <div class="panel-body min-height-4">
+              <h2 class="text-center"><%= notice.title%></h2>
+              <div class="notice-desc clearfix">
+                <span class="pull-right">
+                  发布者：
+                  <a href="/user/user_detail?id=<%= notice.creator._id%>" data-id="<%= notice.creator._id%>"><%=notice.creator.name %></a>
+                  发布时间：
+                  <a href="#"><%= moment(notice.meta.createAt).format('YYYY-MM-DD HH:mm') %></a>
+                </span>
+              </div>
+              <div class="notice-content clearfix">
+                <p class="h4 text-indent col-md-offset-1 col-md-10">
+                  <%= notice.content%>
+                </p>
+                <%if(notice.pic){%>
+                <p class="text-center m-t m-b col-md-offset-1 col-md-10">
+                  <img src="/upload/notice/<%= notice.pic%>" title="<%= notice.title%>" alt="图片">
+                </p>
+                <%}%>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+    <script src="/js/notice.js"></script>
+  </body>
+</html>

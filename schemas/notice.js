@@ -1,13 +1,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
-var messageSchema = new Schema({
-	user: {type: ObjectId, ref: 'User'},
-	reply: [{
-		from: {type: ObjectId, ref: 'User'},
-		to: {type: ObjectId, ref: 'User'},
-		content: String
-	}],
+var noticeSchema = new Schema({
+	creator: {type: ObjectId, ref: 'User'},
+	updater: {type: ObjectId, ref: 'User'},
 	title: String,
 	content: String,
 	pic: String,
@@ -22,7 +18,7 @@ var messageSchema = new Schema({
 		}
 	}
 })
-messageSchema.pre('save',function(next){
+noticeSchema.pre('save',function(next){
 	if(this.isNew){
 		this.meta.createAt = this.meta.updateAt = Date.now();
 	}else{
@@ -30,7 +26,7 @@ messageSchema.pre('save',function(next){
 	}
 	next()
 })
-messageSchema.statics = {
+noticeSchema.statics = {
 	fetch: function(cb){
 		return this
 					.find({})
@@ -43,4 +39,4 @@ messageSchema.statics = {
 					.exec(cb)
 	}
 }
-module.exports = messageSchema;
+module.exports = noticeSchema;
