@@ -12,14 +12,14 @@
           <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title">
-                账号代注册
+                账号代注册(<%= organize.name%>)
                 <a href="javascript:history.go(-1)" class="pull-right">返回</a>
               </h3>
             </div> 
             <div class="panel-body">
               <div class="col-md-8 col-md-offset-2 m-t">
                 <form action="/partner/agent_register" method="post" id="agentRegForm" class="form-horizontal" role="form">
-                  <input type="hidden" name="user[organize]" value="<%if(organize){%><%= organize%><%}%>">
+                  <input type="hidden" name="user[organize]" value="<%if(organize){%><%= organize._id%><%}%>">
                   <div class="form-group">
                     <label for="userName" class="control-label col-md-3">员工姓名</label>
                     <div class="col-md-6">

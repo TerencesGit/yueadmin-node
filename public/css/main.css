@@ -1,5 +1,105 @@
-/*========== css reset ==========**/
+/**========== common class ==========**/
+.m-t {
+  margin-top: 15px;
+}
+.m-b {
+  margin-bottom: 15px;
+}
+.m-l {
+  margin-left: 15px;
+}
+.m-r {
+  margin-right: 15px;
+}
+.p-t {
+  padding-top: 15px;
+}
+.p-b {
+  padding-bottom: 15px;
+}
+.p-l {
+  padding-left: 15px;
+}
+.p-r {
+  padding-right: 15px;
+}
+.min-w-300 {
+  min-width: 300px;
+}
+.min-w-400 {
+  min-width: 400px;
+}
+.min-w-500 {
+  min-width: 500px;
+}
+.max-w-300 {
+  max-width: 300px;
+}
+.max-w-400 {
+  max-width: 400px;
+}
+.max-w-500 {
+  max-width: 500px;
+}
+.max-h-300 {
+  max-height: 300px;
+}
+.max-h-400 {
+  max-height: 400px;
+}
+.max-h-500 {
+  max-height: 500px;
+}
+.min-h-300 {
+  min-height: 300px;
+}
+.min-h-400 {
+  min-height: 400px;
+}
+.min-h-500 {
+  min-height: 500px;
+}
+.letter-space-half {
+  letter-spacing: .5em;
+}
+.letter-space {
+  letter-spacing: 1em;
+}
+.letter-space-2 {
+  letter-spacing: 2em;
+}
+.text-indent {
+  text-indent: 2em
+}
+.border-top {
+  border-top: 1px solid #ccc
+}
+.border-right {
+  border-right: 1px solid #ccc
+}
+.border-bottom {
+  border-bottom: 1px solid #ccc
+}
+.border-left {
+  border-left: 1px solid #ccc
+}
+.none {
+  display: none
+}
+.relative {
+  position: relative;
+}
+li.disabled {
+  cursor: not-allowed;
+}
+a.disabled {
+  pointer-events: none;
+}
 
+/**========== global style ==========**/
+body {
+  background: #f0f3f4
+}
 ul,
 li {
   margin: 0;
@@ -24,51 +124,7 @@ textarea {
 input[type="file"] {
   display: none
 }
-
-/**========== global css ==========**/
-body {
-  background: #f0f3f4
-}
-.m-t {
-  margin-top: 15px;
-}
-.m-b {
-  margin-bottom: 15px;
-}
-.m-l {
-  margin-left: 15px;
-}
-.m-r {
-  margin-right: 15px;
-}
-.letter-space-half {
-  letter-spacing: .5em;
-}
-.letter-space {
-  letter-spacing: 1em;
-}
-.letter-space-2 {
-  letter-spacing: 2em;
-}
-.text-indent {
-  text-indent: 2em
-}
-.border-bottom {
-  border-bottom: 1px solid #ccc
-}
-.min-height-3 {
-  min-height: 300px;
-}
-.min-height-4 {
-  min-height: 400px;
-}
-.min-height-5 {
-  min-height: 500px;
-}
-.none {
-  display: none
-}
-.alert i.fa-warning {
+.alert >  i.fa {
   margin-right: 5px
 }
 .col-md-3.alert {
@@ -92,12 +148,6 @@ body {
   display: inline-block;
   padding: 7px 0 0;
 }
-.relative {
-  position: relative;
-}
-.disabled {
-  pointer-events: none
-}
 .alert-back {
   width: 80%;
   margin: auto
@@ -108,6 +158,10 @@ body {
 .alert-dismissable .close {
   top: 0;
   right: 0; 
+}
+.modal-body.modal-control {
+  height: 350px;
+  overflow-y: scroll;
 }
 /**========== bootstrap reset ==========**/
 
@@ -238,177 +292,6 @@ body {
   animation-name: fadeInDown
 }
 /**========== animation end ==========**/
-
-/**========== 登录注册start ==========**/
-.login-page {
-  background: url(../img/login_bg.jpg) fixed no-repeat;
-  background-size: 100% 100%;
-}
-  
-.login-form {
-  width: 430px;
-  margin: 8% auto 0;
-  padding: 30px;
-  background: #fff;
-  border-radius: 5px
-}
-.login-form .page-header {
-  margin-top: 0;
-}
-.login-form .control-label{
-  padding-right: 0;
-  text-align: left;
-}
-.login-form .form-group {
-  position: relative
-}
-.login-form .form-group:last-child {
-  margin-bottom: 0
-}
-.form-group .fa-check {
-  display: none
-}
-.form-group.has-success .fa-check {
-  display: inline-block;
-  position: absolute;
-  top: 10px;
-  right: 25px;
-  z-index: 2;
-  color: #3c763d;
-}
-.form-group.submit {
-  margin: 15px 0;
-}
-.login-form .alert-danger {
-  float: right;
-  width: 270px;
-  margin-top: -10px;
-  margin-bottom: 5px;
-}
-.login-form .alert-back {
-
-}
-.agree-check +.alert {
-  float: none
-}
-.agree-check > .checkbox-inline {
-  margin-left: 15px;
-}
-.canvas-code {
-  margin-left: -10px;
-  background: #f0f0f0;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.has-error .checkbox-inline {
-  color: #333;
-}
-
-.line {
-  margin: 0 10px;
-}
-
-.remember {
-  margin-top: -5px;
-  color: #666;
-}
-
-.remember > .checkbox-inline {
-  margin-left: 15px;
-}
-/*注册协议 模态框*/
-
-.protocol .modal-dialog {
-  width: 800px;
-  margin-top: 30px;
-}
-
-.protocol .modal-body {
-  height: 500px;
-  overflow-y: scroll
-}
-/**========== 登录注册 end ==========**/
-
-/**========== 重置密码 start ==========**/
-.reset-password .panel {
-  margin: 8% auto;
-  min-height: 450px;
-}
-.reset-password .page-header {
-  border-bottom: 0
-}
-.reset-form {
-  width: 350px;
-  margin: 20px auto;
-}
-.reset-form .alert, .reset-form .btn{
-  float: right;
-  width: 255px
-}
-.reset-password .form-group {
-  margin-top: 20px;
-}
-.find-tab > li{
-  padding: 0;
-}
-.find-tab > li > p{
-  margin: 10px -15px 0 0;
-  color: #666;
-}
-.find-tab >li > em {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  color: #fff;
-  font-size: 20px;
-  font-style: normal;
-  border-radius: 50%;
-  background: #b5b5b5;
-}
-.find-tab > .center-line {
-  padding-top: 2px
-}
-.center-line span{
-  display: inline-block;
-  width: 100%;
-  height: 4px;
-  background: #b5b5b5
-}
-.find-tab > .active > em, .find-tab > .active > span {
-  background: #24c600
-}
-.find-tab > .active > p{
-  color: #24c600;
-}
-.tip-info p{
-  padding-top: 30px;
-  font-size: 20px
-}
-.reset-success {
-  width: 500px;
-  margin: 10% auto 0;
-}
-.reset-success .panel-body {
-  padding: 80px 20px;
-}
-.success-info {
-  text-align: center
-}
-.success-info:before {
-  content: '\2714';
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  color: #0f0;
-  font-size: 30px
-}
-.success-info +p {
-  font-size: 16px
-}
-
-/**========== 重置密码 end ==========**/
 
 /**========== 左侧导航 start ===========**/
 .sidebar-warp {
@@ -722,6 +605,220 @@ body {
 }
 /** 图片上传预览区域 end **/
 
+/** 工具栏 start **/
+.tools {
+  padding: 0 0 5px 15px;
+}
+.tools > li{
+  display: inline-block;
+  margin: 0 8px;
+  text-align: center;
+} 
+.tools > li > a{
+  display: block;
+  color: #337ab7;
+  font-size: 12px;
+}
+.tools > li > a:hover .fa{
+  opacity: 1;
+}
+.tools > li .fa{
+  padding: 5px;
+  font-size: 14px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  opacity: .8
+}
+.tools > li.disabled .fa,
+.tools > li.disabled span {
+  color: #666;
+}
+.tools > li > a > span {
+   display: block;
+   padding-top: 3px;
+}
+.tools .fa-refresh{
+  color: #b0d93d;
+}
+.tools .fa-plus-square{
+  color: #3699c3;
+}
+.tools .fa-edit{
+  color: #c5ad57;
+}   
+.tools .fa-remove{
+  color: #d75931;
+}
+/** 工具栏 end **/ 
+
+/**========== 登录注册start ==========**/
+.login-page {
+  background: url(../img/login_bg.jpg) fixed no-repeat;
+  background-size: 100% 100%;
+}
+  
+.login-form {
+  width: 430px;
+  margin: 8% auto 0;
+  padding: 30px;
+  background: #fff;
+  border-radius: 5px
+}
+.login-form .page-header {
+  margin-top: 0;
+}
+.login-form .control-label{
+  padding-right: 0;
+  text-align: left;
+}
+.login-form .form-group {
+  position: relative
+}
+.login-form .form-group:last-child {
+  margin-bottom: 0
+}
+.form-group .fa-check {
+  display: none
+}
+.form-group.has-success .fa-check {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  z-index: 2;
+  color: #3c763d;
+}
+.form-group.submit {
+  margin: 15px 0;
+}
+.login-form .alert-danger {
+  float: right;
+  width: 270px;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+.agree-check +.alert {
+  float: none
+}
+.agree-check > .checkbox-inline {
+  margin-left: 15px;
+}
+.canvas-code {
+  margin-left: -10px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.has-error .checkbox-inline {
+  color: #333;
+}
+
+.line {
+  margin: 0 10px;
+}
+
+.remember {
+  margin-top: -5px;
+  color: #666;
+}
+
+.remember > .checkbox-inline {
+  margin-left: 15px;
+}
+/*注册协议 模态框*/
+
+.protocol .modal-dialog {
+  width: 800px;
+  margin-top: 30px;
+}
+
+.protocol .modal-body {
+  height: 500px;
+  overflow-y: scroll
+}
+/**========== 登录注册 end ==========**/
+
+/**========== 重置密码 start ==========**/
+.reset-password .panel {
+  margin: 8% auto;
+  min-height: 450px;
+}
+.reset-password .page-header {
+  border-bottom: 0
+}
+.reset-form {
+  width: 350px;
+  margin: 20px auto;
+}
+.reset-form .alert, .reset-form .btn{
+  float: right;
+  width: 255px
+}
+.reset-password .form-group {
+  margin-top: 20px;
+}
+.find-tab > li{
+  padding: 0;
+}
+.find-tab > li > p{
+  margin: 10px -15px 0 0;
+  color: #666;
+}
+.find-tab >li > em {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  font-style: normal;
+  border-radius: 50%;
+  background: #b5b5b5;
+}
+.find-tab > .center-line {
+  padding-top: 2px
+}
+.center-line span{
+  display: inline-block;
+  width: 100%;
+  height: 4px;
+  background: #b5b5b5
+}
+.find-tab > .active > em, .find-tab > .active > span {
+  background: #24c600
+}
+.find-tab > .active > p{
+  color: #24c600;
+}
+.tip-info p{
+  padding-top: 30px;
+  font-size: 20px
+}
+.reset-success {
+  width: 500px;
+  margin: 10% auto 0;
+}
+.reset-success .panel-body {
+  padding: 80px 20px;
+}
+.success-info {
+  text-align: center
+}
+.success-info:before {
+  content: '\2714';
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  color: #0f0;
+  font-size: 30px
+}
+.success-info +p {
+  font-size: 16px
+}
+
+/**========== 重置密码 end ==========**/
+
 /**========== 账号信息编辑 start ===========**/
 .account-info .dl-horizontal dt {
   width: 75px;
@@ -819,43 +916,10 @@ body {
 /**========== 留言板 end ===========*/
 
 /**========== 部门组织管理 start ===========*/
-.organize-tree {
-  min-height: 500px;
+.role-list li .check{
+  display: none
 }
-.tools-bar {
-  padding: 0 0 5px 15px;
-  border-bottom: 1px solid #eee; 
-}
-.tools-bar li{
-  display: inline-block;
-  margin: 0 10px;
-  text-align: center
-} 
-.tools-bar li a{
-  color: #666;
-  font-size: 12px
-}
-.tools-bar li .fa{
-  font-size: 16px;
-}
-.tools-bar .fa-refresh{
-  color: #b0d93d;
-}
-.tools-bar .fa-plus-square{
-  color: #3699c3;
-}
-.tools-bar .fa-edit{
-  color: #c5ad57;
-}   
-.tools-bar .fa-remove{
-  color: #d75931;
-}
-.organize-modal .modal-dialog {
-  width: 300px;
-}
-.organize-modal .modal-dialog .modal-body {
-  height: 240px;
-  max-height: 300px;
-  overflow-y: auto;
+.role-list li.checked .check{
+  display: inline
 }
 /**========== 部门组织管理 end ===========*/

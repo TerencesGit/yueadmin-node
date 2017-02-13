@@ -21,7 +21,7 @@
                   </h3>
                 </div>
                 <div id="collapseTree" class="panel-collapse collapse in">
-                  <div class="panel-body organize-tree">
+                  <div class="panel-body min-h-500">
                     <ul id="organizeTree" class="ztree" data-id="<%= user.partner._id%>"></ul>
                   </div>
                 </div>
@@ -36,33 +36,61 @@
                   </h3>
                 </div>
                 <div id="collapseDepart" class="panel-collapse collapse in">
-                  <div class="panel-body">
-                    <ul class="tools-bar row">
+                  <div class="panel-body min-h-500">
+                    <ul class="tools border-bottom row">
                       <li>
-                        <a href="javascript:;" class="btn-refresh"><i class="fa fa-refresh"></i><br>刷新</a> 
+                        <a href="javascript:;" class="btn-refresh" title="刷新">
+                          <i class="fa fa-refresh"></i>
+                          <span>刷新</span>
+                        </a> 
                       </li>
                       <li>
-                        <a href="#newOrganizeModal" class="btn-new" data-toggle="modal">
-                          <i class="fa fa-plus-square"></i><br>新增
+                        <a href="#newOrganizeModal" class="btn-plus" data-toggle="modal" title="部门新增">
+                          <i class="fa fa-plus-square"></i>
+                          <span>新增</span>
                         </a>
                       </li>
                       <li>
-                        <a href="#editOrganizeModal" class="btn-edit" data-toggle="modal"><i class="fa fa-edit"></i><br>编辑</a> 
+                        <a href="#editOrganizeModal" class="btn-edit" data-toggle="modal" title="部门编辑">
+                          <i class="fa fa-edit"></i>
+                          <span>编辑</span>
+                        </a> 
                       </li>
                       <li>
-                        <a href="javascript:;" class="btn-remove"><i class="fa fa-remove"></i><br>删除</a> 
+                        <a href="javascript:;" class="btn-remove"  title="部门删除">
+                          <i class="fa fa-remove"></i>
+                          <span>删除</span>
+                        </a> 
                       </li>
                       <li>
-                        <a href="#setRoleModal" class="btn-cog" data-toggle="modal"><i class="fa fa-cog"></i><br>设置</a> 
+                        <a href="#setRoleModal" class="btn-cog" data-toggle="modal" title=" 部门权限">
+                          <i class="fa fa-cog"></i>
+                          <span>权限</span>
+                        </a> 
                       </li>
                       <li>
-                        <form action="/partner/agent_register" method="get" id="regStaffForm" onClick="return false">
-                          <input type="hidden" name="orgId" id="orgId" value="">
-                          <a href="javascript:;" class="btn-new-staff" data-toggle="modal"><i class="fa fa-user"></i><br>注册员工</a> 
+                        <a href="javascript:;" class="btn-unlock" title="部门启用">
+                          <i class="fa fa-unlock"></i>
+                          <span>启用</span>
+                        </a> 
+                      </li>
+                      <li>
+                        <a href="javascript:;" class="btn-ban"  title="部门禁用">
+                          <i class="fa fa-ban"></i>
+                          <span>禁用</span>
+                        </a> 
+                      </li>
+                      <li>
+                        <a href="javascript:;" class="btn-user" title="注册员工">
+                          <i class="fa fa-user-plus"></i>
+                          <span>注册员工</span>
+                        </a> 
+                        <form action="/partner/agent_register" method="post" id="userForm" class="hidden">
+                          <input type="hidden" name="orgId" id="departmentId" value="">
                         </form>
                       </li>
                     </ul>
-                    <h3 class="page-header">企业员工</h3>
+                    <h3 class="page-header">部门员工</h3>
                     <table class="table table-bordered">
                       <thead>
                         <tr class="info">
@@ -79,7 +107,7 @@
                       </tbody>
                     </table>
                     <ul class="pagination">
-                      <li><a href="#">&laquo;</a></li>
+                      <li class="disabled"><a href="#">&laquo;</a></li>
                       <li class="active"><a href="#">1</a></li>
                       <li><a href="#">2</a></li>
                       <li><a href="#">3</a></li>
@@ -162,20 +190,22 @@
         <div class="modal-content">
           <form class="form-horizontal">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">权限设置</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">权限设置</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body modal-control">
               <div class="row">
+                <div class="alert alert-info m-l m-r">
+                  <i class="fa fa-info-circle"></i>提示：点击权限名称显示对应的功能</div>
                 <div class="col-md-6">
-                  <ul id="roleList" class="list-group">
+                  <ul id="roleList" class="list-group role-list">
                     <li class="list-group-item active">
                     权限列表
                     </li>
                     <% roles.forEach(function(role){%>
-                    <li class="list-group-item checked">
+                    <li class="list-group-item" data-id="<%= role._id%>">
                       <a href="javascript:;" class="check"><i class="fa fa-check pull-right"></i></a>
-                      <a href="javascript:;" class="role" data-id="<%= role._id%>"><%= role.name%></a>
+                      <a href="javascript:;" class="role"><%= role.name%></a>
                     </li>
                     <%})%>
                   </ul>

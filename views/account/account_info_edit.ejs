@@ -2,7 +2,7 @@
 <html>
   <head>
     <%- include('../link') %>
-    <link rel="stylesheet" href="/plugins/cityPicker/css/hzw-city-picker.css">
+    <link rel="stylesheet" href="/plugins/cityPicker/css/cityLayout.css">
   </head>
   <body>
     <%- include('../aside') %>
@@ -28,6 +28,12 @@
                     <label class="col-md-2 control-label">昵称</label>
                     <div class="col-md-6">
                       <input type="text" id="nickname" class="form-control" name="user[name]" value="<%= user.name %>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">姓名</label>
+                    <div class="col-md-6">
+                      <input type="text" name="user[realname]" id="realname" class="form-control" value="<%= user.name %>">
                     </div>
                   </div>
                   <div class="form-group">
@@ -57,30 +63,30 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-md-2 control-label">生日</label>
-                    <div class="col-md-6">
-                      <input type="text" name="user[birthday]" id="birthday" class="form-control laydate-icon" value="<%if(user && user.birthday){%><%=moment(user.birthday).format('YYYY-MM-DD')%><%}%>">
-                    </div>
-                  </div>
-                  <div class="form-group">
                     <label class="col-md-2 control-label">身份证号</label>
                     <div class="col-md-6">
                        <input type="text" name="user[idcard]" id="idcard" class="form-control" value="<%if(user && user.idcard){%><%=user.idcard %><%}%>">
                     </div>
                   </div>
                   <div class="form-group">
+                    <label class="col-md-2 control-label">生日</label>
+                    <div class="col-md-6">
+                      <input type="text" name="user[birthday]" id="birthday" class="form-control laydate-icon" value="<%if(user && user.birthday){%><%=moment(user.birthday).format('YYYY-MM-DD')%><%}%>">
+                    </div>
+                  </div>
+                  <div class="form-group">
                      <label class="col-md-2 control-label">籍贯</label>
                      <div class="col-md-6">
-                      <input type="text" name="user[address]" id="address" class="form-control" value="<%if(user && user.address){%><%= user.address%><%}%>">
+                      <input type="text" name="user[address]" id="start1" class="proCityQueryAll proCitySelAll form-control city-icon" placeholder="请选择/输入城市名称" value="<%if(user && user.address){%><%= user.address%><%}%>">
                      </div>
                   </div>               
-                  <div class="form-group">
+                <!--   <div class="form-group">
                     <label class="col-md-2 control-label">个性签名</label>
                     <div class="col-md-6">
                       <textarea name="user[signature]" class="form-control" rows="5">   <%if(user && user.signature){%><%=user.signature %><%}%>
                       </textarea>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="form-group">
                     <h3 class="col-md-2 control-label m-t">附件上传</h3>
                     <p class="alert text-warning m-t">
@@ -143,31 +149,13 @@
         </div>
       </div>
     	<%- include('../footer') %>
-    </div>
+    </div>      
     <%- include('../script')%>
     <script src="/plugins/laydate/laydate.js"></script>
-    <script src="/plugins/cityPicker/js/city-data.js"></script>
-    <script src="/plugins/cityPicker/js/hzw-city-picker.min.js"></script>
+    <script src="/plugins/cityPicker/js/public.js"></script>
     <script src="/js/account.js"></script>
     <script>
-      //出生日期选择
       laydate({elem: '#birthday', max: laydate.now(-1)});
-
-      //城市选择
-      var cityPicker = new HzwCityPicker({
-        data: data,
-        target: 'address',
-        valType: 'k-v',
-        hideCityInput: {
-            name: 'city',
-            id: 'city'
-        },
-        hideProvinceInput: {
-            name: 'province',
-            id: 'province'
-        },
-      });
-      cityPicker.init();
     </script>
   </body>
 </html>

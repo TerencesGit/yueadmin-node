@@ -1,18 +1,54 @@
+/** 部门管理 **/
+//部门组织树
 const organizeTree = $('#organizeTree');
+//功能节点树
+const functionTree = $('#functionTree');
+//企业ID
 const partnerId = organizeTree.attr('data-id');
+//部门ID
+const departmentId = $('#departmentId');
+//部门名称
+const departmentName = $('#departmentName');
+//注册员工表单对象
+const userForm = $('#userForm');
+//弹出框延迟时间
+const DELAY_TIME = 800;
+//权限列表对象
+const roleList = $('#roleList');
+//权限单元
+const roleItem = roleList.children('li').not('.active');
+//权限名称
+const roleName = roleList.find('.role');
 let isFirst = true;
 let flag = true;
-
+//部门工具栏对象
+var $btnRefresh = $('.btn-refresh'),
+ 		$btnPlus = $('.btn-plus'),
+	  $btnEdit = $('.btn-edit'),
+	  $btnRemove = $('.btn-remove'),
+	  $btnCog = $('.btn-cog'),
+	  $btnUnlock = $('.btn-unlock'),
+	  $btnBan = $('.btn-ban'),
+    $btnUser = $('.btn-user');
+//页面加载渲染部门树
 $(function(){
-  renderTree(organizeTree)
+  renderOrganizeTree(organizeTree)
 })
-//组织节点点击事件
+//组织节点点击事件(显示部门名称，并获取该部门下员工)
 function HandlerClick(event, treeId, treeNode){
-  var name = treeNode.name;
-  $('#departmentName').text(name);
-  var organizeId = treeNode.id;
- 	renderStaff(organizeId);
- 	$('#orgId').val(organizeId);
+	//组织树对象
+  const name = treeNode.name;
+  const organizeId = treeNode.id;
+  const status= treeNode.status;
+  if(status){
+  	$btnUnlock.addClass('disabled').parent().addClass('disabled');
+  }else{
+  	$btnBan.addClass('disabled').parent().addClass('disabled');
+  }
+  departmentName.text(name);
+ 	departmentId.val(organizeId);
+
+ 	renderStaffList(organizeId);
 }
 //判断父节点
 function isParent(treeNode){
@@ -28,17 +64,34 @@ function getSeletedNode(){
   var node = treeObj.getSelectedNodes()[0];
   if(!node){
   	$.dialog().alert({message: '请选择要操作的部门！'})
-    //alert('请选择要操作的部门！');
     return false;
   }
  	return node;
 }
-//渲染组织树
-function renderTree(organizeTree){
+//刷新操作    
+$btnRefresh.on('click', function(){
+	renderOrganizeTree(organizeTree)
+})
+//新增部门表单
+var newOrganizeModal = $('#newOrganizeModal'),
+    newModalTitle = newOrganizeModal.find('.modal-title'),
+    newOrganizeName = $('#newOrganizeName'),
+    newOrganizeProfile = $('#newOrganizeProfile'),
+    newOrganizeBtn = $('#newOrganizeBtn');
+
+//编辑部门表单
+var editOrganizeModal = $('#editOrganizeModal'),
+		editModalTitle = editOrganizeModal.find('.modal-title'),
+    editOrganizeName = $('#editOrganizeName'),
+    editOrganizeProfile = $('#editOrganizeProfile'),
+    editOrganizeBtn = $('#editOrganizeBtn');
+
+//渲染部门树
+function renderOrganizeTree(organizeTree){
 	var partnerId = organizeTree.attr('data-id');
   $.ajax({
     type: 'get',
-    url: '/partner/getOrganizeTree?partnerId='+ partnerId,
+    url: '/partner/get_organize_tree?partnerId='+ partnerId,
   })
   .done(function(result){
     var organizes = result.organizes;
@@ -57,16 +110,17 @@ function renderTree(organizeTree){
 		}
     var zNode = [];
     var treeObj;
-    for(let i = 0; i <organizes.length; i++){
-      treeObj = {
-        id: organizes[i]._id,
-        pId: organizes[i].parent_id,
-        name: organizes[i].name,
-        profile: organizes[i].profile,
+    organizes.forEach(function(organize){
+    	treeObj = {
+        id: organize._id,
+        pId: organize.parent_id,
+        name: organize.name,
+        profile: organize.profile,
+        status: organize.status,
         open: true
       };
       zNode.push(treeObj)
-    }
+    })
     $.fn.zTree.init(organizeTree, setting, zNode);
     //仅在加载页面时执行
    //  if(isFirst){
@@ -78,7 +132,7 @@ function renderTree(organizeTree){
 			// }
 			// if(getSeletedNode){
 			// 	let organizeId = getSeletedNode().id;
-			// 	renderStaff(organizeId)
+			// 	renderStaffList(organizeId)
 			// }
    //  }
   })
@@ -87,7 +141,7 @@ function renderTree(organizeTree){
   })
 }
 //渲染员工列表
-function renderStaff(organizeId){
+function renderStaffList(organizeId){
   $.ajax({
     type: 'get',
     url: '/partner/get_organize_staff?organizeId='+ organizeId,
@@ -109,42 +163,8 @@ function renderStaff(organizeId){
     console.log(error)
   })
 }
-
-//部门操作工具栏按钮
-var $btnRefresh = $('.btn-refresh'),
- 		$btnNew = $('.btn-new'),
-	  $btnEdit = $('.btn-edit'),
-	  $btnRemove = $('.btn-remove'),
-	  $btnCog = $('.btn-cog'),
-    $btnStaff = $('.btn-new-staff');
-
-//刷新操作    
-$btnRefresh.on('click', function(){
-	renderTree(organizeTree)
-})
-//新增组织模态框表单
-var newOrganizeModal = $('#newOrganizeModal'),
-    newModalTitle = newOrganizeModal.find('.modal-title'),
-    newOrganizeName = $('#newOrganizeName'),
-    newOrganizeProfile = $('#newOrganizeProfile'),
-    newOrganizeBtn = $('#newOrganizeBtn');
-
-//编辑组织模态框表单
-var editOrganizeModal = $('#editOrganizeModal'),
-		editModalTitle = editOrganizeModal.find('.modal-title'),
-    editOrganizeName = $('#editOrganizeName'),
-    editOrganizeProfile = $('#editOrganizeProfile'),
-    editOrganizeBtn = $('#editOrganizeBtn');
-
-//信息提示    
-var msg = {
-	required: '名称不能为空'
-}
-//弹出框延迟时间
-const DELAY_TIME = 800;
-
 //新增组织节点
-$btnNew.on('click', function(e){
+$btnPlus.on('click', function(e){
 	e.preventDefault();
   if(!getSeletedNode()) return false;
   var node = getSeletedNode();
@@ -152,13 +172,12 @@ $btnNew.on('click', function(e){
   newOrganizeName.val('');
   newOrganizeProfile.val('');
 })
-
 //新增组织表单提交
 newOrganizeBtn.on('click', function(e){
 	e.preventDefault()
 	if(!getSeletedNode()) return false;
   var node = getSeletedNode();
-	if(!checkInput(newOrganizeName, msg)) return false;
+	if(!checkInput(newOrganizeName)) return false;
 	var organize = {
 		parent_id: node.id,
 		name: $.trim(newOrganizeName.val()),
@@ -172,14 +191,13 @@ newOrganizeBtn.on('click', function(e){
 			data: {organize: organize},
 		})
 		.done(function(res) {
-			console.log(res)
 			if(res.status == 1){
-				$.dialog({type: 'success', message: '添加成功', delay: DELAY_TIME})
+				$.dialog().success({message: ''+res.message+'', delay: DELAY_TIME})
 				setTimeout(function(){
-					renderTree(organizeTree)
+					renderOrganizeTree(organizeTree)
 				}, DELAY_TIME)
 			}else if(res.status == 2){
-				$.dialog({type: 'warning', message: '添加失败', delay: DELAY_TIME})
+				$.dialog().fail({message: '添加失败'});
 			}
 			flag = true;
 		})
@@ -229,7 +247,7 @@ editOrganizeBtn.on('click', function(e){
 			if(res.status == 1){
 				$.dialog().success({message: '编辑成功', delay: DELAY_TIME})
 				setTimeout(function(){
-					renderTree(organizeTree)
+					renderOrganizeTree(organizeTree)
 				}, DELAY_TIME)
 			}else if(res.status == 2){
 				$.dialog().fail({message: '编辑失败'})
@@ -241,7 +259,7 @@ editOrganizeBtn.on('click', function(e){
 		})
 	}
 })
-//删除组织节点
+//删除组织按钮点击
 $btnRemove.on('click', function(e){
 	e.preventDefault();
 	if(!getSeletedNode()) return false;
@@ -253,16 +271,17 @@ $btnRemove.on('click', function(e){
 		return false;
 	}
 	if(isParent(node)){
-		$.dialog().alert({message: '该部门有下属部门，不可删除！'});
+		$.dialog().fail({message: '该部门有下属部门，不可删除！'});
 		return false;
 	}
-	$.dialog().confirm({message: '确定删除 '+name+ ' ? 此操作不可恢复'})
+	$.dialog().confirm({message: '确定删除<a> '+name+ '</a> ? 此操作不可恢复'})
 	.on('confirm', function(){
 		removeOrganize(id)
 	})
 	.on('cancel', function(){
 	})
 })
+//异步删除方法
 function removeOrganize(id){
 	$.ajax({
 		type: 'get',
@@ -272,7 +291,7 @@ function removeOrganize(id){
 		if(res.status == 1){
 			$.dialog().success({message: '删除成功', delay: DELAY_TIME})
 			setTimeout(function(){
-				renderTree(organizeTree)
+				renderOrganizeTree(organizeTree)
 			}, DELAY_TIME)
 		}else if(res.status == 2){
 			$.dialog().fail({message: '该部门有下属部门，不可删除'})
@@ -288,71 +307,56 @@ function removeOrganize(id){
 		console.log(error)
 	})
 }
-/* 员工操作 */
-
-//设置员工部门
-var setOrganizeForm = $('#setOrganizeForm'),
-    userId = $('#userId'),
-    orgId = $('#organizeId'),
-    setOrganizeBtn = $('#setOrganizeBtn');
-$('.btn-set').on('click', function(){
-  var $tr = $(this).parents('tr');
-  var userid = $tr.attr('data-id');
-  userId.val(userid);
-})
-
-//提交按钮
-setOrganizeBtn.on('click', function(e){
-  e.preventDefault();
-  if(!getSeletedNode()) return false;
-  var node = getSeletedNode();
-  orgId.val(node.id);
-  setOrganizeForm.submit()
-})
-
-//设置权限
+//设置权限操作
 $btnCog.on('click', function(e){
 	e.preventDefault()
 	if(!getSeletedNode()) return false;
  	var node = getSeletedNode();
-
+  var orgId = node.id;
+  roleItem.map(function(index, item){
+  	$(item).removeClass('checked')
+  })
+  getRoleByOrgId(orgId)
 })
-var roleList = $('#roleList');
-var roleItem = roleList.children('li');
-var roleName = roleList.find('.role');
-roleName.on('click', function(e){
-	e.stopPropagation();
-	var roleId = $(this).attr('data-id');
-	console.log(roleId)
-	getFunctionTree()
-})
-//获取角色对应的功能点
-function getFuncByRole(roleId){
-  $.ajax({
-  	url: '/partner/get_function_tree?id='+ roleId,
-  })
-  .done(function(res) {
-  	console.log("success");
-  })
-  .fail(function() {
-  	console.log("error");
-  })
-}
-const functionTree = $('#functionTree');
-//获取功能树
-function getFunctionTree(){
+//权限列表回显
+function getRoleByOrgId(orgId){
 	$.ajax({
-		url: '/system/get_function_tree',
-		type: 'GET',
+		url: '/partner/get_org_role?id='+ orgId,
 	})
 	.done(function(res) {
-		var functions = res.functions;
-		var setting = {
+		const orgRoles = res.orgRoles;
+		const getRoleId = orgRole => orgRole.role;
+		const roleIdList = orgRoles.map(getRoleId);
+		for(let i = 0; i < roleItem.length; i++){
+			for(let j = 0; j < roleIdList.length; j++){
+				if(roleItem[i].getAttribute('data-id') == roleIdList[j]){
+					$(roleItem[i]).addClass('checked')
+					break;
+				}
+			}
+		}
+	})
+	.fail(function() {
+		console.log("error");
+	})
+}
+//点击权限查看对应功能
+roleName.on('click', function(e){
+	e.stopPropagation();
+	let roleId = $(this).parent().attr('data-id');
+	getFuncByRole(roleId)
+})
+
+//获取权限对应的功能点
+function getFuncByRole(roleId){
+  $.ajax({
+  	url: '/system/get_role_func?id='+ roleId,
+  })
+  .done(function(res) {
+  	const roleFuncs = res.role_funcs;
+		const setting = {
     	view: {
     		selectedMulti: false,
-    	},
-    	check: {
-    		enable: true
     	},
     	data: {
         simpleData: {
@@ -365,24 +369,22 @@ function getFunctionTree(){
 		}
     var zNode = [];
     var treeObj;
-    functions.forEach(function(func){
+    roleFuncs.forEach(function(role_func){
       treeObj = {
-        id: func._id,
-        pId: func.parent_id,
-        name: func.name,
-        router: func.router,
-        desc: func.desc,
-        note: func.note,
+        id: role_func.func._id,
+        pId: role_func.func.parent_id,
+        name: role_func.func.name,
         open: true
       };
       zNode.push(treeObj)
     })
     $.fn.zTree.init(functionTree, setting, zNode);
-	})
-	.fail(function() {
-		console.log("error");
-	})
+  })
+  .fail(function() {
+  	console.log("error");
+  })
 }
+//选择权限(选中显示对号，非选中反之)
 roleItem.on('click', function(){
 	if($(this).hasClass('checked')){
 		$(this).removeClass('checked').children('.check').hide()
@@ -390,10 +392,105 @@ roleItem.on('click', function(){
 		$(this).addClass('checked').children('.check').show()
 	}
 })
-$btnStaff.on('click', function(e){
+// 设置权限
+$('#setRoleBtn').on('click', function(e){
+	e.preventDefault();
+	if(!getSeletedNode()) return false;
+ 	const node = getSeletedNode();
+  const orgId = node.id;
+	const checkedList = roleList.children('.checked');
+	const roleIdList= [];
+	checkedList.each(function(index, roleItem){
+		roleIdList.push(roleItem.getAttribute('data-id'))
+	})
+	const org_role = {
+		org_id: orgId,
+		role_list: roleIdList
+	}
+	if(flag){
+		flag = false;
+		$.ajax({
+			url: '/partner/set_org_role',
+			type: 'POST',
+			data: {org_role: org_role},
+		})
+		.done(function(res) {
+			if(res.status == 1){
+				$.dialog().success({message: '设置成功', delay: 1000})
+			}else{
+				$.dialog().fail({message: '设置失败, 请稍后重试'})
+			}
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function(){
+			flag = true;
+		})
+	}
+})
+//部门启用
+$btnUnlock.on('click', function(e){
+	e.preventDefault();
+	if(!getSeletedNode()) return false;
+ 	const node = getSeletedNode();
+  const orgId = node.id;
+  const name = node.name;
+  $.dialog().confirm({message: '确定将<a>'+name+'</a>设置为启用状态?'})
+	.on('confirm', function(){
+		setOrgStatus(orgId, true, $(this))
+	})
+	.on('cancel', function(){
+	})
+  console.log(orgId)
+})
+//部门禁用
+$btnBan.on('click', function(e){
+	e.preventDefault();
+	if(!getSeletedNode()) return false;
+ 	const node = getSeletedNode();
+  const orgId = node.id;
+  const name = node.name;
+  $.dialog().confirm({message: '确定将<a>'+name+'</a>设置为禁用状态?'})
+	.on('confirm', function(){
+		setOrgStatus(orgId, false)
+	})
+	.on('cancel', function(){
+	})
+})
+//设置部门状态
+function setOrgStatus(orgId, status){
+	status = status ? 1 : 0;
+	$.ajax({
+		url: '/partner/set_org_status?id='+ orgId+'&&status='+ status,
+	})
+	.done(function(res) {
+		if(res.status == 1){
+			$.dialog().success({message: '设置成功', delay: DELAY_TIME})
+			if(status){
+				setTimeout(function(){
+					$btnUnlock.addClass('disabled').parent().addClass('disabled');
+					$btnBan.removeClass('disabled').parent().removeClass('disabled');
+				}, DELAY_TIME)
+			}else{
+				setTimeout(function(){
+					$btnBan.addClass('disabled').parent().addClass('disabled');
+					$btnUnlock.removeClass('disabled').parent().removeClass('disabled');
+				}, DELAY_TIME)
+			}
+		}else{
+			$.dialog().fail({message: '设置失败，请稍后重试'})
+		}
+	})
+	.fail(function() {
+		console.log("error");
+	})
+}
+//注册员工
+$btnUser.on('click', function(e){
 	e.preventDefault()
 	if(!getSeletedNode()) return false;
- 	var node = getSeletedNode();
- 	if($('#orgId').val() == '') return;
- 	$('#regStaffForm').submit()
+ 	const node = getSeletedNode();
+ 	if(departmentId.val() == '') return;
+ 	userForm.submit()
 })

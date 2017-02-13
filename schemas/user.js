@@ -13,6 +13,9 @@ var userSchema = new mongoose.Schema({
 	name: {
 		type: String
 	},
+	realname: {
+		type: String
+	},
 	mobile: {
 		type: String
 	},

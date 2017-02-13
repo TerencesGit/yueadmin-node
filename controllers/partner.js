@@ -2,6 +2,7 @@ var Partner = require('../models/partner');
 var User = require('../models/user');
 var Organize = require('../models/organize');
 var Role = require('../models/role');
+var OrgRole = require('../models/org_role');
 var Title = require('../models/title');
 var fs = require('fs');
 var path = require('path');
@@ -11,6 +12,20 @@ var _ = require('lodash');
 function Trim(str){ 
   return str.replace(/(^\s*)|(\s*$)/g, ''); 
 }
+//获取数组a与数组b不重复的部分
+function complement(a, b){
+	var temp = [];
+	var arr = [];
+	for(var i = 0; i < b.length; i++){
+		temp[b[i]] = true;
+	}
+ for(var j = 0; j < a.length; j++){
+ 	if(!temp[a[j]]){
+ 		arr.push(a[j])
+ 	}
+ }
+ return arr;
+} 
 //企业LOGO上传
 exports.logoUpload = function(req, res, next){
 	var logoData = req.files.logo;
@@ -90,7 +105,7 @@ exports.saveInfo = function(req, res){
 				})
 			}else{
 				console.log('该账号已经注册，不能重复注册！')
-				res.redirect('/account/registered_partner')
+				res.redirect('/partner/partner_info')
 			}
 		})
 	}
@@ -221,7 +236,7 @@ exports.newOrganize = function(req, res){
 	var organize = new Organize(_organize);
 	organize.save(function(err, organize){
 		if(err) console.log(err);
-		res.json({status: 1})
+		res.json({status: 1, message: '添加成功---'})
 	})
 }
 //编辑组织节点
@@ -284,6 +299,61 @@ exports.getFuncByRole = function(req, res){
 
 					})
 }
+//设置权限
+exports.setOrgRole = function(req, res){
+	var user = req.session.user;
+	var uid = user._id;
+	var orgRole = req.body.org_role;
+	var orgId = orgRole.org_id;
+	var roleList = orgRole.role_list;
+	var orgRoleObj = {
+		creator: uid,
+		organize: orgId,
+	}
+	var _orgRole;
+	var orgRoleList = [];
+	OrgRole.find({organize: orgId}, function(err, orgRoles){
+		if(err) console.log(err);
+		console.log('orgRoles')
+		console.log(orgRoles)
+		orgRoles.forEach(function(orgRole){
+			orgRoleList.push(orgRole.role)
+		})
+		//被移除的角色列表
+		var removeRoleList = complement(orgRoleList, roleList);
+		removeRoleList.forEach(function(role){
+			OrgRole.remove({organize: orgId, role: role}, function(err, msg){
+				if(err){
+					console.log(err);
+					return res.json({status: 0})
+				}
+			})
+		})
+		//新增的角色列表
+		var newRoleList = complement(roleList, orgRoleList);
+		newRoleList.forEach(function(role){
+		orgRoleObj.role = role;
+		console.log(orgRoleObj)
+		_orgRole = new OrgRole(orgRoleObj);
+		_orgRole.save(function(err, orgRole){
+			if(err){
+				console.log(err);
+				return res.json({status: 0})
+			}
+			res.json({status: 1})
+		})
+	})
+	})
+}
+//根据部门Id获取角色列表
+exports.getRolesByOrgId = function(req, res){
+	var orgId = req.query.id;
+	OrgRole.find({organize: orgId})
+				 .exec(function(err, orgRoles){
+					  if(err) console.log(err)
+					 	res.json({orgRoles: orgRoles})
+				 })
+}
 //员工管理
 exports.staffList = function(req, res){
 	var user = req.session.user;
@@ -312,11 +382,31 @@ exports.setOrganize = function(req, res){
 		res.redirect('/signin')
 	}
 }
+//设置部门状态
+exports.setOrgStatus = function(req, res){
+	var id = req.query.id;
+	var status = req.query.status;
+	console.log(id)
+	console.log(status)
+	if(id){
+		Organize.findById(id, function(err, organize){
+			if(err) console.log(err)
+			organize.update({$set: {status: status}}, function(err, msg){
+				if(err) console.log(err)
+					res.json({status: 1})
+			})
+		})
+	}else{
+		res.json({status: 0})
+	}
+}
 //账户代注册
 exports.agentRegister = function(req, res){
-	var orgId = req.query.orgId;
+	var orgId = req.body.orgId;
 	console.log(orgId)
-	res.render('partner/agent_register', {title: '账户代注册', organize: orgId})
+	Organize.findById(orgId, function(err, organize){
+		res.render('partner/agent_register', {title: '账户代注册', organize: organize})
+	})
 }
 
 //岗位管理页

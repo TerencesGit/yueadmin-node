@@ -20,14 +20,14 @@ var checkInput = function($element, msg, regular, wrapShow){
   }
   if(value == '') {
     formGroup.removeClass('has-success').addClass('has-error');
-    $alert.html('<i class="fa fa-warning"></i>'+msgRequired);
+    $alert.html('<i class="fa fa-minus-circle"></i>'+msgRequired);
     $element.focus();
     return false;
   }else{
     if(regular){
       if(!regular.test(value)) {
         formGroup.removeClass('has-success').addClass('has-error');
-        $alert.html('<i class="fa fa-warning"></i>'+msgRegular);
+        $alert.html('<i class="fa fa-minus-circle"></i>'+msgRegular);
         $element.focus();
         return false;
       }
@@ -84,7 +84,7 @@ var confirmConsistent = function($element, $target, msg, wrapShow) {
   }
   if (value == '' || targetValue == '' || value !== targetValue) {
     formGroup.removeClass('has-success').addClass('has-error');
-    $alert.html('<i class="fa fa-warning"></i>'+msg );
+    $alert.html('<i class="fa fa-minus-circle"></i>'+msg );
     return false;
   } else {
     formGroup.removeClass('has-error').addClass('has-success');
@@ -128,14 +128,14 @@ var queryAccount = function($element, router, msg, $target, wrapShow, contrary){
       	$target && $target.attr('data-status', 2);
       }else{
       	formGroup.removeClass('has-success').addClass('has-error');
-      	$alert.removeClass('hidden').html('<i class="fa fa-warning"></i>'+ msgExisted);
+      	$alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgExisted);
       	$target && $target.attr('data-status', 0);
       }
     }
     if(res.status == 2){
     	if(contrary){
     		formGroup.removeClass('has-success').addClass('has-error');
-      	$alert.removeClass('hidden').html('<i class="fa fa-warning"></i>'+ msgNotExisted);
+      	$alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgNotExisted);
       	$target && $target.attr('data-status', 0);
     	}else{
     		formGroup.removeClass('has-error').addClass('has-success');
@@ -193,12 +193,12 @@ var checkCode = function($element, msg, wrapShow) {
   }
   if (inputCode == '') {
     formGroup.removeClass('has-success').addClass('has-error');
-    $alert.html('<i class="fa fa-warning"></i>'+ msgRequired);
+    $alert.html('<i class="fa fa-minus-circle"></i>'+ msgRequired);
     $element.focus();
     return false;
   } else if (inputCode !== code) {
     formGroup.removeClass('has-success').addClass('has-error');
-    $alert.html('<i class="fa fa-warning"></i>'+ msgError);
+    $alert.html('<i class="fa fa-minus-circle"></i>'+ msgError);
     $element.val('').focus();
     drawCode();
     return false;
@@ -229,7 +229,7 @@ var checkCheckbox = function($element, msg, wrapShow) {
 		  var $alert = formGroup.next('.alert');
 	  }
    	formGroup.removeClass('has-success').addClass('has-error');
-    $alert.html('<i class="fa fa-warning"></i>'+ msgRequired);
+    $alert.html('<i class="fa fa-minus-circle"></i>'+ msgRequired);
     return false;
   } else {
     $alert && $alert.remove();
@@ -271,7 +271,7 @@ var checkImageRequired = function(fileInput, msg){
     formGroup.append('<div class="alert alert-danger hidden"></div>')
   }
   var $alert = formGroup.children('.alert');
-  $alert.removeClass('hidden').html('<i class="fa fa-warning"></i>'+ msgRequired);
+  $alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgRequired);
   return false;
 }
 
@@ -299,10 +299,10 @@ var checkImageRugular = function(fileInput, msg, regular, sizeLimit){
 	var fileValue = fileObj.value,
 	    fileSize = fileObj.files[0] && fileObj.files[0].size / 1024;
 	if(!regular.test(fileValue)){
-		$alert.removeClass('hidden').html('<i class="fa fa-warning"></i>'+ msgRegular);
+		$alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgRegular);
 		return false;
 	}else if(fileSize > sizeLimit){
-		$alert.removeClass('hidden').html('<i class="fa fa-warning"></i>'+ msgSize);
+		$alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgSize);
 		return false;
 	}
   console.log($alert)

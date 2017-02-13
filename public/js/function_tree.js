@@ -1,5 +1,4 @@
 const functionTree = $('#functionTree');
-
 //组织节点点击事件
 function HandlerClick(event, treeId, treeNode){
 	if(isRoot(treeNode)) return false;
@@ -25,8 +24,9 @@ function getSeletedNode(){
   }
  	return node;
 }
+//加载功能树
 $(function(){
-	//getFunctionTree()
+	getFunctionTree()
 })
 //获取功能树
 function getFunctionTree(){
@@ -39,9 +39,6 @@ function getFunctionTree(){
 		var setting = {
     	view: {
     		selectedMulti: false,
-    	},
-    	check: {
-    		enable: true
     	},
     	data: {
         simpleData: {
@@ -212,7 +209,7 @@ editFunctionBtn.on('click', function(e){
 			console.log("error");
 		})
 })
-//删除功能模块
+//删除功能节点
 btnRemove.on('click', function(e){
 	e.preventDefault();
   if(!getSeletedNode()) return false;
@@ -247,192 +244,3 @@ function romoveFunctionNode(id){
 		console.log("error");
 	})
 }
-//角色创建
-var btnCreate = $('.btn-create'),
-		btnDel = $('.btn-del'),
-		btnSet = $('.btn-set');
-
-var newRoleForm = $('#newRoleForm'),
-	  newRoleName = $('#newRoleName'),
-	  newRoleDesc = $('#newRoledesc'),
-	  newRoleBtn = $('#newRoleBtn');
-
-newRoleBtn.on('click', function(e){
-	e.preventDefault();
-	if(!simpleCheckInput(newRoleName)) return false;
-	newRoleForm.submit()
-})
-
-//角色删除
-btnDel.on('click', function(e){
-	e.preventDefault();
-	var $tr = $(this).parents('tr');
-	var id = $tr.attr('data-id');
-	var name = $tr.children('td').eq(0).text();
-	$.dialog().confirm({message: '确定删除<a>'+name+'</a>, 此操作不可恢复'})
-   .on('confirm', function(){
-   	removeRole(id, $tr)
-   })
-})
-function removeRole(id, $tr){
-	$.ajax({
-		url: '/system/role_remove?id='+ id,
-	})
-	.done(function(res) {
-		if(res.status == 1){
-			$.dialog().success({message: '删除成功', delay: 1000})
-			setTimeout(function(){
-				if($tr.length === 1){
-					$tr.remove()
-				}
-			}, 1000)
-		}else{
-			$.dialog().alert({message: '删除失败，请稍后重试'})
-		}
-	})
-	.fail(function() {
-		console.log("error");
-	})
-}
-var roleId;
-btnSet.on('click', function(e){
-	var $tr = $(this).parents('tr');
-	roleId = $tr.attr('data-id');
-	console.log(roleId)
-	getFuncByRole(roleId)
-})
-//获取角色对应的功能点
-function getFuncByRole(roleId){
-	$.ajax({
-		url: '/system/get_role_func?id='+ roleId,
-	})
-	.done(function(res) {
-		var roleFuncs = res.role_funcs;
-    var treeObj = $.fn.zTree.getZTreeObj("functionTree");
-		var nodes = treeObj.transformToArray(treeObj.getNodes());
-		for (let i = 0; i < nodes.length; i++) {
-			treeObj.checkNode(nodes[i], false, true);
-		}
-    var temp = [];
-    var targetNodes = [];
-    for(let i = 0; i < roleFuncs.length; i++){
-    	temp[roleFuncs[i].func] = true;
-    	console.log(roleFuncs[i].func)
-    }
-    for(let i = 0; i < nodes.length; i++){
-    	if(temp[nodes[i].id]){
-    		targetNodes.push(nodes[i])
-    	}
-    }
-		for (let i = 0; i < targetNodes.length; i++) {
-			treeObj.checkNode(targetNodes[i], true, true);
-		}
-	})
-	.fail(function() {
-		console.log("error");
-	})
-}
-$('#setRoleBtn').on('click', function(e){
-	var treeObj = $.fn.zTree.getZTreeObj("functionTree");
-	var nodes = treeObj.getCheckedNodes(true);
-	console.log(nodes)
-	if(nodes.length === 0) return false;
-	var funcList = [];
-	nodes.forEach(function(node){
-		if(node.check_Child_State === -1){
-			funcList.push(node.id)
-		}
-	})
-	var role_func = {
-		roleId: roleId,
-		funcList: funcList
-	}
-	$.ajax({
-		url: '/system/assign_function',
-		type: 'POST',
-		data: {role_func: role_func},
-	})
-	.done(function(res) {
-		if(res.status == 1){
-			$.dialog().success({message: '配置成功', delay: 1000})
-		}else{
-			$.dialog().alert({message: '配置失败，请稍后重试'})
-		}
-	})
-	.fail(function() {
-		console.log("error");
-	})
-})
-/* 公告信息维护 */
-// 公告发布表单
-const noticeForm = $('#noticeForm'),
-			noticeTitle = $('#noticeTitle'),
-			noticeCont = $('#noticeCont'),
-			noticeFile = $('#noticeFile'),
-			noticePic = $('#noticePic'),
-			noticePicPreview = $('#noticePicPreview'),
-			noticePicUpload = $('#noticePicUpload'),
-			removeFileBtn = $('#removeFileBtn'),
-			noticeSubmit = $('#noticeSubmit');
-noticeSubmit.on('click', function(e){
-	e.preventDefault();
-	if(simpleCheckInput(noticeTitle) && simpleCheckInput(noticeCont)){
-		noticeForm.submit()
-	}
-})	
-//公告图片预览
-noticePicPreview.on('click', function(e){
-	noticeFile.click()
-})
-noticePicUpload.on('click', function(e){
-	noticeFile.click()
-})
-noticeFile.change(function(){
-	checkImageRugular(this) 
-	uploadPreview(this, noticePic)
-	noticePicPreview.show()
-	noticePicUpload.hide()
-})
-//清空上传文件
-removeFileBtn.on('click', function(e){
-	e.stopPropagation();
-	noticePicPreview.hide();
-	noticePicUpload.show();
-	clearFile(noticeFile);
-	noticePic.attr('src', '');
-})
-//公告删除	
-const btnResetNotice = $('.btn-remove-notice');
-btnResetNotice.on('click', function(e){
-	var $tr = $(this).parents('tr');
-	var id = $tr.attr('data-id');
-	$.dialog().confirm({message: '确定删除该条公告, 此操作不可恢复'})
-   .on('confirm', function(){
-   	removeNoticeById(id, $tr)
-   })
-})
-function removeNoticeById(id, $tr){
-	$.ajax({
-		url: '/system/notice_remove?id='+id,
-	})
-	.done(function(res) {
-		if(res.status == 1){
-			$.dialog().success({message: '删除成功', delay: 1000})
-			setTimeout(function(){
-				if($tr.length === 1){
-					$tr.remove()
-				}
-			}, 1000)
-		}else{
-			$.dialog().alert({message: '删除失败，请稍后重试'})
-		}
-		console.log("success");
-	})
-	.fail(function() {
-		console.log("error");
-	})
-	.always(function() {
-		console.log("complete");
-	});
-	
-}	

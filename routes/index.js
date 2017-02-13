@@ -68,19 +68,26 @@ router.post('/partner/edit_info',multipartMiddleware, Partner.logoUpload, Partne
 //企业组织管理
 router.get('/partner/organize_manage', Partner.organizeManage);
 
-router.get('/partner/getOrganizeTree', Partner.getOrganizeTree);
+router.get('/partner/get_organize_tree', Partner.getOrganizeTree);
 router.get('/partner/get_organize_staff', Partner.getOrganizeStaff);
 
 router.post('/partner/new_organize', Partner.newOrganize);
 router.post('/partner/edit_organize', Partner.editOrganize);
 router.get('/partner/remove_organize', Partner.removeOrganize);
 
+//权限设置
+router.post('/partner/set_org_role', Partner.setOrgRole);
+router.get('/partner/get_org_role', Partner.getRolesByOrgId);
+
+//状态设置
+router.get('/partner/set_org_status', Partner.setOrgStatus);
+
 //员工管理
 router.get('/partner/staff_manage', Partner.staffList);
 router.post('/partner/set_organize', Partner.setOrganize);
 
 //账户代注册
-router.get('/partner/agent_register', Partner.agentRegister)
+router.post('/partner/agent_register', Partner.agentRegister)
 router.post('/partner/agent_register', User.signup)
 
 //岗位管理

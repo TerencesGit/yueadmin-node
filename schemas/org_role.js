@@ -1,17 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
-var organizeSchema = new Schema({
-	admin: {type: ObjectId, ref: 'User'},
-	partner: {type: ObjectId, ref: 'Partner'},
+var orgRoleSchema = new Schema({
 	creator: {type: ObjectId, ref: 'User'},
-	name: String,
-	profile: String,
-	parent_id: String,
-	is_partner_root: {
-		type: Number,
-		default: 0
-	},
+	updater: {type: ObjectId, ref: 'User'},
+	organize: {type: ObjectId, ref: 'Organize'},
+	role: {type: ObjectId, ref: 'Role'},
 	status: {
 		type: Number,
 		default: 1
@@ -27,15 +21,15 @@ var organizeSchema = new Schema({
 		}
 	}
 })
-organizeSchema.pre('save',function(next){
+orgRoleSchema.pre('save', function(next){
 	if(this.isNew){
-		this.meta.createAt = Date.now();
+		this.meta.createAt = this.meta.updateAt = Date.now();
 	}else{
 		this.meta.updateAt = Date.now();
 	}
 	next()
 })
-organizeSchema.statics = {
+orgRoleSchema.statics = {
 	fetch: function(cb){
 		return this
 					.find({})
@@ -48,4 +42,4 @@ organizeSchema.statics = {
 					.exec(cb)
 	}
 }
-module.exports = organizeSchema;
+module.exports = orgRoleSchema;

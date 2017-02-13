@@ -138,7 +138,6 @@ exports.removeRole = function(req, res){
 		res.json({status: 0})
 	}
 }
-
 //为角色分配功能
 exports.assignFunction = function(req, res){
 	var user = req.session.user;
@@ -151,7 +150,6 @@ exports.assignFunction = function(req, res){
 	var cancelFuncList = [];
 	var temp = [];
 	var _funcList = [];
-	
 	RoleFunc.find({role: roleId}).exec(function(err, roleFuncs){
 		if(err) console.log(err)
 		//获取取消选中的功能点
@@ -197,19 +195,19 @@ exports.assignFunction = function(req, res){
 		res.json({status: 1})
 	})
 }
-
 //获取单个角色的功能点
 exports.getRoleFunc = function(req, res){
 	var roleId = req.query.id;
 	console.log(roleId)
-	RoleFunc.find({role: roleId, status: 1}).exec(function(err, role_funcs){
-		if(err){
-			console.log(err)
-		}
-		res.json({role_funcs: role_funcs})
-	})
+	RoleFunc.find({role: roleId, status: 1})
+					.populate('func', 'name parent_id')
+					.exec(function(err, role_funcs){
+						if(err){
+							console.log(err)
+						}
+						res.json({role_funcs: role_funcs})
+					})
 }
-
 //角色功能列表
 exports.roleFuncList = function(req, res){
 	RoleFunc.fetch(function(err, role_func){
@@ -218,7 +216,6 @@ exports.roleFuncList = function(req, res){
 		res.redirect('/system/role_manage')
 	})
 }
-
 //公告信息管理
 exports.noticeManage = function(req, res){
 	Notice.find()
