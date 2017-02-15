@@ -16,47 +16,41 @@
             </div>
             <div class="panel-body">
               <div class="row form-horizontal m-b">
-                <label for="" class="col-md-1 control-label">性别：</label>
-                <div class="col-md-2">
-                  <select name="" id="" class="form-control">
-                    <option value="0">不限</option>
-                    <option value="0">男</option>
-                    <option value="0">女</option>
-                  </select>
+                <div class="form-group row">
+                  <label class="col-md-2 control-label">部门名称：</label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" placeholder="部门名称">
+                  </div>
+                  <label class="col-md-1 control-label">姓名：</label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" placeholder="姓名">
+                  </div>
+                  <label class="col-md-1 control-label">性别：</label>
+                  <div class="col-md-2">
+                    <select name="" id="" class="form-control">
+                      <option value="0">不限</option>
+                      <option value="0">男</option>
+                      <option value="0">女</option>
+                    </select>
+                  </div>
                 </div>
-                <label for="" class="col-md-2 control-label">注册时间：</label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control" placeholder="">
+                <div class="form-group row">
+                  <label class="col-md-2 control-label">注册日期：</label>
+                  <div class="col-md-2">
+                    <input type="text" id="regStartDate" class="form-control laydate-icon" placeholder="开始日期">
+                  </div>
+                  <span class="pull-left">-</span>
+                  <div class="col-md-2">
+                    <input type="text" id="regEndDate" class="form-control laydate-icon" placeholder="截止日期">
+                  </div>
+                  <label class="col-md-offset-1 col-md-1 control-label">邮箱：</label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" placeholder="邮箱号">
+                  </div>
+                  <button class="btn btn-warning" style="height: 34px">搜索</button>
                 </div>
-                 <label for="" class="col-md-1 control-label">姓名：</label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control" placeholder="姓名">
-                </div>
-                <button class="btn btn-warning">搜索</button>
-                <!-- <dl class="dl-horizontal col-md-4">
-                  <dt>查询条件：</dt>
-                  <dd>
-                    <form action="" method="get"> 
-                      <select name="" id="" class="form-control">
-                        <option value="">工号</option>
-                        <option value="">姓名</option>
-                        <option value="">注册日期</option>
-                        <option value="">性别</option>
-                      </select>
-                    </form>                            
-                  </dd>
-                </dl>
-                <dl class="dl-horizontal col-md-6">
-                  <dt>关键字：</dt>
-                  <dd>
-                    <div class="col-md-8">
-                      <input type="text" class="form-control">
-                    </div>
-                    <button class="btn btn-warning scarch-btn">查询</button>
-                  </dd>
-                </dl> -->                      
               </div>
-              <table class="table table-bordered">
+              <table class="table table-bordered table-hover table-striped">
                 <thead>
                   <tr class="info">
                     <th>序号</th>
@@ -65,6 +59,7 @@
                     <th>邮箱</th>
                     <th>注册日期</th>
                     <th>部门</th>
+                    <th>岗位</th>
                     <th>详细信息</th>
                     <th>操作</th>
                   </tr>
@@ -78,9 +73,25 @@
                     <td><%= user.email%></td>
                     <td><%= moment(user.meta.createAt).format('YYYY-MM-DD') %></td>
                     <td><%if(user.organize && user.organize.name){%><%= user.organize.name %><%}%></td>
-                    <td><a href="#">查看</a></td>
+                    <td>暂无</td>
+                    <td><a href="#showStaffModal" class="btn btn-link btn-set" data-toggle="modal">查看</a></td>
                     <td>
-                      <a href="#setOrganizeModal" class="btn btn-link btn-set" data-toggle="modal">部门设置</a>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">设置
+                          <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                              <a href="#setOrganizeModal" class="btn btn-link btn-set" data-toggle="modal">部门设置</a>
+                            </li>
+                            <li>
+                              <a href="#setTitleModal" class="btn btn-title" data-toggle="modal">岗位设置</a>
+                            </li>
+                            <li>
+                              <a href="#setTitleModal" class="btn btn-title" data-toggle="modal">禁用</a>
+                            </li>
+                        </ul>
+                      </div>
                     </td>
                   </tr>
                   <% })%>
@@ -102,15 +113,15 @@
       </div>
     	<%- include('../footer') %>
     </div>
-    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="setOrganizeModal" class="modal fade organize-modal">
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="setOrganizeModal" class="modal fade">
       <div class="modal-dialog">
-          <div class="modal-content">
+          <div class="modal-content max-w-400">
             <form action="/partner/set_organize" method="post" id="setOrganizeForm" class="form-horizontal">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                   <h4 class="modal-title">部门设置</h4>
               </div>
-              <div class="modal-body">
+              <div class="modal-body max-h-400">
                 <ul id="organizeTree" class="ztree" data-id="<%= user.partner%>"></ul>
                 <input type="hidden" id="userId" name="user[id]" value="">
                 <input type="hidden" id="organizeId" name="user[organizeId]" value="">
@@ -123,8 +134,84 @@
           </div>
       </div>
     </div>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="showStaffModal" class="modal fade organize-modal">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="/partner/set_organize" method="post" id="setOrganizeForm" class="form-horizontal">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">部门设置</h4>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <dl class="horizontal">
+                      <dt>姓名：</dt>
+                      <dd>Transform</dd>
+                    </dl>
+                  </div>
+                  <div class="col-md-6">
+                    <dl class="horizontal">
+                      <dt>性别：</dt>
+                      <dd>男</dd>
+                    </dl>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <dl class="horizontal">
+                      <dt>部门：</dt>
+                      <dd>技术部</dd>
+                    </dl>
+                  </div>
+                  <div class="col-md-6">
+                    <dl class="horizontal">
+                      <dt>邮箱：</dt>
+                      <dd>123456@qq.com123456@qq.com</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="reset">取消</button>
+                <button type="submit" id="setOrganizeBtn"class="btn btn-success">提交</button>
+              </div>
+            </form>
+          </div>
+      </div>
+    </div>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="setTitleModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content max-w-400">
+          <form class="form-horizontal">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">岗位设置</h4>
+            </div>
+            <div class="modal-body max-h-300">
+                <ul id="titleList" class="list-group title-list">
+                  <li class="list-group-item active">
+                  岗位列表
+                  </li>
+                  <% titles.forEach(function(title){%>
+                  <li class="list-group-item" data-id="<%= title._id%>">
+                    <a href="javascript:;" class="check"><i class="fa fa-check pull-right"></i></a>
+                    <a href="javascript:;" class="title"><%= title.name%></a>
+                  </li>
+                  <%})%>
+                </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="reset" data-dismiss="modal" class="btn btn-default">取消</button>
+              <button id="setTitleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <%- include('../script')%>
     <script src="/plugins/zTree/js/jquery.zTree.all.min.js"></script>
-    <script src="/js/organize.js"></script>
+    <script src="/plugins/laydate/laydate.js"></script>
+    <script src="/js/staff.js"></script>
   </body>
 </html>

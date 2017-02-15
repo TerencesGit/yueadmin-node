@@ -15,13 +15,13 @@
               <div class="panel panel-info">
                 <div class="panel-heading">
                   <h3 class="panel-title">
-                    <a href="#collapseTree" data-toggle="collapse">
+                    <a href="#collapseOne" data-toggle="collapse">
                       系统功能树
                     </a>
                   </h3>
                 </div>
-                <div id="collapseTree" class="panel-collapse collapse in">
-                  <div class="panel-body organize-tree">
+                <div id="collapseOne" class="panel-collapse collapse in">
+                  <div class="panel-body min-h-500">
                     <ul id="functionTree" class="ztree" data-id="<%= user.partner._id%>"></ul>
                   </div>
                 </div>
@@ -31,32 +31,39 @@
               <div class="panel panel-info">
                 <div class="panel-heading">
                   <h3 class="panel-title">
-                    <a href="#collapseDepart" data-toggle="collapse"><span id="departmentName"><%= user.partner.name%></span>&nbsp;
-                    (管理员：<%= user.name%></span>)</a>
+                    <a href="#collapseTwo" data-toggle="collapse">功能树操作</a>
                   </h3>
                 </div>
-                <div id="collapseDepart" class="panel-collapse collapse in">
-                  <div class="panel-body">
-                    <ul class="tools-bar row">
+                <div id="collapseTwo" class="panel-collapse collapse in">
+                  <div class="panel-body min-h-500">
+                    <ul class="tools border-bottom row">
                       <li>
-                        <a href="javascript:;" class="btn-refresh"><i class="fa fa-refresh"></i><br>刷新</a> 
+                        <a href="javascript:;" class="btn-refresh">
+                          <i class="fa fa-refresh"></i><span>刷新</span>
+                        </a> 
                       </li>
                       <li>
                         <a href="#newFunctionModal" class="btn-new" data-toggle="modal">
-                          <i class="fa fa-plus-square"></i><br>新增
+                          <i class="fa fa-plus-square"></i>
+                          <span>新增</span>
                         </a>
                       </li>
                       <li>
-                        <a href="#editFunctionModal" class="btn-edit" data-toggle="modal"><i class="fa fa-edit"></i><br>编辑</a> 
+                        <a href="#editFunctionModal" class="btn-edit" data-toggle="modal">
+                          <i class="fa fa-edit"></i>
+                          <span>编辑</span>
+                        </a> 
                       </li>
                       <li>
-                        <a href="javascript:;" class="btn-remove"><i class="fa fa-remove"></i><br>删除</a> 
+                        <a href="javascript:;" class="btn-remove">
+                          <i class="fa fa-remove"></i><span>删除</span>
+                        </a> 
                       </li>
                     </ul>
-                    <h3 class="page-header">功能点详情</h3>
-                    <table class="table table-bordered">
+                    <h3 class="page-header m-t">功能点详情</h3>
+                    <table id="funcTable" class="table table-hover hidden">
                       <thead>
-                        <tr class="info">
+                        <tr class="">
                           <th>名称</th>
                           <th>路由</th>
                           <th>描述</th>
@@ -165,6 +172,6 @@
     </div>
     <%- include('../script')%>
     <script src="/plugins/zTree/js/jquery.zTree.all.min.js"></script>
-    <script src="/js/function_tree.js"></script>
+    <script src="/js/function.js"></script>
   </body>
 </html>

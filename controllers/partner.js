@@ -3,6 +3,7 @@ var User = require('../models/user');
 var Organize = require('../models/organize');
 var Role = require('../models/role');
 var OrgRole = require('../models/org_role');
+var RoleFunc = require('../models/role_func');
 var Title = require('../models/title');
 var fs = require('fs');
 var path = require('path');
@@ -236,7 +237,7 @@ exports.newOrganize = function(req, res){
 	var organize = new Organize(_organize);
 	organize.save(function(err, organize){
 		if(err) console.log(err);
-		res.json({status: 1, message: '添加成功---'})
+		res.json({status: 1, message: '添加成功'})
 	})
 }
 //编辑组织节点
@@ -288,17 +289,8 @@ exports.removeOrganize = function(req, res){
 		}
 	})
 }
-//权限设置
-//获取角色对应的功能点
-exports.getFuncByRole = function(req, res){
-	var roleId = req.query.roleId;
-	RoleFunc.find({role: roleId})
-					.populate('func', 'name')
-					.exec(function(err, role_funcs){
-						if(err) console.log(err);
+/** 权限设置 **/
 
-					})
-}
 //设置权限
 exports.setOrgRole = function(req, res){
 	var user = req.session.user;
@@ -354,6 +346,27 @@ exports.getRolesByOrgId = function(req, res){
 					 	res.json({orgRoles: orgRoles})
 				 })
 }
+//根据部门Id获取所有功能点
+exports.getFuncsByOrgId = function(req, res){
+	var orgId = req.query.id;
+	OrgRole.find({organize: orgId})
+				 .exec(function(err, orgRoles){
+					  if(err) console.log(err)
+					  if(orgRoles[0]){
+					  	var roleId = orgRoles[0].role;
+							RoleFunc.find({role: roleId, status: 1})
+											.populate('func', 'name parent_id')
+											.exec(function(err, role_funcs){
+												if(err){
+													console.log(err)
+												}
+												res.json({role_funcs: role_funcs})
+											})
+										}else{
+											res.json({status: 0})
+										}
+				 })
+}
 //员工管理
 exports.staffList = function(req, res){
 	var user = req.session.user;
@@ -363,8 +376,11 @@ exports.staffList = function(req, res){
 			.populate('organize', 'name')
 			.exec(function(err, users){
 			  if(err) console.log(err)
-			  	console.log(users[0])
-			  res.render('partner/staff_manage',{title: '员工管理', users: users, user: user})
+			  	Title.find({partner: partnerId})
+			  			 .exec(function(err, titles){
+			  			 		res.render('partner/staff_manage',{title: '员工管理', users: users, 
+			  			 			user: user, titles: titles})
+			  			 })
 			})
 }
 //设置员工部门
@@ -380,6 +396,24 @@ exports.setOrganize = function(req, res){
 		})
 	}else{
 		res.redirect('/signin')
+	}
+}
+//设置员工岗位
+exports.setStaffTitle = function(req, res){
+	var tid = req.query.tid;
+	var uid = req.query.uid;
+	console.log(tid, uid)
+	if(uid && tid){
+		User.findbyId(uid, function(err, user){
+			if(err) console.log(err)
+			user.update({$set: {title: tid}}, function(err, msg){
+				if(err) console.log(err)
+					console.log(user)
+				res.json({status: 1})
+			})
+		})
+	}else{
+		res.json({status: 0})
 	}
 }
 //设置部门状态
@@ -402,7 +436,7 @@ exports.setOrgStatus = function(req, res){
 }
 //账户代注册
 exports.agentRegister = function(req, res){
-	var orgId = req.body.orgId;
+	var orgId = req.query.orgId;
 	console.log(orgId)
 	Organize.findById(orgId, function(err, organize){
 		res.render('partner/agent_register', {title: '账户代注册', organize: organize})
@@ -411,15 +445,19 @@ exports.agentRegister = function(req, res){
 
 //岗位管理页
 exports.showTitleManage = function(req, res){
-	Title.fetch(function(err, titles){
-		if(err) console.log(err);
-		res.render('partner/title_manage', {title: '企业岗位管理', titles: titles})
-	})
+	var user = req.session.user;
+	Title.find({partner: user.partner})
+			 .exec(function(err, titles){
+			 	if(err) console.log(err);
+				res.render('partner/title_manage', {title: '岗位管理', titles: titles})
+			 })
 }
 //新增岗位
 exports.newTitle = function(req, res){
+	var user = req.session.user;
 	var titleObj = req.body.title;
-	console.log(titleObj)
+	titleObj.creator = user._id;
+	titleObj.partner = user.partner;
 	var _title = new Title(titleObj);
 	_title.save(function(err, title){
 		if(err) console.log(err)

@@ -1,4 +1,5 @@
 const functionTree = $('#functionTree');
+const funcTable = $('#funcTable');
 //组织节点点击事件
 function HandlerClick(event, treeId, treeNode){
 	if(isRoot(treeNode)) return false;
@@ -84,7 +85,8 @@ function getFunctionNode(id){
         <td>'+func.desc+'</td><td>'+func.note+'</td>\
         <td>'+func.creator.name+'</td><td>'+updater+'</td>\
         <td>'+createAt+'</td></tr>') 
-	  $('.func-detail').empty().append(funcHtml)
+	  $('.func-detail').empty().append(funcHtml);
+	  funcTable.removeClass('hidden')
 	})
 	.fail(function() {
 		console.log("error");

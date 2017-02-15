@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId;
 var titleSchema = new Schema({
+	creator: {type: ObjectId, ref: 'User'}, 
+	updater: {type: ObjectId, ref: 'User'}, 
+	partner: {type: ObjectId, ref: 'Partner'}, 
 	name: String,
 	desc: String,
 	meta: {

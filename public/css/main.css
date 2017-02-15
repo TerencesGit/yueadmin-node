@@ -14,6 +14,9 @@
 .p-t {
   padding-top: 15px;
 }
+.p-t-10 {
+  padding-top: 10px;
+}
 .p-b {
   padding-bottom: 15px;
 }
@@ -34,21 +37,15 @@
 }
 .max-w-300 {
   max-width: 300px;
+  margin: auto;
 }
 .max-w-400 {
   max-width: 400px;
+  margin: auto;
 }
 .max-w-500 {
   max-width: 500px;
-}
-.max-h-300 {
-  max-height: 300px;
-}
-.max-h-400 {
-  max-height: 400px;
-}
-.max-h-500 {
-  max-height: 500px;
+  margin: auto;
 }
 .min-h-300 {
   min-height: 300px;
@@ -58,6 +55,18 @@
 }
 .min-h-500 {
   min-height: 500px;
+}
+.max-h-300 {
+  max-height: 300px;
+  overflow-y: auto
+}
+.max-h-400 {
+  max-height: 400px;
+  overflow-y: auto
+}
+.max-h-500 {
+  max-height: 500px;
+  overflow-y: auto
 }
 .letter-space-half {
   letter-spacing: .5em;
@@ -95,7 +104,11 @@ li.disabled {
 a.disabled {
   pointer-events: none;
 }
-
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 /**========== global style ==========**/
 body {
   background: #f0f3f4
@@ -124,7 +137,7 @@ textarea {
 input[type="file"] {
   display: none
 }
-.alert >  i.fa {
+.alert > i.fa {
   margin-right: 5px
 }
 .col-md-3.alert {
@@ -161,12 +174,7 @@ input[type="file"] {
 }
 .modal-body.modal-control {
   height: 350px;
-  overflow-y: scroll;
-}
-/**========== bootstrap reset ==========**/
-
-.control-label {
-  cursor: pointer;
+  overflow-y: auto;
 }
 .alert {
   padding: 5px;
@@ -182,9 +190,25 @@ input[type="file"] {
 .table > thead > tr > th, 
 .table > tbody > tr > td {
   min-width: 50px;
-  padding: 5px;
   text-align: center;
   vertical-align: middle;
+}
+.table > tbody > tr > td {
+  padding: 5px;
+}
+dl.horizontal dt{
+  float: left;
+  width: 80px;
+  text-align: right;
+}
+dl.horizontal dd {
+  margin-left: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dropdown-menu {
+  min-width: auto
 }
 /**========== animation start ==========**/
 .animated {
@@ -591,13 +615,15 @@ input[type="file"] {
 .preview-area > img,
 .preview-area > a {
   float: left;
-  padding-top: 7px
+  margin-top: 7px
 }
-.preview-area .btn-remove {
+.preview-area .btn-remove,
+.preview-area .btn-update  {
   display: none;
-  margin-left: 10px;
+  padding-left: 10px;
 }
-.preview-area.show:hover .btn-remove {
+.preview-area.show:hover .btn-remove,
+.preview-area:hover .btn-update {
   display: inline
 }
 .preview-area > .pic-preview {
@@ -619,15 +645,13 @@ input[type="file"] {
   color: #337ab7;
   font-size: 12px;
 }
-.tools > li > a:hover .fa{
-  opacity: 1;
-}
 .tools > li .fa{
-  padding: 5px;
-  font-size: 14px;
-  background-color: #f0f0f0;
+  padding: 8px;
+  font-size: 16px;
   border-radius: 5px;
-  opacity: .8
+}
+.tools > li > a:hover .fa{
+  background-color: #f0f0f0;
 }
 .tools > li.disabled .fa,
 .tools > li.disabled span {
@@ -916,10 +940,10 @@ input[type="file"] {
 /**========== 留言板 end ===========*/
 
 /**========== 部门组织管理 start ===========*/
-.role-list li .check{
+.modal-body > .list-group >li > .check{
   display: none
 }
-.role-list li.checked .check{
+.modal-body > .list-group > li.checked > .check{
   display: inline
 }
 /**========== 部门组织管理 end ===========*/

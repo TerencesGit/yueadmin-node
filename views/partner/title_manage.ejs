@@ -2,6 +2,11 @@
 <html>
   <head>
     <%- include('../link') %>
+    <style>
+      .panel-title {
+        margin-top: 8px
+      }
+    </style>
   </head>
   <body>
     <%- include('../aside') %>
@@ -10,14 +15,12 @@
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
           <div class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title">岗位管理
-                <a href="#newTitleModal" class="pull-right" data-toggle="modal">
-                <i class="fa fa-plus-square"></i>添加新岗位</a>
-              </h3>
+            <div class="panel-heading clearfix">
+              <h3 class="panel-title pull-left">岗位管理</h3>
+              <a href="#newTitleModal" class="btn btn-success pull-right" data-toggle="modal">添加岗位</a>
             </div>
             <div class="panel-body">
-              <table class="table table-bordered">
+              <table class="table table-bordered table-hover table-striped">
                 <thead>
                   <tr class="info">
                     <th>序号</th>

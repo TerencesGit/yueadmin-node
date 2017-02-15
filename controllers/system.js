@@ -10,7 +10,7 @@ var _ = require('lodash');
 /* 系统功能树 */
 //功能树管理页
 exports.showFunctionTree = function(req, res){
-	res.render('system/system_function_tree', {title: '系统功能树'})
+	res.render('system/function_manage', {title: '系统功能树'})
 }
 //新增功能节点
 exports.newFunction = function(req, res){
@@ -198,7 +198,6 @@ exports.assignFunction = function(req, res){
 //获取单个角色的功能点
 exports.getRoleFunc = function(req, res){
 	var roleId = req.query.id;
-	console.log(roleId)
 	RoleFunc.find({role: roleId, status: 1})
 					.populate('func', 'name parent_id')
 					.exec(function(err, role_funcs){

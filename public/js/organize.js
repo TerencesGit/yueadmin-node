@@ -1,8 +1,10 @@
 /** 部门管理 **/
 //部门组织树
 const organizeTree = $('#organizeTree');
-//功能节点树
-const functionTree = $('#functionTree');
+//角色对应功能节点树
+const roleFunctionTree = $('#roleFunctionTree');
+//部门对应功能节点树
+const orgFunctionTree = $('#orgFunctionTree');
 //企业ID
 const partnerId = organizeTree.attr('data-id');
 //部门ID
@@ -19,6 +21,9 @@ const roleList = $('#roleList');
 const roleItem = roleList.children('li').not('.active');
 //权限名称
 const roleName = roleList.find('.role');
+//员工数据表格
+const staffDataTable = $('#staffDataTable');
+
 let isFirst = true;
 let flag = true;
 //部门工具栏对象
@@ -27,12 +32,27 @@ var $btnRefresh = $('.btn-refresh'),
 	  $btnEdit = $('.btn-edit'),
 	  $btnRemove = $('.btn-remove'),
 	  $btnCog = $('.btn-cog'),
+	  $btnFunc = $('.btn-func'),
 	  $btnUnlock = $('.btn-unlock'),
 	  $btnBan = $('.btn-ban'),
     $btnUser = $('.btn-user');
-//页面加载渲染部门树
 $(function(){
-  renderOrganizeTree(organizeTree)
+	//页面加载渲染部门树
+  renderOrganizeTree(organizeTree);
+  //DataTable初始化配置
+  staffDataTable.dataTable({
+    paging: false,
+    searching: false,
+    info: false,
+    columns: [
+      { data: 'index' },
+      { data: 'name' },
+      { data: 'gender' },
+      { data: 'email' },
+      { data: 'orgName' },
+      { data: 'btn' }
+  	]
+  });
 })
 //组织节点点击事件(显示部门名称，并获取该部门下员工)
 function HandlerClick(event, treeId, treeNode){
@@ -42,12 +62,14 @@ function HandlerClick(event, treeId, treeNode){
   const status= treeNode.status;
   if(status){
   	$btnUnlock.addClass('disabled').parent().addClass('disabled');
+  	$btnBan.removeClass('disabled').parent().removeClass('disabled');
   }else{
   	$btnBan.addClass('disabled').parent().addClass('disabled');
+  	$btnUnlock.removeClass('disabled').parent().removeClass('disabled');
   }
   departmentName.text(name);
  	departmentId.val(organizeId);
-
+ 	//渲染员工列表
  	renderStaffList(organizeId);
 }
 //判断父节点
@@ -63,7 +85,7 @@ function getSeletedNode(){
 	var treeObj = $.fn.zTree.getZTreeObj("organizeTree");
   var node = treeObj.getSelectedNodes()[0];
   if(!node){
-  	$.dialog().alert({message: '请选择要操作的部门！'})
+  	$.dialog().alert({message: '请选择部门！'})
     return false;
   }
  	return node;
@@ -140,24 +162,38 @@ function renderOrganizeTree(organizeTree){
     console.log(error)
   })
 }
+//DataTable渲染数据
+function renderTableData(dataArr) { 
+    const table = staffDataTable.dataTable();
+    const oSettings = table.fnSettings(); 
+    table.fnClearTable(this); 
+    dataArr.forEach(function(data){
+    	table.oApi._fnAddData(oSettings, data);
+    })
+    oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+    table.fnDraw();
+}
 //渲染员工列表
 function renderStaffList(organizeId){
   $.ajax({
-    type: 'get',
     url: '/partner/get_organize_staff?organizeId='+ organizeId,
   })
-  .done(function(result){
-    let users = result.users;
-    let staffList = '';
-    for(let i = 0; i < users.length; i++){
-      let num = i+1;
-      let gender = users[i].gender == '1' ? '女' : '男';
-      staffList += ('<tr><td>'+num+'</td><td>'+users[i].name+'</td>\
-        <td>'+gender+'</td><td>'+users[i].mobile+'</td>\
-        <td>'+users[i].email+'</td><td>'+users[i].organize.name+'</td>\
-        <td><a href="/partner/staff_manage" class="btn btn-link">设置</a></td></tr>')
-    }
-    $('.staff-list').empty().append(staffList);
+  .done(function(res){
+    const users = res.users;
+	  const dataArr = [];
+	  users.forEach(function(user, index){
+	  	const gender = user.gender == '1' ? '女' : '男';
+	  	const _user = {
+  				"index": index, 
+		  		"name": user.name, 
+		  		"gender": gender, 
+		  		"email": user.email, 
+		  		"orgName": user.organize.name, 
+		  		"btn": '<a href="/partner/staff_manage" class="btn btn-link">设置</a>'
+		  	};
+	  	dataArr.push(_user)
+	  })
+	  renderTableData(dataArr)
   })
   .fail(function(error){
     console.log(error)
@@ -167,7 +203,7 @@ function renderStaffList(organizeId){
 $btnPlus.on('click', function(e){
 	e.preventDefault();
   if(!getSeletedNode()) return false;
-  var node = getSeletedNode();
+  const node = getSeletedNode();
   newModalTitle.html('新增<a>'+node.name+'</a>的下属部门');
   newOrganizeName.val('');
   newOrganizeProfile.val('');
@@ -378,7 +414,7 @@ function getFuncByRole(roleId){
       };
       zNode.push(treeObj)
     })
-    $.fn.zTree.init(functionTree, setting, zNode);
+    $.fn.zTree.init(roleFunctionTree, setting, zNode);
   })
   .fail(function() {
   	console.log("error");
@@ -429,6 +465,56 @@ $('#setRoleBtn').on('click', function(e){
 		})
 	}
 })
+//查看功能
+$btnFunc.on('click', function(e){
+	e.preventDefault();
+	if(!getSeletedNode()) return false;
+ 	const node = getSeletedNode();
+  const orgId = node.id;
+  const name = node.name;
+  getFuncByOrg(orgId);
+})
+//获取部门所拥有的全部功能
+function getFuncByOrg(orgId){
+	$.ajax({
+		url: '/partner/get_func_by_org?id=' + orgId,
+	})
+	.done(function(res) {
+		const roleFuncs = res.role_funcs;
+		if(!roleFuncs) {
+			orgFunctionTree.after('<div class="alert alert-info"><i class="fa fa-info-circle">\
+				</i>该部门尚未设置权限!</div>')
+			return false;
+		}else{
+			orgFunctionTree.next('.alert').remove()
+		}
+		const setting = {
+			view: {
+				selectedMulti: false,
+			},
+			data: {
+		    simpleData: {
+		      enable: true
+		    }
+		  },
+		}
+    var zNode = [];
+    var treeObj;
+    roleFuncs.forEach(function(role_func){
+      treeObj = {
+        id: role_func.func._id,
+        pId: role_func.func.parent_id,
+        name: role_func.func.name,
+        open: true
+      };
+      zNode.push(treeObj)
+    })
+    $.fn.zTree.init(orgFunctionTree, setting, zNode);
+	})
+	.fail(function() {
+		console.log("error");
+	})
+}
 //部门启用
 $btnUnlock.on('click', function(e){
 	e.preventDefault();

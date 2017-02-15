@@ -79,15 +79,19 @@ router.get('/partner/remove_organize', Partner.removeOrganize);
 router.post('/partner/set_org_role', Partner.setOrgRole);
 router.get('/partner/get_org_role', Partner.getRolesByOrgId);
 
+//功能查看
+router.get('/partner/get_func_by_org', Partner.getFuncsByOrgId);
+
 //状态设置
 router.get('/partner/set_org_status', Partner.setOrgStatus);
 
 //员工管理
 router.get('/partner/staff_manage', Partner.staffList);
 router.post('/partner/set_organize', Partner.setOrganize);
+router.get('/partner/set_staff_title', Partner.setStaffTitle);
 
 //账户代注册
-router.post('/partner/agent_register', Partner.agentRegister)
+router.get('/partner/agent_register', Partner.agentRegister)
 router.post('/partner/agent_register', User.signup)
 
 //岗位管理
