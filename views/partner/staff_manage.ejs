@@ -15,41 +15,41 @@
               <h3 class="panel-title">员工管理</h3>
             </div>
             <div class="panel-body">
-              <div class="row form-horizontal m-b">
+              <form action="/partner/staff_search" method="post" id="staffForm" class="form-horizontal m-b" role="form">
                 <div class="form-group row">
                   <label class="col-md-2 control-label">部门名称：</label>
                   <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="部门名称">
+                    <input type="text" name="user[organize]" id="orgName" class="form-control" placeholder="部门名称">
                   </div>
                   <label class="col-md-1 control-label">姓名：</label>
                   <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="姓名">
+                    <input type="text" name="user[name]" id="staffName" class="form-control" placeholder="员工姓名">
                   </div>
                   <label class="col-md-1 control-label">性别：</label>
                   <div class="col-md-2">
-                    <select name="" id="" class="form-control">
+                    <select name="user[gender]" id="staffGender" class="form-control">
                       <option value="0">不限</option>
-                      <option value="0">男</option>
-                      <option value="0">女</option>
+                      <option value="1">男</option>
+                      <option value="2">女</option>
                     </select>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2 control-label">注册日期：</label>
                   <div class="col-md-2">
-                    <input type="text" id="regStartDate" class="form-control laydate-icon" placeholder="开始日期">
+                    <input type="text" name="user[startDate]" id="start" class="form-control laydate-icon" placeholder="开始日期">
                   </div>
-                  <span class="pull-left">-</span>
+                  <span class="pull-left p-t-5">--</span>
                   <div class="col-md-2">
-                    <input type="text" id="regEndDate" class="form-control laydate-icon" placeholder="截止日期">
+                    <input type="text" name="user[endDate]" id="end" class="form-control laydate-icon" placeholder="结束日期">
                   </div>
-                  <label class="col-md-offset-1 col-md-1 control-label">邮箱：</label>
+                  <label class="col-md-1 control-label">邮箱号：</label>
                   <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="邮箱号">
+                    <input type="text" name="user[email]" id="staffEmail" class="form-control" placeholder="邮箱号">
                   </div>
-                  <button class="btn btn-warning" style="height: 34px">搜索</button>
+                  <button type="submit" id="searchSubmit" class="btn btn-warning" style="height: 34px">搜索</button>
                 </div>
-              </div>
+              </form>
               <table class="table table-bordered table-hover table-striped">
                 <thead>
                   <tr class="info">
@@ -65,16 +65,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                   <% users.forEach(function(user, index){ %>
+                  <% users.forEach(function(user, index){ %>
                   <tr data-id="<%= user._id%>">
                     <td><%= index+1%></td>
-                    <td><%= user.name%></td>
+                    <td class="name"><%= user.name%></td>
                     <td><% if(user.gender == '0') {%> 男 <% }else{%> 女 <%}%></td>
                     <td><%= user.email%></td>
                     <td><%= moment(user.meta.createAt).format('YYYY-MM-DD') %></td>
-                    <td><%if(user.organize && user.organize.name){%><%= user.organize.name %><%}%></td>
-                    <td>暂无</td>
-                    <td><a href="#showStaffModal" class="btn btn-link btn-set" data-toggle="modal">查看</a></td>
+                    <td><%if(user.organize && user.organize.name){%><%= user.organize.name %><%}else{%>尚未设置<%}%></td>
+                    <td><%if(user.title && user.title.name){%><%= user.title.name %><%}else{%>尚未设置<%}%></td>
+                    <td><a href="/user/user_detail?id=<%= user._id%>" class="btn btn-link" target="_blank">查看</a></td>
                     <td>
                       <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">设置
@@ -82,13 +82,17 @@
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             <li>
-                              <a href="#setOrganizeModal" class="btn btn-link btn-set" data-toggle="modal">部门设置</a>
+                              <a href="#setOrganizeModal" class="btn btn-org" data-toggle="modal">部门设置</a>
                             </li>
                             <li>
                               <a href="#setTitleModal" class="btn btn-title" data-toggle="modal">岗位设置</a>
                             </li>
                             <li>
-                              <a href="#setTitleModal" class="btn btn-title" data-toggle="modal">禁用</a>
+                              <%if(user.status){%>
+                              <a href="javascript:;" class="btn btn-status" data-id="<%= user.status%>">禁用</a>
+                              <%}else{%>
+                              <a href="javascript:;" class="btn btn-status" data-id="<%= user.status%>">启用</a>
+                              <%}%>
                             </li>
                         </ul>
                       </div>
@@ -97,7 +101,7 @@
                   <% })%>
                 </tbody>
               </table>
-              <ul class="pagination">
+              <ul class="pagination pull-right">
                 <li><a href="#">&laquo;</a></li>
                 <li class="active"><a href="#">1</a></li>
                 <li><a href="#">2</a></li>
@@ -123,18 +127,16 @@
               </div>
               <div class="modal-body max-h-400">
                 <ul id="organizeTree" class="ztree" data-id="<%= user.partner%>"></ul>
-                <input type="hidden" id="userId" name="user[id]" value="">
-                <input type="hidden" id="organizeId" name="user[organizeId]" value="">
               </div>
               <div class="modal-footer">
-                <button data-dismiss="modal" class="btn btn-default" type="reset">取消</button>
-                <button type="submit" id="setOrganizeBtn"class="btn btn-success">提交</button>
+                <button type="reset" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button id="setOrgBtn" class="btn btn-success" data-dismiss="modal">提交</button>
               </div>
             </form>
           </div>
       </div>
     </div>
-    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="showStaffModal" class="modal fade organize-modal">
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="showDetailModal" class="modal fade organize-modal">
       <div class="modal-dialog">
           <div class="modal-content">
             <form action="/partner/set_organize" method="post" id="setOrganizeForm" class="form-horizontal">

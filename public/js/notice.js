@@ -1,5 +1,4 @@
 /* 公告信息维护 */
-
 // 公告发布表单
 const noticeForm = $('#noticeForm'),
 			noticeTitle = $('#noticeTitle'),

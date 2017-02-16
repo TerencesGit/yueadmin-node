@@ -87,8 +87,11 @@ router.get('/partner/set_org_status', Partner.setOrgStatus);
 
 //员工管理
 router.get('/partner/staff_manage', Partner.staffList);
-router.post('/partner/set_organize', Partner.setOrganize);
+router.post('/partner/staff_search', Partner.staffSearch);
+router.get('/partner/set_staff_org', Partner.setStaffOrganize);
+router.get('/partner/get_staff_title', Partner.getStaffTitle);
 router.get('/partner/set_staff_title', Partner.setStaffTitle);
+router.get('/partner/set_staff_status', Partner.setStaffStatus);
 
 //账户代注册
 router.get('/partner/agent_register', Partner.agentRegister)

@@ -63,6 +63,11 @@ var simpleCheckInput = function($element){
     return true;
   }
 }
+//输入框为空验证
+var isEmptyInput = function($element){
+  var value = $.trim($element.val());
+  return value.length;
+}
 //判断输入框两次输入是否一致
 var confirmConsistent = function($element, $target, msg, wrapShow) {
   if(!($element && $target)) throw new Error('至少两个参数！');

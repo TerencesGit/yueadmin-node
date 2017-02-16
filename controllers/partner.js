@@ -367,55 +367,6 @@ exports.getFuncsByOrgId = function(req, res){
 										}
 				 })
 }
-//员工管理
-exports.staffList = function(req, res){
-	var user = req.session.user;
-	var partnerId = user.partner;
-	User.find({partner: partnerId})
-			.populate('partner', 'name')
-			.populate('organize', 'name')
-			.exec(function(err, users){
-			  if(err) console.log(err)
-			  	Title.find({partner: partnerId})
-			  			 .exec(function(err, titles){
-			  			 		res.render('partner/staff_manage',{title: '员工管理', users: users, 
-			  			 			user: user, titles: titles})
-			  			 })
-			})
-}
-//设置员工部门
-exports.setOrganize = function(req, res){
-	var user = req.body.user;
-	var userid = user.id,
-	    organizeId = user.organizeId;
-	if(userid){
-		User.update({_id: userid}, {$set: {organize: organizeId}}, function(err, msg){
-			if(err) console.log(err)
-			user.organize = organizeId;
-			res.redirect('/partner/staff_manage')
-		})
-	}else{
-		res.redirect('/signin')
-	}
-}
-//设置员工岗位
-exports.setStaffTitle = function(req, res){
-	var tid = req.query.tid;
-	var uid = req.query.uid;
-	console.log(tid, uid)
-	if(uid && tid){
-		User.findbyId(uid, function(err, user){
-			if(err) console.log(err)
-			user.update({$set: {title: tid}}, function(err, msg){
-				if(err) console.log(err)
-					console.log(user)
-				res.json({status: 1})
-			})
-		})
-	}else{
-		res.json({status: 0})
-	}
-}
 //设置部门状态
 exports.setOrgStatus = function(req, res){
 	var id = req.query.id;
@@ -434,6 +385,84 @@ exports.setOrgStatus = function(req, res){
 		res.json({status: 0})
 	}
 }
+
+//员工管理
+exports.staffList = function(req, res){
+	var user = req.session.user;
+	var partnerId = user.partner;
+	User.find({partner: partnerId})
+			.populate('partner', 'name')
+			.populate('organize', 'name')
+			.populate('title', 'name')
+			.exec(function(err, users){
+			  if(err) console.log(err)
+			  	Title.find({partner: partnerId})
+			  			 .exec(function(err, titles){
+			  			 		res.render('partner/staff_manage',{title: '员工管理', users: users, 
+			  			 			user: user, titles: titles})
+			  			 })
+			})
+}
+//员工查询
+exports.staffSearch = function(req, res){
+	var user = req.body.user;
+	console.log(user)
+}
+//设置员工部门
+exports.setStaffOrganize = function(req, res){
+	var sid = req.query.sid;
+	var oid = req.query.oid;
+	if(sid && oid){
+		User.update({_id: sid}, {$set: {organize: oid}}, function(err, msg){
+			if(err) console.log(err)
+			res.json({status: 1})
+		})
+	}else{
+		res.json({status: 0})
+	}
+}
+//获取员工岗位
+exports.getStaffTitle = function(req, res){
+	var sid = req.query.sid;
+	if(sid){
+		User.findById(sid, function(err, user){
+			if(err) console.log(err)
+				console.log(user)
+			res.json({status: 1, title: user.title})
+		})
+	}else{
+		res.json({status: 0})
+	}
+}
+//设置员工岗位
+exports.setStaffTitle = function(req, res){
+	var tid = req.query.tid;
+	var sid = req.query.sid;
+	console.log(tid, sid)
+	if(sid && tid){
+		User.update({_id: sid}, {$set: {title: tid}}, function(err, msg){
+			if(err) console.log(err)
+			res.json({status: 1})
+		})
+	}else{
+		res.json({status: 0})
+	}
+}
+//设置部门状态
+exports.setStaffStatus = function(req, res){
+	var sid = req.query.sid;
+	var status = parseInt(req.query.status) ? 0 : 1;
+	console.log(sid, status)
+	if(sid){
+		User.update({_id: sid}, {$set: {status: status}}, function(err, msg){
+			if(err) console.log(err)
+				res.json({status: 1})
+		})
+	}else{
+		res.json({status: 0})
+	}
+}
+
 //账户代注册
 exports.agentRegister = function(req, res){
 	var orgId = req.query.orgId;
@@ -446,7 +475,9 @@ exports.agentRegister = function(req, res){
 //岗位管理页
 exports.showTitleManage = function(req, res){
 	var user = req.session.user;
-	Title.find({partner: user.partner})
+	var partnerId = user.partner;
+	Title.find({partner: partnerId})
+			 .populate('creator', 'name')
 			 .exec(function(err, titles){
 			 	if(err) console.log(err);
 				res.render('partner/title_manage', {title: '岗位管理', titles: titles})

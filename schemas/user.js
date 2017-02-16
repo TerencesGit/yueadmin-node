@@ -13,9 +13,6 @@ var userSchema = new mongoose.Schema({
 	name: {
 		type: String
 	},
-	realname: {
-		type: String
-	},
 	mobile: {
 		type: String
 	},
@@ -55,6 +52,10 @@ var userSchema = new mongoose.Schema({
 		default: 0
 	},
 	role: {
+		type: Number,
+		default: 1
+	},
+	status: {
 		type: Number,
 		default: 1
 	},
