@@ -112,6 +112,12 @@ a.disabled {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.gray {
+  color: gray;
+}
+.light-gray {
+  color: #ccc;
+}
 /**========== global style ==========**/
 body {
   background: #f0f3f4
@@ -625,7 +631,7 @@ dl.horizontal dd {
   display: none;
   padding-left: 10px;
 }
-.preview-area.show:hover .btn-remove,
+.preview-area:hover .btn-remove,
 .preview-area:hover .btn-update {
   display: inline
 }

@@ -15,7 +15,7 @@ var start = {
 };
 var end = {
   elem: '#end', 
-  max: laydate.now(-1),
+  max: laydate.now(),
   choose: function(datas){
      start.max = datas; 
      start.end = datas;

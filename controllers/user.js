@@ -77,8 +77,6 @@ exports.signup = function(req, res){
 			_user.partner = userObj.partner;
 		})
 	}
-	console.log('----------_user--------------')
-	console.log(_user)
 	User.findOne({email: email}, function(err, user){
 		if(err) console.log(err)
 		if(!user){

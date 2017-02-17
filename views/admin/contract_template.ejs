@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+  </head>
+  <body>
+    <%- include('../aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="contract_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">新增合同模板
+                <a href="javascript:history.go(-1)" class="pull-right">返回</a>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div class="alert alert-info  ">
+                <i class="fa fa-info-circle"></i>
+                提示：模板文件暂只支持doc、docx、pdf格式
+                <a class="close" data-dismiss="alert" href="#" aria-hidden="true">
+                  &times;
+                </a>
+              </div>
+              <form action="/admin/save_template" method="post" id="templateForm" class="form-horizontal m-t" role="form" enctype="multipart/form-data">
+                <input type="hidden" name="template[id]" value="<%=template._id%>">
+                <div class="form-group row">
+                  <label class="control-label col-md-2">模板标题</label>
+                  <div class="col-md-7">
+                    <input type="text" name="template[name]" id="templateTitle" class="form-control" placeholder="请输入模板标题" value="<%=template.name%>"/>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="control-label col-md-2">模板描述</label>
+                  <div class="col-md-7">
+                   <textarea name="template[note]" id="templateDesc" rows="5" class="form-control" placeholder="请输入模板描述(可选)"><%=template.note%></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="control-label col-md-2">模板上传</label>
+                  <div class="col-md-3">
+                    <input type="file" name="contract_file" id="contractFile">
+                    <div id="templatePreview" class="preview-area clearfix none">
+                      <a href="javascript:;" class="text-primary" title="合同模板预览"><i class="fa fa-file-word-o fa-5x"></i></a>
+                      <a href="javascript:;" id="removeFileBtn" class="btn-remove">
+                        <i class="fa fa-remove"></i>
+                      </a>
+                    </div>
+                    <button type="button" id="templateUpload" class="btn btn-primary m-b">选择本地文件</button>
+                  </div>
+                </div>
+                <div class="form-group text-center">
+                  <button type="submit" id="templateSubmit" class="btn btn-success">保存</button>
+                  <button type="reset" class="btn btn-default m-l">取消</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+    <script src="/js/contract.js"></script>
+  </body>
+</html>

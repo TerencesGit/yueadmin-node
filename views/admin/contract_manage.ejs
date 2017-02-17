@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
+  </head>
+  <body>
+    <%- include('../aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="contract_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-success">
+            <div class="panel-heading clearfix">
+              <h3 class="panel-title pull-left p-t-5">合同管理</h3>
+              <a href="/admin/new_contract_template" class="btn btn-success pull-right m-l" data-toggle="modal">新增模板</a>
+              <a href="/admin/new_contract" class="btn btn-success pull-right" data-toggle="modal">添加合同</a>
+            </div>
+            <div class="panel-body">
+              <table id="titleDataTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                  <tr class="">
+                    <th>序号</th>
+                    <th>名称</th>
+                    <th>描述</th>
+                    <th>创建者</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                 <!--  -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="newTitleModal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="/partner/new_title" method="post" id="newTitleForm" class="form-horizontal">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">添加岗位</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <label for="titleName" class="col-md-offset-1 col-md-2 control-label">岗位名称</label>
+                  <div class="col-md-6">
+                    <input type="text" name="title[name]" id="titleName" class="form-control" placeholder="岗位名称">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="titleDesc" class="col-md-offset-1 col-md-2 control-label">岗位描述</label>
+                  <div class="col-md-6">
+                    <textarea name="title[desc]" id="titleDesc" class="form-control" rows="3" placeholder="岗位描述"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="reset" data-dismiss="modal" class="btn btn-default">取消</button>
+                <button type="submit" id="newTitleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
+              </div>
+            </form>
+          </div>
+      </div>
+    </div>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editTitleModal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="/partner/edit_title" method="post" id="editTitleForm" class="form-horizontal">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">岗位编辑</h4>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" name="title[_id]" id="editTitleId" value="">
+                <div class="form-group row">
+                  <label for="editTitleName" class="col-md-offset-1 col-md-2 control-label">岗位名称</label>
+                  <div class="col-md-6">
+                    <input type="text" name="title[name]" id="editTitleName" class="form-control" placeholder="岗位名称">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="editTitleDesc" class="col-md-offset-1 col-md-2 control-label">岗位描述</label>
+                  <div class="col-md-6">
+                    <textarea name="title[desc]" id="editTitleDesc" class="form-control" rows="3" placeholder="岗位描述"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="reset" data-dismiss="modal" class="btn btn-default">取消</button>
+                <button type="submit" id="editTitleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
+              </div>
+            </form>
+          </div>
+      </div>
+    </div>
+    <%- include('../script')%>
+    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
+    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+    <script src="/js/title.js"></script>
+  </body>
+</html>

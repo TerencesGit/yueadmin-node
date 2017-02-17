@@ -248,6 +248,38 @@ var hasFile = function(fileInput){
   return fileInput.files && fileInput.files[0];
 }
 
+//文件必选验证
+var checkFileRequired = function(fileInput, msg){
+  if(hasFile(fileInput)) return true;
+  var msgRequired = msg && msg.required || '请选择文件';
+  var formGroup = fileInput.parent();
+  if(formGroup.children('.alert').length === 0) {
+    formGroup.append('<div class="alert alert-danger hidden"></div>')
+  }
+  var $alert = formGroup.children('.alert');
+  $alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgRequired);
+  return false;
+}
+
+//上传文件格式验证
+var checkFile = function(fileInput, regular){
+  var regular = regular || /\.(doc|docx|pdf)$/,
+      msg = msg || '文件格式有误';
+  var formGroup = $(fileInput).parent();
+  if(formGroup.children('.alert').length === 0) {
+    formGroup.append('<div class="alert alert-danger hidden"></div>')
+  }
+  var $alert = formGroup.children('.alert');
+  var fileObj = fileInput instanceof jQuery ? fileInput[0] : fileInput;
+  var fileValue = fileObj.value;
+  if(!regular.test(fileValue)){
+    $alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msg);
+    return false;
+  }else{
+    $alert && $alert.remove()
+    return true;
+  }
+}
 //上传图片预览
 var uploadPreview = function(fileInput, $image){
   if(!hasFile(fileInput)) return;
@@ -266,18 +298,7 @@ var clearFile = function($fileInput){
   fileForm[0].reset()
   fileParent.prepend($fileInput)
   fileForm.remove()
-}
-//图片必选
-var checkImageRequired = function(fileInput, msg){
-  if(hasFile(fileInput)) return true;
-  var msgRequired = msg && msg.required || '请选择图片';
-  var formGroup = fileInput.parent();
-  if(formGroup.children('.alert').length === 0) {
-    formGroup.append('<div class="alert alert-danger hidden"></div>')
-  }
-  var $alert = formGroup.children('.alert');
-  $alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgRequired);
-  return false;
+  return true;
 }
 
 //图片格式大小验证
@@ -310,14 +331,13 @@ var checkImageRugular = function(fileInput, msg, regular, sizeLimit){
 		$alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgSize);
 		return false;
 	}
-  console.log($alert)
 	$alert && $alert.remove()
 	return true;
 }
 
 //图片上传校验
 var checkImage = function(fileInput, msg, regular, sizeLimit){
-  return checkImageRequired(fileInput, msg) && 
+  return checkFileRequired(fileInput, msg) && 
   checkImageRugular(fileInput, msg, regular, sizeLimit)
 }
 

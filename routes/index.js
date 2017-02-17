@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../controllers/user');
+var Admin = require('../controllers/admin');
 var Message = require('../controllers/message');
 var Partner = require('../controllers/partner');
 var System = require('../controllers/System');
@@ -92,6 +93,7 @@ router.get('/partner/set_staff_org', Partner.setStaffOrganize);
 router.get('/partner/get_staff_title', Partner.getStaffTitle);
 router.get('/partner/set_staff_title', Partner.setStaffTitle);
 router.get('/partner/set_staff_status', Partner.setStaffStatus);
+router.get('/partner/show_staff_info', Partner.showStaffInfo);
 
 //账户代注册
 router.get('/partner/agent_register', Partner.agentRegister)
@@ -103,11 +105,18 @@ router.post('/partner/new_title', Partner.newTitle)
 router.post('/partner/edit_title', Partner.editTitle)
 router.get('/partner/remove_title', Partner.removeTitle)
 
+/* 管理员操作 */
+
 //企业审核
-router.get('/admin/manage_partner', Partner.managePartner);
-router.get('/admin/verify_partner', Partner.verifiedPartner);
-router.get('/admin/verify_partner_pass', Partner.verifiedPass);
-router.post('/admin/verify_partner_nopass', Partner.verifiedNoPass);
+router.get('/admin/manage_partner', Admin.managePartner);
+router.get('/admin/verify_partner', Admin.verifiedPartner);
+router.get('/admin/verify_partner_pass', Admin.verifiedPass);
+router.post('/admin/verify_partner_nopass', Admin.verifiedNoPass);
+
+//合同管理
+router.get('/admin/contract_manage', Admin.contractManage)
+router.get('/admin/new_contract_template', Admin.newContractTemplate)
+router.get('/admin/new_contract', Admin.newContract)
 
 /* 系统管理 */
 
