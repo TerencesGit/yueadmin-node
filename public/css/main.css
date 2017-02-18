@@ -101,6 +101,9 @@
 .relative {
   position: relative;
 }
+.absolute {
+  position: absolute;
+}
 li.disabled {
   cursor: not-allowed;
 }
@@ -218,6 +221,9 @@ dl.horizontal dd {
 }
 .dropdown-menu {
   min-width: auto
+}
+.input-group-btn > .btn {
+  padding: 6px 12px;
 }
 /**========== animation start ==========**/
 .animated {
@@ -637,6 +643,19 @@ dl.horizontal dd {
 }
 .preview-area > .pic-preview {
   width: 60%;
+}
+.attach-upload {
+  position: relative;
+}
+.file-clear {
+  display: none;
+  position: absolute;
+  top: -8px;
+  right: 8px;
+  z-index: 99;
+}
+.attach-upload.has-success:hover .file-clear {
+  display: block;
 }
 /** 图片上传预览区域 end **/
 

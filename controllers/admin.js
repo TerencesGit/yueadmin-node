@@ -1,10 +1,7 @@
-var Partner = require('../models/partner');
 var User = require('../models/user');
+var Partner = require('../models/partner');
 var Organize = require('../models/organize');
-var Role = require('../models/role');
-var OrgRole = require('../models/org_role');
-var RoleFunc = require('../models/role_func');
-var Title = require('../models/title');
+var Template = require('../models/contract_template');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
@@ -109,17 +106,102 @@ exports.verifiedNoPass = function(req, res){
 	}    
 }
 
-//合同列表
-exports.contractManage = function(req, res){
-	res.render('admin/contract_manage', {title: '合同管理'})
+//合同模板管理
+exports.contractTemplateManage = function(req, res){
+	Template.find({})
+					.populate('creator', 'name')
+					.exec(function(err, templates){
+						res.render('admin/contract_template_manage', {
+							title: '合同模板管理', 
+							templates: templates
+						})
+					})
+	
 }
-//创建合同模板页
+//新增合同模板
 exports.newContractTemplate = function(req, res){
 	var template = {}
 	res.render('admin/contract_template', {title: '创建合同模板', template: template})
 }
+//保存合同模板文件
+exports.saveTemplateFile = function(req, res, next){
+	var templateData = req.files.contract_file;
+	console.log(templateData)
+	if(templateData && templateData.originalFilename){
+		var templatePath = templateData.path;
+		fs.readFile(templatePath, function(err, data){
+			var timestamp = Date.now();
+			var type = templateData.name.split('.')[1];
+			var template = 'contract_' + timestamp + '.' + type;
+			var newPath = path.join(__dirname, '../', 'public/upload/contract/' + template);
+			fs.writeFile(newPath, data, function(err){
+				req.template = template;
+				next()
+			})
+		})
+	}else{
+		next()
+	}
+}
+//保存合同模板
+exports.saveTemplate = function(req, res){
+	var user = req.session.user;
+	var template = req.body.template;
+	if(req.template){
+		template.file = req.template;
+	}
+	var id = template.id;
+	if(id){
+		template.updater = user._id;
+		Template.findById(id, function(err, originalTemplate){
+			var _template = _.extend(originalTemplate, template);
+			_template.save(function(err, template){
+				if(err) console.log(err)
+				res.redirect('/admin/contract_template_manage')
+			})
+		})
+	}else{
+		template.creator = user._id;
+		var _template = new Template(template);
+		_template.save(function(err, template){
+			if(err) console.log(err)
+			res.redirect('/admin/contract_template_manage')
+		})
+	}
+}
+//合同模板编辑
+exports.editTemplate = function(req, res){
+	var id = req.query.id;
+	Template.findById(id, function(err, template){
+		if(err) console.log(err)
+		res.render('admin/contract_template_edit', {title: '合同模板编辑', template: template})
+	})
+}
+//合同模板删除
+exports.removeTemplate = function(req, res){
+	var id = req.query.id;
+	if(id){
+		Template.remove({_id: id}, function(err, msg){
+			if(err) console.log(err)
+			res.redirect('/admin/contract_template_manage')
+		})
+	}
+}
+
+//合同管理
+exports.contractManage = function(req, res){
+	res.render('admin/contract_manage', {title: '合同管理'})
+}
+
 //添加合同 
 exports.newContract = function(req, res){
 	var contract = {}
-	res.render('admin/contract_input', {title: '合同添加', contract: contract})
+	Template.fetch(function(err, templates){
+		if(err) console.log(err)
+		res.render('admin/contract_input', {
+			title: '合同添加', 
+			contract: contract,
+			templates: templates
+		})
+	})
 }

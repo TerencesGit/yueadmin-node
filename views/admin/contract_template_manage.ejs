@@ -7,28 +7,41 @@
   <body>
     <%- include('../aside') %>
     <%- include('../header') %>
-    <div id="main" class="main" data-page="contract_manage">
+    <div id="main" class="main" data-page="contract_template_manage">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
           <div class="panel panel-success">
             <div class="panel-heading clearfix">
-              <h3 class="panel-title pull-left p-t-5">合同管理</h3>
-              <a href="/admin/new_contract" class="btn btn-success pull-right" data-toggle="modal">添加合同</a>
+              <h3 class="panel-title pull-left p-t-5">合同模板管理</h3>
+              <a href="/admin/new_contract_template" class="btn btn-success pull-right m-l" data-toggle="modal">新增模板</a>
             </div>
             <div class="panel-body">
               <table id="titleDataTable" class="table table-bordered table-hover table-striped">
                 <thead>
                   <tr class="">
                     <th>序号</th>
-                    <th>名称</th>
-                    <th>描述</th>
+                    <th>模板名称</th>
+                    <th>模板描述</th>
                     <th>创建者</th>
                     <th>创建时间</th>
                     <th>操作</th>
                   </tr>
                 </thead>
                 <tbody>
-                 <!--  -->
+                 <%templates.forEach(function(template, index){%>
+                 <tr>
+                    <td><%= index + 1%></td>
+                    <td><%= template.name%></td>
+                    <td><%= template.note%></td>
+                    <td><%= template.creator.name%></td>
+                    <td><%= moment(template.meta.createAt).format('YYYY-MM-DD HH:mm:ss')%></td>
+                    <td>
+                      <a href="#" class="btn btn-success">下载</a>
+                      <a href="/admin/edit_contract_template?id=<%= template._id%>" class="btn btn-warning">编辑</a>
+                      <a href="/admin/remove_contract_template?id=<%= template._id%>" class="btn btn-danger btn-remove">删除</a>
+                    </td>
+                 </tr>
+                 <%})%>
                 </tbody>
               </table>
             </div>
@@ -102,6 +115,16 @@
     <%- include('../script')%>
     <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
     <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
-    <script src="/js/title.js"></script>
+    <script>
+      $('.btn-remove').on('click', function(e){
+        var _this = $(this);
+        e.preventDefault();
+        $.dialog().confirm({message: '确定删除该模板'})
+         .on('confirm', function(){
+            var href = _this.attr('href');
+            location.href = href;
+         })
+      })
+    </script>
   </body>
 </html>

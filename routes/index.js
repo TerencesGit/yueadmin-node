@@ -113,6 +113,12 @@ router.get('/admin/verify_partner', Admin.verifiedPartner);
 router.get('/admin/verify_partner_pass', Admin.verifiedPass);
 router.post('/admin/verify_partner_nopass', Admin.verifiedNoPass);
 
+//合同模板管理
+router.get('/admin/contract_template_manage', Admin.contractTemplateManage);
+router.post('/admin/save_template', multipartMiddleware, Admin.saveTemplateFile, Admin.saveTemplate);
+router.get('/admin/edit_contract_template', Admin.editTemplate);
+router.get('/admin/remove_contract_template', Admin.removeTemplate);
+
 //合同管理
 router.get('/admin/contract_manage', Admin.contractManage)
 router.get('/admin/new_contract_template', Admin.newContractTemplate)

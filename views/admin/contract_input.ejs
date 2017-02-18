@@ -11,109 +11,113 @@
         <div class="container-fluid">
           <div class="panel panel-success">
             <div class="panel-heading">
-              <h3 class="panel-title">合同录入</h3>
+              <h3 class="panel-title">
+                合同录入
+                <a href="javascript:history.go(-1)" class="pull-right">返回</a>
+              </h3>
             </div>
             <div class="panel-body">
-              <h4 class="page-header m-t">请填写合同真实信息，*表示必填项</h4>
+              <div class="alert alert-success">
+                <i class="fa fa-info-circle"></i>
+                提示：请填写合同真实信息，*表示必填项，附件为文档（支持doc、docx、pdf格式）或图片（支持jpg、jpeg、png、gif格式）
+                <a class="close" data-dismiss="alert" href="#" aria-hidden="true">
+                  &times;
+                </a>
+              </div>
               <form action="/admin/save_contract" method="post" id="contractForm" class="form-horizontal m-t" role="form" enctype="multipart/form-data">
                 <input type="hidden" name="contract[id]" value="<%=contract._id%>">
                 <div class="form-group row">
                   <label class="control-label col-md-2"><i>*</i>甲方姓名</label>
                   <div class="col-md-7">
-                    <input type="text" name="contract[party_a_name]" id="PartyAName" class="form-control" placeholder="请输入甲方姓名" value="<%=contract.party_a_name%>"/>
+                    <input type="text" name="contract[party_a_name]" id="partyAName" class="form-control" placeholder="请输入甲方姓名" value="<%=contract.party_a_name%>"/>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="control-label col-md-2"><i>*</i>乙方姓名</label>
                   <div class="col-md-7">
-                    <input type="text" name="contract[party_a_name]" id="PartyAName" class="form-control" placeholder="请输入乙方姓名" value="<%=contract.party_a_name%>"/>
+                    <input type="text" name="contract[party_b_name]" id="partyBName" class="form-control" placeholder="请输入乙方姓名" value="<%=contract.party_b_name%>"/>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="control-label col-md-2">丙方姓名</label>
                   <div class="col-md-7">
-                    <input type="text" name="contract[party_a_name]" id="PartyAName" class="form-control" placeholder="请输入丙方姓名" value="<%=contract.party_a_name%>"/>
+                    <input type="text" name="contract[party_c_name]" id="partyCName" class="form-control" placeholder="请输入丙方姓名" value="<%=contract.party_c_name%>"/>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="control-label col-md-2"><i>*</i>签署时间</label>
                   <div class="col-md-7">
-                    <input type="text" name="contract[party_a_name]" id="signDate" class="form-control laydate-icon" placeholder="签署时间与纸质合同保持一致" value="<%=contract.party_a_name%>"/>
+                    <input type="text" name="contract[sign_time]" id="signDate" class="form-control laydate-icon" placeholder="签署时间与纸质合同保持一致" value="<%=contract.sign_time%>"/>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="control-label col-md-2"><i>*</i>生效时间</label>
                   <div class="col-md-7">
-                    <input type="text" name="contract[party_a_name]" id="effetiveDate" class="form-control laydate-icon" placeholder="生效时间" value="<%=contract.party_a_name%>"/>
+                    <input type="text" name="contract[effetive_time]" id="effetiveDate" class="form-control laydate-icon" placeholder="生效时间" value="<%=contract.effetive_time%>"/>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="control-label col-md-2"><i>*</i>失效时间</label>
                   <div class="col-md-7">
-                    <input type="text" name="contract[party_a_name]" id="expireDate" class="form-control laydate-icon" placeholder="失效时间" value="<%=contract.party_a_name%>"/>
+                    <input type="text" name="contract[expire_time]" id="expireDate" class="form-control laydate-icon" placeholder="失效时间" value="<%=contract.expire_time%>"/>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="control-label col-md-2"><i>*</i>选择模板</label>
+                  <label class="control-label col-md-2">选择模板</label>
                   <div class="col-md-7">
-                    <select name="" id="" class="form-control">
-                      <option value="1">模板1</option>
-                      <option value="1">模板2</option>
-                      <option value="1">模板3</option>
-                      <option value="1">模板4</option>
+                    <select name="contract[template]" id="contractTemplate" class="form-control">
+                      <% templates.forEach(function(template){%>
+                        <option value="<%= template._id%>"><%= template.name%></option>
+                      <%})%>
                     </select>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="control-label col-md-2">附件1</label>
-                  <div class="col-md-3">
-                    <input type="file" name="contract_file" id="contractFile">
-                    <div id="templatePreview" class="preview-area clearfix none">
-                      <a href="javascript:;" class="text-primary" title="合同模板预览"><i class="fa fa-file-word-o fa-5x"></i></a>
-                      <a href="javascript:;" id="removeFileBtn" class="btn-remove">
-                        <i class="fa fa-remove"></i>
-                      </a>
+                  <div class="col-md-7">
+                    <input type="file" name="contract_file_1" class="attach-file">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary attach-upload">选择文件</button>
+                      </span>
+                      <input type="text" class="form-control file-name" disabled="true" placeholder="未选择任何文件">
                     </div>
-                    <button type="button" id="templateUpload" class="btn btn-primary m-b">选择本地文件</button>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="control-label col-md-2">附件2</label>
-                  <div class="col-md-3">
-                    <input type="file" name="contract_file" id="contractFile">
-                    <div id="templatePreview" class="preview-area clearfix none">
-                      <a href="javascript:;" class="text-primary" title="合同模板预览"><i class="fa fa-file-word-o fa-5x"></i></a>
-                      <a href="javascript:;" id="removeFileBtn" class="btn-remove">
-                        <i class="fa fa-remove"></i>
-                      </a>
+                  <div class="col-md-7">
+                    <input type="file" name="contract_file_2" class="attach-file">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary attach-upload">选择文件</button>
+                      </span>
+                      <input type="text" class="form-control file-name" disabled="true" placeholder="未选择任何文件">
                     </div>
-                    <button type="button" id="templateUpload" class="btn btn-primary m-b">选择本地文件</button>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="control-label col-md-2">附件3</label>
-                  <div class="col-md-3">
-                    <input type="file" name="contract_file" id="contractFile">
-                    <div id="templatePreview" class="preview-area clearfix none">
-                      <a href="javascript:;" class="text-primary" title="合同模板预览"><i class="fa fa-file-word-o fa-5x"></i></a>
-                      <a href="javascript:;" id="removeFileBtn" class="btn-remove">
-                        <i class="fa fa-remove"></i>
-                      </a>
+                  <div class="col-md-7">
+                    <input type="file" name="contract_file_3" class="attach-file">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary attach-upload">选择文件</button>
+                      </span>
+                      <input type="text" class="form-control file-name" disabled="true" placeholder="未选择任何文件">
                     </div>
-                    <button type="button" id="templateUpload" class="btn btn-primary m-b">选择本地文件</button>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="control-label col-md-2">附件4</label>
-                  <div class="col-md-3">
-                    <input type="file" name="contract_file" id="contractFile">
-                    <div id="templatePreview" class="preview-area clearfix none">
-                      <a href="javascript:;" class="text-primary" title="合同模板预览"><i class="fa fa-file-word-o fa-5x"></i></a>
-                      <a href="javascript:;" id="removeFileBtn" class="btn-remove">
-                        <i class="fa fa-remove"></i>
-                      </a>
+                  <div class="col-md-7">
+                    <input type="file" name="contract_file_4" class="attach-file">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary attach-upload">选择文件</button>
+                      </span>
+                      <input type="text" class="form-control file-name" disabled="true" placeholder="未选择任何文件">
                     </div>
-                    <button type="button" id="templateUpload" class="btn btn-primary m-b">选择本地文件</button>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -122,9 +126,11 @@
                    <textarea name="contract[content]" id="contractCont" rows="5" class="form-control" placeholder="备注"><%=contract.content%></textarea>
                   </div>
                 </div>
-                <div class="form-group text-center">
-                  <button type="submit" id="contractSubmit" class="btn btn-success">提交</button>
-                  <button class="btn btn-default m-l" onClick="history.go(-1)">返回</button>
+                <div class="form-group row">
+                  <div class="col-md-offset-5">
+                    <button type="submit" id="contractSubmit" class="btn btn-success">提交</button>
+                    <button type="reset" class="btn btn-default m-l">重置</button>
+                  </div>
                 </div>
               </form>
             </div>
@@ -137,5 +143,33 @@
     <%- include('../script')%>
     <script src="/plugins/laydate/laydate.js"></script>
     <script src="/js/contract.js"></script>
+    <script>
+      //日期选择器
+      const sign = {
+        elem: '#signDate',
+        max: laydate.now(),
+        choose: function(datas){
+           effetive.min = datas;
+        }
+      };
+      const effetive = {
+        elem: '#effetiveDate',
+        choose: function(datas){
+           expire.min = datas;
+           expire.start = datas;
+        }
+      };
+      const expire = {
+        elem: '#expireDate',
+        min: laydate.now(),
+        choose: function(datas){
+           effetive.max = datas;
+           effetive.end = datas;
+        }
+      };
+      laydate(sign)
+      laydate(effetive)
+      laydate(expire)
+    </script>
   </body>
 </html>
