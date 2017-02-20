@@ -20,7 +20,7 @@
 .laydate_body .laydate_box a:hover{text-decoration:none;}
 .laydate_body .laydate_box cite, .laydate_body .laydate_box label{position:absolute; width:0; height:0; border-width:5px; border-style:dashed; border-color:transparent; overflow:hidden; cursor:pointer;}
 .laydate_body .laydate_box .laydate_yms, .laydate_body .laydate_box .laydate_time{display:none;}
-.laydate_body .laydate_box .laydate_show{display:block;}
+.laydate_body .laydate_box .laydate_show{display:block;position: relative;top: -155px;left: -5px;}
 .laydate_body .laydate_box input{outline:0; font-size:14px; background-color:#fff;}
 .laydate_body .laydate_top{position:relative; height:35px; padding:5px; *width:100%; z-index:99;}
 .laydate_body .laydate_ym{position:relative; float:left; height:24px; cursor:pointer;}

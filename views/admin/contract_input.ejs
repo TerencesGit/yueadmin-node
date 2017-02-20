@@ -53,13 +53,13 @@
                 <div class="form-group row">
                   <label class="control-label col-md-2"><i>*</i>生效时间</label>
                   <div class="col-md-7">
-                    <input type="text" name="contract[effetive_time]" id="effetiveDate" class="form-control laydate-icon" placeholder="生效时间" value="<%=contract.effetive_time%>"/>
+                    <input type="text" name="contract[effetive_date]" id="effetiveDate" class="form-control laydate-icon" placeholder="生效时间" value="<%=contract.effetive_date%>"/>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="control-label col-md-2"><i>*</i>失效时间</label>
                   <div class="col-md-7">
-                    <input type="text" name="contract[expire_time]" id="expireDate" class="form-control laydate-icon" placeholder="失效时间" value="<%=contract.expire_time%>"/>
+                    <input type="text" name="contract[expire_date]" id="expireDate" class="form-control laydate-icon" placeholder="失效时间" value="<%=contract.expire_date%>"/>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -67,6 +67,9 @@
                   <div class="col-md-7">
                     <select name="contract[template]" id="contractTemplate" class="form-control">
                       <% templates.forEach(function(template){%>
+                       <!--  <%if(template._id == contract.template){%>
+                          <option value="<%= template._id%>"><%= template.name%></option>
+                        <%}%> -->
                         <option value="<%= template._id%>"><%= template.name%></option>
                       <%})%>
                     </select>
@@ -75,19 +78,19 @@
                 <div class="form-group row">
                   <label class="control-label col-md-2">附件1</label>
                   <div class="col-md-7">
-                    <input type="file" name="contract_file_1" class="attach-file">
+                    <input type="file" name="attach_file_1" class="attach-file">
                     <div class="input-group">
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-primary attach-upload">选择文件</button>
                       </span>
-                      <input type="text" class="form-control file-name" disabled="true" placeholder="未选择任何文件">
+                      <input type="text" class="form-control file-name" disabled="true" placeholder="未选择任何文件" value="<%= contract.attach_file_1%>">
                     </div>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="control-label col-md-2">附件2</label>
                   <div class="col-md-7">
-                    <input type="file" name="contract_file_2" class="attach-file">
+                    <input type="file" name="attach_file_2" class="attach-file">
                     <div class="input-group">
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-primary attach-upload">选择文件</button>
@@ -99,7 +102,7 @@
                 <div class="form-group row">
                   <label class="control-label col-md-2">附件3</label>
                   <div class="col-md-7">
-                    <input type="file" name="contract_file_3" class="attach-file">
+                    <input type="file" name="attach_file_3" class="attach-file">
                     <div class="input-group">
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-primary attach-upload">选择文件</button>
@@ -111,7 +114,7 @@
                 <div class="form-group row">
                   <label class="control-label col-md-2">附件4</label>
                   <div class="col-md-7">
-                    <input type="file" name="contract_file_4" class="attach-file">
+                    <input type="file" name="attach_file_4" class="attach-file">
                     <div class="input-group">
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-primary attach-upload">选择文件</button>
@@ -123,7 +126,7 @@
                 <div class="form-group row">
                   <label for="contractCont" class="control-label col-md-2">备注</label>
                   <div class="col-md-7">
-                   <textarea name="contract[content]" id="contractCont" rows="5" class="form-control" placeholder="备注"><%=contract.content%></textarea>
+                   <textarea name="contract[note]" id="contractCont" rows="5" class="form-control" placeholder="备注"><%=contract.note%></textarea>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -147,6 +150,8 @@
       //日期选择器
       const sign = {
         elem: '#signDate',
+        //istime: true,
+        //format: 'YYYY-MM-DD hh:mm:ss',
         max: laydate.now(),
         choose: function(datas){
            effetive.min = datas;

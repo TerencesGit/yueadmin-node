@@ -157,7 +157,7 @@ const queryAccount = function($element, router, msg, $target, wrapShow, contrary
 //生成验证码
 var code;  //保存验证码
 const createCode = function(codeLength) {
-  const codeLength = codeLength || 4;
+  codeLength = codeLength || 4;
   const ALPHABET = 'abcdefghijklmnopqrstuvwxyz1234567890';
   code = '';
   for (let i = 0; i < codeLength; i++) {
@@ -181,29 +181,29 @@ const checkCode = function($element, msg, wrapShow) {
 	if(!($element && msg)) throw new Error('至少两个参数！');
 	const msgRequired = msg.required || '不能为空！';
 	const msgError = msg.error || '验证码错误！';
-	const wrapShow = wrapShow || false;
+	wrapShow = wrapShow || false;
   const inputCode = $.trim($element.val()).toUpperCase();
   const formGroup = $element.parents('.form-group');
   code = code.toUpperCase();
   if(!wrapShow){
   	if (formGroup.children('.alert').length === 0) {
-	    formGroup.append('<div class="col-md-3 alert alert-danger"></div>')
+	    formGroup.append('<div class="col-md-3 alert alert-danger hidden"></div>')
 	  }
 	  const $alert = formGroup.children('.alert');
   }else{
   	if (formGroup.next('.alert').length === 0) {
-	    formGroup.after('<div class="col-md-offset-3 alert alert-danger"></div>')
+	    formGroup.after('<div class="col-md-offset-3 alert alert-danger hidden"></div>')
 	  }
 	  const $alert = formGroup.next('.alert');
   }
   if (inputCode == '') {
     formGroup.removeClass('has-success').addClass('has-error');
-    $alert.html('<i class="fa fa-minus-circle"></i>'+ msgRequired);
+    $alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgRequired);
     $element.focus();
     return false;
   } else if (inputCode !== code) {
     formGroup.removeClass('has-success').addClass('has-error');
-    $alert.html('<i class="fa fa-minus-circle"></i>'+ msgError);
+    $alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgError);
     $element.val('').focus();
     drawCode();
     return false;

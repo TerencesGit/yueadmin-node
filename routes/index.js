@@ -115,15 +115,20 @@ router.post('/admin/verify_partner_nopass', Admin.verifiedNoPass);
 
 //合同模板管理
 router.get('/admin/contract_template_manage', Admin.contractTemplateManage);
+router.get('/admin/new_contract_template', Admin.newContractTemplate)
 router.post('/admin/save_template', multipartMiddleware, Admin.saveTemplateFile, Admin.saveTemplate);
 router.get('/admin/edit_contract_template', Admin.editTemplate);
 router.get('/admin/remove_contract_template', Admin.removeTemplate);
 
 //合同管理
 router.get('/admin/contract_manage', Admin.contractManage)
-router.get('/admin/new_contract_template', Admin.newContractTemplate)
 router.get('/admin/new_contract', Admin.newContract)
+router.post('/admin/save_contract', multipartMiddleware, Admin.attachUpload1, Admin.saveContract)
+router.get('/admin/edit_contract', Admin.editContract)
+router.get('/admin/remove_contract', Admin.removeContract)
 
+//权限管理
+router.get('/admin/jurisdiction_manage', Admin.jurisdictionManage)
 /* 系统管理 */
 
 //系统功能树

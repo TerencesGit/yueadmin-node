@@ -16,19 +16,37 @@
               <a href="/admin/new_contract" class="btn btn-success pull-right" data-toggle="modal">添加合同</a>
             </div>
             <div class="panel-body">
-              <table id="titleDataTable" class="table table-bordered table-hover table-striped">
+              <table id="contractDataTable" class="table table-bordered table-hover table-striped">
                 <thead>
                   <tr class="">
                     <th>序号</th>
-                    <th>名称</th>
-                    <th>描述</th>
+                    <th>合同甲方</th>
+                    <th>合同乙方</th>
+                    <th>签署时间</th>
+                    <th>模板</th>
                     <th>创建者</th>
                     <th>创建时间</th>
+                    <th>描述</th>
                     <th>操作</th>
                   </tr>
                 </thead>
                 <tbody>
-                 <!--  -->
+                 <%contracts.forEach(function(contract, index){%>
+                    <tr>
+                      <td><%= index+1%></td>
+                      <td><%= contract.party_a_name%></td>
+                      <td><%= contract.party_b_name%></td>
+                      <td><%= contract.sign_time%></td>
+                      <td><%= contract.template.name%></td>
+                      <td><%= contract.creator.name%></td>
+                      <td><%= moment(contract.create_time).format('YYYY-MM-DD')%></td>
+                      <td><%= contract.note%></td>
+                      <td>
+                        <a href="/admin/edit_contract?id=<%= contract._id%>" class="btn btn-warning">编辑</a>
+                        <a href="/admin/remove_contract?id=<%= contract._id%>" class="btn btn-danger btn-contract-remove">删除</a>
+                      </td>
+                    </tr>
+                 <%})%>
                 </tbody>
               </table>
             </div>
@@ -102,6 +120,6 @@
     <%- include('../script')%>
     <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
     <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
-    <script src="/js/title.js"></script>
+    <script src="/js/contract.js"></script>
   </body>
 </html>

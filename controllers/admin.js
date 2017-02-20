@@ -2,6 +2,7 @@ var User = require('../models/user');
 var Partner = require('../models/partner');
 var Organize = require('../models/organize');
 var Template = require('../models/contract_template');
+var Contract = require('../models/contract');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
@@ -190,9 +191,13 @@ exports.removeTemplate = function(req, res){
 
 //合同管理
 exports.contractManage = function(req, res){
-	res.render('admin/contract_manage', {title: '合同管理'})
+	Contract.find({})
+					.populate('creator', 'name')
+					.populate('template', 'name')
+					.exec(function(err, contracts){
+						res.render('admin/contract_manage', {title: '合同管理', contracts: contracts})
+					})
 }
-
 //添加合同 
 exports.newContract = function(req, res){
 	var contract = {}
@@ -203,5 +208,90 @@ exports.newContract = function(req, res){
 			contract: contract,
 			templates: templates
 		})
+	})
+}
+//合同附件上传
+exports.attachUpload1 = function(req, res, next){
+	var attachData = req.files.attach_file_1;
+	console.log(attachData)
+	if(attachData && attachData.originalFilename){
+		var attachPath = attachData.path;
+		fs.readFile(attachPath, function(err, data){
+			var timestamp = Date.now();
+			var type = attachData.name.split('.')[1];
+			var attach = 'attach_' + timestamp + '.' + type;
+			var newPath = path.join(__dirname, '../', 'public/upload/attach/' + attach);
+			fs.writeFile(newPath, data, function(err){
+				req.attach_1 = attach;
+				next()
+			})
+		})
+	}else{
+		next()
+	}
+}
+//保存合同
+exports.saveContract = function(req, res){
+	var user = req.session.user;
+	var contract = req.body.contract;
+	if(req.attach_1){
+		contract.attach_file_1 = req.attach_1;
+	}
+	console.log(contract)
+	var id = contract.id;
+	var _contract;
+	if(id){
+		contract.updater = user._id;
+		Contract.findById(id, function(err, contractObj){
+			_contract = _.extend(contractObj, contract)
+			_contract.save(function(err, contract){
+				if(err) console.log(err)
+					res.redirect('/admin/contract_manage');
+			})
+		})
+	}else{
+		contract.creator = user._id;
+		_contract = new Contract(contract);
+		_contract.save(function(err, contract){
+			if(err){
+				console.log(err)
+			}else{
+				res.redirect('/admin/contract_manage');
+			}
+		})
+	}
+}
+//合同编辑
+exports.editContract = function(req, res){
+	var id = req.query.id;
+	if(id){
+		Contract.findById(id, function(err, contract){
+			if(err) console.log(err)
+			Template.fetch(function(err, templates){
+				if(err) console.log(err)
+				res.render('admin/contract_input', {
+					title: '合同编辑', 
+					contract: contract,
+					templates: templates
+				})
+			})
+		})
+	}
+}
+//合同删除
+exports.removeContract = function(req, res){
+	 var id = req.query.id;
+	 if(id){
+	 	Contract.remove({_id: id}, function(err, msg){
+	 		if(err) console.log(err)
+	 			res.redirect('/admin/contract_manage');
+ 	 	})
+	 }
+}
+//权限管理
+exports.jurisdictionManage = function(req, res){
+	Partner.fetch(function(err, partners){
+		if(err) console.log(err)
+		res.render('admin/jurisdiction_manage',{title: '权限管理', partners: partners})
 	})
 }

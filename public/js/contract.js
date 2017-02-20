@@ -1,4 +1,10 @@
 /* 合同管理 */
+const templateDataTable = $('#templateDataTable');
+const contractDataTable = $('#contractDataTable');
+$(function(){
+	templateDataTable.length === 1 && templateDataTable.DataTable({})
+	contractDataTable.length === 1 && contractDataTable.DataTable({})
+})
 //合同模板表单
 const templateForm = $('#templateForm'),
 			templateTitle = $('#templateTitle'),
@@ -93,3 +99,13 @@ attachFile.change(function(){
 function showFileName(fileControl, name){
 	$(fileControl).next('.input-group').children('.file-name').val(name);
 }
+//合同删除
+const removeContractBtn = $('.btn-contract-remove');
+removeContractBtn.on('click', function(e){
+	const _this = $(this);
+	e.preventDefault();
+	$.dialog().confirm({message: '确定删除该合同？'})
+	 .on('confirm', function(){
+	 	  location.href = _this.attr('href');
+	 })
+})
