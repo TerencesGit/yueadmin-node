@@ -128,7 +128,10 @@ router.get('/admin/edit_contract', Admin.editContract)
 router.get('/admin/remove_contract', Admin.removeContract)
 
 //权限管理
-router.get('/admin/jurisdiction_manage', Admin.jurisdictionManage)
+router.get('/admin/jurisdiction_manage', Admin.jurisdictionManage);
+router.get('/admin/show_partner_info', Admin.showPartnerInfo);
+router.get('/admin/set_partner_status', Admin.setPartnerStatus);
+
 /* 系统管理 */
 
 //系统功能树

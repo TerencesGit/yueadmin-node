@@ -3,6 +3,7 @@ var Partner = require('../models/partner');
 var Organize = require('../models/organize');
 var Template = require('../models/contract_template');
 var Contract = require('../models/contract');
+var Role = require('../models/role');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
@@ -292,6 +293,35 @@ exports.removeContract = function(req, res){
 exports.jurisdictionManage = function(req, res){
 	Partner.fetch(function(err, partners){
 		if(err) console.log(err)
-		res.render('admin/jurisdiction_manage',{title: '权限管理', partners: partners})
+		Role.fetch(function(err, roles){
+			if(err) console.log(err)
+			res.render('admin/jurisdiction_manage',{
+				title: '权限管理', 
+				partners: partners,
+				roles: roles
+			})
+		})
 	})
+}
+//企业详情
+exports.showPartnerInfo = function(req, res){
+	var id = req.query.id;
+	Partner.findById(id, function(err, partner){
+		res.render('admin/partner_info', {title: '企业信息', partner: partner})
+	})
+}
+//设置企业状态
+exports.setPartnerStatus = function(req, res){
+	var pid = req.query.pid;
+	var stid = req.query.stid;
+	console.log(pid)
+	console.log(stid)
+	if(pid){
+		Partner.update({_id: pid}, {$set: {status: stid}}, function(err, msg){
+			if(err) console.log(err)
+				res.json({status: 1})
+		})
+	}else{ 
+		res.json({status: 0})
+	}
 }

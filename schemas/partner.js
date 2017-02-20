@@ -16,6 +16,10 @@ var partnerSchema = new Schema({
 	profile: String,
 	logo: String,
 	license: String,
+	status:  {
+		type: Number,
+		default: 1
+	},
 	is_verified: {
 		type: Number,
 		default: 0

@@ -2,11 +2,12 @@
 <html>
   <head>
     <%- include('../link') %>
+    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
   </head>
   <body>
     <%- include('../aside') %>
     <%- include('../header') %>
-    <div id="main" class="main" data-id="partner_info">
+    <div id="main" class="main" data-page="jurisdiction_manage">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
           <div class="panel panel-success">
@@ -14,28 +15,37 @@
             <h3 class="panel-title"><%= title%></h3>
           </div>
           <div class="panel-body">
-               <table class="table table-hover table-bordered table-condensed">
+               <table id="partnerDataTable" class="table table-hover table-bordered table-condensed">
                 <thead>
                   <tr>
+                    <th>序号</th>
                     <th>企业名称</th>
+                    <th>企业法人</th>
                     <th>注册时间</th>
+                    <th>详情</th>
+                    <th>权限</th>
                     <th>状态</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <%partners.forEach(function(partner){%>
-                  <tr>
+                  <%partners.forEach(function(partner, index){%>
+                  <tr data-id="<%= partner._id%>">
+                    <td><%= index+1%></td>
                     <td><%= partner.name%></td>
+                    <td><%= partner.corporation%></td>
                     <td><%= moment(partner.meta.updateAt).format('YYYY-MM-DD HH:mm:ss') %></td>
                     <td>
-                    <%if(partner.is_verified == 0){%> 
-                    <a href="/admin/verify_partner?id=<%= partner._id%>">待审核</a>
-                    <%}else if(partner.is_verified == 1){%> <span>通过</span>
-                    <%}else if(partner.is_verified == 2){%> <span>未通过</span>
-                    <%}else if(partner.is_verified == 3){%> 
-                    <a href="/admin/verify_partner?id=<%= partner._id%>">修改后待审核</a>
-                    <%}else{%><span>无效</span>
-                    <%}%>
+                      <a href="/admin/show_partner_info?id=<%= partner._id%>" class="btn btn-link">查看</a>
+                    </td>
+                    <td>
+                       <a href="#setRoleModal" class="btn btn-link" data-toggle="modal">设置</a>
+                    </td>
+                    <td>
+                      <%if(partner.status == 0){%>
+                      <a href="javascript:;" class="btn-unban" title="禁用"><i class="fa fa-toggle-off fa-2x"></i></a>
+                      <%}else{%>
+                      <a href="javascript:;" class="btn-ban" title="启用"><i class="fa fa-toggle-on fa-2x"></i></a>
+                      <%}%>
                     </td>
                   </tr>
                   <%})%>
@@ -48,7 +58,47 @@
       </div>
     	<%- include('../footer') %>
     </div>
+   <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="setRoleModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form class="form-horizontal">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">权限设置</h4>
+            </div>
+            <div class="modal-body modal-control">
+              <div class="row">
+                <div class="alert alert-info m-l m-r">
+                  <i class="fa fa-info-circle"></i>提示：点击权限名称显示对应的功能</div>
+                <div class="col-md-6">
+                  <ul id="roleList" class="list-group role-list">
+                    <li class="list-group-item active">
+                    权限列表
+                    </li>
+                    <% roles.forEach(function(role){%>
+                    <li class="list-group-item" data-id="<%= role._id%>">
+                      <a href="javascript:;" class="check"><i class="fa fa-check pull-right"></i></a>
+                      <a href="javascript:;" class="role"><%= role.name%></a>
+                    </li>
+                    <%})%>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <ul id="roleFunctionTree" class="ztree"></ul>
+                </div>
+              </div> 
+            </div>
+            <div class="modal-footer">
+              <button type="reset" data-dismiss="modal" class="btn btn-default">取消</button>
+              <button id="setRoleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <%- include('../script')%>
-    <script src="/js/partner.js"></script>
+    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
+    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+    <script src="/js/jurisdiction.js"></script>
   </body>
 </html>
