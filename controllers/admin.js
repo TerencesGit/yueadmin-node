@@ -4,10 +4,24 @@ var Organize = require('../models/organize');
 var Template = require('../models/contract_template');
 var Contract = require('../models/contract');
 var Role = require('../models/role');
+var PartRole = require('../models/part_role');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
-
+//获取数组a与数组b不重复的部分
+function getANotB(a, b){
+	var temp = [];
+	var arr = [];
+	for(var i = 0; i < b.length; i++){
+		temp[b[i]] = true;
+	}
+ for(var j = 0; j < a.length; j++){
+ 	if(!temp[a[j]]){
+ 		arr.push(a[j])
+ 	}
+ }
+ return arr;
+}
 //商家列表 条件查询加分页
 exports.managePartner = function(req, res){
 	var search = req.query.search || {};
@@ -196,7 +210,10 @@ exports.contractManage = function(req, res){
 					.populate('creator', 'name')
 					.populate('template', 'name')
 					.exec(function(err, contracts){
-						res.render('admin/contract_manage', {title: '合同管理', contracts: contracts})
+						res.render('admin/contract_manage', {
+							title: '合同管理', 
+							contracts: contracts
+						})
 					})
 }
 //添加合同 
@@ -308,6 +325,58 @@ exports.showPartnerInfo = function(req, res){
 	var id = req.query.id;
 	Partner.findById(id, function(err, partner){
 		res.render('admin/partner_info', {title: '企业信息', partner: partner})
+	})
+}
+//设置企业权限
+exports.setPartnerRole = function(req, res){
+	const partRole = req.body.part_role;
+	//企业Id
+	const partId = partRole.part_id;
+	//权限列表
+	const roleList = partRole.role_list;
+	const partRoleObj = {
+		partner: partId,
+	};
+	var _partRole;
+	PartRole.find({partner: partId}, function(err, partRoles){
+		//获取原有权限列表
+		const getRoleId = partRole => partRole.role;
+		const originalRoleList = partRoles.map(getRoleId);
+		//获取新增权限列表
+		const newRoleList = getANotB(roleList, originalRoleList);
+		//保存新增权限列表
+		if(newRoleList.length !== 0){
+			newRoleList.forEach(function(role){
+				partRoleObj.role = role;
+				console.log(partRoleObj)
+				_partRole = new PartRole(partRoleObj);
+				_partRole.save(function(err, partrole){
+					if(err) console.log(err)
+				})
+			})
+		}
+		//获取被移除权限列表
+		const removeRoleList = getANotB(originalRoleList, roleList);
+		//删除被移除的权限列表
+		if(removeRoleList.length !== 0){
+			removeRoleList.forEach(function(role){
+				PartRole.remove({partner: partId, role: role}, function(err, msg){
+					if(err) console.log(err)
+				})
+			})
+		}
+		res.json({status: 1})
+	})
+}
+//获取企业权限列表
+exports.getRoleByPartner = function(req, res){
+	const partId = req.query.id;
+	PartRole.find({partner: partId}, function(err, partRoles){
+		if(err){
+			console.log(err)
+		}else{
+			res.json({partRoles: partRoles})
+		}
 	})
 }
 //设置企业状态

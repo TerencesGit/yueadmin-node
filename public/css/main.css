@@ -968,10 +968,10 @@ dl.horizontal dd {
 /**========== 留言板 end ===========*/
 
 /**========== 部门组织管理 start ===========*/
-.modal-body > .list-group >li > .check{
+.modal-body .list-group > li > .check{
   display: none
 }
-.modal-body > .list-group > li.checked > .check{
+.modal-body .list-group > li.checked > .check{
   display: inline
 }
 /**========== 部门组织管理 end ===========*/

@@ -130,6 +130,8 @@ router.get('/admin/remove_contract', Admin.removeContract)
 //权限管理
 router.get('/admin/jurisdiction_manage', Admin.jurisdictionManage);
 router.get('/admin/show_partner_info', Admin.showPartnerInfo);
+router.post('/admin/set_partner_role', Admin.setPartnerRole);
+router.get('/admin/get_role_by_partner', Admin.getRoleByPartner);
 router.get('/admin/set_partner_status', Admin.setPartnerStatus);
 
 /* 系统管理 */
@@ -157,6 +159,9 @@ router.post('/system/save_notice', multipartMiddleware, System.noticeFileUpload,
 router.get('/system/notice_detail', System.noticeDetail);
 router.get('/system/notice_edit', System.noticeEdit);
 router.get('/system/notice_remove', System.noticeRemove);
+
+//账户管理
+router.get('/system/account_manage', System.accountManage);
 
 /* 留言功能 */
 router.get('/message', Message.home);

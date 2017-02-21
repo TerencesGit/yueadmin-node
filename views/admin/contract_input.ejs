@@ -67,10 +67,7 @@
                   <div class="col-md-7">
                     <select name="contract[template]" id="contractTemplate" class="form-control">
                       <% templates.forEach(function(template){%>
-                       <!--  <%if(template._id == contract.template){%>
-                          <option value="<%= template._id%>"><%= template.name%></option>
-                        <%}%> -->
-                        <option value="<%= template._id%>"><%= template.name%></option>
+                      <option value="<%= template._id%>"><%= template.name%></option>
                       <%})%>
                     </select>
                   </div>

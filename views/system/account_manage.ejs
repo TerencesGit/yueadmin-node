@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
+  </head>
+  <body>
+    <%- include('../aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="account_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">账户管理</h3>
+            </div>
+            <div class="panel-body">
+              <table id="accountDataTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>姓名</th>
+                    <th>Email</th>
+                    <th>公司</th>
+                    <th>注册时间</th>
+                    <th>账户信息</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% users.forEach(function(user, index){ %>
+                    <tr data-id="<%= user._id%>">
+                      <td><%= index+1%></td>
+                      <td class="name"><%= user.name %></td>
+                      <td class="email"><%= user.email %></td>
+                      <td><%if(user.partner){%><%= user.partner.name %><%}%></td>
+                      <td><%= moment(user.meta.createAt).format('YYYY-MM-DD') %></td>
+                      <td><a href="">查看</a></td>
+                      <td>
+                        <%if(user.status == 0){%>
+                        <a href="javascript:;" class="btn-unban" title="禁用"><i class="fa fa-toggle-off fa-2x"></i></a>
+                        <%}else{%>
+                        <a href="javascript:;" class="btn-ban" title="启用"><i class="fa fa-toggle-on fa-2x"></i></a>
+                        <%}%>
+                      </td>
+                      <td>
+                        <button class="btn btn-warning btn-sm btn-edit" data-toggle="modal" href="#myModal">编辑</button>
+                        <button class="btn btn-danger btn-sm btn-del">删除</button>
+                      </td>
+                    </tr>
+                  <% })%>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="warp-footer"></div>
+        </div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                  <form action="/user/edit" method="post" class="form-horizontal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">用户编辑</h4>
+                    </div>
+                    <div class="modal-body">
+                      <input type="hidden" id="uid" name="user[id]" value="">
+                      <div class="form-group row">
+                        <label for="" class="col-md-offset-1 col-md-2">用户名</label>
+                        <div class="col-md-6">
+                            <input type="text" name="user[name]" class="form-control username">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="" class="col-md-offset-1 col-md-2">Email</label>
+                        <div class="col-md-6">
+                            <input type="text" name="user[email]" class="form-control email">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="" class="col-md-offset-1 col-md-2">等级</label>
+                        <div class="col-md-6">
+                            <input type="text" name="user[role]" class="form-control role">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button data-dismiss="modal" class="btn btn-default" type="reset">取消</button>
+                      <button class="btn btn-success" type="submit">提交</button>
+                    </div>
+                  </form>
+                </div>
+            </div>
+    </div>
+    <%- include('../script')%>
+    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
+    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+    <script src="/js/account_manage.js"></script>
+  </body>
+</html>

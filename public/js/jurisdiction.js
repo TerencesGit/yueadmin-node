@@ -1,25 +1,52 @@
+//企业表格
 const partnerDataTable = $('#partnerDataTable');
-//权限列表对象
-const roleList = $('#roleList');
-//权限单元
-const roleItem = roleList.children('li').not('.active');
-//权限名称
-const roleName = roleList.find('.role');
+//企业数据表格渲染
 $(function(){
 	partnerDataTable.DataTable()
 })
+//功能树
+const roleFunctionTree = $('#roleFunctionTree');
+let flag = true;
+//权限列表对象
+const roleList = $('#roleList');
+//每项权限
+const roleItem = roleList.children('li').not('.active');
+//权限名称
+const roleName = roleItem.children('.role');
+//权限选中标志
+const roleCheck = roleItem.children('.check');
+//企业Id
+let partnerId;
+//设置权限按钮
+const btnJuris = $('.btn-jurisdiction');
+//设置启用禁用按钮
+const btnBan = $('.btn-ban'),
+      btnUnBan = $('.btn-unban');
+//获取点击按钮所在行的数据      
+function getRowData($target){
+	const $tr = $target.parents('tr');
+	const id = $tr.data('id'),
+				name = $tr.children('.name').text();
+	return {id: id, name: name};
+}
+//获取按钮所在行的企业Id
+btnJuris.on('click', function(){
+	roleItem.removeClass('checked');
+	partnerId = getRowData($(this)).id;
+	getRoleByPartId(partnerId);
+})
 //权限列表回显
-function getRoleByOrgId(orgId){
+function getRoleByPartId(partId){
 	$.ajax({
-		url: '/partner/get_org_role?id='+ orgId,
+		url: '/admin/get_role_by_partner?id='+ partId,
 	})
 	.done(function(res) {
-		const orgRoles = res.orgRoles;
-		const getRoleId = orgRole => orgRole.role;
-		const roleIdList = orgRoles.map(getRoleId);
+		const partRoles = res.partRoles;
+		const getRoleId = partRole => partRole.role;
+		const roleIdList = partRoles.map(getRoleId);
 		for(let i = 0; i < roleItem.length; i++){
 			for(let j = 0; j < roleIdList.length; j++){
-				if(roleItem[i].getAttribute('data-id') == roleIdList[j]){
+				if($(roleItem[i]).data('role') == roleIdList[j]){
 					$(roleItem[i]).addClass('checked')
 					break;
 				}
@@ -33,7 +60,7 @@ function getRoleByOrgId(orgId){
 //点击权限查看对应功能
 roleName.on('click', function(e){
 	e.stopPropagation();
-	let roleId = $(this).parent().attr('data-id');
+	let roleId = $(this).parent().data('role');
 	getFuncByRole(roleId)
 })
 
@@ -53,9 +80,6 @@ function getFuncByRole(roleId){
           enable: true
         }
       },
-		  callback: {
-		    onClick: HandlerClick,
-		  }
 		}
     var zNode = [];
     var treeObj;
@@ -74,35 +98,34 @@ function getFuncByRole(roleId){
   	console.log("error");
   })
 }
-//选择权限(选中显示对号，非选中反之)
-roleItem.on('click', function(){
-	if($(this).hasClass('checked')){
-		$(this).removeClass('checked').children('.check').hide()
-	}else{
-		$(this).addClass('checked').children('.check').show()
-	}
+//选择权限
+roleItem.on('click', function(e){
+	const _this = $(e.target);
+	_this.hasClass('checked') && 
+	_this.removeClass('checked').children('.check').hide() ||
+	_this.addClass('checked').children('.check').show()
+})
+roleCheck.on('click', function(){
+	$(this).parent('li').click()
 })
 // 设置权限
-$('#setRoleBtn').on('click', function(e){
+$('#setJurisdictionBtn').on('click', function(e){
 	e.preventDefault();
-	if(!getSeletedNode()) return false;
- 	const node = getSeletedNode();
-  const orgId = node.id;
 	const checkedList = roleList.children('.checked');
 	const roleIdList= [];
 	checkedList.each(function(index, roleItem){
-		roleIdList.push(roleItem.getAttribute('data-id'))
+		roleIdList.push($(roleItem).data('role'))
 	})
-	const org_role = {
-		org_id: orgId,
+	const part_role = {
+		part_id: partnerId,
 		role_list: roleIdList
 	}
 	if(flag){
 		flag = false;
 		$.ajax({
-			url: '/partner/set_org_role',
+			url: '/admin/set_partner_role',
 			type: 'POST',
-			data: {org_role: org_role},
+			data: {part_role: part_role},
 		})
 		.done(function(res) {
 			if(res.status == 1){
@@ -119,10 +142,8 @@ $('#setRoleBtn').on('click', function(e){
 		})
 	}
 })
-//设置企业启用禁用状态
-var partnerId;
-const btnBan = $('.btn-ban'),
-      btnUnBan = $('.btn-unban');
+
+
 //设置企业禁用      
 btnBan.on('click', function(e){
 	const $tr = $(this).parents('tr');

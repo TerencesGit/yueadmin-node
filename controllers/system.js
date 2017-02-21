@@ -3,6 +3,7 @@ var Role = require('../models/role');
 var RoleFunc = require('../models/role_func');
 var Message = require('../models/message');
 var Notice = require('../models/notice');
+var User = require('../models/user');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
@@ -304,4 +305,36 @@ exports.noticeRemove = function(req, res){
 			res.json({status: 1})
 		})
 	}
+}
+//账户列表
+exports.accountManage = function(req, res){
+	// var page = {
+	// 	number: req.query.page || 1,
+	// 	limit: 5
+	// }
+	// var search = req.query.search || {};
+	// if(req.query.page){
+	// 	page.number = req.query.page < 1 ? 1 : req.query.page;
+	// }
+	// var model = {
+	// 	page: page,
+	//   search: search
+	// }
+	User.find({})
+			.populate('partner', 'name')
+			.populate('organize', 'name')
+			.exec(function(err, users){
+				res.render('system/account_manage', {
+					title: '用户列表',
+					users: users,
+				})
+			}) 
+	// User.findByPagination(model, function(err, pageIndex, pageCount, users){
+	// 	res.render('system/account_manage', {
+	// 			title: '用户列表',
+	// 			users: users,
+	// 			pageCount: pageCount,
+	// 			pageIndex: pageIndex
+	// 		})
+	// })
 }
