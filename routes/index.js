@@ -162,6 +162,9 @@ router.get('/system/notice_remove', System.noticeRemove);
 
 //账户管理
 router.get('/system/account_manage', System.accountManage);
+router.get('/system/show_account_info', System.showAccountInfo);
+router.get('/system/set_account_status', System.setAccountStatus);
+router.get('/system/remove_account', System.removeAccount);
 
 /* 留言功能 */
 router.get('/message', Message.home);

@@ -338,3 +338,37 @@ exports.accountManage = function(req, res){
 	// 		})
 	// })
 }
+//查看账户信息
+exports.showAccountInfo = function(req, res){
+	const id = req.query.id;
+	User.find({_id: id})
+			.populate('partner', 'name')
+			.populate('organize', 'name')
+			.exec(function(err, user){
+				console.log(user)
+				res.render('system/account_info', {title: '账户信息'})
+			})
+}
+//设置账户状态
+exports.setAccountStatus = function(req, res){
+	const id = req.query.id,
+				status = req.query.status;
+	if(id){
+		User.update({_id: id}, {$set: {status: status}}, function(err, msg){
+			if(err) console.log(err)
+				res.json({status: 1})
+		})
+	}
+}
+//删除账户
+exports.removeAccount = function(req, res){
+	var id = req.query.id;
+	if(id){
+		User.remove({_id: id}, function(err, msg){
+			if(err) console.log(err)
+				res.json({status: 1})
+		})
+	}else{
+		res.json({status: 0})
+	}
+}

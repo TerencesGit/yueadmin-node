@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+  </head>
+  <body>
+    <%- include('../aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="account_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a href="#collapseTwo" data-toggle="collapse">账户信息</a>
+                <a href="javascript:history.go(-1)" class="pull-right">返回</a>
+              </h3>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse in">
+              <div class="panel-body">
+                <div class="col-md-offset-3 col-md-6">
+                  <div class="text-center m-b">
+                    <img src="<%if(user.avatar){%>/upload/avatar/<%= user.avatar %><%}else{%> /img/avatar.gif <%}%>" class="img-circle" width="200" height="200" title="头像" alt="头像">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>姓名</dt>
+                    <dd><%= user.name%></dd>
+                  </dl>
+                </div>
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>邮箱</dt>
+                    <dd><%= user.email%></dd>
+                  </dl>
+                </div>
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>手机号</dt>
+                    <dd><%if(user.mobile){%><%= user.mobile%><%}%></dd>
+                  </dl>
+                </div>
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>qq</dt>
+                    <dd><%if(user.qq){%><%= user.qq%><%}%></dd>
+                  </dl>
+                </div>
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>性别</dt>
+                    <dd>
+                    <% if(user.gender == '0'){ %> 男
+                    <% }else if(user.gender == '1'){ %> 女
+                    <% }else{ %> 未知 <% } %>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>生日</dt>
+                    <dd><%if(user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD')%><%}%></dd>
+                  </dl>
+                </div>
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>身份证号</dt>
+                    <dd><%if(user.idcard){%> <%= user.idcard%> <%}%></dd>
+                  </dl>
+                </div>
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>籍贯</dt>
+                    <dd><%if(user.address){%> <%= user.address %> <%}%></dd>
+                  </dl>
+                </div>
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>公司</dt>
+                    <dd><%if(user.partner){%> <%= user.partner.name %> <%}%></dd>
+                  </dl>
+                </div>
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>所属部门</dt>
+                    <dd><%if(user.organize){%> <%= user.organize.name %> <%}%></dd>
+                  </dl>
+                </div>
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>身份证正面</dt>
+                    <dd>
+                      <img src="<%if(user.idcard_front){%>/upload/idcard/<%= user.idcard_front %><%}else{%> /img/idcard_front_example.png <%}%>" width="245" height="158" class="img-rounded" title="身份证正面" alt="身份证正面">
+                    </dd>
+                  </dl>
+                </div>
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>身份证反面</dt>
+                    <dd>
+                      <img src="<%if(user.idcard_back){%>/upload/idcard/<%= user.idcard_back %><%}else{%> /img/idcard_back_example.png <%}%>" width="245" height="158" class="img-rounded" title="身份证反面" alt="身份证反面">
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="warp-footer"></div>
+        </div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+    <script src="/js/message.js"></script>
+  </body>
+</html>
