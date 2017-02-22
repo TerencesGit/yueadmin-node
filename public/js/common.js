@@ -395,3 +395,29 @@ const countDown = function($target, router, count){
       }
     }, 1000)
 }
+
+//检测是否为连续数字
+function checkContinuationInteger(arr){
+  if(typeof arr === 'string'){
+    arr = arr.split('');
+  }
+  if(!Array.isArray(arr)) return false;
+  let len = arr.length;
+  let arrFirst = parseInt(arr[0]);
+  let arrLast = parseInt(arr[len-1]);
+  let sortDirection = 1;
+  if(arrFirst > arrLast){
+    sortDirection = -1;
+  }
+  if(arrFirst + (len-1)*sortDirection !== arrLast){
+    return false;
+  }
+  let isContinuation = true;
+  for(let i = 0; i < len; i++){
+    if(parseInt(arr[i]) !== i*sortDirection + arrFirst){
+      isContinuation = false;
+      break;
+    }
+  }
+  return isContinuation;
+}

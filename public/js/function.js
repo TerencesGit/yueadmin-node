@@ -31,6 +31,10 @@ function getSeletedNode(){
 $(function(){
 	getFunctionTree()
 })
+function getFont(treeId, node) {
+	return node.font ? node.font : {};
+}
+
 //获取功能树
 function getFunctionTree(){
 	$.ajax({
@@ -54,18 +58,35 @@ function getFunctionTree(){
     const zNode = [];
     var treeObj;
     functions.forEach(function(func){
-      treeObj = {
-        id: func._id,
-        pId: func.parent_id,
-        name: func.name,
-        url: func.funUrl,
-        desc: func.funDesc,
-        level: func.funcLevel,
-        seq: func.funcSeq,
-        type: func.funcType, 
-        status: func.status,
-        open: true
-      };
+    	if(!func.parent_id){
+	    	treeObj = {
+	        id: func._id,
+	        pId: func.parent_id,
+	        name: func.name,
+	        url: func.funUrl,
+	        desc: func.funDesc,
+	        level: func.funcLevel,
+	        seq: func.funcSeq,
+	        type: func.funcType, 
+	        status: func.status,
+	        open: true,
+	        iconSkin: 'root',
+	      };
+    	}else{
+    		treeObj = {
+	        id: func._id,
+	        pId: func.parent_id,
+	        name: func.name,
+	        url: func.funUrl,
+	        desc: func.funDesc,
+	        level: func.funcLevel,
+	        seq: func.funcSeq,
+	        type: func.funcType, 
+	        status: func.status,
+	        open: false,
+	        iconSkin: 'folder'
+	      };
+    	}
       zNode.push(treeObj)
     })
     $.fn.zTree.init(functionTree, setting, zNode);
