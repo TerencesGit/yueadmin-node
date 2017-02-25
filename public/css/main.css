@@ -1,4 +1,4 @@
-/**========== common class ==========**/
+*========== common class ==========**/
 .m-t {
   margin-top: 15px;
 }
@@ -28,6 +28,9 @@
 }
 .p-r {
   padding-right: 15px;
+}
+.no-padding {
+  padding: 0;
 }
 .min-w-300 {
   min-width: 300px;
@@ -72,7 +75,7 @@
   overflow-y: auto
 }
 .letter-space-half {
-  letter-spacing: .5em;
+  letter-spacing: .3em;
 }
 .letter-space {
   letter-spacing: 1em;
@@ -115,11 +118,34 @@ a.disabled {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.blue {
+  color: blue;
+}
+.green {
+  color: green;
+}
+.white{
+  color: white;
+}
 .gray {
   color: gray;
 }
 .light-gray {
   color: #ccc;
+}
+.check-link {
+  vertical-align: middle
+}
+.check-link .fa {
+  font-size: 1.2em
+}
+.check-link .fa-check-square,
+.check-link.checked .fa-square-o {
+  display: none
+}
+.check-link .fa-square-o, 
+.check-link.checked .fa-check-square {
+  display: inline-block;
 }
 /**========== global style ==========**/
 body {
@@ -732,6 +758,32 @@ dl.horizontal dd {
 .form-group .fa-check {
   display: none
 }
+/*---------- new ----------*/
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+.login-form .alert-danger {
+  margin-top: -10px;
+}
+.input-group .fa {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  color: #3c763d;
+}
+.input-group-addon {
+  background: transparent;
+}
+.input-group .form-control {
+  border-left: none;
+}
+.has-success .input-group-addon,
+.has-error .input-group-addon {
+  background-color: transparent;
+}
+/*---------------------*/
 .form-group.has-success .fa-check {
   display: inline-block;
   position: absolute;
@@ -974,4 +1026,4 @@ dl.horizontal dd {
 .modal-body .list-group > li.checked > .check{
   display: inline
 }
-/**========== 部门组织管理 end ===========*/
+/**========== 部门组织管理 end ===========

@@ -8,7 +8,6 @@ $(function() {
     $('#remember').prop('checked', true)
   }
 })
-
 //注册表单对象
 const signupForm = $('#signupForm'),
       emailInput = $('#email'),
@@ -121,6 +120,20 @@ function resetPasswdSubmit(){
 btnResetPasswd.on('click', function(e){
   e.preventDefault();
   resetPasswdSubmit()
+})
+//checkbox 选中处理
+$('.check-link').click(function(){
+  $('.checkbox-inline').click()
+})
+agreeCheck.change(function(){
+  const checkLink = $(this).prev();
+  console.log(checkLink)
+  var flag = $(this).prop('checked')
+  if(flag){
+    checkLink.addClass('checked')
+  }else{
+     checkLink.removeClass('checked')
+  }
 })
 //为输入框注册失去焦点事件
 emailInput.blur(function() {

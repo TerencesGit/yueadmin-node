@@ -77,7 +77,7 @@ function getFunctionTree(){
 	        id: func._id,
 	        pId: func.parent_id,
 	        name: func.name,
-	        url: func.funUrl,
+	        url: func.funcUrl,
 	        desc: func.funDesc,
 	        level: func.funcLevel,
 	        seq: func.funcSeq,
