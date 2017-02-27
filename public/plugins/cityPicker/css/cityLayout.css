@@ -43,9 +43,9 @@
 .provinceCity .county .next a,.provinceCity .county .next a:visited{float:right;width:29px;height:109px;background:url(../images/bg_mc_0113_4.png) -58px center no-repeat}
 .provinceCity .county .next a.can,.provinceCity .county .next a.can:visited{background:url(../images/bg_mc_0113_4.png) -29px center no-repeat}
 .provinceCityAll{width:306px;position:absolute;background:#FFF;display:none}
-.provinceCityAll .tabs{height:28px;border-bottom:2px solid #323055;background:url(../images/bg_mc_0113_1.png) no-repeat}
+.provinceCityAll .tabs{height:30px;border-bottom:2px solid #323055;background:url(../images/bg_mc_0113_1.png) no-repeat}
 .provinceCityAll .tabs li{height:28px;float:left;width:76px}
-.provinceCityAll .tabs li a,.provinceCity .tabs li a:visited{display:block;height:28px;color:#777777;line-height:28px;text-align:center;text-decoration:none;float:left;width:76px;background:url(../images/bg_mc_0113_2.png) right center no-repeat}
+.provinceCityAll .tabs li a,.provinceCity .tabs li a:visited{display:block;height:28px;color:#777777;line-height:28px;text-align:center;text-decoration:none;float:left;width:78px;background:url(../images/bg_mc_0113_2.png) right center no-repeat}
 .provinceCityAll .tabs li a.current,.provinceCity .tabs li a.current:visited{background:url(../images/bg_mc_0113_3.png) right center no-repeat;color:#FFF}
 .provinceCityAll .con{height:130px;border:1px solid #d6d6d6;border-top:none;padding:10px}
 .provinceCityAll .provinceAll .pre a,.provinceCityAll .provinceAll .pre a:visited{float:left;width:29px;height:109px;background:url(../images/bg_mc_0113_4.png) left center no-repeat}
@@ -87,4 +87,4 @@
 #dimCityQuery li a,#dimCityQuery li a:visited{display:block;height:26px;padding:0 15px;line-height:26px;color:#777777;text-decoration:none}
 #dimCityQuery li.current a,#dimCityQuery li.current a:visited{background:#ff6c00;color:#FFF}
 #dimCityQuery li.none{height:26px;padding:0 15px;line-height:26px;color:#777777}
-.city-icon {background:url(../images/ts-indexcity.png) no-repeat right;}
+.city-icon {background:url(../images/ts-indexcity.png) no-repeat right;background-position: right -1px;}

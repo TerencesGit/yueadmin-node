@@ -1,7 +1,7 @@
 //* 用户管理 */
 var $btnDelete = $('.btn-del'),
     $btnEdit = $('.btn-edit');
-
+const btnDelete = $('.btn-del');
 //用户信息编辑
 $btnEdit.on('click', function(){
   var $tr = $(this).parents('tr');
@@ -21,27 +21,28 @@ $btnEdit.on('click', function(){
   roleInput.val(role);
 })
 
-//用户删除
-$btnDelete.on('click', function(){
-	var $tr = $(this).parents('tr');
-	var name = $tr.children().eq(0).text();
-	var uid = $tr.attr('data-id');
-  $.dialog({type: 'confirm', message: '确定删除用户'+name, 
-    handlerConfirm: function(){ confirmDel() }, handlerCancel: function(){return false}})
-  function confirmDel(){
+//账户删除
+btnDelete.on('click', function(){
+  const $tr = $(this).parents('tr');
+  const uid = $tr.data('id');
+  const account = $tr.children('.account').text();
+  $.dialog().confirm({message: '确定删除账号<a>'+account+'</a>，此操作不可恢复'})
+   .on('confirm', function(){
+      removeAccount(uid, $tr)
+  })
+})
+function removeAccount(uid, $tr){
     $.ajax({
-      url: '/user/delete',
-      data: {uid: uid},
-      beforeSend: function(){
-        //var waiting = $.dialog({type: 'waiting',delay: 1000})
-      }
+      url: '/system/remove_account?id=' + uid,
     })
     .done(function(res) {
       console.log(res.status);
       if(res.status == 1){
         if($tr.length === 1){
-          $.dialog({type: 'success', message: '删除成功',delay: 1000})
-          $tr.remove()
+          $.dialog().success({message: '删除成功',delay: 600})
+          setTimeout(function(){
+            $tr.remove()
+          }, 700)
         }
       }
     })
@@ -49,4 +50,3 @@ $btnDelete.on('click', function(){
       console.log(error);
     })
   }
-})

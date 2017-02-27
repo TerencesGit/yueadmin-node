@@ -71,10 +71,10 @@ const isEmptyInput = function($element){
 //判断输入框两次输入是否一致
 const confirmConsistent = function($element, $target, msg, wrapShow) {
   if(!($element && $target)) throw new Error('至少两个参数！');
-  const msg = msg && msg.notMatch || '两次输入不一致';
-  const wrapShow = wrapShow || false;
+  msg = msg && msg.notMatch || '两次输入不一致';
+  wrapShow = wrapShow || false;
   const value = $.trim($element.val()),
-      targetValue = $.trim($target.val());
+        targetValue = $.trim($target.val());
   const formGroup = $element.parents('.form-group');
   if(wrapShow){
   	if (formGroup.next('.alert').length === 0) {
@@ -103,8 +103,8 @@ const queryAccount = function($element, router, msg, $target, wrapShow, contrary
   if(!($element && router)) throw new Error('至少两个参数！');
   const msgExisted = msg && msg.existed || '该号码已存在';
   const msgNotExisted = msg && msg.notExisted || '该号码不存在';
-  const wrapShow = wrapShow || false;
-  const contrary = contrary || false;
+  wrapShow = wrapShow || false;
+  contrary = contrary || false;
   const number = $.trim($element.val());
   if(_number == number) return;
    _number = number;
@@ -218,7 +218,7 @@ const checkCode = function($element, msg, wrapShow) {
 const checkCheckbox = function($element, msg, wrapShow) {
 	if(!($element && msg)) throw new Error('至少两个参数！');
 	const msgRequired = msg.required || '需要勾选';
-	const wrapShow = wrapShow || false;
+	wrapShow = wrapShow || false;
   const formGroup = $element.parents('.form-group');
   const checked = $element.prop('checked');
   if(!checked) {
@@ -343,36 +343,28 @@ const clearFile = function($fileControl){
 
 //图片格式大小验证
 const checkImageRugular = function(fileControl, msg, regular, sizeLimit){
-	/*
-		fileControl   //file对象  
-		msg         //错误信息提示
-		regular     //图片格式正则表达式 默认 gif|jpg|jpeg|png
-		sizeLimit   //图片尺寸大小限制   默认 1024K
-	*/
   if(!hasFile(fileControl)) return true;
 	if(!(fileControl instanceof jQuery || fileControl.nodeType === 1)) 
 	throw new Error(fileControl + '不是DOM或jQuery对象！');
 	const msgRegular = msg && msg.regular || '图片格式有误',
-	 		msgSize = msg && msg.size || '图片大小超过限制',
-	 		regular = regular || /\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/,
-	 		sizeLimit = sizeLimit || 1024;
-	const formGroup = $(fileControl).parent();
-	if(formGroup.children('.alert').length === 0) {
-    formGroup.append('<div class="alert alert-danger hidden"></div>')
-  }
-  const $alert = formGroup.children('.alert');
+	 		  msgSize = msg && msg.size || '图片大小超过限制';
+	regular = regular || /\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/,
+	sizeLimit = sizeLimit || 1024;
+	const formGroup = $(fileControl).parents('.form-group');
+  const $alert = formGroup.find('.alert');
   const fileObj = fileControl instanceof jQuery ? fileControl[0] : fileControl;
 	const fileValue = fileObj.value,
-	    fileSize = fileObj.files[0] && fileObj.files[0].size / 1024;
+	      fileSize = fileObj.files[0] && fileObj.files[0].size / 1024;
 	if(!regular.test(fileValue)){
-		$alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgRegular);
+		$alert.addClass('alert-danger').html('<i class="fa fa-minus-circle"></i>'+ msgRegular);
 		return false;
 	}else if(fileSize > sizeLimit){
-		$alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgSize);
+		$alert.addClass('alert-danger').html('<i class="fa fa-minus-circle"></i>'+ msgSize);
 		return false;
-	}
-	$alert && $alert.remove()
-	return true;
+	}else{
+    $alert.removeClass('alert-danger').html('');
+    return true;
+  }
 }
 
 //图片上传校验
@@ -383,7 +375,7 @@ const checkImage = function(fileControl, msg, regular, sizeLimit){
 
 //倒计时 自动跳转到指定页
 const countDown = function($target, router, count){
-  const count = count || 5;
+  count = count || 5;
   var timer;
   timer = setInterval(function() {
       if (count === 0) {

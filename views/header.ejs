@@ -4,11 +4,14 @@
         <a href="javascript:;" id="btnToggle" class="btn-toggle">
           <i class="fa fa-bars"></i>
         </a>
-        <form role="search" class="navbar-form" method="post" action="#">
-            <div class="form-group">
-                <input type="text" placeholder="请输入要查找内容 …" class="form-control" name="top-search" id="top-search">
-            </div>
-        </form>
+        <div id="noticeWapper" class="navbar-notice clearfix">
+            <h4 class="title pull-left m-t"><i class="fa fa-bullhorn"></i></h4>
+            <ul id="noticeList" class="notice-list pull-left">
+             <% notices.forEach(function(notice){%>
+                <li><a href="/system/notice_detail?id=<%= notice._id%>"><%= notice.title%></a><em><%= moment(notice.meta.createAt).format('YYYY-MM-DD') %></em></li>
+             <%})%>            
+            </ul>
+        </div>
       </div>
       <ul class="navbar-nav pull-right"> 
         <li class="dropdown">

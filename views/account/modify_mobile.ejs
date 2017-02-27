@@ -9,12 +9,15 @@
     <div id="main" class="main" data-page="account_security">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
-          <div class="panel panel-info account-modify">
+          <div class="panel panel-warning">
             <div class="panel-heading">
-              <h3 class="panel-title">修改手机号码</h3>
+              <h3 class="panel-title">
+                修改手机号码
+                <a href="javascript:history.go(-1)" class="pull-right">返回</a>
+              </h3>
             </div> 
-            <div class="panel-body">
-              <form action="/account/bind_mobile" method="post" id="modifyMobileForm" class="form-horizontal" role="form">
+            <div class="panel-body min-h-500 p-50">
+              <form action="/account/bind_mobile" method="post" id="modifyMobileForm" class="form-horizontal m-t-100" role="form">
                 <div class="form-group">
                   <label class="col-md-4 control-label">当前手机号码：</label>
                   <div class="col-md-4">

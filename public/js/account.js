@@ -41,7 +41,7 @@
       mobile: /^(13|14|15|17|18)[0-9]{9}$/, 
       email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
       password: /^.{8,20}$/,
-      nickname: /^.{3,20}$/,
+      name: /^.{3,20}$/,
       qq: /[1-9][0-9]{4,}/,
       idcard: /(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
   }
@@ -64,7 +64,7 @@
       required: '请输入密码',
       regular: '密码长度在8-20位之间',
     },
-    nickname: {
+    name: {
       required: '昵称不能为空',
     },
     qq: 'qq格式有误',
@@ -206,8 +206,8 @@
 
   /* 账号编辑页 */
   //账户编辑表单对象
-  const accountInfoForm = $('#accountInfoForm'),
-        nicknameInput = $('#nickname'),
+  const accountForm = $('#accountForm'),
+        nameInput = $('#name'),
         qqInput = $('#qq'),
         idcardInput = $('#idcard'),
         addressInput = $('#address'),
@@ -220,7 +220,7 @@
         idcardBackFile = $('#idcardBackFile'),
         idcardBackPreview = $('#idcardBackPreview'),
         idcardBackPic = $('#idcardBackPic'),
-        btnInfoSubmit = $('#btnInfoSubmit');
+        accountSubmitBtn = $('#accountSubmitBtn');
   
   //头像预览
   avatarFile.change(function(){
@@ -245,15 +245,14 @@
   })
 
   //账户编辑表单提交
-  btnInfoSubmit.on('click', function(e){
+  accountSubmitBtn.on('click', function(e){
     e.preventDefault()
-    checkInput(nicknameInput, msg.nickname) &&
+    checkInput(nameInput, msg.name) &&
     checkInputValue(qqInput, msg.qq, regular.qq) &&
     checkInputValue(idcardInput, msg.idcard, regular.idcard) &&
-    checkImageValue(avatarFile) &&
-    checkImageValue(idcardFrontFile) &&
-    checkImageValue(idcardBackFile) &&
-    alert(234)
-    //accountInfoForm.submit()
+    checkImageRugular(avatarFile) &&
+    checkImageRugular(idcardFrontFile) &&
+    checkImageRugular(idcardBackFile) &&
+    accountForm.submit()
   })
 })(jQuery)

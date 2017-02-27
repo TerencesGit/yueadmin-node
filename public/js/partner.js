@@ -32,7 +32,7 @@ const regular = {
 //错误信息提示			
 const msg = {
 		name: {
-			required: '请输入员工姓名',
+			required: '请输入姓名',
 			regular: '姓名只能是中文或英文'
 		},
 		licenseId: {

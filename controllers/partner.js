@@ -67,19 +67,19 @@ exports.licenseUpload = function(req, res, next){
 		next()
 	}
 }
-//企业信息保存
+//企业注册信息保存
 exports.saveInfo = function(req, res){
-	var user = req.session.user;
-	var partnerObj = req.body.partner;
-	var id= partnerObj._id;
-	var _partner;
+	const user = req.session.user;
+	const partnerObj = req.body.partner;
+	const id = partnerObj.id;
 	if(req.logo){
 		partnerObj.logo = req.logo;
 	}
 	if(req.license){
 		partnerObj.license = req.license;
 	}
-	if(id !== 'undefined'){
+	var _partner;
+	if(id){
 		Partner.findById(id, function(err, partner){
 			if(err) console.log(err);
 			_partner = _.extend(partner, partnerObj);
@@ -87,21 +87,21 @@ exports.saveInfo = function(req, res){
 			_partner.save(function(err, partner){
 				if(err) console.log(err);
 				console.log('提交注册成功again')
-				res.render('account/registered_partner_success',{title: '修改提交成功'})
+				res.render('account/registered_partner_submit',{title: '修改提交成功'})
 			})
 		})
 	}else{
 		partnerObj.admin = user._id;
-		Partner.findOne({admin: _partner.admin}, function(err, partner){
-			if(err) return err;
+		Partner.findOne({admin: partnerObj.admin}, function(err, partner){
+			if(err) console.log(err);
 			if(!partner){
-				var partner = new Partner(_partner);
-				partner.save(function(err, partner){
+				_partner = new Partner(partnerObj);
+				_partner.save(function(err, partner){
 					console.log('提交注册成功')
 					console.log(partner)
 					User.update({_id: user._id},{$set: {partner: partner._id}}, function(err, msg){
-						user.partner = partner._id;
-						res.render('account/registered_partner_success',{title: '提交注册成功'})
+						user.partner = partner._id; 
+						res.render('account/registered_partner_submit',{title: '提交注册成功'})
 					})
 				})
 			}else{
@@ -166,7 +166,7 @@ exports.organizeManage = function(req, res){
 					return res.render('account/registered_partner', {title: '注册我的企业'})
 				}
 				if(user.partner.is_verified == 0 || user.partner.is_verified == 3){
-					res.render('account/registered_partner_success',{title: '等待审核'})
+					res.render('account/registered_partner_submit',{title: '等待审核'})
 				}else if(user.partner.is_verified == 2){
 					res.render('account/registered_partner_result',{title: '未通过审核', partner: partner})
 				}else{

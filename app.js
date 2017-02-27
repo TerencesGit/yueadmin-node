@@ -43,6 +43,11 @@ app.use(function(req, res, next) {
     app.locals.user = _user;
     next()
 });
+app.use(function(req, res, next) {
+    var _notices = req.session.notices;
+    app.locals.notices = _notices;
+    next()
+});
 app.use('/', routes);
 app.use('/users', users);
 

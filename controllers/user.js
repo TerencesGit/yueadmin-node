@@ -1,6 +1,7 @@
 var User = require('../models/user');
 var Message = require('../models/message');
 var Partner = require('../models/partner');
+var Notice = require('../models/notice');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
@@ -255,7 +256,6 @@ exports.modifyEmail = function(req, res){
 //修改密码页
 exports.showModifyPassword = function(req, res){
 	res.render('account/modify_password', {title: '账号安全'})
-	//res.render('account/account_bind', {title: '账号安全', tabIndex: 3})
 }
 //修改密码
 exports.modifyPassword = function(req, res){
@@ -285,7 +285,7 @@ exports.modifyPassword = function(req, res){
 					userSession.error = '原密码不正确';
 					return res.render('account/account_bind', {title: '账号安全', tabIndex: 3, user: userSession})
 				}
-			})
+			}) 
 	})
 }
 //找回密码
@@ -358,12 +358,20 @@ exports.adminRequired = function(req, res, next){
 //账户信息
 exports.showAccountInfo = function(req, res){
 	var user = req.session.user;
-	Message.find()
-				 .sort('-meta.createAt')
-				 .populate('user', 'avatar name')
-				 .exec(function(err, messages){
-				 		res.render('account/account_info', {title: '账户信息', messages: messages})
-				 })
+	Notice.fetch(function(err, notices){
+		req.session.notices = notices;
+		if(err) console.log(notices)
+		Message.find()
+					 .sort('-meta.createAt')
+					 .populate('user', 'avatar name')
+					 .exec(function(err, messages){
+					 		res.render('account/account_info', {
+					 			title: '账户信息', 
+					 			notices: notices,
+					 			messages: messages
+					 		})
+					 })
+	})
 }
 //账户信息编辑
 exports.showAccountEdit = function(req, res){
@@ -381,11 +389,6 @@ exports.avatarUpload = function(req, res, next){
 			var avatar = 'avatar_' + timestamp + '.' +type;
 			var newPath = path.join(__dirname, '../', 'public/upload/avatar/' + avatar);
 			fs.writeFile(newPath, data, function(err){
-				// User.update({_id: user._id},{'$set': {avatar: avatar}}, function(err, msg){
-				// 	if(err) return err;
-				// 	user.avatar = avatar;
-				// 	res.redirect('/account/edit_info')
-				// })
 				req.avatar = avatar;
 				next()
 			})
@@ -438,7 +441,6 @@ exports.saveInfo = function(req, res){
 	var userObj = req.body.user;
 	userObj.idcard = Trim(userObj.idcard);
 	userObj.address = Trim(userObj.address);
-	userObj.signature = Trim(userObj.signature);
 	if(req.avatar){
 		userObj.avatar = req.avatar;
 	}
@@ -454,7 +456,6 @@ exports.saveInfo = function(req, res){
 			if(err) return err;
 			var _user = _.assign(req.session.user, userObj);
 			req.session.user = _user;
-			console.log(_user)
 		  res.redirect('/')
 		})
 	}else {
@@ -489,25 +490,29 @@ exports.showRegistered = function(req, res){
 //注册我的企业
 exports.showRegisteredPartner = function(req, res){
 	var user = req.session.user;
-	if(user){
+	return res.render('account/registered_partner', {title: '注册我的企业'})
+	if(!user.partner){
 		return res.render('account/registered_partner', {title: '注册我的企业'})
-		// Partner.findOne({admin: user._id}, function(err, partner){
-		// 		if(!partner){
-		// 			return res.render('account/registered_partner', {title: '注册我的企业'})
-		// 		}
-		// 		if(partner.is_verified == 0 || partner.is_verified == 3){
-		// 			res.render('account/registered_partner_success',{title: '等待审核'})
-		// 		}else if(partner.is_verified == 2){
-		// 			res.render('account/registered_partner_result',{title: '未通过审核', partner: partner})
-		// 		}else{
-		// 			res.redirect('/partner/partner_info')
-		// 		}
-		// })
 	}else{
-		res.redirect('/signin')
+		Partner.findOne({admin: user._id}, function(err, partner){
+				if(partner.is_verified == 0 || partner.is_verified == 3){
+					res.render('account/registered_partner_submit',{title: '等待审核'})
+				}else if(partner.is_verified == 2){
+					res.render('account/registered_partner_result',{title: '未通过审核', partner: partner})
+				}else{
+					res.redirect('/partner/partner_info')
+				}
+		})
 	}
 }
-
+//等待审核
+exports.registeredPartnerSuccess = function(req, res){
+	res.render('account/registered_partner_submit', {title: '等待审核'})
+}
+//审核不通过
+exports.registeredPartnerResult = function(req, res){
+	res.render('account/registered_partner_result', {title: '未通过审核'})
+}
 /* 管理员操作 */
 
 //用户列表

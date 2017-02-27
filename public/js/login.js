@@ -1,12 +1,6 @@
 $(function() {
   //绘制验证码
   if($('#canvasCode').length !== 0) drawCode();
-  //检测cookie是否保存用户登录信息
-  if($.cookie && $.cookie('remember') == 'true'){
-    $('#username').val(atob($.cookie('username')))
-    $('#password').val(atob($.cookie('password')))
-    $('#remember').prop('checked', true)
-  }
 })
 //注册表单对象
 const signupForm = $('#signupForm'),
@@ -136,10 +130,30 @@ agreeCheck.change(function(){
   }
 })
 //为输入框注册失去焦点事件
-emailInput.blur(function() {
-  checkInput(emailInput, msg.email, regular.email, true, email) &&
-  queryAccount(emailInput, 'findByEmail', msg.email, btnSignup, true)
-})
+function onBlurCheck($element, msg, regular, next, clear){
+  $element.blur(function(){
+    if($.trim($element.val()) !== ''){
+      next($element, msg, regular, true)
+    }else{
+      clear($element)
+    }
+  })
+}
+function clearCheck($element){
+  const formGroup = $element.parents('.form-group');
+  if(formGroup.hasClass('has-error')){
+    formGroup.removeClass('has-error')
+  }
+  if(formGroup.next('.alert').length === 1){
+    formGroup.next('.alert').remove()
+  }
+}
+onBlurCheck(emailInput, msg.email, regular.email, checkInput, clearCheck)
+// emailInput.blur(function() {
+//   if($.trim(emailInput.val()) == '') return;
+//   checkInput(emailInput, msg.email, regular.email, true, email) &&
+//   queryAccount(emailInput, 'findByEmail', msg.email, btnSignup, true)
+// })
 passwdInput.blur(function() {
   checkInput(passwdInput, msg.password, regular.password, true)
   if (!passwdInput2.val() == '') {
@@ -163,18 +177,3 @@ resetPasswordInput2.blur(function(){
     confirmConsistent(resetPasswordInput2, resetPasswordInput, msg.password, true)
   }
 })
-//保存cookie 
-function saveCookie(){
-  var checked = rememberCheck.prop('checked');
-  if(checked){
-    var uname = btoa(nameInput.val());
-    var passwd = btoa(passInput.val());
-    $.cookie('remember', true, {expires: 7});
-    $.cookie('username', uname, {expires: 7});
-    $.cookie('password', passwd, {expires: 7});
-  }else{
-    $.cookie('remember', false, {expires: -1});
-    $.cookie('username', '', {expires: -1});
-    $.cookie('password', '', {expires: -1});
-  }
-}

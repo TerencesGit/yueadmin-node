@@ -9,16 +9,16 @@
     <div id="main" class="main" data-page="registered_partner">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
-          <div class="panel panel-success">
+          <div class="panel panel-danger">
             <div class="panel-heading">
               <h3 class="panel-title">未通过审核</h3>
             </div>
-            <div class="panel-body text-center">
-              <div class="success">
-                <h3>抱歉，您的申请未通过审核。</h3>
-                <p class="m-t">
-                  原因：<%= partner.reject_info%>
-                </p>
+            <div class="panel-body text-center min-h-500">
+              <div class="m-t-100">
+                <h3 class="text-warning"><i class="fa fa-warning m-r"></i>抱歉，您的注册企业申请未通过审核。</h3>
+                <h4 class="m-t">
+                  原因：企业信息不完整！
+                </h4>
                 <a href="/account/show_registered_partner">返回重新填写</a>
               </div>
             </div>

@@ -11,11 +11,21 @@
         <div class="container-fluid">
           <div class="panel panel-success">
           <div class="panel-heading">
-            <h3 class="panel-title">注册我的企业</h3>
+            <h3 class="panel-title">
+            注册我的企业
+            <a href="javascript:history.go(-1)" class="pull-right">返回</a>
+            </h3>
           </div>
           <div class="panel-body">
-            <h4 class="page-header m-t">请填写企业真实信息，*表示必填项</h4> 
-            <form method="post" action="/partner/register" id="registeredForm" class="form-horizontal " role="form" enctype="multipart/form-data"> 
+            <div class="alert alert-info">
+              <i class="fa fa-info-circle"></i>
+              提示：请填写企业真实信息，*表示必填项
+              <a class="close" data-dismiss="alert" href="#" aria-hidden="true">
+                &times;
+              </a>
+            </div>
+            <form method="post" action="/partner/register" id="registeredForm" class="form-horizontal m-t" role="form" enctype="multipart/form-data"> 
+              <input type="hidden" name="partner[id]" value="">
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>企业名称</label>
                 <div class="col-md-6">
@@ -80,29 +90,34 @@
                 <label class="col-md-3 control-label"><i>*</i>企业LOGO</label>
                 <div class="col-md-3">
                  <input type="file" name="logo" id="logoFile">
-                 <div id="logoPreview" class="preview-area">
-                  <img src="" id="logoPic" class="part_logo" width="100" height="100" title="企业LOGO" alt="企业LOGO">
-                  <a class="btn btn-link">选择本地图片</a>
+                 <div id="logoPreview" class="preview-area clearfix">
+                  <img src="" id="logoPic" class="part_logo" width="150" height="150" title="企业LOGO" alt="选择本地图片">
                  </div>
+                 <div class="alert"></div>
                 </div>
                 <label class="col-md-1 control-label">示例：</label>
                 <div class="col-md-3">
-                    <img src="/img/logo.png" alt="企业LOGO示例" title="企业LOGO示例" width="100" height="100">
+                    <img src="/img/logo.png" alt="企业LOGO示例" title="企业LOGO示例" width="150" height="150">
                 </div>
               </div>    
               <div class="form-group row license-upload">
                 <label class="col-md-3 control-label"><i>*</i>营业执照</label>
                 <div class="col-md-9">
                   <input type="file" name="license" id="licenseFile">
-                  <div id="licensePreview" class="preview-area">
-                    <img src="" id="licensePic" class="part_license" width="500" height="150" title="营业执照" alt="营业执照">
-                    <a class="btn btn-link">选择本地图片</a>
+                  <div id="licensePreview" class="preview-area clearfix">
+                    <img src="" id="licensePic" class="part_license" width="100%" height="350" title="营业执照" alt="选择本地图片">
                   </div>
+                  <div class="alert"></div>
                 </div>
               </div> 
               <div class="form-group text-center"> 
-                <button type="submit" id="btnRegistered" class="btn btn-success">提交</button>
-                <button class="btn btn-default m-l" onClick="history.go(-1)">返回</button>
+                <button type="submit" id="btnRegistered" class="btn btn-primary">提交</button>
+                <button type="reset" class="btn btn-default m-l">重置</button>
+              </div>
+              <div class="form-group text-center">
+                <h3 class="text-danger">****临时链接****</h3> 
+                <a href="/account/registered_partner_success" class="btn btn-success">提交成功</a>
+                <a href="/account/registered_partner_result" class="btn btn-danger m-l">审核不通过</a>
               </div>
             </form>            
           </div>

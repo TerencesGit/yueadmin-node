@@ -1,15 +1,24 @@
-*========== common class ==========**/
+/*========== common class ==========**/
 .m-t {
   margin-top: 15px;
 }
+.m-t-100 {
+  margin-top: 100px;
+}
 .m-b {
   margin-bottom: 15px;
+}
+.m-b-0 {
+  margin-bottom: 0 !important;
 }
 .m-l {
   margin-left: 15px;
 }
 .m-r {
   margin-right: 15px;
+}
+.p-50 {
+  padding: 50px;
 }
 .p-t {
   padding-top: 15px;
@@ -133,19 +142,149 @@ a.disabled {
 .light-gray {
   color: #ccc;
 }
-.check-link {
-  vertical-align: middle
+/*自定义按钮*/
+.btn-secondary {
+  color: #fff !important;
+  background-color: #7266ba;
+  border-color: #7266ba;
 }
-.check-link .fa {
-  font-size: 1.2em
+.btn-secondary:hover, 
+.btn-secondary:focus, 
+.btn-secondary:active, 
+.btn-secondary.active, 
+.open .dropdown-toggle.btn-secondary {
+  color: #ffffff !important;
+  background-color: #6254b2;
+  border-color: #5a4daa;
 }
-.check-link .fa-check-square,
-.check-link.checked .fa-square-o {
-  display: none
+.btn-success {
+  color: #fff !important;
+  background-color: #27c24c;
+  border-color: #27c24c;
 }
-.check-link .fa-square-o, 
-.check-link.checked .fa-check-square {
-  display: inline-block;
+.btn-success:hover, 
+.btn-success:focus, 
+.btn-success:active, 
+.btn-success.active, 
+.open .dropdown-toggle.btn-success {
+  color: #ffffff !important;
+  background-color: #23ad44;
+  border-color: #20a03f;
+}
+.btn-info {
+  color: #fff !important;
+  background-color: #23b7e5;
+  border-color: #23b7e5;
+}
+.btn-info:hover, 
+.btn-info:focus, 
+.btn-info:active, 
+.btn-info.active, 
+.open .dropdown-toggle.btn-info {
+  color: #ffffff !important;
+  background-color: #19a9d5;
+  border-color: #189ec8;
+}
+.btn-warning {
+  color: #fff !important;
+  background-color: #fad733;
+  border-color: #fad733;
+}
+.btn-warning:hover, 
+.btn-warning:focus, 
+.btn-warning:active, 
+.btn-warning.active, 
+.open .dropdown-toggle.btn-warning {
+  color: #ffffff !important;
+  background-color: #f9d21a;
+  border-color: #f9cf0b;
+}
+.btn-danger {
+  color: #fff !important;
+  background-color: #f05050;
+  border-color: #f05050;
+}
+.btn-danger:hover, 
+.btn-danger:focus, 
+.btn-danger:active, 
+.btn-danger.active, 
+.open .dropdown-toggle.btn-danger {
+  color: #ffffff !important;
+  background-color: #ee3939;
+  border-color: #ed2a2a;
+}
+/*自定义面板*/
+.panel-primary {
+  border-color: #23b7e5;
+}
+.panel-primary > .panel-heading {
+  background-color: #23b7e5;
+  border-color: #23b7e5;
+}
+.panel-info {
+  border-color: #23c6c8;
+}
+.panel-info > .panel-heading {
+  background-color: #23c6c8;
+  border-color: #23c6c8;
+  color: #fff;
+}
+.panel-warning {
+  border-color: #f8ac59;
+}
+.panel-warning > .panel-heading {
+  background-color: #f8ac59;
+  border-color: #f8ac59;
+  color: #fff;
+}
+.panel-danger {
+  border-color: #ed5565;
+}
+.panel-danger > .panel-heading {
+  background-color: #ed5565;
+  border-color: #ed5565;
+  color: #fff;
+}
+
+.panel-blue {
+  border-color: #1c84c6;
+}
+.panel-blue > .panel-heading {
+  background-color: #1c84c6;
+  border-color: #1c84c6;
+  color: #fff;
+}
+.panel-green {
+  border-color: #009D00;
+}
+.panel-green > .panel-heading {
+  background-color: #009D00;
+  border-color: #009D00;
+  color: #fff;
+}
+.panel-gray {
+  border-color: gray;
+}
+.panel-gray > .panel-heading {
+  background-color: gray;
+  border-color: gray;
+  color: #fff;
+}
+.panel-orange {
+  border-color: orange;
+}
+.panel-orange > .panel-heading {
+  background-color: orange;
+  border-color: orange;
+  color: #fff;
+}
+.panel-purple {
+  border-color: purple;
+}
+.panel-purple > .panel-heading {
+  background-color: purple;
+  border-color: purple;
+  color: #fff;
 }
 /**========== global style ==========**/
 body {
@@ -245,11 +384,23 @@ dl.horizontal dd {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/*.account-info .dl-horizontal dt {
+  width: 75px;
+}
+.account-info .dl-horizontal dd {
+  margin-left: 90px;
+}*/
 .dropdown-menu {
   min-width: auto
 }
 .input-group-btn > .btn {
   padding: 6px 12px;
+}
+.list-group-item.active,
+.list-group-item.active:focus, 
+.list-group-item.active:hover {
+  background-color: #23b7e5;
+  border-color: #23b7e5;
 }
 /**========== animation start ==========**/
 .animated {
@@ -494,11 +645,6 @@ dl.horizontal dd {
   border: 1px solid #e7e7e7;
   z-index: 999
 }
-
-.navbar-header {
-  width: 400px;
-}
-
 .btn-toggle {
   padding: 5px 12px;
   margin: 10px 5px 5px 20px;
@@ -515,22 +661,37 @@ dl.horizontal dd {
   color: #fff;
 }
 
-.navbar-form {
+.navbar-notice {
   display: inline-block;
+  height: 20px;
+  margin-top: 15px;
+  margin-left: 20px;
+  overflow: hidden;
 }
-
-.navbar-form .form-control {
-  background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
-  border: medium none;
-  font-size: 14px;
-  box-shadow: none
+.navbar-notice .title {
+  margin-top: 2px;
+  color: #23b7e5;
 }
-
-.navbar-form .form-control:focus {
-  box-shadow: none;
-  border-bottom: 1px solid #23b7e5;
+.notice-list {
+  margin-left: 10px;
+  overflow: hidden;
 }
-
+.notice-list > li > a {
+  display: inline-block;
+  max-width: 300px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.notice-list > li > em {
+  font-style: normal;
+  vertical-align: top;
+  margin-left: 5px;
+  color: #337ab7;
+}
+.notice-list > li > a:hover {
+  text-decoration: underline;
+}
 .navbar-nav > li {
   display: inline-block;
   margin: 15px 0 0 10px;
@@ -650,7 +811,7 @@ dl.horizontal dd {
 
 /** 图片上传预览区域 start **/
 .preview-area {
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
   cursor: pointer;
 }
 .preview-area > img,
@@ -758,32 +919,6 @@ dl.horizontal dd {
 .form-group .fa-check {
   display: none
 }
-/*---------- new ----------*/
-.input-group {
-  position: relative;
-  margin-bottom: 20px;
-}
-.login-form .alert-danger {
-  margin-top: -10px;
-}
-.input-group .fa {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 3;
-  color: #3c763d;
-}
-.input-group-addon {
-  background: transparent;
-}
-.input-group .form-control {
-  border-left: none;
-}
-.has-success .input-group-addon,
-.has-error .input-group-addon {
-  background-color: transparent;
-}
-/*---------------------*/
 .form-group.has-success .fa-check {
   display: inline-block;
   position: absolute;
@@ -923,32 +1058,7 @@ dl.horizontal dd {
 
 /**========== 重置密码 end ==========**/
 
-/**========== 账号信息编辑 start ===========**/
-.account-info .dl-horizontal dt {
-  width: 75px;
-}
-.account-info .dl-horizontal dd {
-  margin-left: 90px;
-}
-.avatar-form {
-  width: 150px;
-}
-.idcard-form .alert {
-  width: 245px;
-  margin-left: 33.33333333%;
-}
-.idcard-form .btn-primary {
-  width: 245px;
-}
-.back-example {
-  margin-top: 30px;
-}
-/**========== 账号信息编辑 end ===========**/
-
-/**========== 账号绑定 start ===========**/
-.account-panel .panel-body {
-  padding: 0 15px;
-}
+/*账号安全*/
 .panel-item {
   padding: 25px 25px 20px 25px;
   border-bottom: 1px solid #eee;
@@ -962,24 +1072,7 @@ dl.horizontal dd {
 .panel-item .item-title {
   font-size: 18px
 }
-.account-modify .panel-body {
-  padding: 50px;
-}
-/**========== 账号绑定 end ===========**/
 
-/**========== 注册我的企业 start ===========**/
-
-.form-group.logo-upload +.alert {
-    width: 130px;
-    margin-left: 25%;
-}
-.form-group.license-upload +.alert {
-  width: 500px;
-  margin-left: 25%;
-}
-.panel-success {
-  min-height: 300px
-}
 /* 企业信息 */
 .partner-info .dl-horizontal dd{
   font-size: 16px
@@ -991,39 +1084,11 @@ dl.horizontal dd {
   width: 60%;
   margin: auto;
 }
-/**========== 注册我的企业 end ===========**/
 
-/**========== 留言板 start ===========**/
-
-.media-body p{
-  font-size: 18px;
-  margin: 0
-}
-.media-avatar span{
-  font-size: 16px;
-  vertical-align: top;
-}
-.btn-delete {
-  display: none;
-  position: absolute;
-  top: -4px;
-  left: -20px;
-  padding: 0;
-  font-size: 20px;
-}
-.btn-delete:hover {
-  text-decoration: none
-}
-.media:hover .btn-delete {
-  display: inline-block;
-}
-/**========== 留言板 end ===========*/
-
-/**========== 部门组织管理 start ===========*/
+/*部门组织管理 */
 .modal-body .list-group > li > .check{
   display: none
 }
 .modal-body .list-group > li.checked > .check{
   display: inline
 }
-/**========== 部门组织管理 end ===========

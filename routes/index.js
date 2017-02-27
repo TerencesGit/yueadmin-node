@@ -38,13 +38,11 @@ router.get('/account', User.signinRequired, User.showAccountInfo);
 router.get('/account/account_info', User.signinRequired, User.showAccountInfo);
 router.get('/account/edit_info', User.signinRequired, User.showAccountEdit);
 router.post('/account/save_info', User.signinRequired, multipartMiddleware, User.avatarUpload, User.idcardFrontUpload, User.idcardBackUpload, User.saveInfo);
-//router.post('/account/avatarUpload', multipartMiddleware, User.avatarUpload);
 
 //账号设置
 router.get('/account/account_security', User.signinRequired, User.accountBind);
 router.get('/account/bind_mobile', User.showBindMobile);
 router.post('/account/bind_mobile', User.bindMobile);
-//router.get('/account/verify_email', User.verifiedEmail);
 router.post('/account/verify_email', User.verifiedEmail);
 router.get('/account/show_modify_email', User.showModifyEmail);
 router.get('/account/modify_email', User.modifyEmail);
@@ -65,6 +63,9 @@ router.post('/partner/register', multipartMiddleware, Partner.logoUpload, Partne
 router.get('/partner/partner_info', Partner.showInfo)
 router.get('/partner/partner_info_edit', Partner.showInfoEdit)
 router.post('/partner/edit_info',multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.EditInfo)
+
+router.get('/account/registered_partner_success', User.registeredPartnerSuccess)
+router.get('/account/registered_partner_result', User.registeredPartnerResult)
 
 //企业组织管理
 router.get('/partner/organize_manage', Partner.organizeManage);
