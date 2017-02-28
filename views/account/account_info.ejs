@@ -112,7 +112,11 @@
                       <dl class="horizontal clearfix">
                         <dt>身份证正面</dt>
                         <dd>
-                          <img src="<%if(user.idcard_front){%>/upload/idcard/<%= user.idcard_front %><%}else{%> /img/idcard_front_example.png <%}%>" width="245" height="158" class="img-rounded" title="身份证正面" alt="身份证正面">
+                          <%if(user.idcard_front){%>
+                          <img src="/upload/idcard/<%= user.idcard_front %>" width="245" height="158" class="img-rounded" title="身份证正面" alt="身份证正面">
+                          <%}else{%>
+                          <span>暂无</span>
+                          <%}%>
                         </dd>
                       </dl>
                     </div>
@@ -120,14 +124,18 @@
                       <dl class="horizontal clearfix">
                         <dt>身份证反面</dt>
                         <dd>
-                          <img src="<%if(user.idcard_back){%>/upload/idcard/<%= user.idcard_back %><%}else{%> /img/idcard_back_example.png <%}%>" width="245" height="158" class="img-rounded" title="身份证反面" alt="身份证反面">
+                          <%if(user.idcard_back){%>
+                          <img src="/upload/idcard/<%= user.idcard_back %>" width="245" height="158" class="img-rounded" title="身份证反面" alt="身份证反面">
+                          <%}else{%> 
+                          <span>暂无</span>
+                          <%}%>
                         </dd>
                       </dl>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="panel panel-info hidden">
+              <div class="panel panel-info">
                 <div class="panel-heading">
                   <h3 class="panel-title">
                     <a href="#collapseThree" data-toggle="collapse">消息动态</a>
@@ -139,7 +147,7 @@
                       <% messages.forEach(function(message){ %>
                       <li class="media">
                         <div class="pull-left">
-                          <a href="/" class="media-avatar">
+                          <a href="/user/user_detail?id=<%= message.user._id%>" class="media-avatar">
                             <img src="/upload/avatar/<%= message.user.avatar %>" alt="" class=" img-rounded" width="30" height="30">
                             <span><%= message.user.name%></span>
                           </a>

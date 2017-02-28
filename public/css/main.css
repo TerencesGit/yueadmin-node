@@ -83,14 +83,14 @@
   max-height: 500px;
   overflow-y: auto
 }
-.letter-space-half {
-  letter-spacing: .3em;
+.letter-space-s {
+  letter-spacing: .4em;
 }
-.letter-space {
+.letter-space-m {
   letter-spacing: 1em;
 }
-.letter-space-2 {
-  letter-spacing: 2em;
+.letter-space-l {
+  letter-spacing: 1.8em;
 }
 .text-indent {
   text-indent: 2em
@@ -181,7 +181,7 @@ a.disabled {
 .btn-info:active, 
 .btn-info.active, 
 .open .dropdown-toggle.btn-info {
-  color: #ffffff !important;
+  color: #fff !important;
   background-color: #19a9d5;
   border-color: #189ec8;
 }
@@ -195,7 +195,7 @@ a.disabled {
 .btn-warning:active, 
 .btn-warning.active, 
 .open .dropdown-toggle.btn-warning {
-  color: #ffffff !important;
+  color: #fff !important;
   background-color: #f9d21a;
   border-color: #f9cf0b;
 }
@@ -209,7 +209,7 @@ a.disabled {
 .btn-danger:active, 
 .btn-danger.active, 
 .open .dropdown-toggle.btn-danger {
-  color: #ffffff !important;
+  color: #fff !important;
   background-color: #ee3939;
   border-color: #ed2a2a;
 }
@@ -384,12 +384,6 @@ dl.horizontal dd {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/*.account-info .dl-horizontal dt {
-  width: 75px;
-}
-.account-info .dl-horizontal dd {
-  margin-left: 90px;
-}*/
 .dropdown-menu {
   min-width: auto
 }
@@ -509,7 +503,7 @@ dl.horizontal dd {
 }
 /**========== animation end ==========**/
 
-/**========== 左侧导航 start ===========**/
+/**========== sidebar start ===========**/
 .sidebar-warp {
   position: fixed;
   top: 0;
@@ -631,9 +625,9 @@ dl.horizontal dd {
 .submenu a:hover {
   color: #fff;
 }
-/**========== 左侧导航 end ===========**/
+/**========== sidebar end ===========**/
 
-/**========== 页头区域 start ===========**/
+/**========== header  start ===========**/
 
 .header {
   position: fixed;
@@ -750,9 +744,9 @@ dl.horizontal dd {
   padding: 5px 20px;
   color: #a4abbb
 }
-/**========== 页头区域end ===========**/
+/**========== header end ===========**/
 
-/**========== 主体区域start ===========**/
+/**========== main start ===========**/
 
 .main {
   position: absolute;
@@ -782,9 +776,9 @@ dl.horizontal dd {
     display: none;
   }
 }
-/**========== 主体区域 end ===========**/
+/**========== main end ===========**/
 
-/**========== 页脚区域 start ===========**/
+/**========== footer start ===========**/
 
 .site-footer {
   position: relative;
@@ -807,9 +801,9 @@ dl.horizontal dd {
 .back-top i {
   color: #2A3542;
 }
-/**========== 页脚区域 end ===========**/
+/**========== footer end ===========**/
 
-/** 图片上传预览区域 start **/
+/** picture upload preview start **/
 .preview-area {
   /*margin-bottom: 20px;*/
   cursor: pointer;
@@ -844,9 +838,9 @@ dl.horizontal dd {
 .attach-upload.has-success:hover .file-clear {
   display: block;
 }
-/** 图片上传预览区域 end **/
+/** picture upload preview end **/
 
-/** 工具栏 start **/
+/** tools start **/
 .tools {
   padding: 0 0 5px 15px;
 }
@@ -888,9 +882,9 @@ dl.horizontal dd {
 .tools .fa-remove{
   color: #d75931;
 }
-/** 工具栏 end **/ 
+/** tools end **/ 
 
-/**========== 登录注册start ==========**/
+/**========== login start ==========**/
 .login-page {
   background: url(../img/login_bg.jpg) fixed no-repeat;
   background-size: 100% 100%;
@@ -916,10 +910,10 @@ dl.horizontal dd {
 .login-form .form-group:last-child {
   margin-bottom: 0
 }
-.form-group .fa-check {
+.form-group .fa-check-circle {
   display: none
 }
-.form-group.has-success .fa-check {
+.form-group.has-success .fa-check-circle {
   display: inline-block;
   position: absolute;
   top: 10px;
@@ -930,17 +924,23 @@ dl.horizontal dd {
 .form-group.submit {
   margin: 15px 0;
 }
-.login-form .alert-danger {
+/*.login-form .alert-danger {
   float: right;
   width: 270px;
   margin-top: -10px;
   margin-bottom: 5px;
+}*/
+.input-tip.alert.alert-info,
+.input-tip.alert.alert-danger {
+  float: right;
+  width: 270px;
+  margin: 5px 15px 0 0;
 }
-.agree-check +.alert {
-  float: none
+.check-tip.alert {
+  margin: 0;
 }
-.agree-check > .checkbox-inline {
-  margin-left: 15px;
+.check-tip.alert.alert-danger{
+  margin: 5px 15px 0;
 }
 .canvas-code {
   margin-left: -10px;
@@ -975,9 +975,9 @@ dl.horizontal dd {
   height: 500px;
   overflow-y: scroll
 }
-/**========== 登录注册 end ==========**/
+/**========== login end ==========**/
 
-/**========== 重置密码 start ==========**/
+/**========== reset password start ==========**/
 .reset-password .panel {
   margin: 8% auto;
   min-height: 450px;
@@ -1056,9 +1056,9 @@ dl.horizontal dd {
   font-size: 16px
 }
 
-/**========== 重置密码 end ==========**/
+/**========== reset password end ==========**/
 
-/*账号安全*/
+/* 账号安全 */
 .panel-item {
   padding: 25px 25px 20px 25px;
   border-bottom: 1px solid #eee;

@@ -1,13 +1,13 @@
 $(function() {
   //绘制验证码
-  if($('#canvasCode').length !== 0) drawCode();
+  ($('#canvasCode').length === 1) && drawCode();
 })
 //注册表单对象
 const signupForm = $('#signupForm'),
       emailInput = $('#email'),
       passwdInput = $('#passwd'),
-      passwdInput2 = $('#passwd2'),
-      signupCodeInput = $('#signupCode'),
+      confirmPasswd = $('#confirmPasswd'),
+      signupCode = $('#signupCode'),
       agreeCheck = $('#agree'),
       btnSignup = $('#btnSignup');
 
@@ -15,43 +15,50 @@ const signupForm = $('#signupForm'),
 const signinForm = $('#signinForm'),
       nameInput = $('#username'),
       passInput = $('#password'),
-      signinCodeInput = $('#signinCode'),
+      signinCode = $('#signinCode'),
       rememberCheck = $('#remember'),
       btnSignIn = $('#btnSignIn');
 
 // 忘记密码表单对象
 const findPasswdForm = $('#findPasswdForm'),
       bindEmailInput = $('#bindEmail'),
-      findPasswdCodeInput = $('#findPasswdCode'),
+      findPasswdCode = $('#findPasswdCode'),
       btnFindPasswd = $('#btnFindPasswd');
 
 //重置密码表单对象      
 const resetPasswdForm = $('#resetPasswdForm'),
-      resetPasswordInput = $('#resetPassword'),
-      resetPasswordInput2 = $('#resetPassword2'),
+      resetPassword = $('#resetPassword'),
+      resetPassword2 = $('#resetPassword2'),
       btnResetPasswd = $('#btnResetPasswd');
 
 //正则表达式   
 const regular = {
-      email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-      password: /^.{8,20}$/,
+  email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+  password: /^.{8,20}$/,
 }
 
-//错误信息提示
+//信息提示
 const msg = {
     email: {
+      tip: '完成验证后，可用于邮箱登录和密码找回',
       required: '请输入邮箱号',
       regular: '邮箱格式不正确',
       existed: '该邮箱号已被占用',
       notExisted: '该邮箱号未绑定'
     },
     password: {
+      tip: '密码长度在8-20位之间',
       required: '请输入密码',
       regular: '密码长度在8-20位之间',
-      notMatch: '两次密码输入不一致'
+    },
+    confirmPasswd: {
+      tip: '请再次输入密码',
+      required: '请再次输入密码',
+      inconsistent: '两次密码输入不一致'
     },
     authcode: {
-      required: '验证码不能为空',
+      tip: '看不清？点击图片更换验证码',
+      required: '请输入验证码',
       error: '验证码错误'
     },
     agreeCheck: {
@@ -61,119 +68,83 @@ const msg = {
       required: '请输入用户名'
     }
 }
+//注册表单失去焦点验证
+focusEvent(emailInput, msg.email, regular.email, validateForm);
+focusEvent(passwdInput, msg.password, regular.password, validateForm);
+focusEvent(confirmPasswd, msg.confirmPasswd, null, confirmPassword, passwdInput);
+focusEvent(signupCode, msg.authcode, null, clearTip);
+emailInput.blur(function(){
+  if($(this).val() !== ''){
+    validateForm(emailInput, msg.email, regular.email) &&
+    queryEmail(emailInput, msg.email, btnSignup)
+  }
+})
 
+//注册表单验证
+function validateSignupForm(){
+  return validateForm(emailInput, msg.email, regular.email) && 
+  validateForm(passwdInput, msg.password, regular.password) &&
+  confirmConsistent(confirmPasswd, passwdInput, msg.password) && 
+  validateCode(signupCode, msg.authcode) &&
+  isCkecked(agreeCheck, msg.agreeCheck)
+}
 //注册按钮提交
 btnSignup.on('click',function(e) {
   e.preventDefault()
-  var status = $(this).attr('data-status');
-  if(status == '0') return;
-  signupSubmit()
+  if($(this).attr('data-status') == 0) return;
+  validateSignupForm() && signupForm.submit()
 })
-
-//注册表单逐步验证
-function signupSubmit() {
-  checkInput(emailInput, msg.email, regular.email, true) && 
-  checkInput(passwdInput, msg.password, regular.password, true) &&
-  confirmConsistent(passwdInput2, passwdInput, msg.password, true) && 
-  checkCode(signupCodeInput, msg.authcode, true) && 
-  checkCheckbox(agreeCheck, msg.agreeCheck, true) && signupForm.submit()
-}
-
 //登录表单验证
-function signinSubmit(){
-  checkInput(nameInput, msg.username, null, true) && 
-  checkInput(passInput, msg.password, null, true) && 
-  checkCode(signinCodeInput, msg.authcode, true) && 
-  signinForm.submit()
+function validateSigninForm(){
+  return validateForm(nameInput, msg.username, null, true) && 
+  validateForm(passInput, msg.password, null, true) && 
+  validateCode(signinCode, msg.authcode, true)
 }
-
-//登录表单同步提交
+nameInput.blur(function(){
+  if($(this).val() !== ''){
+    clearTip($(this))
+  }
+})
+passInput.blur(function(){
+  if($(this).val() !== ''){
+    clearTip($(this))
+  }
+})
+signinCode.blur(function(){
+  if($(this).val() !== ''){
+    clearTip($(this))
+  }
+})
+//登录表单提交
 btnSignIn.on('click', function(e){
   e.preventDefault()
-  saveCookie()
-  signinSubmit()
+  validateSigninForm() && signinForm.submit()
 })
-//找回密码表单提交
-function findPasswdSubmit(){
-  checkInput(bindEmailInput, msg.email, regular.email, true) &&
-  checkCode(findPasswdCodeInput, msg.authcode, true) &&
-  findPasswdForm.submit()
-}
-btnFindPasswd.on('click', function(e){
-  e.preventDefault();
-  var status = $(this).attr('data-status');
-  if(status == '0') return;
-  findPasswdSubmit()
-})
-//重置密码表单提交
-function resetPasswdSubmit(){
-  checkInput(resetPasswordInput, msg.password, regular.password, true) &&
-  confirmConsistent(resetPasswordInput2, resetPasswordInput, msg.password, true) && 
-  resetPasswdForm.submit()
-}
-btnResetPasswd.on('click', function(e){
-  e.preventDefault();
-  resetPasswdSubmit()
-})
-//checkbox 选中处理
-$('.check-link').click(function(){
-  $('.checkbox-inline').click()
-})
-agreeCheck.change(function(){
-  const checkLink = $(this).prev();
-  console.log(checkLink)
-  var flag = $(this).prop('checked')
-  if(flag){
-    checkLink.addClass('checked')
-  }else{
-     checkLink.removeClass('checked')
-  }
-})
-//为输入框注册失去焦点事件
-function onBlurCheck($element, msg, regular, next, clear){
-  $element.blur(function(){
-    if($.trim($element.val()) !== ''){
-      next($element, msg, regular, true)
-    }else{
-      clear($element)
-    }
-  })
-}
-function clearCheck($element){
-  const formGroup = $element.parents('.form-group');
-  if(formGroup.hasClass('has-error')){
-    formGroup.removeClass('has-error')
-  }
-  if(formGroup.next('.alert').length === 1){
-    formGroup.next('.alert').remove()
-  }
-}
-onBlurCheck(emailInput, msg.email, regular.email, checkInput, clearCheck)
-// emailInput.blur(function() {
-//   if($.trim(emailInput.val()) == '') return;
-//   checkInput(emailInput, msg.email, regular.email, true, email) &&
-//   queryAccount(emailInput, 'findByEmail', msg.email, btnSignup, true)
-// })
-passwdInput.blur(function() {
-  checkInput(passwdInput, msg.password, regular.password, true)
-  if (!passwdInput2.val() == '') {
-    confirmConsistent(passwdInput2, passwdInput, msg.password, true)
-  }
-})
-passwdInput2.blur(function() {
-  if (passwdInput.val() !== '' && passwdInput2.val() !== '') {
-    confirmConsistent(passwdInput2, passwdInput, msg.password, true)
-  }
-})
+
+//找回密码表单验证
 bindEmailInput.blur(function(){
   checkInput($(this), msg.email, regular.email, true) &&
   queryAccount($(this), 'findByEmail', msg.email, btnFindPasswd, true, true)
 })
-resetPasswordInput.blur(function(){
-  checkInput(resetPasswordInput, msg.password, regular.password, true)
+btnFindPasswd.on('click', function(e){
+  e.preventDefault();
+  if($(this).attr('data-status') == 0) return;
+  checkInput(bindEmailInput, msg.email, regular.email, true) &&
+  checkCode(findPasswdCode, msg.authcode, true) &&
+  findPasswdForm.submit()
 })
-resetPasswordInput2.blur(function(){
-  if (resetPasswordInput.val() !== '' && resetPasswordInput2.val() !== '') {
-    confirmConsistent(resetPasswordInput2, resetPasswordInput, msg.password, true)
+//重置密码表单验证
+resetPassword.blur(function(){
+  checkInput(resetPassword, msg.password, regular.password, true)
+})
+resetPassword2.blur(function(){
+  if(resetPassword.val() !== '' && resetPassword2.val() !== '') {
+    confirmConsistent(resetPassword2, resetPassword, msg.password, true)
   }
+})
+btnResetPasswd.on('click', function(e){
+  e.preventDefault();
+  checkInput(resetPassword, msg.password, regular.password, true) &&
+  confirmConsistent(resetPassword2, resetPassword, msg.password, true) && 
+  resetPasswdForm.submit()
 })

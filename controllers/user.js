@@ -22,7 +22,7 @@ exports.findByEmail = function(req, res, next){
 		if(user){
 			res.json({status: 1})
 		}else{
-			res.json({status: 2})
+			res.json({status: 0})
 		}
 	})
 }

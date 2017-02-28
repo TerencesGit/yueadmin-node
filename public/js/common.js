@@ -110,13 +110,13 @@ const queryAccount = function($element, router, msg, $target, wrapShow, contrary
    _number = number;
   const formGroup = $element.parents('.form-group');
   if(!wrapShow){
-  	if (formGroup.children('.alert').length === 0) {
+  	if(formGroup.children('.alert').length === 0) {
 	    formGroup.append('<p class="col-md-3 alert alert-danger hidden"></p>')
 	  }
 	  const $alert = formGroup.children('.alert');
 	  $alert.addClass('hidden');
   }else {
-  	if (formGroup.next('.alert').length === 0) {
+  	if(formGroup.next('.alert').length === 0) {
 	    formGroup.after('<div class="col-md-offset-3 col-md-9 alert alert-danger hidden"></div>')
 	  }
 	  const $alert = formGroup.next('.alert');
@@ -178,23 +178,23 @@ const drawCode = function() {
 
 //校验验证码
 const checkCode = function($element, msg, wrapShow) {
-	if(!($element && msg)) throw new Error('至少两个参数！');
-	const msgRequired = msg.required || '不能为空！';
-	const msgError = msg.error || '验证码错误！';
-	wrapShow = wrapShow || false;
+  if(!($element && msg)) throw new Error('至少两个参数！');
+  const msgRequired = msg.required || '不能为空！';
+  const msgError = msg.error || '验证码错误！';
+  wrapShow = wrapShow || false;
   const inputCode = $.trim($element.val()).toUpperCase();
   const formGroup = $element.parents('.form-group');
   code = code.toUpperCase();
   if(!wrapShow){
-  	if (formGroup.children('.alert').length === 0) {
-	    formGroup.append('<div class="col-md-3 alert alert-danger hidden"></div>')
-	  }
-	  const $alert = formGroup.children('.alert');
+    if(formGroup.children('.alert').length === 0) {
+      formGroup.append('<div class="col-md-3 alert alert-danger hidden"></div>')
+    }
+    const $alert = formGroup.children('.alert');
   }else{
-  	if (formGroup.next('.alert').length === 0) {
-	    formGroup.after('<div class="col-md-offset-3 alert alert-danger hidden"></div>')
-	  }
-	  const $alert = formGroup.next('.alert');
+    if(formGroup.next('.alert').length === 0) {
+      formGroup.after('<div class="col-md-offset-3 alert alert-danger hidden"></div>')
+    }
+    const $alert = formGroup.next('.alert');
   }
   if (inputCode == '') {
     formGroup.removeClass('has-success').addClass('has-error');
@@ -210,6 +210,31 @@ const checkCode = function($element, msg, wrapShow) {
   } else {
     formGroup.removeClass('has-error').addClass('has-success');
     $alert.remove();
+    return true;
+  }
+}
+const validateCode = function($element, msg, focus) {
+  const inputCode = $.trim($element.val()).toUpperCase();
+  const formGroup = $element.parents('.form-group');
+  const alert = formGroup.find('.alert');
+  alert.hasClass('alert-info') && alert.removeClass('alert-info');
+  !alert.hasClass('alert-danger') && alert.addClass('alert-danger');
+  code = code.toUpperCase();
+  if(inputCode == ''){
+    formGroup.removeClass('has-success').addClass('has-error');
+    alert.html('<i class="fa fa-minus-circle"></i>'+ msg.required);
+    focus && $element.focus();
+    return false;
+  }else if(inputCode !== code) {
+    formGroup.removeClass('has-success').addClass('has-error');
+    alert.html('<i class="fa fa-minus-circle"></i>'+ msg.error);
+    $element.val('');
+    drawCode();
+    focus && $element.focus();
+    return false;
+  }else{
+    formGroup.removeClass('has-error').addClass('has-success');
+    alert.removeClass('alert-danger').html('');
     return true;
   }
 }
@@ -466,36 +491,14 @@ function checkPayPassword($element, msg, regular){
     return true;
   }
 }
-//确认密码验证
-function confirmPassword($element, $target, msg){
-  const formGroup = $element.parents('.form-group');
-  const $tip = formGroup.children('.input-tip');
-  const value = $.trim($element.val()),
-        targetValue = $.trim($target.val());
-  $tip.hasClass('alert-info') && $tip.removeClass('alert-info');
-  !($tip.hasClass('alert-danger')) && $tip.addClass('alert-danger');
-  if(value == ''){
-    formGroup.removeClass('has-success').addClass('has-error');
-    $tip.html('<i class="fa fa-exclamation-circle"></i>'+ msg.required);
-    return false;
-  }else if(value !== targetValue){
-    formGroup.removeClass('has-success').addClass('has-error');
-    $tip.html('<i class="fa fa-exclamation-circle"></i>'+ msg.inconsistent);
-    return false;
-  }else{
-    formGroup.removeClass('has-error').addClass('has-success');
-    $tip.removeClass('alert-danger').html('');
-    return true;
-  }
-}
 //判断多选框是否被选中
 function isCkecked($element, msg){
   const formGroup = $element.parents('.form-group');
-  const $tip = formGroup.children('.input-tip');
+  const $tip = formGroup.find('.check-tip');
   const checked = $element.prop('checked');
   if(!checked){
     $tip.addClass('alert-danger')
-        .html('<i class="fa fa-exclamation-circle"></i>'+ msg.check);
+        .html('<i class="fa fa-exclamation-circle"></i>'+ msg.required);
     return false;
   }else{
     $tip.removeClass('alert-danger').html('')
@@ -556,4 +559,117 @@ function isSameNumber(arr){
     }
   }
   return isSame;
+}
+//输入框失去焦点验证
+function focusEvent($element, msg, regular, next, target){
+  $element.focus(function(){
+    if($.trim($element.val()) == ''){
+      onFocus($element, msg)
+    }
+  }).blur(function(){
+    if($.trim($element.val()) == ''){
+      clearTip($element)
+    }else{
+      target ? next($element, target, msg) : next($element, msg, regular)
+    }
+  })
+  if($element.length === 1){
+    $element[0].oninput = function(){
+      onFocus($element, msg)
+    }
+  }
+}
+//得到焦点事件
+function onFocus($element, msg){
+  const formGroup = $element.parents('.form-group');
+  const alert = formGroup.find('.alert');
+  !alert.hasClass('alert-info') && alert.addClass('alert-info');
+  alert.hasClass('alert-danger') && alert.removeClass('alert-danger');
+  alert.html('<i class="fa fa-exclamation-circle"></i>'+msg.tip);
+}
+//清除提示信息
+function clearTip($element){
+  const formGroup = $element.parents('.form-group');
+  const alert = formGroup.find('.alert');
+  formGroup.hasClass('has-error') && formGroup.removeClass('has-error');
+  formGroup.hasClass('has-success') && formGroup.removeClass('has-success');
+  alert.hasClass('alert-info') && alert.removeClass('alert-info');
+  alert.hasClass('alert-danger') && alert.removeClass('alert-danger');
+  alert.html('');
+}
+//表单输入验证
+function validateForm($element, msg, regular, focus){
+  const formGroup = $element.parents('.form-group');
+  const alert = formGroup.find('.input-tip');
+  const value = $.trim($element.val());
+  alert.hasClass('alert-info') && alert.removeClass('alert-info');
+  !alert.hasClass('alert-danger') && alert.addClass('alert-danger');
+  if(value == ''){
+    !formGroup.hasClass('has-error') && formGroup.addClass('has-error');
+    formGroup.hasClass('has-success') && formGroup.removeClass('has-success');
+    alert.html('<i class="fa fa-minus-circle"></i>'+msg.required);
+    focus && $element.focus();
+    return false;
+  }else{
+    if(regular){
+      if(!regular.test(value)){
+        !formGroup.hasClass('has-error') && formGroup.addClass('has-error');
+        formGroup.hasClass('has-success') && formGroup.removeClass('has-success');
+        alert.html('<i class="fa fa-minus-circle"></i>'+msg.regular);
+        focus && $element.focus();
+        return false;
+      }
+    }
+    formGroup.removeClass('has-error').addClass('has-success');
+    alert.removeClass('alert-danger').html('');
+    return true;
+  }
+}
+//异步查询邮箱号
+let _emailTemp;
+function queryEmail($element, msg, target){
+  const formGroup = $element.parents('.form-group');
+  const alert = formGroup.find('.input-tip');
+  const value = $.trim($element.val());
+  if(_emailTemp == value) return;
+   _emailTemp = value;
+  $.ajax({
+    url: '/findByEmail',
+    type: 'GET',
+    data: {number: value},
+  })
+  .done(function(res) {
+    if(res.status == 1){
+      formGroup.removeClass('has-success').addClass('has-error');
+      alert.addClass('alert-danger').html('<i class="fa fa-minus-circle"></i>'+msg.existed);
+      target.attr('data-status', 0);
+    }else{
+      target.attr('data-status', 1);
+    }
+  })
+  .fail(function() {
+    console.log("error");
+  })
+}
+//确认密码验证
+function confirmPassword($element, $target, msg){
+  const formGroup = $element.parents('.form-group');
+  const $tip = formGroup.find('.input-tip');
+  const value = $.trim($element.val()),
+        targetValue = $.trim($target.val());
+  $tip.hasClass('alert-info') && $tip.removeClass('alert-info');
+  !($tip.hasClass('alert-danger')) && $tip.addClass('alert-danger');
+  if(value == ''){
+    formGroup.removeClass('has-success').addClass('has-error');
+    $tip.html('<i class="fa fa-minus-circle"></i>'+ msg.required);
+    return false;
+  }else if(value !== targetValue){
+    formGroup.removeClass('has-success').addClass('has-error');
+    $tip.html('<i class="fa fa-minus-circle"></i>'+ msg.inconsistent);
+    return false;
+  }else{
+    formGroup.removeClass('has-error').addClass('has-success');
+    $tip.removeClass('alert-danger').html('');
+    return true;
+  }
 }
