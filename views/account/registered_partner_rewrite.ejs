@@ -24,47 +24,48 @@
                 &times;
               </a>
             </div>
-            <form method="post" action="/partner/register" id="registeredForm" class="form-horizontal m-t" role="form" enctype="multipart/form-data"> 
+            <form method="post" action="/partner/register_rewrite" id="registeredForm" class="form-horizontal m-t" role="form" enctype="multipart/form-data"> 
+              <input type="hidden" name="partner[id]" value="<%=partner._id%>">
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>企业名称</label>
                 <div class="col-md-6">
-                  <input type="text" id="partnerName" class="form-control" name="partner[name]" value="" placeholder="请输入企业名称">
+                  <input type="text" id="partnerName" class="form-control" name="partner[name]" value="<%=partner.name%>" placeholder="请输入企业名称">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>法定代表人</label>
                 <div class="col-md-6">
-                  <input type="text" id="corporation" class="form-control" name="partner[corporation]" value="" placeholder="请输入企业法定代表人">
+                  <input type="text" id="corporation" class="form-control" name="partner[corporation]" value="<%=partner.corporation%>" placeholder="请输入企业法定代表人">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>营业执照注册号</label>
                 <div class="col-md-6">
-                  <input type="text" id="licenseId" class="form-control" name="partner[license_id]" value="" placeholder="请输入营业执照注册号">
+                  <input type="text" id="licenseId" class="form-control" name="partner[license_id]" value="<%=partner.license_id%>" placeholder="请输入营业执照注册号">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>联系人</label>
                 <div class="col-md-6">
-                  <input type="text" id="contactName" class="form-control" name="partner[contact_name]" value="" placeholder="请输入联系人姓名">
+                  <input type="text" id="contactName" class="form-control" name="partner[contact_name]" value="<%=partner.contact_name%>" placeholder="请输入联系人姓名">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>地址</label>
                 <div class="col-md-6">
-                  <input type="text" id="address" class="form-control" name="partner[address]" value="" placeholder="请输入企业地址">
+                  <input type="text" id="address" class="form-control" name="partner[address]" value="<%=partner.address%>" placeholder="请输入企业地址">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>邮编</label>
                 <div class="col-md-6">
-                  <input type="text" id="postcode" class="form-control" name="partner[post]" value="" placeholder="请输入邮编号">
+                  <input type="text" id="postcode" class="form-control" name="partner[post]" value="<%=partner.post%>" placeholder="请输入邮编号">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 control-label">联系电话</label>
                 <div class="col-md-6">
-                  <input type="text" id="contactTelephone" class="form-control" name="partner[telephone]" value="" placeholder="号码格式：区号-直播号码，例如：010-12345678">
+                  <input type="text" id="contactTelephone" class="form-control" name="partner[telephone]" value="<%=partner.telephone%>" placeholder="号码格式：区号-直播号码，例如：010-12345678">
                 </div>
               </div>
               <div class="form-group row">
@@ -85,12 +86,12 @@
                    <textarea id="profile" class="form-control" name="partner[profile]" placeholder="企业简介" rows="5"></textarea>
                 </div>
               </div>
-              <div class="form-group row">
+               <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>企业LOGO</label>
                 <div class="col-md-3">
                  <input type="file" name="logo" class="file-control">
                  <div class="preview-area clearfix">
-                  <img src="" class="pic-preview" width="150" height="150" title="企业LOGO" alt="选择本地图片">
+                  <img src="/upload/logo/<%= partner.logo%>" class="pic-preview" width="150" height="150" title="企业LOGO" alt="选择本地图片">
                  </div>
                  <div class="alert w-150"></div>
                 </div>
@@ -104,11 +105,11 @@
                 <div class="col-md-9 max-w-600">
                   <input type="file" name="license" class="file-control">
                   <div class="preview-area clearfix">
-                    <img src="" class="pic-preview" width="100%" height="350" title="营业执照" alt="选择本地图片">
+                    <img src="/upload/license/<%= partner.license%>" class="pic-preview" width="100%" height="350" title="营业执照" alt="选择本地图片">
                   </div>
                   <div class="alert"></div>
                 </div>
-              </div> 
+              </div>  
               <div class="form-group text-center"> 
                 <button type="submit" id="btnRegistered" class="btn btn-primary">提交</button>
                 <button type="reset" class="btn btn-default m-l">重置</button>

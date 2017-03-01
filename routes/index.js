@@ -56,13 +56,19 @@ router.post('/account/show_send_email', User.showSendEmail);
 router.get('/account/show_reset_password', User.showRestPassword);
 router.post('/account/reset_password', User.resetPassword);
 
-//注册企业
+//注册企业 
 router.get('/account/registered_partner', User.showRegisteredPartner);
-router.get('/account/show_registered_partner', User.showRegistered);
-router.post('/partner/register', multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.saveInfo);
-router.get('/partner/partner_info', Partner.showInfo)
+//返回重新填写
+router.get('/account/show_registered_partner', Partner.showRegistered);
+//注册信息提交
+router.post('/partner/register', Partner.isPartnerRegisterd, multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.saveInfo);
+//返回重新填写提交
+router.post('/partner/register_rewrite', multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.saveRewriteInfo);
+//企业信息展示
+router.get('/partner/partner_info', Partner.isPartnerRegisterd, Partner.showInfo)
+
 router.get('/partner/partner_info_edit', Partner.showInfoEdit)
-router.post('/partner/edit_info',multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.EditInfo)
+router.post('/partner/edit_info', Partner.isPartnerRegisterd, multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.EditInfo)
 
 router.get('/account/registered_partner_success', User.registeredPartnerSuccess)
 router.get('/account/registered_partner_result', User.registeredPartnerResult)
@@ -109,7 +115,7 @@ router.get('/partner/remove_title', Partner.removeTitle)
 /* 管理员操作 */
 
 //企业审核
-router.get('/admin/manage_partner', Admin.managePartner);
+router.get('/admin/partner_manage', Admin.managePartner);
 router.get('/admin/verify_partner', Admin.verifiedPartner);
 router.get('/admin/verify_partner_pass', Admin.verifiedPass);
 router.post('/admin/verify_partner_nopass', Admin.verifiedNoPass);

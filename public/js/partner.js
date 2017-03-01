@@ -1,4 +1,4 @@
-//企业信息表单对象
+//企业注册表单对象
 const registeredForm = $('#registeredForm'),
 			partnerName = $('#partnerName'),
 			corporation = $('#corporation'),
@@ -10,12 +10,14 @@ const registeredForm = $('#registeredForm'),
 			contactMobile = $('#contactMobile'),
 			partnerEmail = $('#partnerEmail'),
 			profile = $('#profile'),
-			logoFile = $('#logoFile'),
-			logoPreview = $('#logoPreview'),
-			logoPic = $('#logoPic'),
-			licenseFile = $('#licenseFile'),
-			licensePreview = $('#licensePreview'),
-			licensePic = $('#licensePic'),
+			// logoFile = $('#logoFile'),
+			// logoPreview = $('#logoPreview'),
+			// logoPic = $('#logoPic'),
+			// licenseFile = $('#licenseFile'),
+			// licensePreview = $('#licensePreview'),
+			// licensePic = $('#licensePic'),
+			previewArea = $('.preview-area'),
+			fileControl = $('.file-control'),
 			btnRegistered = $('#btnRegistered');
 
 //正则表达式   
@@ -64,9 +66,9 @@ const msg = {
 btnRegistered.on('click', function(e){
 	e.preventDefault()
 	checkInput(partnerName) &&
-	checkPartnerForm() &&
-	checkImage(logoFile) &&
-	checkImage(licenseFile) &&
+	//checkPartnerForm() &&
+	//checkImage(logoFile) &&
+	//checkImage(licenseFile) &&
 	registeredForm.submit()
 })		
 
@@ -81,20 +83,30 @@ function checkPartnerForm(){
 	checkInputValue(contactMobile, msg.mobile, regular.mobile) &&
 	checkInputValue(partnerEmail, msg.email, regular.email)
 }
-//企业Logo预览
-logoPreview.on('click', function(){
-	logoFile.click()
-})
-logoFile.change(function(){
-  checkImage(this) && uploadPreview(this, logoPic)
-})
-//企业营业执照预览
-licensePreview.on('click', function(){
-	licenseFile.click()
-})
-licenseFile.change(function(){
-  checkImage(this) && uploadPreview(this, licensePic)
-})
+//点击选择本地图片
+  previewArea.on('click', function(e){
+     $(this).parents('.form-group').find('.file-control').click()
+  })
+  //图片预览
+  fileControl.change(function(e){
+    const picPreview = $(this).parents('.form-group').find('.pic-preview');
+    checkImage(this) && uploadPreview(this, picPreview)
+    picPreview.parent().addClass('show');
+  })
+// //企业Logo预览
+// logoPreview.on('click', function(){
+// 	logoFile.click()
+// })
+// logoFile.change(function(){
+//   checkImage(this) && uploadPreview(this, logoPic)
+// })
+// //企业营业执照预览
+// licensePreview.on('click', function(){
+// 	licenseFile.click()
+// })
+// licenseFile.change(function(){
+//   checkImage(this) && uploadPreview(this, licensePic)
+// })
 
 //企业信息编辑
 const partnerForm = $('#partnerForm'),

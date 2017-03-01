@@ -84,7 +84,7 @@ emailInput.blur(function(){
 function validateSignupForm(){
   return validateForm(emailInput, msg.email, regular.email) && 
   validateForm(passwdInput, msg.password, regular.password) &&
-  confirmConsistent(confirmPasswd, passwdInput, msg.password) && 
+  confirmPassword(confirmPasswd, passwdInput, msg.confirmPasswd) && 
   validateCode(signupCode, msg.authcode) &&
   isCkecked(agreeCheck, msg.agreeCheck)
 }

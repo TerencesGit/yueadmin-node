@@ -478,15 +478,7 @@ exports.showBindMobile = function(req, res){
 exports.showModifyMobile = function(req, res){
 	res.render('account/modify_mobile', {title: '手机号修改'})
 }
-//
-exports.showRegistered = function(req, res){
-	var user = req.session.user;
-	if(user){
-		Partner.find({admin: user._id}).exec(function(err, partner){
-			return res.render('account/registered_partner', {title: '注册我的企业', partner: partner[0]})
-		})
-	}
-}
+
 //注册我的企业
 exports.showRegisteredPartner = function(req, res){
 	var user = req.session.user;

@@ -1,11 +1,11 @@
 (function(){
   /* 账号绑定页 */
-  var $tabList = $('.tab-list'),
+  const $tabList = $('.tab-list'),
         $tabItem = $tabList.children('li'),
         $tabCont = $('.tab-content');
   $(function(){
     //动态显示修改页
-    var index = $('.tab-list').find('.curr').index();
+    const index = $('.tab-list').find('.curr').index();
     $tabCont.eq(index).show().siblings().hide();
   })
   //账号绑定tab切换
@@ -13,7 +13,6 @@
     $(this).addClass("curr").siblings().removeClass("curr");
     $tabCont.eq($(this).index()).show().siblings().hide();
   })
-
   //绑定手机号表单
   const mobileForm = $('#bindMobileForm'),
         mobileInput = $('#mobile'),
@@ -45,7 +44,7 @@
       qq: /[1-9][0-9]{4,}/,
       idcard: /(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
   }
-  //错误信息提示
+  //信息提示
   const msg = {
     mobile: {
       required: '请输入手机号',
@@ -120,7 +119,6 @@
       $.dialog().alert({message: '发送失败'})
     })
   })
-
   //绑定手机号 获取验证码
   btnSendCode.on('click', function(e){
     e.preventDefault()
@@ -211,39 +209,27 @@
         qqInput = $('#qq'),
         idcardInput = $('#idcard'),
         addressInput = $('#address'),
-        avatarFile = $('#avatarFile'),
-        avatarPreview = $('#avatarPreview'),
-        avatarPic = $('#avatarPic'),
-        idcardFrontFile = $('#idcardFrontFile'),
-        idcardFrontPreview = $('#idcardFrontPreview'),
-        idcardFrontPic = $('#idcardFrontPic'),
-        idcardBackFile = $('#idcardBackFile'),
-        idcardBackPreview = $('#idcardBackPreview'),
-        idcardBackPic = $('#idcardBackPic'),
+        fileControl = $('.file-control'),
+        previewArea =  $('.preview-area'),
+        imgRemove = $('.img-remove'),
         accountSubmitBtn = $('#accountSubmitBtn');
-  
-  //头像预览
-  avatarFile.change(function(){
-    checkImage(this) && uploadPreview(this, avatarPic)
+  //点击选择本地图片
+  previewArea.on('click', function(e){
+     $(this).parents('.form-group').find('.file-control').click()
   })
-  avatarPreview.click(function(){
-    avatarFile.click()
+  //图片预览
+  fileControl.change(function(e){
+    const picPreview = $(this).parents('.form-group').find('.pic-preview');
+    checkImage(this) && uploadPreview(this, picPreview)
+    picPreview.parent().addClass('show');
   })
-  //身份证正面预览
-  idcardFrontFile.change(function(){
-    checkImage(this) && uploadPreview(this, idcardFrontPic)
+  //图片删除
+  imgRemove.on('click', function(e){
+    e.stopPropagation()
+    const fileControl = $(this).parents('.form-group').find('.file-control');
+    clearFile(fileControl)
+    $(this).prev().attr('src', '').parents('.preview-area').removeClass('show');
   })
-  idcardFrontPreview.click(function(){
-    idcardFrontFile.click()
-  })
-  //身份证反面预览
-  idcardBackFile.change(function(){
-    checkImage(this) && uploadPreview(this, idcardBackPic)
-  })
-  idcardBackPreview.click(function(){
-    idcardBackFile.click()
-  })
-
   //账户编辑表单提交
   accountSubmitBtn.on('click', function(e){
     e.preventDefault()

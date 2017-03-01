@@ -6,7 +6,7 @@
   <body>
     <%- include('../aside') %>
     <%- include('../header') %>
-    <div id="main" class="main" data-id="partner_info">
+    <div id="main" class="main" data-page="partner_manage">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
           <div class="panel panel-success">
@@ -90,7 +90,7 @@
               <dl class="col-md-offset-2 dl-horizontal">
                 <dt>企业LOGO</dt>
                 <dd>
-                  <img src="/upload/logo/<%= partner.logo%>" id="logoPic" class="part_logo" width="200" height="200" title="企业LOGO" alt="企业LOGO">
+                  <img src="/upload/logo/<%= partner.logo%>" class="extend-l" width="150" height="150" title="企业LOGO" alt="企业LOGO">
                 </dd>
               </dl>
             </div>
@@ -98,7 +98,7 @@
               <dl class="col-md-offset-2 dl-horizontal">
                 <dt>营业执照</dt>
                 <dd>
-                  <img src="/upload/license/<%= partner.license%>" id="licensePic" class="part_license" width="500" height="150" title="营业执照" alt="营业执照">
+                  <img src="/upload/license/<%= partner.license%>" class="extend-m" width="600" height="350" title="营业执照" alt="营业执照">
                 </dd>
               </dl>
             </div>
@@ -111,7 +111,7 @@
               </div>
               <div class="form-group text-center">
                 <a href="/admin/verify_partner_pass?id=<%= partner._id%>" class="btn btn-success">通过</a>
-                <button type="submit" id="btnVerified" class="btn btn-warning m-l">不通过</button>
+                <button type="submit" id="btnVerified" class="btn btn-danger m-l">不通过</button>
               </div>
             </form>
           </div>

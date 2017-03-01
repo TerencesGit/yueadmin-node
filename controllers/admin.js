@@ -8,6 +8,10 @@ var PartRole = require('../models/part_role');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
+//去除前后空格
+function Trim(str){ 
+  return str.replace(/(^\s*)|(\s*$)/g, ''); 
+}
 //获取数组a与数组b不重复的部分
 function getANotB(a, b){
 	var temp = [];
@@ -115,7 +119,7 @@ exports.verifiedNoPass = function(req, res){
 	if(partner){
 		Partner.update({_id: id}, {$set: {is_verified: 2, reject_info: info}}, function(err, msg){
 			if(err) console.log(err)
-			res.redirect('/admin/manage_partner')
+			res.redirect('/admin/partner_manage')
 		})
 	}else{
 		res.redirect('/')

@@ -67,9 +67,37 @@ exports.licenseUpload = function(req, res, next){
 		next()
 	}
 }
+//检测用户是否可注册
+exports.isPartnerRegisterd = function(req, res, next){
+	const user = req.session.user;
+	console.log(user)
+	if(!user.partner){
+		return next()
+	}
+	const partnerId = user.partner;
+	var _partner = {};
+	User.findOne({partner: partnerId})
+			.populate('partner', 'is_verified name')
+			.exec(function(err, user){
+				if(user.partner.is_verified == 0 || user.partner.is_verified == 3){
+					_partner.msg = '您的企业注册信息已提交！';
+					return res.render('account/registered_partner_submit', {title: '等待审核', partner: _partner})
+				}else if(user.partner.is_verified == 2){
+					Partner.findById(user.partner, function(err, partner){
+						_partner.info = partner.reject_info;
+						return res.render('account/registered_partner_result', {title: '未通过审核', partner: _partner})
+					})
+				}else if(user.partner.is_verified == 1){
+					Partner.findById(user.partner, function(err, partner){
+						return res.render('partner/partner_info', {title: '企业信息', partner: partner})
+					})
+				}
+			})
+}
 //企业注册信息保存
 exports.saveInfo = function(req, res){
 	const user = req.session.user;
+	const uid = user._id;
 	const partnerObj = req.body.partner;
 	const id = partnerObj.id;
 	if(req.logo){
@@ -87,19 +115,24 @@ exports.saveInfo = function(req, res){
 			_partner.save(function(err, partner){
 				if(err) console.log(err);
 				console.log('提交注册成功again')
-				res.render('account/registered_partner_submit',{title: '修改提交成功'})
+				_partner.msg = '修改提交成功',
+				res.render('account/registered_partner_submit',{
+					title: '修改提交成功',
+					partner: _partner
+				})
 			})
 		})
 	}else{
-		partnerObj.admin = user._id;
-		Partner.findOne({admin: partnerObj.admin}, function(err, partner){
+		partnerObj.admin = uid;
+		Partner.findOne({admin: uid}, function(err, partner){
 			if(err) console.log(err);
 			if(!partner){
 				_partner = new Partner(partnerObj);
+				console.log(_partner)
 				_partner.save(function(err, partner){
 					console.log('提交注册成功')
 					console.log(partner)
-					User.update({_id: user._id},{$set: {partner: partner._id}}, function(err, msg){
+					User.update({_id: uid},{$set: {partner: partner._id}}, function(err, msg){
 						user.partner = partner._id; 
 						res.render('account/registered_partner_submit',{title: '提交注册成功'})
 					})
@@ -109,6 +142,44 @@ exports.saveInfo = function(req, res){
 				res.redirect('/partner/partner_info')
 			}
 		})
+	}
+}
+//注册企业返回重写
+exports.showRegistered = function(req, res){
+	var user = req.session.user;
+	if(!user.partner){
+		return res.redirect('/account/registered_partner');
+	}
+	Partner.findOne({admin: user._id})
+				 .exec(function(err, partner){
+					return res.render('account/registered_partner_rewrite', {
+						title: '注册我的企业', 
+						partner: partner
+				  })
+			  })
+}
+//企业注册信息重写保存
+exports.saveRewriteInfo = function(req, res){
+	const partnerObj = req.body.partner;
+	console.log(partnerObj)
+  const id = partnerObj.id;
+	if(id){
+		Partner.findById(id, function(err, partner){
+			if(err) console.log(err);
+			_partner = _.extend(partner, partnerObj);
+			_partner.is_verified = 3;
+			_partner.save(function(err, partner){
+				if(err) console.log(err);
+				console.log('提交注册成功again')
+				_partner.msg = '修改提交成功',
+				res.render('account/registered_partner_submit',{
+					title: '修改提交成功',
+					partner: _partner
+				})
+			})
+		})
+	}else{
+		res.redirect('/account/registered_partner')
 	}
 }
 //企业信息展示

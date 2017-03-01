@@ -299,12 +299,9 @@ const getFileName = function(fileControl){
 const checkFileRequired = function(fileControl, msg){
   if(hasFile(fileControl)) return true;
   const msgRequired = msg && msg.required || '请选择文件';
-  const formGroup = fileControl.parent();
-  if(formGroup.children('.alert').length === 0) {
-    formGroup.append('<div class="alert alert-danger hidden"></div>')
-  }
-  const $alert = formGroup.children('.alert');
-  $alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msgRequired);
+  const formGroup = $(fileControl).parents('.form-group');
+  const $alert = formGroup.find('.alert');
+  $alert.addClass('alert-danger').html('<i class="fa fa-minus-circle"></i>'+ msgRequired);
   return false;
 }
 

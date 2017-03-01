@@ -41,6 +41,15 @@
 .no-padding {
   padding: 0;
 }
+.w-150 {
+  width: 150px;
+}
+.w-170 {
+  width: 170px;
+}
+.w-265 {
+  width: 265px;
+}
 .min-w-300 {
   min-width: 300px;
 }
@@ -49,6 +58,10 @@
 }
 .min-w-500 {
   min-width: 500px;
+}
+.max-w-200 {
+  max-width: 200px;
+  margin: auto;
 }
 .max-w-300 {
   max-width: 300px;
@@ -60,6 +73,10 @@
 }
 .max-w-500 {
   max-width: 500px;
+  margin: auto;
+}
+.max-w-600 {
+  max-width: 600px;
   margin: auto;
 }
 .min-h-300 {
@@ -82,6 +99,12 @@
 .max-h-500 {
   max-height: 500px;
   overflow-y: auto
+}
+.l-h {
+  line-height: 1
+}
+.l-h-2 {
+  line-height: 2
 }
 .letter-space-s {
   letter-spacing: .4em;
@@ -107,8 +130,17 @@
 .border-left {
   border-left: 1px solid #ccc
 }
-.none {
-  display: none
+.extend-s:hover {
+  transform: scale(.5);
+  transition: all .5s;
+}
+.extend-m:hover {
+  transform: scale(1.5);
+  transition: all .5s;
+}
+.extend-l:hover {
+  transform: scale(2);
+  transition: all .5s;
 }
 .relative {
   position: relative;
@@ -805,7 +837,8 @@ dl.horizontal dd {
 
 /** picture upload preview start **/
 .preview-area {
-  /*margin-bottom: 20px;*/
+  position: relative;
+  margin-bottom: 20px;
   cursor: pointer;
 }
 .preview-area > img,
@@ -813,18 +846,33 @@ dl.horizontal dd {
   float: left;
   margin-top: 7px
 }
+.preview-area .img-remove {
+  display: none;
+  position: absolute;
+  top: -9px;
+  right: 12px;
+  width: 18px;
+  height: 18px;
+  background: url(../img/remove.png);
+  background-size: cover
+}
+.preview-area.show:hover .img-remove {
+  display: inline;
+}
 .preview-area .btn-remove,
 .preview-area .btn-update  {
   display: none;
-  padding-left: 10px;
+  position: absolute;
+  top: -9px;
+  right: 12px;
 }
 .preview-area:hover .btn-remove,
 .preview-area:hover .btn-update {
   display: inline
 }
-.preview-area > .pic-preview {
+/*.preview-area > .pic-preview {
   width: 60%;
-}
+}*/
 .attach-upload {
   position: relative;
 }
@@ -924,12 +972,6 @@ dl.horizontal dd {
 .form-group.submit {
   margin: 15px 0;
 }
-/*.login-form .alert-danger {
-  float: right;
-  width: 270px;
-  margin-top: -10px;
-  margin-bottom: 5px;
-}*/
 .input-tip.alert.alert-info,
 .input-tip.alert.alert-danger {
   float: right;

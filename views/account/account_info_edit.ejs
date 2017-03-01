@@ -34,7 +34,7 @@
                   <div class="form-group">
                     <label class="col-md-2 control-label">QQ</label>
                     <div class="col-md-6">
-                      <input type="text" id="qq" class="form-control" name="user[qq]" value="<%if(user.qq){%><%= user.qq%><%}%>">
+                      <input type="text" id="qq" class="form-control" name="user[qq]" value="<%if(user.qq){%><%= user.qq%><%}%>" placeholder="请输入QQ">
                     </div>
                   </div>
                   <div class="form-group">
@@ -60,13 +60,13 @@
                   <div class="form-group">
                     <label class="col-md-2 control-label">身份证号</label>
                     <div class="col-md-6">
-                       <input type="text" name="user[idcard]" id="idcard" class="form-control" value="<%if(user.idcard){%><%=user.idcard %><%}%>">
+                       <input type="text" name="user[idcard]" id="idcard" class="form-control" value="<%if(user.idcard){%><%=user.idcard %><%}%>" placeholder="请输入身份证号">
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-md-2 control-label">生日</label>
                     <div class="col-md-6">
-                      <input type="text" name="user[birthday]" id="birthday" class="form-control laydate-icon" value="<%if(user.birthday){%><%=moment(user.birthday).format('YYYY-MM-DD')%><%}%>">
+                      <input type="text" name="user[birthday]" id="birthday" class="form-control laydate-icon" value="<%if(user.birthday){%><%=moment(user.birthday).format('YYYY-MM-DD')%><%}%>" placeholder="请选择生日">
                     </div>
                   </div>
                   <div class="form-group">
@@ -77,31 +77,32 @@
                   </div>               
                   <div class="form-group">
                     <h3 class="col-md-2 control-label m-t">附件上传</h3>
-                    <p class="alert text-warning m-t">
+                    <p class="alert text-warning m-t l-h-2">
                       支持JPG、JPEG、PNG格式且大小不要超过1M！
                     </p>
                   </div>
                   <div class="form-group">
                     <label class="col-md-2 control-label">头像上传：</label>
                     <div class="col-md-4">
-                      <input type="file" name="avatar" id="avatarFile">
-                      <div id="avatarPreview" class="preview-area clearfix">
-                        <img id="avatarPic" width="150" height="150" alt="选择本地图片" title="选择本地图片">
+                      <input type="file" name="avatar" class="file-control">
+                      <div class="preview-area clearfix w-170">
+                        <img class="pic-preview" width="150" height="150" alt="选择本地图片" title="选择本地图片">
+                        <a href="javascript:;" class="img-remove" title="删除"></a>
                       </div>
-                      <div class="alert m-b-0"></div>
+                      <div class="alert m-b-0 w-150"></div>
                     </div>
                     <label class="col-md-2 control-label">当前头像：</label>
                     <div class="col-md-4">
-                      <img src="<%if(user.avatar){%>/upload/avatar/<%=user.avatar %><%}else{%>/img/avatar.jpg<%}%>" class="img-rounded" width="150" height="150" alt="当前头像"/>
+                      <img src="<%if(user.avatar){%>/upload/avatar/<%=user.avatar %><%}else{%>/img/avatar.gif<%}%>" class="img-rounded" width="150" height="150" alt="当前头像"/>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-md-2 control-label">身份证正面：</label>
                     <div class="col-md-4">
-                      <input type="file" name="idcard_front" id="idcardFrontFile">
-                      <div id="idcardFrontPreview" class="preview-area clearfix">
-                        <img id="idcardFrontPic" src="<%if(user.idcard_front){%>/upload/idcard/<%= user.idcard_front %><%}%>" alt="身份证上传" width="245" height="158" class="img-rounded" title="选择本地图片">
-                        <a class="btn btn-link">选择本地图片</a>
+                      <input type="file" name="idcard_front" class="file-control">
+                      <div class="preview-area clearfix w-265">
+                        <img src="<%if(user.idcard_front){%>/upload/idcard/<%=user.idcard_front %><%}%>" class="pic-preview" width="245" height="158" class="img-rounded" alt="选择本地图片" title="选择本地图片">
+                        <a href="javascript:;" class="img-remove" title="删除"></a>
                       </div>
                       <div class="alert m-b-0"></div>
                     </div>
@@ -114,10 +115,10 @@
                   <div class="form-group">
                     <label class="col-md-2 control-label">身份证反面：</label>
                     <div class="col-md-4">
-                      <input type="file" name="idcard_back" id="idcardBackFile">
-                      <div id="idcardBackPreview" class="preview-area clearfix">
-                        <img id="idcardBackPic" src="<%if(user.idcard_back){%>/upload/idcard/<%= user.idcard_back %><%}%>" alt="身份证上传" width="245" height="158" class="img-rounded" title="选择本地图片">
-                        <a class="btn btn-link">选择本地图片</a>
+                      <input type="file" name="idcard_back" class="file-control">
+                      <div class="preview-area clearfix w-265">
+                        <img src="<%if(user.idcard_back){%>/upload/idcard/<%= user.idcard_back %><%}%>" class="pic-preview" width="245" height="158" class="img-rounded" alt="选择本地图片" title="选择本地图片">
+                        <a href="javascript:;" class="img-remove" title="删除"></a>
                       </div>
                       <div class="alert m-b-0"></div>
                     </div>

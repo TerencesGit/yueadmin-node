@@ -74,23 +74,21 @@
                   <textarea id="profile" class="form-control" name="partner[profile]" placeholder="企业简介" rows="5"><%= partner.profile%></textarea>
                 </div>
               </div>
-              <div class="form-group row logo-upload">
+              <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>企业LOGO</label>
                 <div class="col-md-8">
-                 <input type="file" name="logo" id="logoFile">
-                <div id="logoPreview" class="preview-area clearfix">
-                  <img src="/upload/logo/<%= partner.logo%>" id="logoPic" class="part_logo" width="200" height="200" title="企业LOGO" alt="企业LOGO上传">
-                  <a class="btn btn-link btn-update">点击更换图片</a>
-                 </div>
+                 <input type="file" name="logo" class="file-control">
+                <div id="logoPreview" class="preview-area clearfix w-170">
+                  <img src="/upload/logo/<%= partner.logo%>" id="logoPic" class="pic-preview" width="150" height="150" title="点击上传LOGO" alt="企业LOGO上传">
+                </div>
                 </div>
               </div>    
-              <div class="form-group row license-upload">
+              <div class="form-group row">
                 <label class="col-md-3 control-label"><i>*</i>营业执照</label>
                 <div class="col-md-8">
-                  <input type="file" name="license" id="licenseFile">
+                  <input type="file" name="license" class="file-control">
                   <div id="licensePreview" class="preview-area clearfix">
-                    <img src="/upload/license/<%= partner.license%>" id="licensePic" class="part_license" width="550" height="350" title="营业执照" alt="营业执照上传">
-                    <a class="btn btn-link btn-update">点击更换图片</a>
+                    <img src="/upload/license/<%= partner.license%>" id="licensePic" class="pic-preview" width="600" height="350" title="点击上传营业执照" alt="营业执照上传">
                   </div>
                 </div>
               </div> 

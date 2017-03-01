@@ -15,7 +15,11 @@
             </div>
             <div class="panel-body text-center min-h-500">
               <div class="success m-t-100">
-                <h3 class="text-success"><i class="fa fa-check"></i>企业注册信息提交成功！</h3>
+                <h3 class="text-success">
+                  <i class="fa fa-check"></i>
+                  <!-- 企业注册信息提交成功！ -->
+                  <%if(partner){%><%= partner.msg%><%}%>
+                </h3>
                 <h4 class="m-t">
                   请等待管理员审核... <a href="/">返回账户首页</a>
                 </h4>

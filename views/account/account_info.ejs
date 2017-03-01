@@ -55,7 +55,7 @@
                   </h3>
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse in">
-                  <div class="panel-body min-h-500">
+                  <div class="panel-body min-h-500 m-t">
                     <div class="col-md-6">
                       <dl class="horizontal clearfix">
                         <dt>姓名</dt>
@@ -71,13 +71,13 @@
                     <div class="col-md-6">
                       <dl class="horizontal clearfix">
                         <dt>手机号</dt>
-                        <dd><%if(user.mobile){%><%= user.mobile%><%}%></dd>
+                        <dd><%if(user.mobile){%><%= user.mobile%><%}else{%>暂无<%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="horizontal clearfix">
                         <dt>qq</dt>
-                        <dd><%if(user.qq){%><%= user.qq%><%}%></dd>
+                        <dd><%if(user.qq){%><%= user.qq%><%}else{%>暂无<%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
@@ -93,19 +93,19 @@
                     <div class="col-md-6">
                       <dl class="horizontal clearfix">
                         <dt>生日</dt>
-                        <dd><%if(user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD')%><%}%></dd>
+                        <dd><%if(user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD')%><%}else{%>暂无<%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="horizontal clearfix">
                         <dt>身份证号</dt>
-                        <dd><%if(user.idcard){%> <%= user.idcard%> <%}%></dd>
+                        <dd><%if(user.idcard){%> <%= user.idcard%><%}else{%>暂无<%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="horizontal clearfix">
                         <dt>籍贯</dt>
-                        <dd><%if(user.address){%> <%= user.address %> <%}%></dd>
+                        <dd><%if(user.address){%> <%= user.address %><%}else{%>暂无<%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
@@ -148,12 +148,12 @@
                       <li class="media">
                         <div class="pull-left">
                           <a href="/user/user_detail?id=<%= message.user._id%>" class="media-avatar">
-                            <img src="/upload/avatar/<%= message.user.avatar %>" alt="" class=" img-rounded" width="30" height="30">
+                            <img src="<%if(message.user.avatar){%>/upload/avatar/<%= message.user.avatar %><%}else{%>/img/avatar.gif<%}%>" alt="" class=" img-rounded" width="30" height="30">
                             <span><%= message.user.name%></span>
                           </a>
                         </div>
                         <div class="media-body">
-                          <p class="pull-left">
+                          <p class="pull-left p-t-5">
                             <%- message.content %>
                           </p>
                           <div class="pull-right relative">
