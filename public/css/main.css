@@ -1,21 +1,40 @@
 /*========== common class ==========**/
 .m-t {
-  margin-top: 15px;
+  margin-top: 15px !important;
+}
+.m-t-20 {
+  margin-top: 20px !important;
+}
+.m-t-40 {
+  margin-top: 40px !important;
+}
+.m-t-50 {
+  margin-top: 50px !important;
+}
+.m-t-80 {
+  margin-top: 80px !important;
 }
 .m-t-100 {
-  margin-top: 100px;
+  margin-top: 100px !important;
 }
 .m-b {
-  margin-bottom: 15px;
+  margin-bottom: 15px !important;
 }
 .m-b-0 {
   margin-bottom: 0 !important;
+}
+.m-b-20 {
+  margin-bottom: 20px !important;
 }
 .m-l {
   margin-left: 15px;
 }
 .m-r {
   margin-right: 15px;
+}
+.m-horizontal-0 {
+  margin-left: 0!important;
+  margin-right: 0!important;
 }
 .p-50 {
   padding: 50px;
@@ -28,6 +47,9 @@
 }
 .p-t-10 {
   padding-top: 10px;
+}
+.p-t-30 {
+  padding-top: 30px;
 }
 .p-b {
   padding-bottom: 15px;
@@ -47,8 +69,17 @@
 .w-170 {
   width: 170px;
 }
+.w-255 {
+  width: 255px;
+}
 .w-265 {
   width: 265px;
+}
+.w-270 {
+  width: 270px;
+}
+.w-800 {
+  width: 800px;
 }
 .min-w-300 {
   min-width: 300px;
@@ -65,6 +96,10 @@
 }
 .max-w-300 {
   max-width: 300px;
+  margin: auto;
+}
+.max-w-350 {
+  max-width: 350px;
   margin: auto;
 }
 .max-w-400 {
@@ -99,6 +134,12 @@
 .max-h-500 {
   max-height: 500px;
   overflow-y: auto
+}
+.font-18 {
+  font-size: 18px
+}
+.font-20 {
+  font-size: 20px
 }
 .l-h {
   line-height: 1
@@ -174,7 +215,7 @@ a.disabled {
 .light-gray {
   color: #ccc;
 }
-/*自定义按钮*/
+/** custom button*/
 .btn-secondary {
   color: #fff !important;
   background-color: #7266ba;
@@ -245,7 +286,7 @@ a.disabled {
   background-color: #ee3939;
   border-color: #ed2a2a;
 }
-/*自定义面板*/
+/** custom panel **/
 .panel-primary {
   border-color: #23b7e5;
 }
@@ -575,15 +616,12 @@ dl.horizontal dd {
   font-size: 0;
   background-color: #131e26;
 }
-
-/**手风琴菜单**/
-
+/** Accordion **/
 .accordion {
   width: 100%;
   max-width: 300px;
   margin: 0 auto 20px;
 }
-
 .accordion .link {
   display: block;
   position: relative;
@@ -594,7 +632,6 @@ dl.horizontal dd {
   transition: all 0.4s ease;
   cursor: pointer;
 }
-
 .accordion .link:hover {
   background: #131e26;
   color: #fff;
@@ -659,7 +696,7 @@ dl.horizontal dd {
 }
 /**========== sidebar end ===========**/
 
-/**========== header  start ===========**/
+/**========== header start ===========**/
 
 .header {
   position: fixed;
@@ -866,13 +903,6 @@ dl.horizontal dd {
   top: -9px;
   right: 12px;
 }
-.preview-area:hover .btn-remove,
-.preview-area:hover .btn-update {
-  display: inline
-}
-/*.preview-area > .pic-preview {
-  width: 60%;
-}*/
 .attach-upload {
   position: relative;
 }
@@ -932,7 +962,45 @@ dl.horizontal dd {
 }
 /** tools end **/ 
 
-/**========== login start ==========**/
+/** ui-step start**/
+.ui-step > li{
+  padding: 0;
+}
+.ui-step > li > p{
+  margin: 10px -8px 0 0;
+  color: #666;
+}
+.ui-step >li > em {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  font-style: normal;
+  border-radius: 50%;
+  background: #b5b5b5;
+}
+.ui-step > .center-line {
+  padding-top: 2px
+}
+.ui-step-line span{
+  display: inline-block;
+  width: 100%;
+  height: 4px;
+  background: #b5b5b5
+}
+.ui-step > .active > em, 
+.ui-step > .active > span {
+  background: #24c600
+}
+.ui-step > .active > p{
+  color: #24c600;
+}
+/** ui-step end **/
+
+/** login start **/
 .login-page {
   background: url(../img/login_bg.jpg) fixed no-repeat;
   background-size: 100% 100%;
@@ -1006,76 +1074,24 @@ dl.horizontal dd {
 .remember > .checkbox-inline {
   margin-left: 15px;
 }
-/*注册协议 模态框*/
-
-.protocol .modal-dialog {
-  width: 800px;
-  margin-top: 30px;
-}
-
-.protocol .modal-body {
-  height: 500px;
-  overflow-y: scroll
-}
 /**========== login end ==========**/
 
-/**========== reset password start ==========**/
-.reset-password .panel {
-  margin: 8% auto;
-  min-height: 450px;
-}
-.reset-password .page-header {
-  border-bottom: 0
-}
+/** reset password start **/
 .reset-form {
   width: 350px;
-  margin: 20px auto;
+  margin: 40px auto;
 }
-.reset-form .alert, .reset-form .btn{
+.reset-form .alert, 
+.reset-form .btn{
   float: right;
-  width: 255px
+  width: 255px;
+  margin-bottom: 0
 }
-.reset-password .form-group {
-  margin-top: 20px;
+.reset-form .alert.alert-info ,
+.reset-form .alert.alert-danger {
+  margin: 10px 15px 0 0;
 }
-.find-tab > li{
-  padding: 0;
-}
-.find-tab > li > p{
-  margin: 10px -15px 0 0;
-  color: #666;
-}
-.find-tab >li > em {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  color: #fff;
-  font-size: 20px;
-  font-style: normal;
-  border-radius: 50%;
-  background: #b5b5b5;
-}
-.find-tab > .center-line {
-  padding-top: 2px
-}
-.center-line span{
-  display: inline-block;
-  width: 100%;
-  height: 4px;
-  background: #b5b5b5
-}
-.find-tab > .active > em, .find-tab > .active > span {
-  background: #24c600
-}
-.find-tab > .active > p{
-  color: #24c600;
-}
-.tip-info p{
-  padding-top: 30px;
-  font-size: 20px
-}
+
 .reset-success {
   width: 500px;
   margin: 10% auto 0;

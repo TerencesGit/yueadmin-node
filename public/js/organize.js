@@ -144,19 +144,6 @@ function renderOrganizeTree(organizeTree){
       zNode.push(treeObj)
     })
     $.fn.zTree.init(organizeTree, setting, zNode);
-    //仅在加载页面时执行
-   //  if(isFirst){
-   //  	isFirst = false;
-   //  	let treeObj = $.fn.zTree.getZTreeObj("organizeTree");
-			// let nodes = treeObj.getNodes();
-			// if (nodes.length > 0) {
-			// 	treeObj.selectNode(nodes[0]);
-			// }
-			// if(getSeletedNode){
-			// 	let organizeId = getSeletedNode().id;
-			// 	renderStaffList(organizeId)
-			// }
-   //  }
   })
   .fail(function(error){ 
     console.log(error)
@@ -184,7 +171,7 @@ function renderStaffList(organizeId){
 	  users.forEach(function(user, index){
 	  	const gender = user.gender == '1' ? '女' : '男';
 	  	const _user = {
-  				"index": index, 
+  				"index": index + 1, 
 		  		"name": user.name, 
 		  		"gender": gender, 
 		  		"email": user.email, 

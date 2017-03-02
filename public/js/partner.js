@@ -10,12 +10,6 @@ const registeredForm = $('#registeredForm'),
 			contactMobile = $('#contactMobile'),
 			partnerEmail = $('#partnerEmail'),
 			profile = $('#profile'),
-			// logoFile = $('#logoFile'),
-			// logoPreview = $('#logoPreview'),
-			// logoPic = $('#logoPic'),
-			// licenseFile = $('#licenseFile'),
-			// licensePreview = $('#licensePreview'),
-			// licensePic = $('#licensePic'),
 			previewArea = $('.preview-area'),
 			fileControl = $('.file-control'),
 			btnRegistered = $('#btnRegistered');
@@ -34,6 +28,7 @@ const regular = {
 //错误信息提示			
 const msg = {
 		name: {
+			tip: '员工姓名只能是中文或英文',
 			required: '请输入姓名',
 			regular: '姓名只能是中文或英文'
 		},
@@ -53,22 +48,27 @@ const msg = {
 			regular: '手机号码格式错误'
 		},
 		email: {
+			tip: '验证邮箱后，可用于邮箱登录和密码找回',
 			required: '请输入邮箱',
 			regular: '邮箱格式不正确',
 			existed: '该邮箱号已被占用'
 		},
 		password: {
+      tip: '密码长度为8-20位',
       required: '请输入密码',
-      regular: '密码长度在8-20位之间',
-      notMatch: '两次密码输入不一致'
+      regular: '密码长度为8-20位',
+    },
+    confirmPasswd: {
+    	tip: '请再次输入密码',
+    	inconsistent: '两次密码输入不一致'
     }
 }			
 btnRegistered.on('click', function(e){
 	e.preventDefault()
 	checkInput(partnerName) &&
-	//checkPartnerForm() &&
-	//checkImage(logoFile) &&
-	//checkImage(licenseFile) &&
+	checkPartnerForm() &&
+	checkImage(logoFile) &&
+	checkImage(licenseFile) &&
 	registeredForm.submit()
 })		
 
@@ -84,40 +84,25 @@ function checkPartnerForm(){
 	checkInputValue(partnerEmail, msg.email, regular.email)
 }
 //点击选择本地图片
-  previewArea.on('click', function(e){
-     $(this).parents('.form-group').find('.file-control').click()
-  })
-  //图片预览
-  fileControl.change(function(e){
-    const picPreview = $(this).parents('.form-group').find('.pic-preview');
-    checkImage(this) && uploadPreview(this, picPreview)
-    picPreview.parent().addClass('show');
-  })
-// //企业Logo预览
-// logoPreview.on('click', function(){
-// 	logoFile.click()
-// })
-// logoFile.change(function(){
-//   checkImage(this) && uploadPreview(this, logoPic)
-// })
-// //企业营业执照预览
-// licensePreview.on('click', function(){
-// 	licenseFile.click()
-// })
-// licenseFile.change(function(){
-//   checkImage(this) && uploadPreview(this, licensePic)
-// })
+previewArea.on('click', function(e){
+   $(this).parents('.form-group').find('.file-control').click()
+})
+//图片预览
+fileControl.change(function(e){
+  const picPreview = $(this).parents('.form-group').find('.pic-preview');
+  checkImage(this) && uploadPreview(this, picPreview)
+  picPreview.parent().addClass('show');
+})
 
 //企业信息编辑
 const partnerForm = $('#partnerForm'),
       savePratnerBtn = $('#savePratnerBtn');
-   
 savePratnerBtn.on('click', function(e){
 	e.preventDefault();
   checkPartnerForm() && partnerForm.submit()
 })   
 
-//企业代注册表单
+//用户代注册表单
 const agentRegForm = $('#agentRegForm'),
       userName = $('#userName'),
       userEmail = $('#userEmail'),
@@ -127,38 +112,40 @@ const agentRegForm = $('#agentRegForm'),
 agentRegBtn.on('click', function(e){
   e.preventDefault();
   var status = $(this).attr('data-status');
-  if(status == '0') return;
+  if(status == 0) return;
   checkRegForm() && agentRegForm.submit()
 })
-//用户代注册表单校验
-function checkRegForm(){
-	return checkInput(userName, msg.name, regular.name) &&
-  checkInput(userEmail, msg.email, regular.email) &&
-  checkInput(userPasswd, msg.password, regular.password) &&
-  confirmConsistent(confirmPasswd, userPasswd, msg.password)
-}
-//为输入框注册失去焦点事件
-userName.blur(function(e){
-	checkInput(userName, msg.name, regular.name)
-})
-userEmail.blur(function(e){
-	checkInput(userEmail, msg.email, regular.email) &&
-	queryAccount(userEmail, 'findByEmail', msg.email, agentRegBtn)
-})
-userPasswd.blur(function(e){
-	checkInput(userPasswd, msg.password, regular.password)
-})
-userPasswd.blur(function(e){
-	checkInput(userPasswd, msg.password, regular.password)
-	if(confirmPasswd.val() !== ''){
-		confirmConsistent(confirmPasswd, userPasswd, msg.password)
-	}
-})
-confirmPasswd.blur(function(e){
-	if(userPasswd.val() !== '' && confirmPasswd.val() !== '') {
-    confirmConsistent(confirmPasswd, userPasswd, msg.password)
+//输入框焦点事件
+focusEvent(userName, msg.name, regular.name, validateForm);
+focusEvent(userPasswd, msg.password, regular.password, validateForm);
+focusEvent(confirmPasswd, msg.confirmPasswd, regular.password, checkConsistency, userPasswd);
+userEmail.focus(function(){
+	if($.trim($(this).val()) == ''){
+    onFocus($(this), msg.email)
   }
 })
+let _tempEmail;
+userEmail.blur(function(){
+	const value = $.trim($(this).val());
+	if(value == ''){
+		clearTip($(this))
+		return;
+	}
+	if(_tempEmail == value) return;
+	_tempEmail = value;
+	validateForm(userEmail, msg.email, regular.email) &&
+	queryEmail(userEmail, msg.email, agentRegBtn, 'null')
+})
+userEmail[0].oninput = function(){
+  onFocus($(this), msg.email)
+}
+//用户代注册表单校验
+function checkRegForm(){
+	return validateForm(userName, msg.name, regular.name) &&
+  validateForm(userEmail, msg.email, regular.email) &&
+  validateForm(userPasswd, msg.password, regular.password) &&
+  checkConsistency(confirmPasswd, userPasswd, msg.confirmPasswd)
+}
 
 //商家信息审核表单
 var verifiedPartnerForm = $('#verifiedPartnerForm'),

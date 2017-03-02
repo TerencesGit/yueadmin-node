@@ -53,8 +53,10 @@ router.get('/account/modify_mobile', User.showModifyMobile);
 //重置密码
 router.get('/account/find_password', User.showFindPassword);
 router.post('/account/show_send_email', User.showSendEmail);
+router.get('/account/show_send_email', User.showSendEmail);
 router.get('/account/show_reset_password', User.showRestPassword);
 router.post('/account/reset_password', User.resetPassword);
+router.get('/account/reset_password', User.resetPasswdSuccess);
 
 //注册企业 
 router.get('/account/registered_partner', User.showRegisteredPartner);
@@ -65,16 +67,16 @@ router.post('/partner/register', Partner.isPartnerRegisterd, multipartMiddleware
 //返回重新填写提交
 router.post('/partner/register_rewrite', multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.saveRewriteInfo);
 //企业信息展示
-router.get('/partner/partner_info', Partner.isPartnerRegisterd, Partner.showInfo)
+router.get('/partner/partner_info', Partner.isPartnerPass, Partner.showInfo)
 
-router.get('/partner/partner_info_edit', Partner.showInfoEdit)
-router.post('/partner/edit_info', Partner.isPartnerRegisterd, multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.EditInfo)
+router.get('/partner/partner_info_edit', Partner.isPartnerPass, Partner.showInfoEdit)
+router.post('/partner/edit_info', Partner.isPartnerPass, multipartMiddleware, Partner.logoUpload, Partner.licenseUpload, Partner.EditInfo)
 
 router.get('/account/registered_partner_success', User.registeredPartnerSuccess)
 router.get('/account/registered_partner_result', User.registeredPartnerResult)
 
 //企业组织管理
-router.get('/partner/organize_manage', Partner.organizeManage);
+router.get('/partner/organize_manage', Partner.isPartnerPass, Partner.organizeManage);
 
 router.get('/partner/get_organize_tree', Partner.getOrganizeTree);
 router.get('/partner/get_organize_staff', Partner.getOrganizeStaff);
@@ -94,7 +96,7 @@ router.get('/partner/get_func_by_org', Partner.getFuncsByOrgId);
 router.get('/partner/set_org_status', Partner.setOrgStatus);
 
 //员工管理
-router.get('/partner/staff_manage', Partner.staffList);
+router.get('/partner/staff_manage', Partner.isPartnerPass, Partner.staffList);
 router.post('/partner/staff_search', Partner.staffSearch);
 router.get('/partner/set_staff_org', Partner.setStaffOrganize);
 router.get('/partner/get_staff_title', Partner.getStaffTitle);
@@ -107,7 +109,7 @@ router.get('/partner/agent_register', Partner.agentRegister)
 router.post('/partner/agent_register', User.signup)
 
 //岗位管理
-router.get('/partner/title_manage', Partner.showTitleManage)
+router.get('/partner/title_manage', Partner.isPartnerPass, Partner.showTitleManage)
 router.post('/partner/new_title', Partner.newTitle)
 router.post('/partner/edit_title', Partner.editTitle)
 router.get('/partner/remove_title', Partner.removeTitle)

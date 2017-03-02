@@ -5,33 +5,33 @@
 </head>
 <body>
 		<div class="animated fadeInRight">
-	    <div class="container reset-password">
-        <div class="panel panel-success">
+	    <div class="container">
+        <div class="panel panel-success m-t-80 min-h-500">
           <div class="panel-heading">
             <h2 class="panel-title">发送邮件</h2>
           </div>
           <div class="panel-body">
             <div class="row">
-              <ul class="col-md-offset-2 col-md-10 page-header find-tab">
+              <ul class="col-md-offset-2 col-md-10 m-t-40 ui-step">
                 <li class="col-sm-1 col-md-1 text-center active">
                   <em>1</em>
                   <p>填写绑定邮箱</p>
                 </li>
-                <li class="col-sm-2 col-md-2 center-line active">
+                <li class="col-sm-2 col-md-2 ui-step-line active">
                   <span></span>
                 </li>
                 <li class="col-sm-1 col-md-1 text-center active">
                   <em>2</em>
                   <p>邮件发送成功</p>
                 </li>
-                <li class="col-sm-2 col-md-2 center-line">
+                <li class="col-sm-2 col-md-2 ui-step-line">
                   <span></span>
                 </li>
                 <li class="col-sm-1 col-md-1 text-center">
                   <em>3</em>
                   <p>重置密码</p>
                 </li>
-                <li class="col-sm-2 col-md-2 center-line">
+                <li class="col-sm-2 col-md-2 ui-step-line">
                   <span></span>
                 </li>
                 <li class="col-sm-1 col-md-1 text-center">
@@ -40,15 +40,14 @@
                 </li>
               </ul>
             </div>
-            <div class="tip-info text-center">
-              <p>重置密码邮件已发送到您的<a href="/account/show_reset_password"><%if(user){%><%= user.email%><%}%></a>邮箱，请注意查收</p>
+            <div class="text-center m-t-100">
+              <p class="font-20">重置密码邮件已发送到您的<a href="/account/show_reset_password"><%if(user){%><%= user.email%><%}%></a>邮箱，请注意查收</p>
             </div>
           </div>
         </div>
       </div>  	    
     </div>
   <%- include('../script')%>
-  <script src="/js/jquery.cookie.js"></script>
   <script src="/js/login.js"></script>	
 </body>
 </html> 

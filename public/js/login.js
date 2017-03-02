@@ -44,6 +44,11 @@ const msg = {
       required: '请输入邮箱号',
       regular: '邮箱格式不正确',
       existed: '该邮箱号已被占用',
+    },
+    bindEmail: {
+      tip: '请输入绑定的邮箱号',
+      required: '请输入邮箱号',
+      regular: '邮箱格式不正确',
       notExisted: '该邮箱号未绑定'
     },
     password: {
@@ -69,22 +74,38 @@ const msg = {
     }
 }
 //注册表单失去焦点验证
-focusEvent(emailInput, msg.email, regular.email, validateForm);
 focusEvent(passwdInput, msg.password, regular.password, validateForm);
-focusEvent(confirmPasswd, msg.confirmPasswd, null, confirmPassword, passwdInput);
+focusEvent(confirmPasswd, msg.confirmPasswd, null, checkConsistency, passwdInput);
 focusEvent(signupCode, msg.authcode, null, clearTip);
-emailInput.blur(function(){
-  if($(this).val() !== ''){
-    validateForm(emailInput, msg.email, regular.email) &&
-    queryEmail(emailInput, msg.email, btnSignup)
+emailInput.focus(function(){
+  if($.trim($(this).val()) == ''){
+    onFocus($(this), msg.email)
   }
 })
+let _tempEmail;
+emailInput.blur(function(){
+  const value = $.trim($(this).val());
+
+  if(value == ''){
+    clearTip($(this))
+    return;
+  }
+  if(_tempEmail == value) return;
+  _tempEmail = value;
+  validateForm(emailInput, msg.email, regular.email) &&
+  queryEmail(emailInput, msg.email, btnSignup, 'null')
+})
+if(emailInput.length === 1){
+  emailInput[0].oninput = function(){
+    onFocus($(this), msg.email)
+  }
+}
 
 //注册表单验证
 function validateSignupForm(){
   return validateForm(emailInput, msg.email, regular.email) && 
   validateForm(passwdInput, msg.password, regular.password) &&
-  confirmPassword(confirmPasswd, passwdInput, msg.confirmPasswd) && 
+  checkConsistency(confirmPasswd, passwdInput, msg.confirmPasswd) && 
   validateCode(signupCode, msg.authcode) &&
   isCkecked(agreeCheck, msg.agreeCheck)
 }
@@ -122,29 +143,38 @@ btnSignIn.on('click', function(e){
 })
 
 //找回密码表单验证
+let _tempBindEmail;
 bindEmailInput.blur(function(){
-  checkInput($(this), msg.email, regular.email, true) &&
-  queryAccount($(this), 'findByEmail', msg.email, btnFindPasswd, true, true)
+  const value = $.trim($(this).val());
+  if(value == ''){
+    clearTip($(this));
+    return;
+  };
+  if(_tempBindEmail == value) return;
+  _tempBindEmail = value;
+  validateForm($(this), msg.bindEmail, regular.email) &&
+  queryEmail($(this), msg.bindEmail, btnFindPasswd, 'has')
 })
+if(findPasswdCode.length === 1){
+  findPasswdCode[0].oninput = function(){
+    clearTip($(this))
+  }
+}
+//找回密码表单提交
 btnFindPasswd.on('click', function(e){
   e.preventDefault();
   if($(this).attr('data-status') == 0) return;
-  checkInput(bindEmailInput, msg.email, regular.email, true) &&
-  checkCode(findPasswdCode, msg.authcode, true) &&
+  //validateForm(bindEmailInput, msg.bindEmail, regular.email, true) &&
+  //validateCode(findPasswdCode, msg.authcode, true) &&
   findPasswdForm.submit()
 })
+
 //重置密码表单验证
-resetPassword.blur(function(){
-  checkInput(resetPassword, msg.password, regular.password, true)
-})
-resetPassword2.blur(function(){
-  if(resetPassword.val() !== '' && resetPassword2.val() !== '') {
-    confirmConsistent(resetPassword2, resetPassword, msg.password, true)
-  }
-})
+focusEvent(resetPassword, msg.password, regular.password, validateForm)
+focusEvent(resetPassword2, msg.confirmPasswd, regular.password, checkConsistency, resetPassword)
 btnResetPasswd.on('click', function(e){
   e.preventDefault();
-  checkInput(resetPassword, msg.password, regular.password, true) &&
-  confirmConsistent(resetPassword2, resetPassword, msg.password, true) && 
+  //validateForm(resetPassword, msg.password, regular.password) &&
+  //checkConsistency(resetPassword2, resetPassword, msg.confirmPasswd) && 
   resetPasswdForm.submit()
 })

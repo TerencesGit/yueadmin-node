@@ -16,9 +16,7 @@
               <div class="panel panel-info">
                 <div class="panel-heading">
                   <h3 class="panel-title">
-                    <a href="#collapseTree" data-toggle="collapse">
-                      部门组织结构
-                    </a>
+                    <a href="#collapseTree" data-toggle="collapse">部门组织结构</a>
                   </h3>
                 </div>
                 <div id="collapseTree" class="panel-collapse collapse in">
@@ -33,13 +31,13 @@
                 <div class="panel-heading">
                   <h3 class="panel-title">
                     <a href="#collapseTwo" data-toggle="collapse"><span id="departmentName"><%= user.partner.name%></span>&nbsp;
-                    (当前操作人：<%= user.name%></span>)</a>
+                    (当前操作人：<%= user.name%>)</a>
                   </h3>
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse in">
                   <div class="panel-body min-h-500">
                     <ul class="tools border-bottom row">
-                      <li>
+                      <li class="hidden">
                         <a href="javascript:;" class="btn-refresh" title="刷新">
                           <i class="fa fa-refresh"></i>
                           <span>刷新</span>

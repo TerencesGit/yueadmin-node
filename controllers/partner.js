@@ -70,7 +70,6 @@ exports.licenseUpload = function(req, res, next){
 //检测用户是否可注册
 exports.isPartnerRegisterd = function(req, res, next){
 	const user = req.session.user;
-	console.log(user)
 	if(!user.partner){
 		return next()
 	}
@@ -94,6 +93,33 @@ exports.isPartnerRegisterd = function(req, res, next){
 				}
 			})
 }
+//检测用户是否注册企业通过审核
+exports.isPartnerPass = function(req, res, next){
+	const user = req.session.user;
+	if(!user.partner){
+		return res.redirect('/account/registered_partner')
+	}
+	const partnerId = user.partner;
+	var _partner = {};
+	User.findOne({partner: partnerId})
+			.populate('partner', 'is_verified name')
+			.exec(function(err, user){
+				if(user.partner.is_verified == 1){
+					Partner.findById(user.partner, function(err, partner){
+						return next()
+					})
+				}else if(user.partner.is_verified == 0 || user.partner.is_verified == 3){
+					_partner.msg = '您的企业注册信息已提交！';
+					return res.render('account/registered_partner_submit', {title: '等待审核', partner: _partner})
+				}else if(user.partner.is_verified == 2){
+					Partner.findById(user.partner, function(err, partner){
+						_partner.info = partner.reject_info;
+						return res.render('account/registered_partner_result', {title: '未通过审核', partner: _partner})
+					})
+				}
+			})
+}
+
 //企业注册信息保存
 exports.saveInfo = function(req, res){
 	const user = req.session.user;

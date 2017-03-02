@@ -23,7 +23,7 @@ exports.findByEmail = function(req, res, next){
 			res.json({status: 1})
 		}else{
 			res.json({status: 0})
-		}
+		} 
 	})
 }
 //查询手机号
@@ -34,7 +34,7 @@ exports.findByMobile = function(req, res, next){
 		if(user){
 			res.json({status: 1})
 		}else{
-			res.json({status: 2})
+			res.json({status: 0})
 		}
 	})
 }
@@ -290,21 +290,25 @@ exports.modifyPassword = function(req, res){
 }
 //找回密码
 exports.showFindPassword = function(req, res){
-	res.render('account/find_password',{title: '找回密码'})
+	res.render('account/find_password', {title: '找回密码'})
 }
 //发送邮件提示页
 exports.showSendEmail = function(req, res){
-	var email = req.body.email;
-	User.findOne({email: email}, function(err, user){
-		if(err) return err;
-		if(user){
-			req.session.user = user;
-			res.render('account/reset_send_email', {title: '邮件发送成功', user: user})
-		}else{
-			res.redirect('/signin')
-		}
-	})
+	res.render('account/reset_send_email', {title: '邮件发送成功'})
 }
+//发送邮件提示页
+// exports.showSendEmail = function(req, res){
+// 	var email = req.body.email;
+// 	User.findOne({email: email}, function(err, user){
+// 		if(err) return err;
+// 		if(user){
+// 			req.session.user = user;
+// 			res.render('account/reset_send_email', {title: '邮件发送成功', user: user})
+// 		}else{
+// 			res.redirect('/signin')
+// 		}
+// 	})
+// }
 //重置密码页
 exports.showRestPassword = function(req, res){
 	res.render('account/reset_password', {title: '重置密码'})
@@ -334,6 +338,10 @@ exports.resetPassword = function(req, res){
 			}
 		})
 	})
+}
+//重置密码成功页
+exports.resetPasswdSuccess = function(req, res){
+  res.render('account/reset_password_success', {title: '重置密码成功'})
 }
 //退出功能
 exports.logout = function(req, res){
@@ -499,11 +507,17 @@ exports.showRegisteredPartner = function(req, res){
 }
 //等待审核
 exports.registeredPartnerSuccess = function(req, res){
-	res.render('account/registered_partner_submit', {title: '等待审核'})
+	var partner = {
+		msg: '您的企业注册信息已提交！'
+	}
+	res.render('account/registered_partner_submit', {title: '等待审核', partner: partner})
 }
 //审核不通过
 exports.registeredPartnerResult = function(req, res){
-	res.render('account/registered_partner_result', {title: '未通过审核'})
+	var partner = {
+		info: '信息填写不完整'
+	}
+	res.render('account/registered_partner_result', {title: '未通过审核', partner: partner})
 }
 /* 管理员操作 */
 

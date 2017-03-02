@@ -12,41 +12,45 @@
           <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title">
-                账号代注册(<%= organize.name%>)
+                账号代注册（<%= organize.name%>）
                 <a href="javascript:history.go(-1)" class="pull-right">返回</a>
               </h3>
             </div> 
             <div class="panel-body min-h-400">
               <div class="col-md-8 col-md-offset-2 m-t">
-                <form action="/partner/agent_register" method="post" id="agentRegForm" class="form-horizontal" role="form">
+                <form action="/partner/agent_register" method="post" id="agentRegForm" class="form-horizontal m-t" role="form">
                   <input type="hidden" name="user[organize]" value="<%if(organize){%><%= organize._id%><%}%>">
                   <div class="form-group">
                     <label for="userName" class="control-label col-md-3">员工姓名</label>
                     <div class="col-md-6">
                       <input type="text" name="user[name]" id="userName" class="form-control" placeholder="请输入员工姓名" required />
-                      <span class="fa fa-check"></span>
+                      <span class="fa fa-check-circle"></span>
                     </div>
+                    <div class="col-md-3 alert"></div>
                   </div>
                   <div class="form-group">
                     <label for="userEmail" class="control-label col-md-3">邮箱号</label>
                     <div class="col-md-6">
                       <input type="text" name="user[email]" id="userEmail" class="form-control" placeholder="请输入真实有效的邮箱号" required />
-                      <span class="fa fa-check"></span>
+                      <span class="fa fa-check-circle"></span>
                     </div>
+                    <div class="col-md-3 alert"></div>
                   </div>
                   <div class="form-group">
                     <label for="userPasswd" class="control-label col-md-3 text-center">密码</label>
                     <div class="col-md-6">
                       <input type="password" name="user[password]" id="userPasswd" class="form-control" placeholder="设置密码" maxlength="20" required value=""/>
-                      <span class="fa fa-check"></span>
+                      <span class="fa fa-check-circle"></span>
                     </div>
+                    <div class="col-md-3 alert"></div>
                   </div>
                   <div class="form-group">
                     <label for="confirmPasswd" class="control-label col-md-3">确认密码</label>
                     <div class="col-md-6">
                       <input type="password" name="user[password2]" id="confirmPasswd" class="form-control" placeholder="确认密码" maxlength="20" required /> 
-                      <span class="fa fa-check"></span>
+                      <span class="fa fa-check-circle"></span>
                     </div>
+                    <div class="col-md-3 alert"></div>
                   </div>
                   <div class="form-group">
                     <div class=" col-md-offset-3 col-md-6 m-t">

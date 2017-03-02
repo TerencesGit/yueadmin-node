@@ -14,15 +14,15 @@
         <label for="email" class="control-label col-md-3 letter-space-s">邮箱号</label>
         <div class="col-md-9">
           <input type="text" name="user[email]" id="email" class="form-control" placeholder="请输入真实有效的邮箱号" required value="<%if(user &&  user.error){%><%=user.email%><%}%>"/>
-          <span class="fa fa-check-circle"></span>
+          <i class="fa fa-check-circle"></i>
         </div>
         <div class="input-tip alert"></div>
       </div>
       <div class="form-group">
         <label for="passwd" class="control-label col-md-3 letter-space-l">密码</label>
         <div class="col-md-9">
-          <input type="password" name="user[password]" id="passwd" class="form-control" placeholder="设置密码" maxlength="20" required value="<% if(user && user.error){ %> <%= user.password %> <% } %>"/>
-          <span class="fa fa-check-circle"></span>
+          <input type="password" name="user[password]" id="passwd" class="form-control" placeholder="设置密码" maxlength="20" required value="<%if(user && user.error){%><%= user.password%><%}%>"/>
+          <i class="fa fa-check-circle"></i>
         </div>
         <div class="input-tip alert"></div>
       </div>
@@ -30,7 +30,7 @@
         <label for="passwd2" class="control-label col-md-3">确认密码</label>
         <div class="col-md-9">
           <input type="password" name="confirm_password" id="confirmPasswd" class="form-control" placeholder="确认密码" maxlength="20" required /> 
-          <span class="fa fa-check-circle"></span>
+          <i class="fa fa-check-circle"></i>
         </div>
         <div class="input-tip alert"></div>
       </div>
@@ -59,13 +59,13 @@
       </div>
     </form>
   </div>
-  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="protocol modal fade">
-    <div class="modal-dialog">
+  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+    <div class="modal-dialog w-800 m-t-50">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title">注册协议</h4> </div>
-        <div class="modal-body">
+        <div class="modal-body max-h-400">
           <div class="protocol-con">
             <h4>京东用户注册协议</h4>
             <p> 本协议是您与京东网站（简称"本站"，网址：www.jd.com）所有者（以下简称为"京东"）之间就京东网站服务等相关事宜所订立的契约，请您仔细阅读本注册协议，您点击"同意并继续"按钮后，本协议即构成对双方有约束力的法律文件。</p>
