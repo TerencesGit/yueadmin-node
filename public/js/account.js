@@ -1,40 +1,29 @@
 (function(){
-  /* 账号绑定页 */
-  const $tabList = $('.tab-list'),
-        $tabItem = $tabList.children('li'),
-        $tabCont = $('.tab-content');
-  $(function(){
-    //动态显示修改页
-    const index = $('.tab-list').find('.curr').index();
-    $tabCont.eq(index).show().siblings().hide();
-  })
-  //账号绑定tab切换
-  $tabItem.on('click', function(){
-    $(this).addClass("curr").siblings().removeClass("curr");
-    $tabCont.eq($(this).index()).show().siblings().hide();
-  })
-  //绑定手机号表单
-  const mobileForm = $('#bindMobileForm'),
-        mobileInput = $('#mobile'),
-        phoneCodeInput = $('#phoneCode'),
-        btnSendCode = $('#btnSendCode'),
-        btnBindMobile = $('#btnBindMobile');
-  //修改手机号表单
-  const modifyMobileForm = $('#modifyMobileForm'),
-        newMobileInput = $('#newMobile'),
-        phoneCodeInput2 = $('#phoneCode2'),
-        btnSendCode2 = $('#btnSendCode2'),
-        btnModifyMobile = $('#btnModifyMobile');
-  //修改邮箱号表单
-  const modifyEmailForm = $('#modifyEmailForm'),
-        newEmailInput = $('#newEmail'),
-        btnModifyEmail = $('#btnModifyEmail');
+  /* 账户安全 */
   //修改密码表单
   const modifyPasswdForm = $('#modifyPasswdForm'),
         oldPasswd = $('#oldPasswd'),
         newPasswd = $('#newPasswd'),
         confirmPasswd = $('#confirmPasswd'),
         btnModifyPasswd = $('#btnModifyPasswd');
+
+  //绑定手机号表单
+  const mobileForm = $('#bindMobileForm'),
+        mobileInput = $('#mobile'),
+        phoneCode = $('#phoneCode'),
+        btnSendCode = $('#btnSendCode'),
+        btnBindMobile = $('#btnBindMobile');
+  //修改手机号表单
+  const modifyMobileForm = $('#modifyMobileForm'),
+        newMobileInput = $('#newMobile'),
+        phoneCode2 = $('#phoneCode2'),
+        btnSendCode2 = $('#btnSendCode2'),
+        btnModifyMobile = $('#btnModifyMobile');
+  //修改邮箱号表单
+  const modifyEmailForm = $('#modifyEmailForm'),
+        newEmailInput = $('#newEmail'),
+        btnModifyEmail = $('#btnModifyEmail');
+  
   //正则表达式    
   const regular = {
       mobile: /^(13|14|15|17|18)[0-9]{9}$/, 
@@ -43,12 +32,13 @@
       name: /^.{3,20}$/,
       qq: /[1-9][0-9]{4,}/,
       idcard: /(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+      date: /^\d{4}-\d{1,2}-\d{1,2}/
   }
   //信息提示
   const msg = {
     mobile: {
       required: '请输入手机号',
-      regular: '请输入正确手机号',
+      regular: '手机号格式有误',
       existed: '该手机号已被绑定'
     },
     phoneCode: {
@@ -59,46 +49,46 @@
       regular: '邮箱格式不正确',
       existed: '该邮箱号已被绑定'
     },
+    oldPasswd: {
+      tip: '请输入原密码'
+    },
     password: {
+      tip: '密码长度为8-20位',
       required: '请输入密码',
-      regular: '密码长度在8-20位之间',
+      regular: '密码长度为8-20位',
+    },
+    confirmPasswd: {
+      tip: '请再次输入密码',
+      required: '请再次输入密码',
+      inconsistent: '两次密码输入不一致'
     },
     name: {
       required: '昵称不能为空',
     },
-    qq: 'qq格式有误',
-    idcard: '身份证号格式有误',
+    qq: {
+      regular: 'QQ号格式有误',
+    },
+    idcard: {
+      regular: '身份证号格式有误',
+    },
+    date: {
+      regular: '日期格式有误'
+    }
   }
-  //输入框失去焦点事件
-  mobileInput.blur(function(event){
-    checkInput(mobileInput, msg.mobile, regular.mobile) &&
-    queryAccount(mobileInput, 'findByMobile', msg.mobile, btnSendCode)
-  })
-  newMobileInput.blur(function(event){
-    checkInput(newMobileInput, msg.mobile, regular.mobile) &&
-    queryAccount(newMobileInput, 'findByMobile', msg.mobile, btnSendCode2)
-  })
-  newEmailInput.blur(function(event){
-    checkInput(newEmailInput, msg.email, regular.email) &&
-    queryAccount(newEmailInput, 'findByEmail', msg.email, btnModifyEmail)
-  })
-  oldPasswd.blur(function(event){
-    checkInput(oldPasswd, msg.password)
-  })
-  newPasswd.blur(function(event) {
-    checkInput(newPasswd, msg.password, regular.password) && 
-    confirmPasswd.attr('disabled', false);
-    var value = $.trim(confirmPasswd.val());
-    if(value == '') return;
-    confirmConsistent(confirmPasswd, $(this));
-  });
-  confirmPasswd.blur(function(){
-    var value = $.trim($(this).val());
-    if(value == '') return;
-    confirmConsistent($(this), newPasswd)
+  //修改密码表单验证
+  focusEvent(oldPasswd, msg.oldPasswd, null, validateForm);
+  focusEvent(newPasswd, msg.password, regular.password, validateForm);
+  focusEvent(confirmPasswd, msg.confirmPasswd, regular.password, checkConsistency, newPasswd);
+  //修改密码提交
+  btnModifyPasswd.on('click', function(e){
+    e.preventDefault()
+    validateForm(oldPasswd, msg.password) &&
+    validateForm(newPasswd, msg.password, regular.password) &&
+    checkConsistency(confirmPasswd, newPasswd, msg.confirmPasswd) &&  
+    modifyPasswdForm.submit()
   })
   //验证邮箱
-  var verifyEmailBtn = $('#verifyEmailBtn');
+  const verifyEmailBtn = $('#verifyEmailBtn');
   verifyEmailBtn.on('click', function(e){
     var email = $(this).attr('data-id');
     $.ajax({
@@ -119,53 +109,63 @@
       $.dialog().alert({message: '发送失败'})
     })
   })
+  //绑定手机号验证
+  mobileInput.blur(function(){
+    if($.trim($(this).val()) == ''){
+      removeTip($(this))
+    }else{
+      checkInput(mobileInput, msg.mobile, regular.mobile) &&
+      queryAccount(mobileInput, 'findByMobile', msg.mobile, btnSendCode, 'null')
+    }
+  })
   //绑定手机号 获取验证码
   btnSendCode.on('click', function(e){
     e.preventDefault()
+    if($(this).attr('data-status') == 0) return;
     checkInput(mobileInput, msg.mobile, regular.mobile);
-    var status = $(this).attr('data-status');
-    if(status == 0) return;
+    if($(this).attr('data-status') == 2) return;
     sendCode($(this), 20, mobileInput, mobileForm)
-  })
-  //修改手机号 获取验证码
-  btnSendCode2.on('click', function(e){
-    e.preventDefault()
-    checkInput(newMobileInput, msg.mobile, regular.mobile);
-    var status = $(this).attr('data-status');
-    if(status == 0) return;
-    sendCode($(this), 20, newMobileInput, modifyMobileForm)
   })
   //绑定手机号提交
   btnBindMobile.on('click', function(e){
     e.preventDefault()
     checkInput(mobileInput, msg.mobile, regular.mobile) &&
-    checkInput(phoneCodeInput, msg.phoneCode) &&
+    checkInput(phoneCode, msg.phoneCode) &&
     bindMobileForm.submit()
   })
+  //修改手机号验证
+  newMobileInput.blur(function(){
+    if($.trim($(this).val()) == ''){
+      removeTip($(this))
+    }else{
+      checkInput(newMobileInput, msg.mobile, regular.mobile) &&
+      queryAccount(newMobileInput, 'findByMobile', msg.mobile, btnSendCode2, 'null')
+    }
+  })
+  //修改手机号 获取验证码
+  btnSendCode2.on('click', function(e){
+    e.preventDefault()
+    if($(this).attr('data-status') == 0) return;
+    checkInput(newMobileInput, msg.mobile, regular.mobile);
+    if($(this).attr('data-status') == 2) return;
+    sendCode($(this), 20, newMobileInput, modifyMobileForm)
+  })
+ 
   //修改手机号提交
   btnModifyMobile.on('click', function(e){
     e.preventDefault()
-    let status = $(this).attr('data-status');
-    if(status == 0) return;
+    if($(this).attr('data-status') == 0) return;
     checkInput(newMobileInput, msg.mobile, regular.mobile) &&
-    checkInput(phoneCodeInput2, msg.phoneCode) &&
+    checkInput(phoneCode2, msg.phoneCode) &&
     modifyMobileForm.submit()
   })
+
   //修改邮箱提交
   btnModifyEmail.on('click', function(e){
     e.preventDefault()
-    let status = $(this).attr('data-status');
-    if(status == 0) return;
+    if($(this).attr('data-status') == 0) return;
     checkInput(newEmailInput, msg.email, regular.email) &&
     modifyEmailForm.submit()
-  })
-  //修改密码提交
-  btnModifyPasswd.on('click', function(e){
-    e.preventDefault()
-    checkInput(oldPasswd, msg.password) &&
-    checkInput(newPasswd, msg.password, regular.password) &&
-    confirmConsistent(confirmPasswd, newPasswd) &&  
-    modifyPasswdForm.submit()
   })
   //发送验证码
   function sendCode($target, interval, $input, $form) {
@@ -207,8 +207,9 @@
   const accountForm = $('#accountForm'),
         nameInput = $('#name'),
         qqInput = $('#qq'),
-        idcardInput = $('#idcard'),
-        addressInput = $('#address'),
+        idcard = $('#idcard'),
+        birthday = $('#birthday'),
+        address = $('#start1'),
         fileControl = $('.file-control'),
         previewArea =  $('.preview-area'),
         imgRemove = $('.img-remove'),
@@ -220,25 +221,29 @@
   //图片预览
   fileControl.change(function(e){
     const picPreview = $(this).parents('.form-group').find('.pic-preview');
-    checkImage(this) && uploadPreview(this, picPreview)
+    checkImageRegular(this) 
+    uploadPreview(this, picPreview)
     picPreview.parent().addClass('show');
   })
   //图片删除
   imgRemove.on('click', function(e){
     e.stopPropagation()
-    const fileControl = $(this).parents('.form-group').find('.file-control');
-    clearFile(fileControl)
-    $(this).prev().attr('src', '').parents('.preview-area').removeClass('show');
+    clearFile($(this).parents('.form-group').find('.file-control'))
+    $(this).prev().attr('src', '/img/upload.png').parents('.preview-area').removeClass('show');
+    clearTip($(this))
   })
   //账户编辑表单提交
-  accountSubmitBtn.on('click', function(e){
-    e.preventDefault()
-    checkInput(nameInput, msg.name) &&
+  function checkAccountForm(){
+    return checkInput(nameInput, msg.name) &&
     checkInputValue(qqInput, msg.qq, regular.qq) &&
-    checkInputValue(idcardInput, msg.idcard, regular.idcard) &&
+    checkInputValue(idcard, msg.idcard, regular.idcard) &&
+    checkInputValue(birthday, msg.birthday, regular.birthday) &&
     checkImageRugular(avatarFile) &&
     checkImageRugular(idcardFrontFile) &&
-    checkImageRugular(idcardBackFile) &&
-    accountForm.submit()
+    checkImageRugular(idcardBackFile)
+  }
+  accountSubmitBtn.on('click', function(e){
+    e.preventDefault()
+    checkAccountForm() && accountForm.submit()
   })
 })(jQuery)

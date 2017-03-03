@@ -12,6 +12,7 @@ const registeredForm = $('#registeredForm'),
 			profile = $('#profile'),
 			previewArea = $('.preview-area'),
 			fileControl = $('.file-control'),
+			imgRemove = $('.img-remove'),
 			btnRegistered = $('#btnRegistered');
 
 //正则表达式   
@@ -85,15 +86,23 @@ function checkPartnerForm(){
 }
 //点击选择本地图片
 previewArea.on('click', function(e){
-   $(this).parents('.form-group').find('.file-control').click()
+  $(this).parents('.form-group').find('.file-control').click();
 })
 //图片预览
+let imgPath = 
 fileControl.change(function(e){
   const picPreview = $(this).parents('.form-group').find('.pic-preview');
-  checkImage(this) && uploadPreview(this, picPreview)
+  checkImageRegular(this)
+  uploadPreview(this, picPreview)
   picPreview.parent().addClass('show');
 })
-
+//图片删除
+  imgRemove.on('click', function(e){
+    e.stopPropagation()
+    clearFile($(this).parents('.form-group').find('.file-control'))
+    $(this).prev().attr('src', '/img/upload.png').parents('.preview-area').removeClass('show');
+    clearTip($(this))
+  })
 //企业信息编辑
 const partnerForm = $('#partnerForm'),
       savePratnerBtn = $('#savePratnerBtn');
@@ -128,7 +137,7 @@ let _tempEmail;
 userEmail.blur(function(){
 	const value = $.trim($(this).val());
 	if(value == ''){
-		clearTip($(this))
+		clearTip($(this));
 		return;
 	}
 	if(_tempEmail == value) return;
@@ -136,9 +145,12 @@ userEmail.blur(function(){
 	validateForm(userEmail, msg.email, regular.email) &&
 	queryEmail(userEmail, msg.email, agentRegBtn, 'null')
 })
-userEmail[0].oninput = function(){
-  onFocus($(this), msg.email)
+if(userEmail.length === 1){
+	userEmail[0].oninput = function(){
+	  onFocus($(this), msg.email)
+	}
 }
+
 //用户代注册表单校验
 function checkRegForm(){
 	return validateForm(userName, msg.name, regular.name) &&
@@ -156,7 +168,6 @@ btnVerified.on('click', function(e){
 	if($.trim(rejectInfo.val()).length >= 5){
 		verifiedPartnerForm.submit()
 	}else{
-		console.log($.trim(rejectInfo.val()).length)
 		rejectInfo.parents('.form-group').addClass('has-error')
 	}
 })

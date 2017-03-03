@@ -293,22 +293,22 @@ exports.showFindPassword = function(req, res){
 	res.render('account/find_password', {title: '找回密码'})
 }
 //发送邮件提示页
-exports.showSendEmail = function(req, res){
+exports.getSendEmail = function(req, res){
 	res.render('account/reset_send_email', {title: '邮件发送成功'})
 }
 //发送邮件提示页
-// exports.showSendEmail = function(req, res){
-// 	var email = req.body.email;
-// 	User.findOne({email: email}, function(err, user){
-// 		if(err) return err;
-// 		if(user){
-// 			req.session.user = user;
-// 			res.render('account/reset_send_email', {title: '邮件发送成功', user: user})
-// 		}else{
-// 			res.redirect('/signin')
-// 		}
-// 	})
-// }
+exports.showSendEmail = function(req, res){
+	var email = req.body.email;
+	User.findOne({email: email}, function(err, user){
+		if(err) return err;
+		if(user){
+			req.session.user = user;
+			res.render('account/reset_send_email', {title: '邮件发送成功', user: user})
+		}else{
+			res.redirect('/signin')
+		}
+	})
+}
 //重置密码页
 exports.showRestPassword = function(req, res){
 	res.render('account/reset_password', {title: '重置密码'})

@@ -176,7 +176,7 @@ function renderStaffList(organizeId){
 		  		"gender": gender, 
 		  		"email": user.email, 
 		  		"orgName": user.organize.name, 
-		  		"btn": '<a href="/partner/staff_manage" class="btn btn-link">设置</a>'
+		  		"btn": '<a href="/partner/staff_manage" class="btn btn-link">管理</a>'
 		  	};
 	  	dataArr.push(_user)
 	  })

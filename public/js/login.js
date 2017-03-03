@@ -164,17 +164,18 @@ if(findPasswdCode.length === 1){
 btnFindPasswd.on('click', function(e){
   e.preventDefault();
   if($(this).attr('data-status') == 0) return;
-  //validateForm(bindEmailInput, msg.bindEmail, regular.email, true) &&
-  //validateCode(findPasswdCode, msg.authcode, true) &&
+  validateForm(bindEmailInput, msg.bindEmail, regular.email, true) &&
+  validateCode(findPasswdCode, msg.authcode, true) &&
   findPasswdForm.submit()
 })
 
 //重置密码表单验证
 focusEvent(resetPassword, msg.password, regular.password, validateForm)
 focusEvent(resetPassword2, msg.confirmPasswd, regular.password, checkConsistency, resetPassword)
+//重置密码表单提交
 btnResetPasswd.on('click', function(e){
   e.preventDefault();
-  //validateForm(resetPassword, msg.password, regular.password) &&
-  //checkConsistency(resetPassword2, resetPassword, msg.confirmPasswd) && 
+  // validateForm(resetPassword, msg.password, regular.password) &&
+  // checkConsistency(resetPassword2, resetPassword, msg.confirmPasswd) && 
   resetPasswdForm.submit()
 })

@@ -142,38 +142,38 @@ $('#setJurisdictionBtn').on('click', function(e){
 		})
 	}
 })
-
-
-//设置企业禁用      
-btnBan.on('click', function(e){
-	const $tr = $(this).parents('tr');
-	const	partnerId = $tr.data('id'),
-	      name = $tr.children('td').eq(1).text();
-	$.dialog().confirm({message: '确定将'+name+'设为禁用状态'})
-	 .on('confirm', function(){
-	 		setPartnerStatus(partnerId, 0)
-	 })
+//设置状态按钮
+const btnStatus = $('.btn-status');
+//设置账户状态 
+btnStatus.on('click', function(e){
+  const _this = $(this);
+  const status = $(this).attr('data-status');
+  const name = getRowData($(this)).name;
+  const partnerId = getRowData($(this)).id;
+  let statu = status == 0 ? 1 : 0;
+  let info = status == 0 ? '启用状态' : '禁用状态';
+  $.dialog().confirm({message: '确定将账户 <a>'+ name+ '</a> 设置为'+info})
+   .on('confirm', function(){
+      setPartnerStatus(partnerId, statu, _this)
+   })
 })
-//设置企业启用   
-btnUnBan.on('click', function(e){
-	const $tr = $(this).parents('tr');
-	const	partnerId = $tr.data('id'),
-	      name = $tr.children('td').eq(1).text();
-	$.dialog().confirm({message: '确定将'+name+'设为启用状态'})
-	 .on('confirm', function(){
-	 		setPartnerStatus(partnerId, 1)
-	 })
-})
-function setPartnerStatus(pid, stid){
+function setPartnerStatus(pid, status, target){
 	$.ajax({
-		url: '/admin/set_partner_status?pid='+ pid +'&&stid='+ stid,
+		url: '/admin/set_partner_status?pid='+ pid +'&&stid='+ status,
 		type: 'GET',
 	})
 	.done(function(res) {
 		if(res.status == 1){
 			$.dialog().success({message: '设置成功', delay: 600})
-			setTimeout(function(){
-        location.replace(location.href)
+      setTimeout(function(){
+        let title = status == 0 ? '禁用状态' : '启用状态';
+        if(status == 0){
+          target.attr('title', title).attr('data-status', 0).children('.fa')
+                .removeClass('fa-toggle-on').addClass('fa-toggle-off');
+        }else{
+          target.attr('title', title).attr('data-status', 1).children('.fa')
+                .removeClass('fa-toggle-off').addClass('fa-toggle-on');
+        }
       }, 600)
 		}else{
 			$.dialog().fail({message: '设置失败，请稍后重试'})

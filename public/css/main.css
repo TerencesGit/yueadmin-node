@@ -1,6 +1,6 @@
 /*========== common class ==========**/
 .m-t {
-  margin-top: 15px !important;
+  margin-top: 15px;
 }
 .m-t-20 {
   margin-top: 20px !important;
@@ -22,6 +22,9 @@
 }
 .m-b-0 {
   margin-bottom: 0 !important;
+}
+.m-b-5 {
+  margin-bottom: 5px !important;
 }
 .m-b-20 {
   margin-bottom: 20px !important;
@@ -215,7 +218,8 @@ a.disabled {
 .light-gray {
   color: #ccc;
 }
-/** custom button*/
+
+/** custom button **/
 .btn-secondary {
   color: #fff !important;
   background-color: #7266ba;
@@ -429,7 +433,11 @@ input[type="file"] {
 .alert {
   padding: 5px;
   text-indent: 2px;
-  margin-bottom: 10px;
+  margin-bottom: 0;
+}
+.form-control ~.alert-info,
+.form-control ~.alert-danger {
+  margin-top: 5px;
 }
 .breadcrumb {
   background-color: #ddd;
@@ -1061,22 +1069,13 @@ dl.horizontal dd {
 .has-error .checkbox-inline {
   color: #333;
 }
-
-.line {
+.vertical-line {
   margin: 0 10px;
 }
-
-.remember {
+.form-group.remember {
   margin-top: -5px;
   color: #666;
 }
-
-.remember > .checkbox-inline {
-  margin-left: 15px;
-}
-/**========== login end ==========**/
-
-/** reset password start **/
 .reset-form {
   width: 350px;
   margin: 40px auto;
@@ -1091,32 +1090,13 @@ dl.horizontal dd {
 .reset-form .alert.alert-danger {
   margin: 10px 15px 0 0;
 }
+.success-info > .fa{
+  color: #24c600;
+  vertical-align: top;
+}
+/**========== login end ==========**/
 
-.reset-success {
-  width: 500px;
-  margin: 10% auto 0;
-}
-.reset-success .panel-body {
-  padding: 80px 20px;
-}
-.success-info {
-  text-align: center
-}
-.success-info:before {
-  content: '\2714';
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  color: #0f0;
-  font-size: 30px
-}
-.success-info +p {
-  font-size: 16px
-}
-
-/**========== reset password end ==========**/
-
-/* 账号安全 */
+/* account-security */
 .panel-item {
   padding: 25px 25px 20px 25px;
   border-bottom: 1px solid #eee;
@@ -1130,20 +1110,7 @@ dl.horizontal dd {
 .panel-item .item-title {
   font-size: 18px
 }
-
-/* 企业信息 */
-.partner-info .dl-horizontal dd{
-  font-size: 16px
-}
-.partner-info .form-group .form-control {
-  width: 80%;
-}
-.check-partner {
-  width: 60%;
-  margin: auto;
-}
-
-/*部门组织管理 */
+/* list-group check */
 .modal-body .list-group > li > .check{
   display: none
 }

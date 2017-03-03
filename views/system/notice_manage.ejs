@@ -2,6 +2,7 @@
 <html>
   <head>
     <%- include('../link') %>
+    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
   </head>
   <body>
     <%- include('../aside') %>
@@ -14,45 +15,35 @@
               <h3 class="panel-title pull-left p-t-10">公告管理</h3>
               <a href="/system/notice_release" class="btn btn-success pull-right">发布公告</a>
             </div>
-            <table class="table table-hover">
-              <caption class="h3">公告列表</caption>
-              <thead>
-                <tr>
-                  <th>序号</th>
-                  <th>公告标题</th>
-                  <th>发布者</th>
-                  <th>修改者</th>
-                  <th>发布时间</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% notices.forEach(function(notice, index){ %>
-                <tr data-id="<%= notice._id%>">
-                  <td><%= index+1 %></td>
-                  <td><%= notice.title %></td>
-                  <td><%= notice.creator.name%></td>
-                  <td><%if(notice.updater){%><%= notice.updater.name%><%}else{%>暂无<%}%></td>
-                  <td><%= moment(notice.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %></td>
-                  <td>
-                    <a href="/system/notice_detail?id=<%= notice._id%>" class="btn btn-success">查看</a>
-                    <a href="/system/notice_edit?id=<%= notice._id%>" class="btn btn-warning">编辑</a>
-                    <button class="btn btn-danger btn-remove-notice">删除</button>
-                  </td>
-                </tr>
-                <%})%>
-              </tbody>
-            </table>
-            <div class="clearfix m-t m-r">
-              <ul class="pagination pull-right">
-                <li><a href="#">&laquo;</a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&raquo;</a></li>
-              </ul>
+            <div class="panel-body min-h-500">
+              <table id="noticeDataTable" class="table table-hover table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>公告标题</th>
+                    <th>发布者</th>
+                    <th>修改者</th>
+                    <th>发布时间</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% notices.forEach(function(notice, index){ %>
+                  <tr data-id="<%= notice._id%>">
+                    <td><%= index+1 %></td>
+                    <td><%= notice.title %></td>
+                    <td><%= notice.creator.name%></td>
+                    <td><%if(notice.updater){%><%= notice.updater.name%><%}else{%>暂无<%}%></td>
+                    <td><%= moment(notice.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %></td>
+                    <td>
+                      <a href="/system/notice_detail?id=<%= notice._id%>" class="btn btn-success">查看</a>
+                      <a href="/system/notice_edit?id=<%= notice._id%>" class="btn btn-warning">编辑</a>
+                      <button class="btn btn-danger btn-remove-notice">删除</button>
+                    </td>
+                  </tr>
+                  <%})%>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -61,6 +52,8 @@
     	<%- include('../footer') %>
     </div>
     <%- include('../script')%>
+    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
+    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
     <script src="/js/notice.js"></script>
   </body>
 </html>

@@ -14,18 +14,18 @@
         </div>
       </div>
       <ul class="navbar-nav pull-right"> 
-        <li class="dropdown">
+        <li class="dropdown hidden">
             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="false">
                 <i class="fa fa-bell"></i> <span class="label label-warning">8</span>
             </a>
             <ul class="dropdown-menu dropdown-alerts">
                 <li>
-                    <a href="mailbox.html">
-                        <div>
-                            <i class="fa fa-envelope fa-fw"></i> 您有16条未读消息
-                            <!-- <span class="pull-right text-muted small">4分钟前</span> -->
-                        </div>
-                    </a>
+                  <a href="mailbox.html">
+                      <div>
+                        <i class="fa fa-envelope fa-fw"></i> 您有16条未读消息
+                        <span class="pull-right text-muted small">4分钟前</span>
+                      </div>
+                  </a>
                 </li>
                 <li class="divider"></li>
                 <li>
@@ -48,19 +48,15 @@
             </ul>
         </li>
         <li class="dropdown personal-center">
-            <a href="javascript:;" class="dropdown-toggle" id="personMenu" data-toggle="dropdown">
-              <% if(user && user.avatar){ %> <img src="/upload/avatar/<%= user.avatar %>" alt="头像">
-              <% }else{ %> <img src="/img/avatar.gif" alt="头像"> <% } %>
-              <span class="username">
-                <% if(user){%> <%= user.name %>
-                <% }else{ %> 未登录 <% } %>
-              </span>
+            <a href="javascript:;" class="dropdown-toggle" id="personMenu" data-toggle="dropdown" title="<%= user.name %>">
+              <img src="<%if(user.avatar){%>/upload/avatar/<%=user.avatar%><%}else{%>/img/avatar.gif"><%}%>" alt="头像">
+              <span class="username"><%= user.name %></span>
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="personMenu">
-                <% if(user && user.role > 20){ %>
+                <%if(user && user.role > 20){%>
                 <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="/user/list">用户列表</a>
+                    <a href="/user/list" role="menuitem" tabindex="-1">用户列表</a>
                 </li>
                 <li role="presentation" class="divider"></li>
                 <% } %>
@@ -69,16 +65,8 @@
                 </li>
                 <li role="presentation" class="divider"></li>
                 <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="/account">个人中心</a>
+                    <a role="menuitem" tabindex="-1" href="/account">个人首页</a>
                 </li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="/account/edit_info">账号设置</a>
-                </li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="/account/modify_password">修改密码</a>
-                </li> 
                 <li role="presentation" class="divider"></li>
                 <li role="presentation">
                     <a role="menuitem" tabindex="-1" href="/logout">退出</a>

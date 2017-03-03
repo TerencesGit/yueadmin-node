@@ -2,6 +2,7 @@
 <html>
   <head>
     <%- include('../link') %>
+    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
   </head>
   <body>
     <%- include('../aside') %>
@@ -15,15 +16,16 @@
               </div>
               <div class="panel-body">
                 <div class="btn-group m-b">
-                  <a href="/admin/manage_partner" class="btn btn-default <%if(status == undefined){%>active<%}%>">全部</a>
-                  <a href="/admin/manage_partner?search=0" class="btn btn-default <%if(status == '0'){%>active<%}%>">未审核</a>
-                  <a href="/admin/manage_partner?search=1" class="btn btn-default <%if(status == '1'){%>active<%}%>">已通过</a>
-                  <a href="/admin/manage_partner?search=2" class="btn btn-default <%if(status == '2'){%>active<%}%>">未通过</a>
-                  <a href="/admin/manage_partner?search=3" class="btn btn-default <%if(status == '3'){%>active<%}%>">重新申请待审核</a>
+                  <a href="/admin/partner_manage" class="btn btn-default <%if(status == undefined){%>active<%}%>">全部</a>
+                  <a href="/admin/partner_manage?search=0" class="btn btn-default <%if(status == '0'){%>active<%}%>">未审核</a>
+                  <a href="/admin/partner_manage?search=1" class="btn btn-default <%if(status == '1'){%>active<%}%>">已通过</a>
+                  <a href="/admin/partner_manage?search=2" class="btn btn-default <%if(status == '2'){%>active<%}%>">未通过</a>
+                  <a href="/admin/partner_manage?search=3" class="btn btn-default <%if(status == '3'){%>active<%}%>">重新申请待审核</a>
                 </div>
-                <table class="table table-hover table-bordered table-condensed">
+                <table id="partnerDataTable" class="table table-hover table-bordered table-condensed table-striped">
                   <thead>
-                    <tr class='info'>
+                    <tr>
+                      <th>序号</th>
                       <th>申请人</th>
                       <th>企业名称</th>
                       <th>申请时间</th>
@@ -31,8 +33,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <%partners.forEach(function(partner){%>
+                    <%partners.forEach(function(partner, index){%>
                     <tr>
+                      <td><%= index+1 %></td>
                       <td><%= partner.admin.name%></td>
                       <td><%= partner.name%></td>
                       <td><%= moment(partner.meta.updateAt).format('YYYY-MM-DD HH:mm:ss') %></td>
@@ -68,5 +71,12 @@
     	<%- include('../footer') %>
     </div>
     <%- include('../script')%>
+    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
+    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+    <script>
+      $(function(){
+        $('#partnerDataTable').dataTable()
+      })
+    </script>
   </body>
 </html>

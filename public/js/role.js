@@ -1,5 +1,6 @@
 /* 系统角色管理 */
 const functionTree = $('#functionTree');
+const roleDataTable = $('#roleDataTable');
 //组织节点点击事件
 function HandlerClick(event, treeId, treeNode){
 	if(isRoot(treeNode)) return false;
@@ -11,8 +12,9 @@ function HandlerClick(event, treeId, treeNode){
 function isParent(treeNode){
 	return treeNode.isParent;
 } 
-//加载功能树
+//渲染数据表格 加载功能树
 $(function(){
+	roleDataTable.dataTable()
 	getFunctionTree()
 })
 //角色创建
@@ -34,9 +36,9 @@ newRoleBtn.on('click', function(e){
 //角色删除
 btnDel.on('click', function(e){
 	e.preventDefault();
-	var $tr = $(this).parents('tr');
-	var id = $tr.attr('data-id');
-	var name = $tr.children('td').eq(0).text();
+	const $tr = $(this).parents('tr');
+	const id = $tr.attr('data-id');
+	const name = $tr.children('.name').text();
 	$.dialog().confirm({message: '确定删除<a>'+name+'</a>, 此操作不可恢复'})
    .on('confirm', function(){
    	removeRole(id, $tr)
@@ -66,7 +68,6 @@ var roleId;
 btnSet.on('click', function(e){
 	var $tr = $(this).parents('tr');
 	roleId = $tr.attr('data-id');
-	console.log(roleId)
 	getFuncByRole(roleId)
 })
 //获取功能树

@@ -53,7 +53,7 @@ router.get('/account/modify_mobile', User.showModifyMobile);
 //重置密码
 router.get('/account/find_password', User.showFindPassword);
 router.post('/account/show_send_email', User.showSendEmail);
-router.get('/account/show_send_email', User.showSendEmail);
+router.get('/account/show_send_email', User.getSendEmail);
 router.get('/account/show_reset_password', User.showRestPassword);
 router.post('/account/reset_password', User.resetPassword);
 router.get('/account/reset_password', User.resetPasswdSuccess);

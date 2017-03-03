@@ -17,7 +17,13 @@
               </h3>
           </div>
           <div class="panel-body">
-            <h4 class="page-header m-t">请填写企业真实信息，*表示必填项</h4> 
+            <div class="alert alert-info">
+              <i class="fa fa-info-circle"></i>
+              提示： * 表示不能为空
+              <a class="close" data-dismiss="alert" href="#" aria-hidden="true">
+                &times;
+              </a>
+            </div> 
             <form method="post" action="/partner/edit_info" id="partnerForm" class="form-horizontal m-t" role="form" enctype="multipart/form-data">  
               <input type="hidden" name="partner[id]" value="<%=partner._id%>">      
               <div class="form-group row">
@@ -75,21 +81,25 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 control-label"><i>*</i>企业LOGO</label>
+                <label class="col-md-3 control-label">企业LOGO</label>
                 <div class="col-md-8">
                  <input type="file" name="logo" class="file-control">
-                <div id="logoPreview" class="preview-area clearfix w-170">
-                  <img src="/upload/logo/<%= partner.logo%>" id="logoPic" class="pic-preview" width="150" height="150" title="点击上传LOGO" alt="企业LOGO上传">
-                </div>
+                  <div id="logoPreview" class="preview-area clearfix w-170">
+                    <img src="/upload/logo/<%= partner.logo%>" id="logoPic" class="pic-preview" width="150" height="150" title="点击上传LOGO" alt="企业LOGO上传">
+                    <a href="javascript:;" class="img-remove"></a>
+                  </div>
+                  <div class="alert w-150"></div>
                 </div>
               </div>    
               <div class="form-group row">
-                <label class="col-md-3 control-label"><i>*</i>营业执照</label>
+                <label class="col-md-3 control-label">营业执照</label>
                 <div class="col-md-8">
                   <input type="file" name="license" class="file-control">
                   <div id="licensePreview" class="preview-area clearfix">
-                    <img src="/upload/license/<%= partner.license%>" id="licensePic" class="pic-preview" width="600" height="350" title="点击上传营业执照" alt="营业执照上传">
+                    <img src="/upload/license/<%= partner.license%>" id="licensePic" class="pic-preview" width="650" height="350" title="点击上传营业执照" alt="营业执照上传">
+                    <a href="javascript:;" class="img-remove"></a>
                   </div>
+                  <div class="alert"></div>
                 </div>
               </div> 
               <div class="form-group text-center"> 

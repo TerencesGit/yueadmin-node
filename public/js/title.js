@@ -66,7 +66,9 @@ function removeTitle(id, $tr){
 		if(res.status == 1){
 			$.dialog().success({message: '删除成功', delay: 1000})
 			setTimeout(function(){
-				location.replace(location.href)
+				if($tr.length === 1){
+					$tr.remove()
+				}
 			}, 1000)
 		}else{
 			$.dialog().fail({message: '删除失败，请稍后重试'})

@@ -1,7 +1,10 @@
 /* 员工管理 */
 const organizeTree = $('#organizeTree');
-//页面加载渲染部门树
+//岗位数据表格
+const staffDataTable = $('#staffDataTable');
+//渲染员工数据列表 页面加载渲染部门树 
 $(function(){
+  staffDataTable.DataTable({})
   renderOrgTree(organizeTree)
 })
 //日期选择器

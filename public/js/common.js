@@ -1,54 +1,44 @@
 /* 公用方法 */
 
 //表单输入框验证
-var checkInput = function($element, msg, regular, wrapShow){
+var checkInput = function($element, msg, regular){
   const msgRequired = msg && msg.required || '该项为必填',
         msgRegular = msg && msg.regular || '输入格式有误';
-  wrapShow = wrapShow || false;
   const value = $.trim($element.val());
   const formGroup = $element.parents('.form-group');
-  if(wrapShow){
-  	if(formGroup.next('.alert').length === 0) {
-	    formGroup.after('<div class="col-md-offset-3 alert alert-danger"></div>')
-	  }
-	  $alert = formGroup.next('.alert');
-  }else {
-	  if(formGroup.children('.alert').length === 0) {
-	    formGroup.append('<div class="col-md-3 alert alert-danger"></div>')
-	  }
-	  $alert = formGroup.children('.alert');
+  if(formGroup.children('.alert').length === 0) {
+    formGroup.append('<div class="col-md-3 alert alert-danger"></div>')
   }
+  alert = formGroup.children('.alert');
   if(value == '') {
     formGroup.removeClass('has-success').addClass('has-error');
-    $alert.html('<i class="fa fa-minus-circle"></i>'+msgRequired);
+    alert.html('<i class="fa fa-minus-circle"></i>'+msgRequired);
     $element.focus();
     return false;
   }else{
     if(regular){
       if(!regular.test(value)) {
         formGroup.removeClass('has-success').addClass('has-error');
-        $alert.html('<i class="fa fa-minus-circle"></i>'+msgRegular);
+        alert.html('<i class="fa fa-minus-circle"></i>'+msgRegular);
         $element.focus();
         return false;
       }
     }
     formGroup.removeClass('has-error').addClass('has-success');
-    $alert.remove();
+    alert.length === 1 && alert.remove();
     return true;
   }
 }
 
 //输入框有值时验证
-const checkInputValue = function($element, msg, regular, wrapShow){
-  if($.trim($element.val()) == '') {
-    const formGroup = $element.parents('.form-group');
-    if(formGroup.children('.alert').length !== 0){
-      formGroup.children('.alert').remove();
-    }
-    formGroup.removeClass('has-error');
-    return true;
+const checkInputValue = function($element, msg, regular){
+  if($.trim($element.val()) !== '') return checkInput($element, msg, regular)
+  const formGroup = $element.parents('.form-group');
+  if(formGroup.children('.alert').length !== 0){
+    formGroup.children('.alert').remove();
   }
-  return checkInput($element, msg, regular, wrapShow);
+  formGroup.removeClass('has-error');
+  return true;
 }
 
 //输入框简单验证
@@ -63,40 +53,35 @@ const simpleCheckInput = function($element){
     return true;
   }
 }
-//输入框为空验证
-const isEmptyInput = function($element){
-  const value = $.trim($element.val());
-  return value.length;
-}
 //判断输入框两次输入是否一致
-const confirmConsistent = function($element, $target, msg, wrapShow) {
-  if(!($element && $target)) throw new Error('至少两个参数！');
-  msg = msg && msg.notMatch || '两次输入不一致';
-  wrapShow = wrapShow || false;
-  const value = $.trim($element.val()),
-        targetValue = $.trim($target.val());
-  const formGroup = $element.parents('.form-group');
-  if(wrapShow){
-  	if (formGroup.next('.alert').length === 0) {
-	    formGroup.after('<div class="col-md-offset-3 alert alert-danger"></div>');
-	  }
-	  $alert = formGroup.next('.alert');
-  }else{
-	  if (formGroup.children('.alert').length === 0) {
-	    formGroup.append('<div class="col-md-3 alert alert-danger"></div>');
-	  }
-	  $alert = formGroup.children('.alert');
-  }
-  if (value == '' || targetValue == '' || value !== targetValue) {
-    formGroup.removeClass('has-success').addClass('has-error');
-    $alert.html('<i class="fa fa-minus-circle"></i>'+msg );
-    return false;
-  } else {
-    formGroup.removeClass('has-error').addClass('has-success');
-    $alert.remove();
-    return true;
-  }
-}
+// const confirmConsistent = function($element, $target, msg, wrapShow) {
+//   if(!($element && $target)) throw new Error('至少两个参数！');
+//   msg = msg && msg.notMatch || '两次输入不一致';
+//   wrapShow = wrapShow || false;
+//   const value = $.trim($element.val()),
+//         targetValue = $.trim($target.val());
+//   const formGroup = $element.parents('.form-group');
+//   if(wrapShow){
+//   	if (formGroup.next('.alert').length === 0) {
+// 	    formGroup.after('<div class="col-md-offset-3 alert alert-danger"></div>');
+// 	  }
+// 	  $alert = formGroup.next('.alert');
+//   }else{
+// 	  if (formGroup.children('.alert').length === 0) {
+// 	    formGroup.append('<div class="col-md-3 alert alert-danger"></div>');
+// 	  }
+// 	  $alert = formGroup.children('.alert');
+//   }
+//   if (value == '' || targetValue == '' || value !== targetValue) {
+//     formGroup.removeClass('has-success').addClass('has-error');
+//     $alert.html('<i class="fa fa-minus-circle"></i>'+msg );
+//     return false;
+//   } else {
+//     formGroup.removeClass('has-error').addClass('has-success');
+//     $alert.remove();
+//     return true;
+//   }
+// }
 
 //生成验证码
 var code;  //保存验证码
@@ -148,32 +133,32 @@ const validateCode = function($element, msg, focus) {
 }
 
 //验证多选框是否勾选
-const checkCheckbox = function($element, msg, wrapShow) {
-	if(!($element && msg)) throw new Error('至少两个参数！');
-	const msgRequired = msg.required || '需要勾选';
-	wrapShow = wrapShow || false;
-  const formGroup = $element.parents('.form-group');
-  const checked = $element.prop('checked');
-  if(!checked) {
-	  if(!wrapShow){
-	  	if (formGroup.children('.alert').length === 0) {
-		    formGroup.append('<div class="col-md-3 alert alert-danger"></div>')
-		  }
-		  const $alert = formGroup.children('.alert');
-	  }else{
-	  	if (formGroup.next('.alert').length === 0) {
-		    formGroup.after('<div class="alert alert-danger"></div>')
-		  }
-		  const $alert = formGroup.next('.alert');
-	  }
-   	formGroup.removeClass('has-success').addClass('has-error');
-    $alert.html('<i class="fa fa-minus-circle"></i>'+ msgRequired);
-    return false;
-  } else {
-    $alert && $alert.remove();
-    return true;
-  }
-}
+// const checkCheckbox = function($element, msg, wrapShow) {
+// 	if(!($element && msg)) throw new Error('至少两个参数！');
+// 	const msgRequired = msg.required || '需要勾选';
+// 	wrapShow = wrapShow || false;
+//   const formGroup = $element.parents('.form-group');
+//   const checked = $element.prop('checked');
+//   if(!checked) {
+// 	  if(!wrapShow){
+// 	  	if (formGroup.children('.alert').length === 0) {
+// 		    formGroup.append('<div class="col-md-3 alert alert-danger"></div>')
+// 		  }
+// 		  const $alert = formGroup.children('.alert');
+// 	  }else{
+// 	  	if (formGroup.next('.alert').length === 0) {
+// 		    formGroup.after('<div class="alert alert-danger"></div>')
+// 		  }
+// 		  const $alert = formGroup.next('.alert');
+// 	  }
+//    	formGroup.removeClass('has-success').addClass('has-error');
+//     $alert.html('<i class="fa fa-minus-circle"></i>'+ msgRequired);
+//     return false;
+//   } else {
+//     $alert && $alert.remove();
+//     return true;
+//   }
+// }
 
 //判断是否上传文件
 const hasFile = function(fileControl){
@@ -272,7 +257,7 @@ const clearFile = function($fileControl){
 }
 
 //图片格式大小验证
-const checkImageRugular = function(fileControl, msg, regular, sizeLimit){
+const checkImageRegular = function(fileControl, msg, regular, sizeLimit){
   if(!hasFile(fileControl)) return true;
 	if(!(fileControl instanceof jQuery || fileControl.nodeType === 1)) 
 	throw new Error(fileControl + '不是DOM或jQuery对象！');
@@ -300,7 +285,7 @@ const checkImageRugular = function(fileControl, msg, regular, sizeLimit){
 //图片上传校验
 const checkImage = function(fileControl, msg, regular, sizeLimit){
   return checkFileRequired(fileControl, msg) && 
-  checkImageRugular(fileControl, msg, regular, sizeLimit)
+  checkImageRegular(fileControl, msg, regular, sizeLimit)
 }
 
 //倒计时 自动跳转到指定页
@@ -344,7 +329,7 @@ function checkPayPassword($element, msg, regular){
     return true;
   }
 }
-//判断多选框是否被选中(new)
+//判断多选框是否被选中
 function isCkecked($element, msg){
   const formGroup = $element.parents('.form-group');
   const $tip = formGroup.find('.check-tip');
@@ -436,11 +421,9 @@ function focusEvent($element, msg, regular, next, target){
 function onFocus($element, msg){
   const formGroup = $element.parents('.form-group');
   const alert = formGroup.find('.alert');
-  !alert.hasClass('alert-info') && alert.addClass('alert-info');
-  alert.hasClass('alert-danger') && alert.removeClass('alert-danger');
-  alert.html('<i class="fa fa-exclamation-circle"></i>'+msg.tip);
+  alert.addClass('alert-info').removeClass('alert-danger').html('<i class="fa fa-exclamation-circle"></i>'+msg.tip);
 }
-//清除提示信息
+//清空提示信息
 function clearTip($element){
   const formGroup = $element.parents('.form-group');
   const alert = formGroup.find('.alert');
@@ -450,24 +433,29 @@ function clearTip($element){
   alert.hasClass('alert-danger') && alert.removeClass('alert-danger');
   alert.html('');
 }
+//删除提示信息
+function removeTip($element){
+  const formGroup = $element.parents('.form-group');
+  const alert = formGroup.find('.alert');
+  formGroup.hasClass('has-error') && formGroup.removeClass('has-error');
+  formGroup.hasClass('has-success') && formGroup.removeClass('has-success');
+  alert.remove()
+}
 //表单输入验证
 function validateForm($element, msg, regular, focus){
   const formGroup = $element.parents('.form-group');
   const alert = formGroup.find('.alert');
   const value = $.trim($element.val());
-  alert.hasClass('alert-info') && alert.removeClass('alert-info');
-  !alert.hasClass('alert-danger') && alert.addClass('alert-danger');
+  alert.removeClass('alert-info').addClass('alert-danger');
   if(value == ''){
-    !formGroup.hasClass('has-error') && formGroup.addClass('has-error');
-    formGroup.hasClass('has-success') && formGroup.removeClass('has-success');
+    formGroup.addClass('has-error').removeClass('has-success');
     alert.html('<i class="fa fa-minus-circle"></i>'+msg.required);
     focus && $element.focus();
     return false;
   }else{
     if(regular){
       if(!regular.test(value)){
-        !formGroup.hasClass('has-error') && formGroup.addClass('has-error');
-        formGroup.hasClass('has-success') && formGroup.removeClass('has-success');
+        formGroup.addClass('has-error').removeClass('has-success');
         alert.html('<i class="fa fa-minus-circle"></i>'+msg.regular);
         focus && $element.focus();
         return false;
@@ -510,14 +498,53 @@ function queryEmail($element, msg, target, expected){
     console.log("error");
   })
 }
+//异步查询账号
+function queryAccount($element, router, msg, target, expected){
+  const value = $.trim($element.val());
+  $.ajax({
+    url: '/'+router,
+    type: 'GET',
+    data: {number: value},
+  })
+  .done(function(res) {
+    if(expected === 'has'){
+      if(res.status == 0){
+        showAlert($element, msg.notExisted)
+        target.attr('data-status', 0);
+      }else{
+        target.attr('data-status', 1);
+      }
+    }else if(expected == 'null'){
+      if(res.status == 0){
+        target.attr('data-status', 1);
+      }else{
+        showAlert($element, msg.existed)
+        target.attr('data-status', 0);
+      }
+    }else {
+      alert('期望值只能是“has”或“null”')
+      throw new Error('期望值只能是“has”或“null”')
+    }
+  })
+  .fail(function() {
+    console.log("error");
+  })
+}
 //错误信息显示
 function alertShow($element, msg){
   const formGroup = $element.parents('.form-group');
   const alert = formGroup.find('.alert');
-  alert.hasClass('alert-info') && alert.removeClass('alert-info');
-  !(alert.hasClass('alert-danger')) && alert.addClass('alert-danger');
   formGroup.removeClass('has-success').addClass('has-error');
-  alert.html('<i class="fa fa-minus-circle"></i>'+ msg);
+  alert.removeClass('alert-info').addClass('alert-danger').html('<i class="fa fa-minus-circle"></i>'+ msg);
+}
+function showAlert($element, msg){
+  const formGroup = $element.parents('.form-group');
+  if(formGroup.children('alert').length === 0){
+    formGroup.append('<div class="col-md-3 alert alert-dander"></div>')
+  }
+  const alert = formGroup.children('.alert');
+  formGroup.removeClass('has-success').addClass('has-error');
+  alert.removeClass('alert-info').addClass('alert-danger').html('<i class="fa fa-minus-circle"></i>'+ msg);
 }
 //校验两次输入是否一致
 function checkConsistency($element, $target, msg){

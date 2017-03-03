@@ -1,13 +1,16 @@
-/* 公告信息维护 */
+/* 公告信息管理 */
+const noticeDataTable = $('#noticeDataTable');
+$(function(){
+	noticeDataTable.length === 1 &&　noticeDataTable.dataTable()
+})
 // 公告发布表单
 const noticeForm = $('#noticeForm'),
 			noticeTitle = $('#noticeTitle'),
 			noticeCont = $('#noticeCont'),
-			noticeFile = $('#noticeFile'),
-			noticePic = $('#noticePic'),
-			noticePicPreview = $('#noticePicPreview'),
-			noticePicUpload = $('#noticePicUpload'),
-			removeFileBtn = $('#removeFileBtn'),
+			fileControl = $('.file-control'),
+			previewArea = $('.preview-area'),
+			picPreview = $('.pic-preview'),
+			imgRemove = $('.img-remove'),
 			noticeSubmit = $('#noticeSubmit');
 noticeSubmit.on('click', function(e){
 	e.preventDefault();
@@ -16,27 +19,25 @@ noticeSubmit.on('click', function(e){
 	checkImageRugular(noticeFile) &&
 	noticeForm.submit()
 })	
-//公告图片预览
-noticePicPreview.on('click', function(e){
-	noticeFile.click()
-})
-noticePicUpload.on('click', function(e){
-	noticeFile.click()
-})
-noticeFile.change(function(){
-	checkImageRugular(this) &&
-	uploadPreview(this, noticePic)
-	noticePicPreview.show().addClass('show')
-	noticePicUpload.hide()
-})
-//清空上传文件
-removeFileBtn.on('click', function(e){
-	e.stopPropagation();
-	noticePicPreview.hide();
-	noticePicUpload.show();
-	clearFile(noticeFile);
-	noticePic.attr('src', '');
-})
+ //点击选择本地图片
+  previewArea.on('click', function(e){
+     $(this).parents('.form-group').find('.file-control').click()
+  })
+  //图片预览
+  fileControl.change(function(e){
+    const picPreview = $(this).parents('.form-group').find('.pic-preview');
+    checkImageRegular(this) 
+    uploadPreview(this, picPreview)
+    picPreview.parent().addClass('show');
+  })
+  //图片删除
+  imgRemove.on('click', function(e){
+    e.stopPropagation()
+    clearFile($(this).parents('.form-group').find('.file-control'))
+    $(this).prev().attr('src', '/img/upload.png').parents('.preview-area').removeClass('show');
+    clearTip($(this))
+  })
+
 //公告删除	
 const btnResetNotice = $('.btn-remove-notice');
 btnResetNotice.on('click', function(e){
