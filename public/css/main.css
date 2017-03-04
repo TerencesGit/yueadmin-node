@@ -123,8 +123,14 @@
 .min-h-400 {
   min-height: 400px;
 }
+.min-h-450 {
+  min-height: 450px;
+}
 .min-h-500 {
   min-height: 500px;
+}
+.min-h-520 {
+  min-height: 520px;
 }
 .max-h-300 {
   max-height: 300px;
@@ -174,16 +180,8 @@
 .border-left {
   border-left: 1px solid #ccc
 }
-.extend-s:hover {
+.scale:hover {
   transform: scale(.5);
-  transition: all .5s;
-}
-.extend-m:hover {
-  transform: scale(1.5);
-  transition: all .5s;
-}
-.extend-l:hover {
-  transform: scale(2);
   transition: all .5s;
 }
 .relative {
@@ -203,13 +201,7 @@ a.disabled {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.blue {
-  color: blue;
-}
-.green {
-  color: green;
-}
-.white{
+.white,.white:hover {
   color: white;
 }
 .gray {
@@ -218,12 +210,15 @@ a.disabled {
 .light-gray {
   color: #ccc;
 }
-
+.green {
+  color: green;
+}
 /** custom button **/
 .btn-secondary {
   color: #fff !important;
   background-color: #7266ba;
   border-color: #7266ba;
+  color: #fff;
 }
 .btn-secondary:hover, 
 .btn-secondary:focus, 
@@ -248,55 +243,14 @@ a.disabled {
   background-color: #23ad44;
   border-color: #20a03f;
 }
-.btn-info {
-  color: #fff !important;
-  background-color: #23b7e5;
-  border-color: #23b7e5;
-}
-.btn-info:hover, 
-.btn-info:focus, 
-.btn-info:active, 
-.btn-info.active, 
-.open .dropdown-toggle.btn-info {
-  color: #fff !important;
-  background-color: #19a9d5;
-  border-color: #189ec8;
-}
-.btn-warning {
-  color: #fff !important;
-  background-color: #fad733;
-  border-color: #fad733;
-}
-.btn-warning:hover, 
-.btn-warning:focus, 
-.btn-warning:active, 
-.btn-warning.active, 
-.open .dropdown-toggle.btn-warning {
-  color: #fff !important;
-  background-color: #f9d21a;
-  border-color: #f9cf0b;
-}
-.btn-danger {
-  color: #fff !important;
-  background-color: #f05050;
-  border-color: #f05050;
-}
-.btn-danger:hover, 
-.btn-danger:focus, 
-.btn-danger:active, 
-.btn-danger.active, 
-.open .dropdown-toggle.btn-danger {
-  color: #fff !important;
-  background-color: #ee3939;
-  border-color: #ed2a2a;
-}
 /** custom panel **/
-.panel-primary {
+.panel-secondary {
   border-color: #23b7e5;
 }
-.panel-primary > .panel-heading {
+.panel-secondary > .panel-heading {
   background-color: #23b7e5;
   border-color: #23b7e5;
+  color: #fff;
 }
 .panel-info {
   border-color: #23c6c8;
@@ -323,12 +277,12 @@ a.disabled {
   color: #fff;
 }
 
-.panel-blue {
-  border-color: #1c84c6;
+.panel-black {
+  border-color: #333;
 }
-.panel-blue > .panel-heading {
-  background-color: #1c84c6;
-  border-color: #1c84c6;
+.panel-black > .panel-heading {
+  background-color: #333;
+  border-color: #333;
   color: #fff;
 }
 .panel-green {
@@ -353,14 +307,6 @@ a.disabled {
 .panel-orange > .panel-heading {
   background-color: orange;
   border-color: orange;
-  color: #fff;
-}
-.panel-purple {
-  border-color: purple;
-}
-.panel-purple > .panel-heading {
-  background-color: purple;
-  border-color: purple;
   color: #fff;
 }
 /**========== global style ==========**/
@@ -464,18 +410,17 @@ dl.horizontal dd {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 16px;
+}
+.dl-horizontal dt,
+.dl-horizontal dd {
+  font-size: 16px;
 }
 .dropdown-menu {
   min-width: auto
 }
 .input-group-btn > .btn {
   padding: 6px 12px;
-}
-.list-group-item.active,
-.list-group-item.active:focus, 
-.list-group-item.active:hover {
-  background-color: #23b7e5;
-  border-color: #23b7e5;
 }
 /**========== animation start ==========**/
 .animated {

@@ -175,7 +175,7 @@ focusEvent(resetPassword2, msg.confirmPasswd, regular.password, checkConsistency
 //重置密码表单提交
 btnResetPasswd.on('click', function(e){
   e.preventDefault();
-  // validateForm(resetPassword, msg.password, regular.password) &&
-  // checkConsistency(resetPassword2, resetPassword, msg.confirmPasswd) && 
+  validateForm(resetPassword, msg.password, regular.password) &&
+  checkConsistency(resetPassword2, resetPassword, msg.confirmPasswd) && 
   resetPasswdForm.submit()
 })

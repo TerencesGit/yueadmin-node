@@ -9,64 +9,68 @@
     <div id="main" class="main" data-page="account_security">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
-          <div class="panel panel-green">
+          <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title">安全中心</h3>
-            </div> 
-            <div class="panel-body">
-              <div class="row panel-item">
-                <div class="col-md-1 item-icon">
-                  <img src="/img/icon-msg.png">
-                </div>
-                <div class="col-md-2 item-title">
-                 <span>修改密码</span>
-                </div>
-                <div class="col-md-7">
-                  <p>建议您定期更改密码以保护账户安全。</p>
-                </div>
-                <div class="col-md-1 text-right">
-                  <a href="/account/modify_password">修改</a>
-                </div>
-              </div>
-              <div class="row panel-item">
-                <div class="col-md-1 item-icon">
-                  <img src="/img/icon-msg.png">
-                </div>
-                <div class="col-md-2 item-title">
-                 <span>邮箱验证</span>
-                </div>
-                <div class="col-md-7">验证后，可用于快速找回密码。</div>
-                <div class="col-md-1 text-right">
-                  <a href="javascript:;" id="verifyEmailBtn" data-id="<%= user.email%>">验证</a>
-                </div>
-              </div>
-              <div class="row panel-item">
-                <div class="col-md-1 item-icon">
-                  <img src="/img/icon-warning.png">
-                </div>
-                <div class="col-md-2 item-title">
-                 <span>绑定手机号码</span>
-                </div>
-                <div class="col-md-7">绑定手机号，可用于快速登录账号。</div>
-                <div class="col-md-1 text-right">
-                  <a href="/account/bind_mobile">验证</a>
-                </div>
-              </div>
-              <div class="row panel-item">
-                <div class="col-md-1 item-icon">
-                  <img src="/img/icon-warning.png">
-                </div>
-                <div class="col-md-2 item-title">
-                 <span>修改手机号码</span>
-                </div>
-                <div class="col-md-7">
-                  <p>当前手机号码： 183*****275。</p>
-                </div>
-                <div class="col-md-1 text-right">
-                  <a href="/account/modify_mobile">修改</a>
-                </div>
-              </div>
+              <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">安全中心</a>
+              </h3>
             </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+              <div class="panel-body">
+                <div class="row panel-item">
+                  <div class="col-md-1 item-icon">
+                    <img src="/img/icon-msg.png">
+                  </div>
+                  <div class="col-md-2 item-title">
+                   <span>修改密码</span>
+                  </div>
+                  <div class="col-md-7">
+                    <p>建议您定期更改密码以保护账户安全。</p>
+                  </div>
+                  <div class="col-md-1 text-right">
+                    <a href="/account/modify_password">修改</a>
+                  </div>
+                </div>
+                <div class="row panel-item">
+                  <div class="col-md-1 item-icon">
+                    <img src="/img/icon-msg.png">
+                  </div>
+                  <div class="col-md-2 item-title">
+                   <span>邮箱验证</span>
+                  </div>
+                  <div class="col-md-7">验证后，可用于快速找回密码。</div>
+                  <div class="col-md-1 text-right">
+                    <a href="javascript:;" id="verifyEmailBtn" data-id="<%= user.email%>">验证</a>
+                  </div>
+                </div>
+                <div class="row panel-item">
+                  <div class="col-md-1 item-icon">
+                    <img src="/img/icon-warning.png">
+                  </div>
+                  <div class="col-md-2 item-title">
+                   <span>绑定手机号码</span>
+                  </div>
+                  <div class="col-md-7">绑定手机号，可用于快速登录账号。</div>
+                  <div class="col-md-1 text-right">
+                    <a href="/account/bind_mobile">验证</a>
+                  </div>
+                </div>
+                <div class="row panel-item">
+                  <div class="col-md-1 item-icon">
+                    <img src="/img/icon-warning.png">
+                  </div>
+                  <div class="col-md-2 item-title">
+                   <span>修改手机号码</span>
+                  </div>
+                  <div class="col-md-7">
+                    <p>当前手机号码： 183*****275。</p>
+                  </div>
+                  <div class="col-md-1 text-right">
+                    <a href="/account/modify_mobile">修改</a>
+                  </div>
+                </div>
+              </div>
+            </div> 
           </div>
           <div class="warp-footer"></div>
         </div>

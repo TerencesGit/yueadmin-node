@@ -9,12 +9,21 @@ var functionSchema = new Schema({
 	desc: String,
 	parent_id: String,
 	level: {
-		type: Number
+		type: Number,
+		default: 1
+	},
+	seq: {
+		type: Number,
+		default: 1
 	},
 	type: {
-		type: Number
+		type: Number,
+		default: 1
 	},
-	note: String,
+	status: {
+		type: Number,
+		default: 1
+	},
 	viewname: String,
 	is_function_root: {
 		type: Number,
@@ -33,7 +42,7 @@ var functionSchema = new Schema({
 })
 functionSchema.pre('save',function(next){
 	if(this.isNew){
-		this.meta.createAt = Date.now();
+		this.meta.createAt = this.meta.updateAt = Date.now();
 	}else{
 		this.meta.updateAt = Date.now();
 	}

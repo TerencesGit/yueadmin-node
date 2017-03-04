@@ -10,7 +10,7 @@
     <div id="main" class="main" data-page="account_manage">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
-          <div class="panel panel-success">
+          <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title">账户管理</h3>
             </div>
@@ -21,6 +21,7 @@
                     <th>序号</th>
                     <th>账号</th>
                     <th>姓名</th>
+                    <th>账户性质</th>
                     <th>所在公司</th>
                     <th>注册时间</th>
                     <th>账户信息</th>
@@ -33,6 +34,7 @@
                       <td><%= index+1%></td>
                       <td class="account"><%= user.email %></td>
                       <td class="name"><%= user.name %></td>
+                      <td><%if(user.partner){%>企业用户<%}else{%>个人用户<%}%></td>
                       <td><%if(user.partner){%><%= user.partner.name %><%}%></td>
                       <td><%= moment(user.meta.createAt).format('YYYY-MM-DD') %></td>
                       <td><a href="/system/show_account_info?id=<%= user._id%>">查看</a></td>

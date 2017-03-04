@@ -97,27 +97,42 @@
               </div>
               <div class="modal-body">
                 <div class="form-group row">
-                  <label class="col-md-offset-1 col-md-2 control-label organize-name">功能名称</label>
+                  <label class="col-md-offset-1 col-md-2 control-label">功能名称</label>
                   <div class="col-md-6">
                     <input type="text" id="newFunctionName" class="form-control" placeholder="必填">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-offset-1 col-md-2 control-label organize-name">路由地址</label>
+                  <label class="col-md-offset-1 col-md-2 control-label">URL</label>
                   <div class="col-md-6">
                     <input type="text" id="newFunctionRouter" class="form-control" placeholder="必填">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-offset-1 col-md-2 control-label">功能描述</label>
+                  <label class="col-md-offset-1 col-md-2 control-label">等级</label>
                   <div class="col-md-6">
-                    <textarea id="newFunctionDesc" class="form-control" rows="3" placeholder="必填"></textarea>
+                    <input type="text" id="newFunctionLevel" class="form-control" placeholder="必填">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-offset-1 col-md-2 control-label">备注</label>
+                  <label class="col-md-offset-1 col-md-2 control-label">序列</label>
                   <div class="col-md-6">
-                    <textarea id="newFunctionNote" class="form-control" rows="2" placeholder="选填"></textarea>
+                    <input type="text" id="newFunctionSeq" class="form-control" placeholder="必填">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-offset-1 col-md-2 control-label">类别</label>
+                  <div class="col-md-6">
+                    <select id="newFunctionType" class="form-control">
+                      <option value="1">实功能点</option>
+                      <option value="0">虚功能点</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-offset-1 col-md-2 control-label">功能描述</label>
+                  <div class="col-md-6">
+                    <textarea id="newFunctionDesc" class="form-control" rows="2" placeholder="必填"></textarea>
                   </div>
                 </div>
               </div>

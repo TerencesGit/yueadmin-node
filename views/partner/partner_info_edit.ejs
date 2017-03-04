@@ -9,104 +9,99 @@
     <div id="main" class="main" data-page="partner_info_edit">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
-          <div class="panel panel-success">
+          <div class="panel panel-info">
           <div class="panel-heading">
               <h3 class="panel-title">
-               企业信息编辑(<%= partner.name%>)
+               <a href="#collapseOne" data-toggle="collapse">企业信息编辑（<%= partner.name%>）</a>
                <a href="javascript:history.go(-1)" class="pull-right">返回</a>
               </h3>
           </div>
-          <div class="panel-body">
-            <div class="alert alert-info">
-              <i class="fa fa-info-circle"></i>
-              提示： * 表示不能为空
-              <a class="close" data-dismiss="alert" href="#" aria-hidden="true">
-                &times;
-              </a>
-            </div> 
-            <form method="post" action="/partner/edit_info" id="partnerForm" class="form-horizontal m-t" role="form" enctype="multipart/form-data">  
-              <input type="hidden" name="partner[id]" value="<%=partner._id%>">      
-              <div class="form-group row">
-                <label class="col-md-3 control-label"><i>*</i>法定代表人</label>
-                <div class="col-md-6">
-                  <input type="text" id="corporation" class="form-control" name="partner[corporation]" value="<%= partner.corporation%>" placeholder="请输入企业法定代表人">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 control-label"><i>*</i>营业执照注册号</label>
-                <div class="col-md-6">
-                  <input type="text" id="licenseId" class="form-control" name="partner[license_id]" value="<%= partner.license_id%>" placeholder="请输入营业执照注册号">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 control-label"><i>*</i>联系人</label>
-                <div class="col-md-6">
-                  <input type="text" id="contactName" class="form-control" name="partner[contact_name]" value="<%= partner.contact_name%>" placeholder="请输入联系人姓名">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 control-label"><i>*</i>地址</label>
-                <div class="col-md-6">
-                  <input type="text" id="address" class="form-control" name="partner[address]" value="<%= partner.address%>" placeholder="请输入企业地址">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 control-label"><i>*</i>邮编</label>
-                <div class="col-md-6">
-                  <input type="text" id="postcode" class="form-control" name="partner[post]" value="<%= partner.post%>" placeholder="请输入邮编号">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 control-label">联系电话</label>
-                <div class="col-md-6">
-                  <input type="text" id="contactTelephone" class="form-control" name="partner[telephone]" value="<%= partner.telephone%>" placeholder="号码格式：区号-直播号码，例如：010-12345678">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 control-label">联系手机</label>
-                <div class="col-md-6">
-                  <input type="text" id="contactMobile" class="form-control" name="partner[mobile]" value="<%= partner.mobile%>" placeholder="请输入手机号码">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 control-label">企业邮箱</label>
-                <div class="col-md-6">
-                  <input type="text" id="partnerEmail" class="form-control" name="partner[email]" value="<%= partner.email%>" placeholder="请输入企业邮箱">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 control-label">企业简介</label>
-                <div class="col-md-6">
-                  <textarea id="profile" class="form-control" name="partner[profile]" placeholder="企业简介" rows="5"><%= partner.profile%></textarea>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 control-label">企业LOGO</label>
-                <div class="col-md-8">
-                 <input type="file" name="logo" class="file-control">
-                  <div id="logoPreview" class="preview-area clearfix w-170">
-                    <img src="/upload/logo/<%= partner.logo%>" id="logoPic" class="pic-preview" width="150" height="150" title="点击上传LOGO" alt="企业LOGO上传">
-                    <a href="javascript:;" class="img-remove"></a>
+          <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <form method="post" action="/partner/edit_info" id="partnerForm" class="form-horizontal m-t" role="form" enctype="multipart/form-data">  
+                <input type="hidden" name="partner[id]" value="<%=partner._id%>">      
+                <div class="form-group row">
+                  <label class="col-md-3 control-label"><i>*</i>法定代表人</label>
+                  <div class="col-md-6">
+                    <input type="text" id="corporation" class="form-control" name="partner[corporation]" value="<%= partner.corporation%>" placeholder="请输入企业法定代表人">
                   </div>
-                  <div class="alert w-150"></div>
                 </div>
-              </div>    
-              <div class="form-group row">
-                <label class="col-md-3 control-label">营业执照</label>
-                <div class="col-md-8">
-                  <input type="file" name="license" class="file-control">
-                  <div id="licensePreview" class="preview-area clearfix">
-                    <img src="/upload/license/<%= partner.license%>" id="licensePic" class="pic-preview" width="650" height="350" title="点击上传营业执照" alt="营业执照上传">
-                    <a href="javascript:;" class="img-remove"></a>
+                <div class="form-group row">
+                  <label class="col-md-3 control-label"><i>*</i>营业执照注册号</label>
+                  <div class="col-md-6">
+                    <input type="text" id="licenseId" class="form-control" name="partner[license_id]" value="<%= partner.license_id%>" placeholder="请输入营业执照注册号">
                   </div>
-                  <div class="alert"></div>
                 </div>
-              </div> 
-              <div class="form-group text-center"> 
-                <button type="submit" id="savePratnerBtn" class="btn btn-success">保存</button>
-                <button class="btn btn-default m-l" onClick="history.go(-1)">返回</button>
-              </div>
-            </form>            
+                <div class="form-group row">
+                  <label class="col-md-3 control-label"><i>*</i>联系人</label>
+                  <div class="col-md-6">
+                    <input type="text" id="contactName" class="form-control" name="partner[contact_name]" value="<%= partner.contact_name%>" placeholder="请输入联系人姓名">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 control-label"><i>*</i>地址</label>
+                  <div class="col-md-6">
+                    <input type="text" id="address" class="form-control" name="partner[address]" value="<%= partner.address%>" placeholder="请输入企业地址">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 control-label"><i>*</i>邮编</label>
+                  <div class="col-md-6">
+                    <input type="text" id="postcode" class="form-control" name="partner[post]" value="<%= partner.post%>" placeholder="请输入邮编号">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">联系电话</label>
+                  <div class="col-md-6">
+                    <input type="text" id="contactTelephone" class="form-control" name="partner[telephone]" value="<%= partner.telephone%>" placeholder="号码格式：区号-直播号码，例如：010-12345678">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">联系手机</label>
+                  <div class="col-md-6">
+                    <input type="text" id="contactMobile" class="form-control" name="partner[mobile]" value="<%= partner.mobile%>" placeholder="请输入手机号码">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">企业邮箱</label>
+                  <div class="col-md-6">
+                    <input type="text" id="partnerEmail" class="form-control" name="partner[email]" value="<%= partner.email%>" placeholder="请输入企业邮箱">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">企业简介</label>
+                  <div class="col-md-6">
+                    <textarea id="profile" class="form-control" name="partner[profile]" placeholder="企业简介" rows="5"><%= partner.profile%></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">企业LOGO</label>
+                  <div class="col-md-8">
+                   <input type="file" name="logo" class="file-control">
+                    <div id="logoPreview" class="preview-area clearfix w-170">
+                      <img src="/upload/logo/<%= partner.logo%>" id="logoPic" class="pic-preview" width="150" height="150" title="点击上传LOGO" alt="企业LOGO上传">
+                      <a href="javascript:;" class="img-remove"></a>
+                    </div>
+                    <div class="alert w-150"></div>
+                  </div>
+                </div>    
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">营业执照</label>
+                  <div class="col-md-8">
+                    <input type="file" name="license" class="file-control">
+                    <div id="licensePreview" class="preview-area clearfix">
+                      <img src="/upload/license/<%= partner.license%>" id="licensePic" class="pic-preview" width="650" height="350" title="点击上传营业执照" alt="营业执照上传">
+                      <a href="javascript:;" class="img-remove"></a>
+                    </div>
+                    <div class="alert"></div>
+                  </div>
+                </div> 
+                <div class="form-group text-center"> 
+                  <button type="submit" id="savePratnerBtn" class="btn btn-info">保存</button>
+                  <button class="btn btn-default m-l" onClick="history.go(-1)">取消</button>
+                </div>
+              </form>            
+            </div>
           </div>
         </div>
           <div class="warp-footer"></div>

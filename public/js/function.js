@@ -6,8 +6,9 @@ const funcTable = $('#funcTable');
 function HandlerClick(event, treeId, treeNode){
 	if(isRoot(treeNode)) return false;
   const name = treeNode.name;
-  const functionId = treeNode.id;
-  getFunctionNode(functionId)
+  //const functionId = treeNode.id;
+  //getFunctionNode(functionId)
+  showFuncDetail(treeNode)
 }
 //判断父节点
 function isParent(treeNode){
@@ -58,30 +59,29 @@ function getFunctionTree(){
     const zNode = [];
     var treeObj;
     functions.forEach(function(func){
-    	if(!func.parent_id){
+    	if(!func.parentId){
 	    	treeObj = {
-	        id: func._id,
-	        pId: func.parent_id,
+	        id: func.funcId,
 	        name: func.name,
-	        url: func.funUrl,
-	        desc: func.funDesc,
-	        level: func.funcLevel,
+	        funcUrl: func.funcUrl,
+	        desc: func.funcDesc,
+	        funcLevel: func.funcLevel,
 	        seq: func.funcSeq,
-	        type: func.funcType, 
+	        funcType: func.funcType, 
 	        status: func.status,
 	        open: true,
 	        iconSkin: 'root',
 	      };
     	}else{
     		treeObj = {
-	        id: func._id,
-	        pId: func.parent_id,
+	        id: func.funcId,
+	        pId: func.parentId,
 	        name: func.name,
-	        url: func.funcUrl,
-	        desc: func.funDesc,
-	        level: func.funcLevel,
+	        funcUrl: func.funcUrl,
+	        desc: func.funcDesc,
+	        funcLevel: func.funcLevel,
 	        seq: func.funcSeq,
-	        type: func.funcType, 
+	        funcType: func.funcType, 
 	        status: func.status,
 	        open: false,
 	        iconSkin: 'folder'
@@ -95,25 +95,35 @@ function getFunctionTree(){
 		console.log("error");
 	})
 }
-//获取单个功能节点
-function getFunctionNode(id){
-	$.ajax({
-		url: '/system/get_function_node?id='+ id,
-	})
-	.done(function(res) {
-		if(res.status == 0) return $.dialog().alert({message: '获取失败, 请稍后重试'})
-		const func = res.func;
-	  var funcHtml = '';
-	  funcHtml = ('<tr><td>'+func.name+'</td><td>'+func.funcUrl+'</td>\
-        <td>'+func.funDesc+'</td><td>'+func.funcLevel+'</td>\
-        <td>'+func.funcSeq+'</td><td>'+func.funcType+'</td>\
-        <td>'+func.createTime+'</td><td>'+func.status+'</td></tr>') 
-	  $('.func-detail').empty().append(funcHtml);
-	  funcTable.removeClass('hidden')
-	})
-	.fail(function() {
-		console.log("error");
-	})
+//异步获取单个功能节点详情
+// function getFunctionNode(id){
+// 	$.ajax({
+// 		url: '/system/get_function_node?id='+ id,
+// 	})
+// 	.done(function(res) {
+// 		if(res.status == 0) return $.dialog().alert({message: '获取失败, 请稍后重试'})
+// 		const func = res.func;
+// 	  var funcHtml = '';
+// 	  funcHtml = ('<tr><td>'+func.name+'</td><td>'+func.funcUrl+'</td>\
+//         <td>'+func.funDesc+'</td><td>'+func.funcLevel+'</td>\
+//         <td>'+func.funcSeq+'</td><td>'+func.funcType+'</td>\
+//         <td>'+func.createTime+'</td><td>'+func.status+'</td></tr>') 
+// 	  $('.func-detail').empty().append(funcHtml);
+// 	  funcTable.removeClass('hidden')
+// 	})
+// 	.fail(function() {
+// 		console.log("error");
+// 	})
+// }
+//显示功能点详情
+function showFuncDetail(func){
+	var funcHtml = '';
+  funcHtml = ('<tr><td>'+func.name+'</td><td>'+func.funcUrl+'</td>\
+      <td>'+func.funDesc+'</td><td>'+func.funcLevel+'</td>\
+      <td>'+func.funcSeq+'</td><td>'+func.funcType+'</td>\
+      <td>'+func.createTime+'</td><td>'+func.status+'</td></tr>') 
+  $('.func-detail').empty().append(funcHtml);
+  funcTable.removeClass('hidden')
 }
 // 工具按钮
 const btnNew = $('.btn-new'),

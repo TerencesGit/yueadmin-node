@@ -7,10 +7,10 @@
   <body>
     <%- include('../aside') %>
     <%- include('../header') %>
-    <div id="main" class="main" data-page="edit_info">
+    <div id="main" class="main" data-page="account_info_edit">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
-          <div id="baseInfo" class="panel panel-info">
+          <div id="baseInfo" class="panel panel-primary">
             <div class="panel-heading">
              <h3 class="panel-title">
               <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
@@ -23,7 +23,7 @@
               <div class="panel-body">
                 <form method="post" action="/account/save_info" id="accountForm" class="form-horizontal" enctype="multipart/form-data" role="form"> 
                   <div class="form-group">
-                    <h3 class="col-md-2 control-label">基本信息编辑</h3>       
+                    <h3 class="col-md-2 control-label text-info">基本信息</h3>       
                   </div>
                   <div class="form-group">
                     <label class="col-md-2 control-label">姓名</label>
@@ -76,7 +76,7 @@
                      </div>
                   </div>               
                   <div class="form-group">
-                    <h3 class="col-md-2 control-label m-t">附件上传</h3>
+                    <h3 class="col-md-2 control-label m-t text-info">附件上传</h3>
                     <p class="alert text-warning m-t l-h-2">
                       支持JPG、JPEG、PNG格式且大小不要超过1M！
                     </p>
@@ -129,7 +129,7 @@
                     </div>
                   </div>
                   <div class="form-group"> 
-                    <button type="submit" id="accountSubmitBtn" class="col-md-offset-5 btn btn-success">保存</button>
+                    <button type="submit" id="accountSubmitBtn" class="col-md-offset-5 btn btn-primary">保存</button>
                     <button type="reset" class="btn btn-default m-l">重置</button>
                   </div>
                 </form>

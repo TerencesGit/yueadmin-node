@@ -36,7 +36,7 @@ router.get('/sendPhoneCode', User.sendPhoneCode);
 /* 账户信息 */
 router.get('/account', User.signinRequired, User.showAccountInfo);
 router.get('/account/account_info', User.signinRequired, User.showAccountInfo);
-router.get('/account/edit_info', User.signinRequired, User.showAccountEdit);
+router.get('/account/account_info_edit', User.signinRequired, User.showAccountEdit);
 router.post('/account/save_info', User.signinRequired, multipartMiddleware, User.avatarUpload, User.idcardFrontUpload, User.idcardBackUpload, User.saveInfo);
 
 //账号设置

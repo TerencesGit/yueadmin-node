@@ -133,14 +133,25 @@ function renderOrganizeTree(organizeTree){
     var zNode = [];
     var treeObj;
     organizes.forEach(function(organize){
-    	treeObj = {
-        id: organize._id,
-        pId: organize.parent_id,
-        name: organize.name,
-        profile: organize.profile,
-        status: organize.status,
-        open: true
-      };
+    	if(!organize.parent_id){
+    		treeObj = {
+	        id: organize._id,
+	        name: organize.name,
+	        profile: organize.profile,
+	        status: organize.status,
+	        open: true,
+        	iconSkin: 'root'
+	      };
+    	}else{
+	    	treeObj = {
+	        id: organize._id,
+	        pId: organize.parent_id,
+	        name: organize.name,
+	        profile: organize.profile,
+	        status: organize.status,
+	        open: false
+	      };
+    	}
       zNode.push(treeObj)
     })
     $.fn.zTree.init(organizeTree, setting, zNode);

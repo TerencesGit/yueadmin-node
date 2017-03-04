@@ -10,60 +10,64 @@
     <div id="main" class="main" data-page="partner_manage">
       <div class="wrapper animated fadeInRight">
          <div class="container-fluid">
-          <div class="panel panel-success">
+          <div class="panel panel-secondary">
               <div class="panel-heading">
-                  <h3 class="panel-title">商家管理</h3>
+                <h3 class="panel-title">
+                  <a href="#collapseOne" data-toggle="collapse"><%= title%></a>
+                </h3>
               </div>
-              <div class="panel-body">
-                <div class="btn-group m-b">
-                  <a href="/admin/partner_manage" class="btn btn-default <%if(status == undefined){%>active<%}%>">全部</a>
-                  <a href="/admin/partner_manage?search=0" class="btn btn-default <%if(status == '0'){%>active<%}%>">未审核</a>
-                  <a href="/admin/partner_manage?search=1" class="btn btn-default <%if(status == '1'){%>active<%}%>">已通过</a>
-                  <a href="/admin/partner_manage?search=2" class="btn btn-default <%if(status == '2'){%>active<%}%>">未通过</a>
-                  <a href="/admin/partner_manage?search=3" class="btn btn-default <%if(status == '3'){%>active<%}%>">重新申请待审核</a>
-                </div>
-                <table id="partnerDataTable" class="table table-hover table-bordered table-condensed table-striped">
-                  <thead>
-                    <tr>
-                      <th>序号</th>
-                      <th>申请人</th>
-                      <th>企业名称</th>
-                      <th>申请时间</th>
-                      <th>状态</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <%partners.forEach(function(partner, index){%>
-                    <tr>
-                      <td><%= index+1 %></td>
-                      <td><%= partner.admin.name%></td>
-                      <td><%= partner.name%></td>
-                      <td><%= moment(partner.meta.updateAt).format('YYYY-MM-DD HH:mm:ss') %></td>
-                      <td>
-                      <%if(partner.is_verified == 0){%> 
-                      <a href="/admin/verify_partner?id=<%= partner._id%>">待审核</a>
-                      <%}else if(partner.is_verified == 1){%> <span>通过</span>
-                      <%}else if(partner.is_verified == 2){%> <span>未通过</span>
-                      <%}else if(partner.is_verified == 3){%> 
-                      <a href="/admin/verify_partner?id=<%= partner._id%>">修改后待审核</a>
-                      <%}else{%><span>无效</span>
-                      <%}%>
-                      </td>
-                    </tr>
-                    <%})%>
-                  </tbody>
-                </table>
-                <ul class="pagination">
-                  <%if(pageCount > 0){%>
-                  <li class="<%if(pageIndex == 1){%>disabled<%}%>"><a href="/admin/manage_partner?search=<%=status%>&page=<%= pageIndex*1-1 == 0 ? 1 : pageIndex*1-1 %>">&laquo;</a></li>
-                  <%}%>
-                  <% for(var i = 1; i <= pageCount; i++){%>
-                    <li class="<%if(pageIndex == i){%>active<%}%>"><a href="/admin/manage_partner?search=<%=status%>&page=<%=i%>" class="<%if(pageIndex == i){%>disabled<%}%>"><%=i%></a></li>
-                  <% }%> 
-                  <%if(pageCount > 0){%> 
-                  <li class="<%if(pageIndex == pageCount){%>disabled<%}%>"><a href="/admin/manage_partner?search=<%=status%>&page=<%= pageIndex*1 == pageCount ? pageCount : pageIndex*1+1 %>">&raquo;</a></li>
-                  <%}%> 
-                </ul>
+              <div id="collapseOne" class="pnanel-collapse collapse in">
+                <div class="panel-body">
+                  <div class="btn-group m-b">
+                    <a href="/admin/partner_manage" class="btn btn-default <%if(status == undefined){%>active<%}%>">全部</a>
+                    <a href="/admin/partner_manage?search=0" class="btn btn-default <%if(status == '0'){%>active<%}%>">未审核</a>
+                    <a href="/admin/partner_manage?search=1" class="btn btn-default <%if(status == '1'){%>active<%}%>">已通过</a>
+                    <a href="/admin/partner_manage?search=2" class="btn btn-default <%if(status == '2'){%>active<%}%>">未通过</a>
+                    <a href="/admin/partner_manage?search=3" class="btn btn-default <%if(status == '3'){%>active<%}%>">重新申请待审核</a>
+                  </div>
+                  <table id="partnerDataTable" class="table table-hover table-bordered table-condensed table-striped">
+                    <thead>
+                      <tr>
+                        <th>序号</th>
+                        <th>申请人</th>
+                        <th>企业名称</th>
+                        <th>申请时间</th>
+                        <th>状态</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <%partners.forEach(function(partner, index){%>
+                      <tr>
+                        <td><%= index+1 %></td>
+                        <td><%= partner.admin.name%></td>
+                        <td><%= partner.name%></td>
+                        <td><%= moment(partner.meta.updateAt).format('YYYY-MM-DD HH:mm:ss') %></td>
+                        <td>
+                        <%if(partner.is_verified == 0){%> 
+                        <a href="/admin/verify_partner?id=<%= partner._id%>">待审核</a>
+                        <%}else if(partner.is_verified == 1){%> <span>通过</span>
+                        <%}else if(partner.is_verified == 2){%> <span>未通过</span>
+                        <%}else if(partner.is_verified == 3){%> 
+                        <a href="/admin/verify_partner?id=<%= partner._id%>">修改后待审核</a>
+                        <%}else{%><span>无效</span>
+                        <%}%>
+                        </td>
+                      </tr>
+                      <%})%>
+                    </tbody>
+                  </table>
+                  <ul class="pagination">
+                    <%if(pageCount > 0){%>
+                    <li class="<%if(pageIndex == 1){%>disabled<%}%>"><a href="/admin/manage_partner?search=<%=status%>&page=<%= pageIndex*1-1 == 0 ? 1 : pageIndex*1-1 %>">&laquo;</a></li>
+                    <%}%>
+                    <% for(var i = 1; i <= pageCount; i++){%>
+                      <li class="<%if(pageIndex == i){%>active<%}%>"><a href="/admin/manage_partner?search=<%=status%>&page=<%=i%>" class="<%if(pageIndex == i){%>disabled<%}%>"><%=i%></a></li>
+                    <% }%> 
+                    <%if(pageCount > 0){%> 
+                    <li class="<%if(pageIndex == pageCount){%>disabled<%}%>"><a href="/admin/manage_partner?search=<%=status%>&page=<%= pageIndex*1 == pageCount ? pageCount : pageIndex*1+1 %>">&raquo;</a></li>
+                    <%}%> 
+                  </ul>
+                </div>  
               </div>
           </div>       
         </div>

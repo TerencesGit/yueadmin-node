@@ -8,41 +8,51 @@
     <%- include('../header') %>
     <div id="main" class="main" data-page="account_info">
       <div class="wrapper animated fadeInRight">
-        <div class="container-fluid">
+        <div class="container-fluid account">
           <div class="row">
             <div class="col-md-3">
-              <div class="panel panel-default">
-                <div class="panel-body min-h-500">
+              <div class="panel panel-primary">
+                <div class="panel-body">
                   <div class="text-center m-b">
-                    <img src="<%if(user.avatar){%>/upload/avatar/<%= user.avatar %><%}else{%> /img/avatar.gif <%}%>" class="img-circle" width="200" height="200" title="头像" alt="头像">
-                    <p class="m-t"><%= user.name %></p>
+                    <img src="<%if(user.avatar){%>/upload/avatar/<%= user.avatar %><%}else{%>/img/avatar.gif<%}%>" class="img-circle" width="200" height="200" title="<%= user.name %>" alt="头像">
+                    <h4 class="m-t text-info"><%= user.name %></h4>
                   </div>
                   <ul class="list-group">
                     <li class="list-group-item active">
-                      <i class="fa fa-user"></i>账户基本信息
+                      <i class="fa fa-user"></i>
+                      <a href="#collapseOne" data-toggle="collapse" class="white">账户基本信息</a>
                     </li>
-                    <li class="list-group-item">
-                      <a href="/account/edit_info"><i class="fa fa-edit"></i>编辑账户信息</a>
-                    </li>
-                    <li class="list-group-item">
-                      <label>邮箱:</label>
-                      <span><%= user.email %></span>
-                    </li>
-                    <li class="list-group-item">
-                      <label>性别:</label>
-                      <span>
-                      <% if(user.gender == '0'){ %>男
-                      <% }else if(user.gender == '1'){ %>女
-                      <% }else{ %> 未知 <%}%>
-                      </span>
-                    </li>
-                    <li class="list-group-item">
-                      <label>籍贯:</label>
-                      <span>
-                        <% if(user.address){ %><%= user.address %>
-                        <% }else{ %>未设置<%}%>
-                      </span>
-                    </li>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                      <li class="list-group-item">
+                        <a href="/account/edit_info"><i class="fa fa-edit"></i>编辑账户信息</a>
+                      </li>
+                      <li class="list-group-item">
+                        <label>邮箱:</label>
+                        <span><%= user.email %></span>
+                      </li>
+                      <li class="list-group-item">
+                        <label>性别:</label>
+                        <span>
+                        <% if(user.gender == '0'){ %>男
+                        <% }else if(user.gender == '1'){ %>女
+                        <% }else{ %> 未知 <%}%>
+                        </span>
+                      </li>
+                      <li class="list-group-item">
+                        <label>年龄:</label>
+                        <span>
+                          <% if(user.birthday){ %><%= new Date().getFullYear() - moment(user.birthday).format('YYYY') %>
+                          <% }else{ %>未设置<%}%>
+                        </span>
+                      </li>
+                      <li class="list-group-item">
+                        <label>籍贯:</label>
+                        <span>
+                          <% if(user.address){ %><%= user.address %>
+                          <% }else{ %>未设置<%}%>
+                        </span>
+                      </li>
+                    </div>
                   </ul>
                 </div>
               </div>
@@ -55,7 +65,7 @@
                   </h3>
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse in">
-                  <div class="panel-body min-h-500 m-t">
+                  <div class="panel-body min-h-520 m-t">
                     <div class="col-md-6">
                       <dl class="horizontal clearfix">
                         <dt>姓名</dt>
@@ -135,10 +145,11 @@
                   </div>
                 </div>
               </div>
-              <div class="panel panel-info">
+              <div class="panel panel-danger">
                 <div class="panel-heading">
                   <h3 class="panel-title">
-                    <a href="#collapseThree" data-toggle="collapse">消息动态</a>
+                    <a href="#collapseThree" data-toggle="collapse">消息动态（删除）</a>
+                    <a href="#" class="pull-right" data-dismiss="panel" aria-hidden="true">&times;</a>
                   </h3>
                 </div>
                 <div id="collapseThree" class="panel-collapse collapse in">

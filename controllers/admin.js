@@ -67,7 +67,7 @@ exports.managePartner = function(req, res){
 				 			}else{
 				 				var pageCount = Math.ceil(count / pageSize)
 				 				res.render('admin/partner_manage', {
-									title: '商家列表',
+									title: '商家审核',
 									partners: partners,
 									pageCount: pageCount,
 									pageIndex: pageIndex,

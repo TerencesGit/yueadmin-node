@@ -9,43 +9,45 @@
     <div id="main" class="main" data-page="account_security">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
-          <div class="panel panel-green">
+          <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">
-                修改手机号码
+                <a href="collapseOne" data-toggle="collapse">修改手机号码</a>
                 <a href="javascript:history.go(-1)" class="pull-right">返回</a>
               </h3>
-            </div> 
-            <div class="panel-body min-h-500 p-50">
-              <form action="/account/bind_mobile" method="post" id="modifyMobileForm" class="form-horizontal m-t-80" role="form">
-                <div class="form-group">
-                  <label class="col-md-4 control-label">当前手机号码：</label>
-                  <div class="col-md-4">
-                    <span class="control-text"><%= user.mobile %></span>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+              <div class="panel-body min-h-400 p-50">
+                <form action="/account/bind_mobile" method="post" id="modifyMobileForm" class="form-horizontal m-t-40" role="form">
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">当前手机号码：</label>
+                    <div class="col-md-4">
+                      <span class="control-text"><%= user.mobile %></span>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-4 control-label">新手机号码：</label>
-                  <div class="col-md-4">
-                    <input type="text" name="user[mobile]" id="newMobile" class="form-control" placeholder="输入手机号码">
-                    <i class="fa fa-check-circle"></i>
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">新手机号码：</label>
+                    <div class="col-md-4">
+                      <input type="text" name="user[mobile]" id="newMobile" class="form-control" placeholder="输入手机号码">
+                      <i class="fa fa-check-circle"></i>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-4 control-label">验证码：</label>
-                  <div class="col-md-2">
-                    <input type="text" name="user[phonecode]" id="phoneCode2" class="form-control" placeholder="输入验证码">
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">验证码：</label>
+                    <div class="col-md-2">
+                      <input type="text" name="user[phonecode]" id="phoneCode2" class="form-control" placeholder="输入验证码">
+                    </div>
+                    <div class="col-md-2">
+                      <button type="button" id="btnSendCode2" class="btn btn-success btn-block" data-status="0">获取验证码</button>
+                    </div>
                   </div>
-                  <div class="col-md-2">
-                    <button type="button" id="btnSendCode2" class="btn btn-success btn-block" data-status="0">获取验证码</button>
+                  <div class="form-group">
+                    <div class="col-md-offset-4 col-md-4 m-t">
+                      <button type="submit" id="btnModifyMobile" class="btn btn-primary btn-block">确定</button>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-md-offset-4 col-md-4 m-t">
-                    <button type="submit" id="btnModifyMobile" class="btn btn-primary btn-block">确定</button>
-                  </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
           <div class="warp-footer"></div>

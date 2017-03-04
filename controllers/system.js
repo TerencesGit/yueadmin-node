@@ -1,4 +1,4 @@
-var System = require('../models/function');
+var Functions = require('../models/function');
 var Role = require('../models/role');
 var RoleFunc = require('../models/role_func');
 var Message = require('../models/message');
@@ -19,7 +19,7 @@ exports.newFunction = function(req, res){
 	var func = req.body.func;
 	func.creator = user._id;
 	console.log(func)
-	var _func = new System(func);
+	var _func = new Functions(func);
 	_func.save(function(err, func){
 		if(err) {
 			console.log(err)
@@ -30,15 +30,32 @@ exports.newFunction = function(req, res){
 }
 //获取功能节点树
 exports.getFunctionTree = function(req, res){
-	System.fetch(function(err, functions){
+	const _functions = [];
+	var _func;
+	Functions.fetch(function(err, functions){
 		if(err) console.log(err)
-		res.json({functions: functions})
+			functions.forEach(function(funcs){
+				_func = {
+					funcId: funcs._id,
+					parentId: funcs.parent_id,
+          name: funcs.name,
+          funcUrl: funcs.router,
+          funcDesc: funcs.desc,
+          funcLevel: funcs.level,
+          funcSeq: funcs.seq,
+          funcType: funcs.type,
+          status: funcs.status,
+          careatTime: funcs.meta.createAt,
+				}
+				_functions.push(_func)
+			})
+		res.json({functions: _functions})
 	})
 }
 //获取单个功能节点
 exports.getFunctionNode = function(req, res){
 	var id = req.query.id;
-	System.find({_id: id})
+	Functions.find({_id: id})
 				.populate('creator', 'name')
 				.populate('updater', 'name')
 				.exec(function(err, funcs){
@@ -59,7 +76,7 @@ exports.editFunction = function(req, res){
 	func.updater = user._id;
 	console.log(func);
 	if(!id) return res.json({status: 0})
-	System.findById(id, function(err, funcitonNode){
+	Functions.findById(id, function(err, funcitonNode){
 		funcitonNode.update({$set: func}, function(err, msg){
 			if(err){
 				console.log(err)
@@ -75,11 +92,11 @@ exports.removeFunction = function(req, res){
 	var id = req.query.id;
 	console.log(id)
 	if(id){
-		System.findById(id, function(err, func){
+		Functions.findById(id, function(err, func){
 			if(func.is_function_root == 1){
 				return res.json({status: 0})
 			}else{
-				System.remove({_id: id}, function(err, msg){
+				Functions.remove({_id: id}, function(err, msg){
 					if(err){
 						console.log(err);
 						res.json({status: 2})
@@ -341,12 +358,11 @@ exports.accountManage = function(req, res){
 //查看账户信息
 exports.showAccountInfo = function(req, res){
 	const id = req.query.id;
-	User.find({_id: id})
+	User.findOne({_id: id})
 			.populate('partner', 'name')
 			.populate('organize', 'name')
-			.exec(function(err, user){
-				console.log(user)
-				res.render('system/account_info', {title: '账户信息'})
+			.exec(function(err, account){
+				res.render('system/account_info', {title: '账户信息', account: account})
 			})
 }
 //设置账户状态
