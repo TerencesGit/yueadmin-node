@@ -45,7 +45,7 @@ exports.getFunctionTree = function(req, res){
           funcSeq: funcs.seq,
           funcType: funcs.type,
           status: funcs.status,
-          careatTime: funcs.meta.createAt,
+          createTime: funcs.meta.createAt,
 				}
 				_functions.push(_func)
 			})
@@ -54,16 +54,29 @@ exports.getFunctionTree = function(req, res){
 }
 //获取单个功能节点
 exports.getFunctionNode = function(req, res){
-	var id = req.query.id;
-	Functions.find({_id: id})
+	const id = req.query.id;
+	var _func;
+	Functions.findOne({_id: id})
 				.populate('creator', 'name')
 				.populate('updater', 'name')
-				.exec(function(err, funcs){
+				.exec(function(err, func){
 					if(err){
 						console.log(err)
 						res.json({status: 0})
 					}else{
-						res.json({func: funcs[0]})
+						_func = {
+							funcId: func._id,
+							parentId: func.parent_id,
+		          name: func.name,
+		          funcUrl: func.router,
+		          funcDesc: func.desc,
+		          funcLevel: func.level,
+		          funcSeq: func.seq,
+		          funcType: func.type,
+		          status: func.status,
+		          createTime: func.meta.createAt,
+						}
+						res.json({func: _func})
 					}
 				})
 }

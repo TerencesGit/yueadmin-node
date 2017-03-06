@@ -30,7 +30,7 @@
                         <label>邮箱:</label>
                         <span><%= user.email %></span>
                       </li>
-                      <li class="list-group-item">
+                      <li class="list-group-item hidden">
                         <label>性别:</label>
                         <span>
                         <% if(user.gender == '0'){ %>男
@@ -38,7 +38,7 @@
                         <% }else{ %> 未知 <%}%>
                         </span>
                       </li>
-                      <li class="list-group-item">
+                      <li class="list-group-item hidden">
                         <label>年龄:</label>
                         <span>
                           <% if(user.birthday){ %><%= new Date().getFullYear() - moment(user.birthday).format('YYYY') %>
@@ -46,9 +46,23 @@
                         </span>
                       </li>
                       <li class="list-group-item">
-                        <label>籍贯:</label>
+                        <label>所在城市：</label>
                         <span>
                           <% if(user.address){ %><%= user.address %>
+                          <% }else{ %>未设置<%}%>
+                        </span>
+                      </li>
+                      <li class="list-group-item">
+                        <label>所属公司：</label>
+                        <span>
+                          <% if(user.partner){ %><%= user.partner.name %>
+                          <% }else{ %>未设置<%}%>
+                        </span>
+                      </li>
+                      <li class="list-group-item">
+                        <label>所属部门：</label>
+                        <span>
+                          <% if(user.organize){ %><%= user.organize.name %>
                           <% }else{ %>未设置<%}%>
                         </span>
                       </li>

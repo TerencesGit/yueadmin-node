@@ -97,36 +97,50 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-md-2 control-label">身份证正面：</label>
+                    <label class="col-md-2 control-label">身份证正面上传：</label>
                     <div class="col-md-4">
                       <input type="file" name="idcard_front" class="file-control">
                       <div class="preview-area clearfix w-265">
-                        <img src="/img/upload_big.png" class="pic-preview" width="245" height="158" class="img-rounded" alt="选择本地图片" title="选择本地图片">
+                        <img src="/img/upload.png" class="pic-preview" width="245" height="158" class="img-rounded" alt="选择本地图片" title="选择本地图片">
                         <a href="javascript:;" class="img-remove" title="删除"></a>
                       </div>
-                      <div class="alert m-b-0"></div>
+                      <div class="alert m-b-0 w-245"></div>
                     </div>
+                    <%if(user.idcard_front){%>
+                    <label class="col-md-2 control-label">当前身份证正面：</label>
+                    <div class="col-md-4">
+                      <img src="/upload/idcard/<%= user.idcard_front%>" width="245" height="158" class="img-rounded" alt="身份证正面" title="身份证正面">
+                    </div>
+                    <%}else{%>
                     <label class="col-md-2 control-label">示例：</label>
                     <div class="col-md-4">
-                      <img src="/img/idcard_front_example.png" width="245" height="158" alt="身份证正面" title="身份证正面">
+                      <img src="/img/idcard_front_example.png" width="245" height="158" class="img-rounded" alt="身份证正面" title="身份证正面">
                       <p class="text-info text-center">证件上文字清晰可识别</p> 
                     </div>
+                    <%}%>
                   </div>
                   <div class="form-group">
-                    <label class="col-md-2 control-label">身份证反面：</label>
+                    <label class="col-md-2 control-label">身份证背面上传：</label>
                     <div class="col-md-4">
                       <input type="file" name="idcard_back" class="file-control">
                       <div class="preview-area clearfix w-265">
-                        <img src="/img/upload_big.png" class="pic-preview" width="245" height="158" class="img-rounded" alt="选择本地图片" title="选择本地图片">
+                        <img src="/img/upload.png" class="pic-preview" width="245" height="158" class="img-rounded" alt="选择本地图片" title="选择本地图片">
                         <a href="javascript:;" class="img-remove" title="删除"></a>
                       </div>
-                      <div class="alert m-b-0"></div>
+                      <div class="alert m-b-0 w-245"></div>
                     </div>
+                    <%if(user.idcard_back){%>
+                    <label class="col-md-2 control-label">当前身份证背面：</label>
+                    <div class="col-md-4">
+                      <img src="/upload/idcard/<%= user.idcard_back%>" width="245" height="158" class="img-rounded" alt="身份证背面" title="身份证背面"> 
+                    </div>
+                    <%}else{%>
                     <label class="col-md-2 control-label">示例：</label>
                     <div class="col-md-4">
-                      <img src="/img/idcard_back_example.png" width="245" height="158" alt="身份证反面" title="身份证反面"> 
+                      <img src="/img/idcard_back_example.png" width="245" height="158" class="img-rounded" alt="身份证背面" title="身份证背面"> 
                       <p class="text-info text-center">证件上文字清晰可识别</p>
                     </div>
+                    <%}%>
                   </div>
                   <div class="form-group"> 
                     <button type="submit" id="accountSubmitBtn" class="col-md-offset-5 btn btn-primary">保存</button>

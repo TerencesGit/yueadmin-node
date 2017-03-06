@@ -170,24 +170,27 @@ exports.signin = function(req, res){
 			})
 		})
 	}else{
-		User.findOne({email: name}, function(err, user){
-			if(err) return err;
-			if(!user){
-				_user.error = '用户名不存在！'
-				return res.render('signin', {title: '欢迎登录', user: _user})
-			}
-			user.comparePassword(passwd, function(err, isMatch){
-				if(err) return err;
-				if(isMatch){
-					console.log(user)
-					req.session.user = user;
-					res.redirect('/')
-				}else{
-					_user.error = '密码不正确！';
-					return res.render('signin', {title: '欢迎登录', user: _user})
-				}
-			})
-		})
+		User.findOne({email: name})
+				.populate('partner', 'name')
+				.populate('organize', 'name')
+				.exec(function(err, user){
+					if(err) return err;
+					if(!user){
+						_user.error = '用户名不存在！'
+						return res.render('signin', {title: '欢迎登录', user: _user})
+					}
+					user.comparePassword(passwd, function(err, isMatch){
+						if(err) return err;
+						if(isMatch){
+							console.log(user)
+							req.session.user = user;
+							res.redirect('/')
+						}else{
+							_user.error = '密码不正确！';
+							return res.render('signin', {title: '欢迎登录', user: _user})
+						}
+					})
+				})
 	}
 }
 //绑定手机号

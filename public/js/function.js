@@ -4,11 +4,11 @@ const functionTree = $('#functionTree');
 const funcTable = $('#funcTable');
 //组织节点点击事件
 function HandlerClick(event, treeId, treeNode){
-	if(isRoot(treeNode)) return false;
+	// if(isRoot(treeNode)) return false;
   const name = treeNode.name;
-  //const functionId = treeNode.id;
-  //getFunctionNode(functionId)
-  showFuncDetail(treeNode)
+  const functionId = treeNode.id;
+  getFunctionNode(functionId)
+  //showFuncDetail(treeNode)
 }
 //判断父节点
 function isParent(treeNode){
@@ -59,34 +59,25 @@ function getFunctionTree(){
     const zNode = [];
     var treeObj;
     functions.forEach(function(func){
+    	var iconSkin;
     	if(!func.parentId){
-	    	treeObj = {
-	        id: func.funcId,
-	        name: func.name,
-	        funcUrl: func.funcUrl,
-	        desc: func.funcDesc,
-	        funcLevel: func.funcLevel,
-	        seq: func.funcSeq,
-	        funcType: func.funcType, 
-	        status: func.status,
-	        open: true,
-	        iconSkin: 'root',
-	      };
-    	}else{
-    		treeObj = {
-	        id: func.funcId,
-	        pId: func.parentId,
-	        name: func.name,
-	        funcUrl: func.funcUrl,
-	        desc: func.funcDesc,
-	        funcLevel: func.funcLevel,
-	        seq: func.funcSeq,
-	        funcType: func.funcType, 
-	        status: func.status,
-	        open: false,
-	        iconSkin: 'folder'
-	      };
+    		iconSkin = 'root'
+    	}else if(func.funcType == 0){
+    		iconSkin = 'folder'
     	}
+    	treeObj = {
+        id: func.funcId,
+        pId: func.parentId,
+        name: func.name,
+        funcUrl: func.funcUrl,
+        desc: func.funcDesc,
+        funcLevel: func.funcLevel,
+        seq: func.funcSeq,
+        funcType: func.funcType, 
+        status: func.status,
+        open: true,
+        iconSkin: iconSkin,
+      };
       zNode.push(treeObj)
     })
     $.fn.zTree.init(functionTree, setting, zNode);
@@ -96,34 +87,34 @@ function getFunctionTree(){
 	})
 }
 //异步获取单个功能节点详情
-// function getFunctionNode(id){
-// 	$.ajax({
-// 		url: '/system/get_function_node?id='+ id,
-// 	})
-// 	.done(function(res) {
-// 		if(res.status == 0) return $.dialog().alert({message: '获取失败, 请稍后重试'})
-// 		const func = res.func;
-// 	  var funcHtml = '';
-// 	  funcHtml = ('<tr><td>'+func.name+'</td><td>'+func.funcUrl+'</td>\
-//         <td>'+func.funDesc+'</td><td>'+func.funcLevel+'</td>\
-//         <td>'+func.funcSeq+'</td><td>'+func.funcType+'</td>\
-//         <td>'+func.createTime+'</td><td>'+func.status+'</td></tr>') 
-// 	  $('.func-detail').empty().append(funcHtml);
-// 	  funcTable.removeClass('hidden')
-// 	})
-// 	.fail(function() {
-// 		console.log("error");
-// 	})
-// }
+function getFunctionNode(id){
+	$.ajax({
+		url: '/system/get_function_node?id='+ id,
+	})
+	.done(function(res) {
+		if(res.status == 0) return $.dialog().alert({message: '获取失败, 请稍后重试'})
+		const func = res.func;
+	  var funcTbody = '';
+	  var sStatus = func.status == 1 ? '启用' : '停用';
+	  var sType = func.funcType == 1 ? '实功能点' : '虚功能点';
+	  funcTbody = '<tr><td>'+func.name+'</td><td>'+func.funcUrl+'</td>\
+				         <td>'+func.funcDesc+'</td><td>'+func.funcLevel+'</td>\
+				         <td>'+func.funcSeq+'</td><td>'+sType+'</td>\
+				         <td>'+sStatus+'</td><td>'+func.createTime.substr(0, 10)+'</td></tr>';
+	  funcTable.removeClass('hidden').find('tbody').empty().append(funcTbody);
+	})
+	.fail(function() {
+		console.log("error");
+	})
+}
 //显示功能点详情
 function showFuncDetail(func){
-	var funcHtml = '';
-  funcHtml = ('<tr><td>'+func.name+'</td><td>'+func.funcUrl+'</td>\
-      <td>'+func.funDesc+'</td><td>'+func.funcLevel+'</td>\
+	var funcTbody = '';
+  funcTbody = ('<tr><td>'+func.name+'</td><td>'+func.funcUrl+'</td>\
+      <td>'+func.funcDesc+'</td><td>'+func.funcLevel+'</td>\
       <td>'+func.funcSeq+'</td><td>'+func.funcType+'</td>\
-      <td>'+func.createTime+'</td><td>'+func.status+'</td></tr>') 
-  $('.func-detail').empty().append(funcHtml);
-  funcTable.removeClass('hidden')
+      <td>'+func.status+'</td><td>'+func.createTime+'</td></tr>') 
+  funcTable.removeClass('hidden').find('tbody').empty().append(funcTbody);
 }
 // 工具按钮
 const btnNew = $('.btn-new'),

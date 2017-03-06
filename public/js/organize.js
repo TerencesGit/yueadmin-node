@@ -27,23 +27,23 @@ const staffDataTable = $('#staffDataTable');
 let isFirst = true;
 let flag = true;
 //部门工具栏对象
-var $btnRefresh = $('.btn-refresh'),
- 		$btnPlus = $('.btn-plus'),
-	  $btnEdit = $('.btn-edit'),
-	  $btnRemove = $('.btn-remove'),
-	  $btnCog = $('.btn-cog'),
-	  $btnFunc = $('.btn-func'),
-	  $btnUnlock = $('.btn-unlock'),
-	  $btnBan = $('.btn-ban'),
-    $btnUser = $('.btn-user');
+const $btnRefresh = $('.btn-refresh'),
+	 		$btnPlus = $('.btn-plus'),
+		  $btnEdit = $('.btn-edit'),
+		  $btnRemove = $('.btn-remove'),
+		  $btnCog = $('.btn-cog'),
+		  $btnFunc = $('.btn-func'),
+		  $btnUnlock = $('.btn-unlock'),
+		  $btnBan = $('.btn-ban'),
+	    $btnUser = $('.btn-user');
 $(function(){
 	//页面加载渲染部门树
   renderOrganizeTree(organizeTree);
   //DataTable初始化配置
   staffDataTable.dataTable({
-    paging: false,
-    searching: false,
-    info: false,
+    paging: true,
+    searching: true,
+    info: true,
     columns: [
       { data: 'index' },
       { data: 'name' },
@@ -95,18 +95,18 @@ $btnRefresh.on('click', function(){
 	renderOrganizeTree(organizeTree)
 })
 //新增部门表单
-var newOrganizeModal = $('#newOrganizeModal'),
-    newModalTitle = newOrganizeModal.find('.modal-title'),
-    newOrganizeName = $('#newOrganizeName'),
-    newOrganizeProfile = $('#newOrganizeProfile'),
-    newOrganizeBtn = $('#newOrganizeBtn');
+const newOrganizeModal = $('#newOrganizeModal'),
+	    newModalTitle = newOrganizeModal.find('.modal-title'),
+	    newOrganizeName = $('#newOrganizeName'),
+	    newOrganizeProfile = $('#newOrganizeProfile'),
+	    newOrganizeBtn = $('#newOrganizeBtn');
 
 //编辑部门表单
-var editOrganizeModal = $('#editOrganizeModal'),
-		editModalTitle = editOrganizeModal.find('.modal-title'),
-    editOrganizeName = $('#editOrganizeName'),
-    editOrganizeProfile = $('#editOrganizeProfile'),
-    editOrganizeBtn = $('#editOrganizeBtn');
+const editOrganizeModal = $('#editOrganizeModal'),
+			editModalTitle = editOrganizeModal.find('.modal-title'),
+	    editOrganizeName = $('#editOrganizeName'),
+	    editOrganizeProfile = $('#editOrganizeProfile'),
+	    editOrganizeBtn = $('#editOrganizeBtn');
 
 //渲染部门树
 function renderOrganizeTree(organizeTree){
@@ -133,25 +133,21 @@ function renderOrganizeTree(organizeTree){
     var zNode = [];
     var treeObj;
     organizes.forEach(function(organize){
+    	var iconSkin = '';
     	if(!organize.parent_id){
-    		treeObj = {
-	        id: organize._id,
-	        name: organize.name,
-	        profile: organize.profile,
-	        status: organize.status,
-	        open: true,
-        	iconSkin: 'root'
-	      };
+    		iconSkin = 'root';
     	}else{
-	    	treeObj = {
-	        id: organize._id,
-	        pId: organize.parent_id,
-	        name: organize.name,
-	        profile: organize.profile,
-	        status: organize.status,
-	        open: false
-	      };
+    		iconSkin = 'folder';
     	}
+    	treeObj = {
+        id: organize._id,
+        pId: organize.parent_id,
+        name: organize.name,
+        profile: organize.profile,
+        status: organize.status,
+        open: true,
+        iconSkin: iconSkin,
+      };
       zNode.push(treeObj)
     })
     $.fn.zTree.init(organizeTree, setting, zNode);
@@ -162,14 +158,14 @@ function renderOrganizeTree(organizeTree){
 }
 //DataTable渲染数据
 function renderTableData(dataArr) { 
-    const table = staffDataTable.dataTable();
-    const oSettings = table.fnSettings(); 
-    table.fnClearTable(this); 
-    dataArr.forEach(function(data){
-    	table.oApi._fnAddData(oSettings, data);
-    })
-    oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
-    table.fnDraw();
+  const table = staffDataTable.dataTable();
+  const oSettings = table.fnSettings(); 
+  table.fnClearTable(this); 
+  dataArr.forEach(function(data){
+  	table.oApi._fnAddData(oSettings, data);
+  })
+  oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+  table.fnDraw();
 }
 //渲染员工列表
 function renderStaffList(organizeId){
@@ -450,7 +446,7 @@ $('#setRoleBtn').on('click', function(e){
 		})
 		.done(function(res) {
 			if(res.status == 1){
-				$.dialog().success({message: '设置成功', delay: 1000})
+				$.dialog().success({message: '设置成功', delay: DELAY_TIME})
 			}else{
 				$.dialog().fail({message: '设置失败, 请稍后重试'})
 			}
