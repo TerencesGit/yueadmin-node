@@ -1,7 +1,9 @@
+//系统功能树管理
 //功能树对象
 const functionTree = $('#functionTree');
 //功能点详情表格
 const funcTable = $('#funcTable');
+const DELAY_TIME = 600;
 //组织节点点击事件
 function HandlerClick(event, treeId, treeNode){
 	// if(isRoot(treeNode)) return false;
@@ -72,7 +74,7 @@ function getFunctionTree(){
         funcUrl: func.funcUrl,
         desc: func.funcDesc,
         funcLevel: func.funcLevel,
-        seq: func.funcSeq,
+        funcSeq: func.funcSeq,
         funcType: func.funcType, 
         status: func.status,
         open: true,
@@ -121,55 +123,56 @@ const btnNew = $('.btn-new'),
 		  btnEdit = $('.btn-edit'),
 		  btnRemove = $('.btn-remove');
 
-//添加功能节点表单
-const newFunctionModal = $('#newFunctionModal'),
-			newFunctionTitle = $('#newFunctionTitle'),
-			newFunctionName = $('#newFunctionName'),
-			newFunctionRouter = $('#newFunctionRouter'),
-			newFunctionDesc = $('#newFunctionDesc'),
-			newFunctionNote = $('#newFunctionNote'),
-			newFunctionBtn = $('#newFunctionBtn'),
+//功能点表单
+const newFuncModal = $('#newFuncModal'),
+			newFuncTitle = $('#newFuncTitle'),
+			newFuncName = $('#newFuncName'),
+			newFuncRouter = $('#newFuncRouter'),
+			newFuncDesc = $('#newFuncDesc'),
+			newFuncLevel = $('#newFuncLevel'),
+			newFuncType = $('#newFuncType'),
+			newFuncStatus = $('#newFuncStatus'),
+			newFuncSeq = $('#newFuncSeq'),
+			newFuncBtn = $('#newFuncBtn'),
 			btnReset = $('#btnReset');
-//添加功能节点
+//新增功能点按钮
 btnNew.on('click', function(){
 	if(!getSeletedNode()) return false;
 	const node = getSeletedNode();
-  newFunctionTitle.html('添加<a>'+node.name+'</a>下的子模块');
-  btnReset.click()
+  newFuncTitle.html('添加<a>'+node.name+'</a>下的子模块');
+  btnReset.click();
 })
-newFunctionBtn.on('click', function(e){
+//功能点表单提交
+newFuncBtn.on('click', function(e){
 		e.preventDefault();
 	  if(!getSeletedNode()) return false;
 	  const node = getSeletedNode();
-		if(!(simpleCheckInput(newFunctionName) && 
-				 simpleCheckInput(newFunctionRouter) && 
-				 simpleCheckInput(newFunctionDesc))) return false;
-		const name = $.trim(newFunctionName.val()),
-					router = $.trim(newFunctionRouter.val()),
-					desc = $.trim(newFunctionDesc.val()),
-					note = $.trim(newFunctionNote.val());
-		const func = {
+		if(!(simpleCheckInput(newFuncName) && simpleCheckInput(newFuncRouter))) return false;
+		const funcObj = {
 			parent_id: node.id,
-			name: name,
-			router: router,
-			desc: desc,
-			note: note
+			name: $.trim(newFuncName.val()),
+			router: $.trim(newFuncRouter.val()),
+			desc: $.trim(newFuncDesc.val()),
+			level: $.trim(newFuncLevel.val()),
+			type: $.trim(newFuncType.val()),
+			status: $.trim(newFuncStatus.val()),
+			seq: $.trim(newFuncSeq.val()),
 		}
+		console.log(funcObj)
 		$.ajax({
 			url: '/system/new_function',
 			type: 'post',
-			data: {func: func},
+			data: {func: funcObj},
 		})
 		.done(function(res) {
 			if(res.status == 1){
-				$.dialog().success({message: '添加成功', delay: 1000})
+				$.dialog().success({message: '添加成功', delay: DELAY_TIME})
 				setTimeout(function(){
 					getFunctionTree()
-				},1000)
+				}, DELAY_TIME)
 			}else{
 				$.dialog().alert({message: '添加失败, 请稍后重试'})
 			}
-			console.log("success");
 		})
 		.fail(function(error) {
 			console.log("error");
@@ -177,63 +180,68 @@ newFunctionBtn.on('click', function(e){
 })
 
 //编辑功能节点
-const editFunctionModal = $('#editFunctionModal'),
-			editFunctionTitle = editFunctionModal.find('.modal-title'),
-			editFunctionName = $('#editFunctionName'),
-			editFunctionRouter = $('#editFunctionRouter'),
-			editFunctionDesc = $('#editFunctionDesc'),
-			editFunctionNote = $('#editFunctionNote'),
-			editFunctionBtn = $('#editFunctionBtn');
+const editFuncModal = $('#editFuncModal'),
+			editFuncTitle = editFuncModal.find('.modal-title'),
+			editFuncName = $('#editFuncName'),
+			editFuncRouter = $('#editFuncRouter'),
+			editFuncParentId = $('#editFuncParentId'),
+			editFuncDesc = $('#editFuncDesc'),
+			editFuncLevel = $('#editFuncLevel'),
+			editFuncType = $('#editFuncType'),
+			editFuncStatus = $('#editFuncStatus'),
+			editFuncSeq = $('#editFuncSeq'),
+			editFuncBtn = $('#editFuncBtn');
 
 btnEdit.on('click', function(){
 	if(!getSeletedNode()) return false;
 	const node = getSeletedNode();
-	if(isRoot(node)) {
-		$.dialog().alert({message: '根节点不可编辑'})
-		return false;
-	}
-  editFunctionTitle.html('编辑<a>'+node.name+'</a>模块');
-  editFunctionName.val(node.name);
-  editFunctionRouter.val(node.router);
-  editFunctionDesc.text(node.desc);
-  editFunctionNote.text(node.note)
+	// if(isRoot(node)) {
+	// 	$.dialog().alert({message: '根节点不可编辑'})
+	// 	return false;
+	// }
+  editFuncTitle.html('编辑<a>'+node.name+'</a>模块');
+  editFuncName.val(node.name);
+  editFuncRouter.val(node.funcUrl);
+  editFuncParentId.val(node.pId);
+  editFuncDesc.val(node.desc);
+  editFuncLevel.val(node.funcLevel);
+  editFuncType.val(node.funcType);
+  editFuncStatus.val(node.status);
+  editFuncSeq.val(node.funcSeq);
 })
-editFunctionBtn.on('click', function(e){
+editFuncBtn.on('click', function(e){
 	e.preventDefault();
   if(!getSeletedNode()) return false;
   const node = getSeletedNode();
-	if(!(simpleCheckInput(editFunctionName) && 
-			 simpleCheckInput(editFunctionRouter) && 
-			 simpleCheckInput(editFunctionDesc))) return false;
-	const name = $.trim(editFunctionName.val()),
-			router = $.trim(editFunctionRouter.val()),
-			desc = $.trim(editFunctionDesc.val()),
-			note = $.trim(editFunctionNote.val());
-		const func = {
-			id: node.id,
-			name: name,
-			router: router,
-			desc: desc,
-			note: note
+	if(!(simpleCheckInput(editFuncName) && simpleCheckInput(editFuncRouter))) return false;
+	const funcObj = {
+		id: node.id,
+		name: $.trim(editFuncName.val()),
+		router: $.trim(editFuncRouter.val()),
+		desc: $.trim(editFuncDesc.val()),
+		level: $.trim(editFuncLevel.val()),
+		type: $.trim(editFuncType.val()),
+		status: $.trim(editFuncStatus.val()),
+		seq: $.trim(editFuncSeq.val()),
+	}
+	$.ajax({
+		url: '/system/edit_function',
+		type: 'post',
+		data: {func: funcObj},
+	})
+	.done(function(res) {
+		if(res.status == 1){
+			$.dialog().success({message: '编辑成功', delay: DELAY_TIME})
+			setTimeout(function(){
+				getFunctionTree()
+			}, DELAY_TIME)
+		}else{
+			$.dialog().alert({message: '编辑失败, 请稍后重试'})
 		}
-		$.ajax({
-			url: '/system/edit_function',
-			type: 'post',
-			data: {func: func},
-		})
-		.done(function(res) {
-			if(res.status == 1){
-				$.dialog().success({message: '编辑成功', delay: 1000})
-				setTimeout(function(){
-					getFunctionTree()
-				},1000)
-			}else{
-				$.dialog().alert({message: '编辑失败, 请稍后重试'})
-			}
-		})
-		.fail(function(error) {
-			console.log("error");
-		})
+	})
+	.fail(function(error) {
+		console.log("error");
+	})
 })
 //删除功能节点
 btnRemove.on('click', function(e){
@@ -244,24 +252,24 @@ btnRemove.on('click', function(e){
   	return $.dialog().alert({message: '父节点不可删除'})
   }
   const name = node.name,
-  		id = node.id;
-  $.dialog().confirm({message: '确定删除<a>'+name+'</a>, 此操作不可恢复'})
+  			funcId = node.id;
+  $.dialog().confirm({message: '确定删除<a> '+name+' </a>功能？'})
    .on('confirm', function(){
-   	romoveFunctionNode(id)
+   	  romoveFunctionNode(funcId)
    })
 })
-function romoveFunctionNode(id){
+function romoveFunctionNode(func_id){
 	$.ajax({
-		url: '/system/remove_function?id='+id,
+		url: '/system/remove_function?id='+func_id,
 	})
 	.done(function(res) {
 		if(res.status == 0){
 			$.dialog().error({message: '根节点禁止删除'})
 		}else if(res.status == 1){
-			$.dialog().success({message: '删除成功', delay: 1000})
+			$.dialog().success({message: '删除成功', delay: DELAY_TIME})
 			setTimeout(function(){
 					getFunctionTree()
-			},1000)
+			}, DELAY_TIME)
 		}else{
 			$.dialog().error({message: '删除失败, 请稍后重试'})
 		}

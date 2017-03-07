@@ -115,8 +115,8 @@ function renderOrganizeTree(organizeTree){
     type: 'get',
     url: '/partner/get_organize_tree?partnerId='+ partnerId,
   })
-  .done(function(result){
-    var organizes = result.organizes;
+  .done(function(res){
+    var organizes = res.organizes;
     var setting = {
     	view: {
     		selectedMulti: false,
@@ -134,14 +134,14 @@ function renderOrganizeTree(organizeTree){
     var treeObj;
     organizes.forEach(function(organize){
     	var iconSkin = '';
-    	if(!organize.parent_id){
+    	if(!organize.parentId){
     		iconSkin = 'root';
     	}else{
     		iconSkin = 'folder';
     	}
     	treeObj = {
-        id: organize._id,
-        pId: organize.parent_id,
+        id: organize.orgId,
+        pId: organize.parentId,
         name: organize.name,
         profile: organize.profile,
         status: organize.status,
@@ -183,7 +183,7 @@ function renderStaffList(organizeId){
 		  		"gender": gender, 
 		  		"email": user.email, 
 		  		"orgName": user.organize.name, 
-		  		"btn": '<a href="/partner/staff_manage" class="btn btn-link">管理</a>'
+		  		"btn": '<a href="/partner/staff_manage" class="btn btn-link">员工管理</a>'
 		  	};
 	  	dataArr.push(_user)
 	  })
@@ -468,6 +468,7 @@ $btnFunc.on('click', function(e){
   const name = node.name;
   getFuncByOrg(orgId);
 })
+
 //获取部门所拥有的全部功能
 function getFuncByOrg(orgId){
 	$.ajax({
@@ -476,11 +477,14 @@ function getFuncByOrg(orgId){
 	.done(function(res) {
 		const roleFuncs = res.role_funcs;
 		if(!roleFuncs) {
-			orgFunctionTree.after('<div class="alert alert-info"><i class="fa fa-info-circle">\
-				</i>该部门尚未设置权限!</div>')
+			if(orgFunctionTree.next('.alert').length === 0){
+				orgFunctionTree.after('<div class="alert alert-info">\
+					<i class="fa fa-exclamation-circle"></i>该部门尚未设置权限</div>')
+			}
+			orgFunctionTree.hide();
 			return false;
 		}else{
-			orgFunctionTree.next('.alert').remove()
+			orgFunctionTree.show().next('.alert').remove();
 		}
 		const setting = {
 			view: {

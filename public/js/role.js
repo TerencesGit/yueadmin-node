@@ -1,32 +1,27 @@
 /* 系统角色管理 */
+//功能树
 const functionTree = $('#functionTree');
+//角色数据表格
 const roleDataTable = $('#roleDataTable');
-//组织节点点击事件
-function HandlerClick(event, treeId, treeNode){
-	if(isRoot(treeNode)) return false;
-  var name = treeNode.name;
-  var functionId = treeNode.id;
-  getFunctionNode(functionId)
-}
 //判断父节点
 function isParent(treeNode){
 	return treeNode.isParent;
 } 
 //渲染数据表格 加载功能树
 $(function(){
-	roleDataTable.dataTable()
+	roleDataTable.dataTable();
 	getFunctionTree()
 })
-//角色创建
+//角色设置按钮
 var btnCreate = $('.btn-create'),
 		btnDel = $('.btn-del'),
 		btnSet = $('.btn-set');
 
+//创建角色
 var newRoleForm = $('#newRoleForm'),
 	  newRoleName = $('#newRoleName'),
 	  newRoleDesc = $('#newRoledesc'),
 	  newRoleBtn = $('#newRoleBtn');
-
 newRoleBtn.on('click', function(e){
 	e.preventDefault();
 	if(!simpleCheckInput(newRoleName)) return false;
@@ -90,21 +85,28 @@ function getFunctionTree(){
           enable: true
         }
       },
-		  callback: {
-		    onClick: HandlerClick,
-		  }
 		}
     var zNode = [];
     var treeObj;
     functions.forEach(function(func){
+    	var iconSkin;
+      if(!func.parentId){
+        iconSkin = 'root'
+      }else if(func.funcType == 0){
+    		iconSkin = 'folder'
+    	}
       treeObj = {
-        id: func._id,
-        pId: func.parent_id,
+        id: func.funcId,
+        pId: func.parentId,
         name: func.name,
-        router: func.router,
-        desc: func.desc,
-        note: func.note,
-        open: true
+        funcUrl: func.funcUrl,
+        desc: func.funcDesc,
+        funcLevel: func.funcLevel,
+        seq: func.funcSeq,
+        funcType: func.funcType, 
+        status: func.status,
+        open: true,
+        iconSkin: iconSkin,
       };
       zNode.push(treeObj)
     })
@@ -150,18 +152,21 @@ $('#setRoleBtn').on('click', function(e){
 	var nodes = treeObj.getCheckedNodes(true);
 	console.log(nodes)
 	if(nodes.length === 0) return false;
-	//const isCheckNode = node => node.check_Child_State === -1;
-	const getNodeId = node => node.id;
-	const funcIdList = nodes.map(getNodeId)
-	console.log(funcIdList)
+	//传统写法
 	// const funcList = [];
 	// nodes.forEach(function(node){
 	// 	if(node.check_Child_State === -1){
 	// 		funcList.push(node.id)
 	// 	}
 	// })
-	// console.log(funcList)
-	var role_func = {
+	//ES6语法
+	//获取被选中节点不包括其父节点，暂时注释
+	//const isCheckNode = node => node.check_Child_State === -1;
+	const getNodeId = node => node.id;
+	const funcIdList = nodes.map(getNodeId)
+	console.log(funcIdList)
+	
+	const role_func = {
 		roleId: roleId,
 		funcList: funcIdList
 	}
@@ -172,7 +177,7 @@ $('#setRoleBtn').on('click', function(e){
 	})
 	.done(function(res) {
 		if(res.status == 1){
-			$.dialog().success({message: '配置成功', delay: 1000})
+			$.dialog().success({message: '配置成功', delay: 600})
 		}else{
 			$.dialog().fail({message: '配置失败，请稍后重试'})
 		}

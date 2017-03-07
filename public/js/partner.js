@@ -10,6 +10,8 @@ const registeredForm = $('#registeredForm'),
 			contactMobile = $('#contactMobile'),
 			partnerEmail = $('#partnerEmail'),
 			profile = $('#profile'),
+			logoFile = $('#logoFile'),
+			licenseFile = $('#licenseFile'),
 			previewArea = $('.preview-area'),
 			fileControl = $('.file-control'),
 			imgRemove = $('.img-remove'),
@@ -63,7 +65,8 @@ const msg = {
     	tip: '请再次输入密码',
     	inconsistent: '两次密码输入不一致'
     }
-}			
+}
+//企业注册提交		
 btnRegistered.on('click', function(e){
 	e.preventDefault()
 	checkInput(partnerName) &&

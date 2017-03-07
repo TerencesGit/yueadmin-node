@@ -36,7 +36,7 @@
                     <td><%= template.creator.name%></td>
                     <td><%= moment(template.meta.createAt).format('YYYY-MM-DD HH:mm:ss')%></td>
                     <td>
-                      <a href="/admin/contract_template_download?id=<%= template._id%>" class="btn btn-success">下载</a>
+                      <a href="/admin/contract_template_download?name=<%= template.file%>" class="btn btn-success">下载</a>
                       <a href="/admin/edit_contract_template?id=<%= template._id%>" class="btn btn-warning">编辑</a>
                       <a href="/admin/remove_contract_template?id=<%= template._id%>" class="btn btn-danger btn-remove">删除</a>
                     </td>

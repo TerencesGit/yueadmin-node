@@ -58,24 +58,24 @@
                     <th>姓名</th>
                     <th>性别</th>
                     <th>邮箱</th>
-                    <th>注册日期</th>
                     <th>部门</th>
                     <th>岗位</th>
+                    <th>注册日期</th>
                     <th>详细信息</th>
                     <th>操作</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% users.forEach(function(user, index){ %>
-                  <tr data-id="<%= user._id%>">
+                  <% staffList.forEach(function(staff, index){ %>
+                  <tr data-id="<%= staff._id%>">
                     <td><%= index+1%></td>
-                    <td class="name"><%= user.name%></td>
-                    <td><% if(user.gender == '0') {%> 男 <% }else{%> 女 <%}%></td>
-                    <td><%= user.email%></td>
-                    <td><%= moment(user.meta.createAt).format('YYYY-MM-DD') %></td>
-                    <td><%if(user.organize && user.organize.name){%><%= user.organize.name %><%}else{%>尚未设置<%}%></td>
-                    <td><%if(user.title && user.title.name){%><%= user.title.name %><%}else{%>尚未设置<%}%></td>
-                    <td><a href="/partner/show_staff_info?id=<%= user._id%>" class="btn btn-link" target="_blank">查看</a></td>
+                    <td class="name"><%= staff.name%></td>
+                    <td><% if(staff.gender == '0') {%> 男 <% }else{%> 女 <%}%></td>
+                    <td><%= staff.email%></td>
+                    <td><%if(staff.organize && staff.organize.name){%><%= staff.organize.name %><%}else{%>尚未设置<%}%></td>
+                    <td><%if(staff.title && staff.title.name){%><%= staff.title.name %><%}else{%>尚未设置<%}%></td>
+                    <td><%= moment(staff.meta.createAt).format('YYYY-MM-DD') %></td>
+                    <td><a href="/partner/show_staff_info?id=<%=staff._id%>" class="btn btn-link">查看</a></td>
                     <td>
                       <div class="btn-group">
                         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">设置
@@ -118,57 +118,11 @@
                   <h4 class="modal-title">部门设置</h4>
               </div>
               <div class="modal-body max-h-400">
-                <ul id="organizeTree" class="ztree" data-id="<%= user.partner%>"></ul>
+                <ul id="organizeTree" class="ztree" data-partner="<%=partner_id%>"></ul>
               </div>
               <div class="modal-footer">
                 <button type="reset" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button id="setOrgBtn" class="btn btn-success" data-dismiss="modal">提交</button>
-              </div>
-            </form>
-          </div>
-      </div>
-    </div>
-    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="showDetailModal" class="modal fade organize-modal">
-      <div class="modal-dialog">
-          <div class="modal-content">
-            <form action="/partner/set_organize" method="post" id="setOrganizeForm" class="form-horizontal">
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title">部门设置</h4>
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <div class="col-md-6">
-                    <dl class="horizontal">
-                      <dt>姓名：</dt>
-                      <dd>Transform</dd>
-                    </dl>
-                  </div>
-                  <div class="col-md-6">
-                    <dl class="horizontal">
-                      <dt>性别：</dt>
-                      <dd>男</dd>
-                    </dl>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <dl class="horizontal">
-                      <dt>部门：</dt>
-                      <dd>技术部</dd>
-                    </dl>
-                  </div>
-                  <div class="col-md-6">
-                    <dl class="horizontal">
-                      <dt>邮箱：</dt>
-                      <dd>123456@qq.com123456@qq.com</dd>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button data-dismiss="modal" class="btn btn-default" type="reset">取消</button>
-                <button type="submit" id="setOrganizeBtn"class="btn btn-success">提交</button>
               </div>
             </form>
           </div>

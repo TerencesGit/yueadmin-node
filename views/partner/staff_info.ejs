@@ -14,7 +14,7 @@
               <div class="panel panel-info account-info">
                 <div class="panel-heading">
                   <h3 class="panel-title">
-                    <a href="#collapseTwo" data-toggle="collapse">员工信息</a>
+                    <a href="#collapseTwo" data-toggle="collapse"><%= title%></a>
                   </h3>
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse in">
@@ -39,13 +39,13 @@
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>手机号</dt>
-                        <dd><%if(user.mobile){%><%= user.mobile%><%}%></dd>
+                        <dd><%if(user.mobile){%><%= user.mobile%><%}else{%>暂无<%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>qq</dt>
-                        <dd><%if(user.qq){%><%= user.qq%><%}%></dd>
+                        <dd><%if(user.qq){%><%= user.qq%><%}else{%>暂无<%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
@@ -61,34 +61,40 @@
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>生日</dt>
-                        <dd><%if(user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD')%><%}%></dd>
+                        <dd><%if(user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD')%><%}else{%>暂无<%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>身份证号</dt>
-                        <dd><%if(user.idcard){%> <%= user.idcard%> <%}%></dd>
+                        <dd><%if(user.idcard){%><%= user.idcard%><%}else{%>暂无<%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>籍贯</dt>
-                        <dd><%if(user.address){%> <%= user.address %> <%}%></dd>
+                        <dd><%if(user.address){%><%= user.address %><%}else{%>暂无<%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
                         <dt>身份证正面</dt>
                         <dd>
-                          <img src="<%if(user.idcard_front){%>/upload/idcard/<%= user.idcard_front %><%}else{%> /img/idcard_front_example.png <%}%>" width="245" height="158" class="img-rounded" title="身份证正面" alt="身份证正面">
+                          <%if(user.idcard_front){%>
+                          <img src="/upload/idcard/<%=user.idcard_front%>" width="245" height="158" class="img-rounded" title="身份证正面" alt="身份证正面">
+                          <%}else{%>
+                          暂无
+                          <%}%>
                         </dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="dl-horizontal">
-                        <dt>身份证反面</dt>
+                        <dt>身份证背面</dt>
                         <dd>
-                          <img src="<%if(user.idcard_back){%>/upload/idcard/<%= user.idcard_back %><%}else{%> /img/idcard_back_example.png <%}%>" width="245" height="158" class="img-rounded" title="身份证反面" alt="身份证反面">
+                          <%if(user.idcard_back){%>
+                          <img src="/upload/idcard/<%= user.idcard_back %>" width="245" height="158" class="img-rounded" title="身份证背面" alt="身份证背面">
+                          <%}else{%>暂无<%}%>
                         </dd>
                       </dl>
                     </div>

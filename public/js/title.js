@@ -13,13 +13,18 @@ const newTitleForm = $('#newTitleForm'),
 			titleName = $('#titleName'),
 			titleDesc = $('#titleDesc'),
 			newTitleBtn = $('#newTitleBtn');
+const regular = {
+	desc: /^.{1,20}$/
+}
+const msg = {
+	desc: {
+		regular: '字数超过限制'
+	}
+}
 newTitleBtn.on('click', function(e){
 	e.preventDefault();
-	if(simpleCheckInput(titleName) && simpleCheckInput(titleDesc)){
-		newTitleForm.submit()
-	}else{
-		return false;
-	}
+	if(!(checkInput(titleName) && checkInput(titleDesc, msg.desc, regular.desc))) return false;
+	newTitleForm.submit()
 })	
 //编辑岗位表单	
 const editTitleForm = $('#editTitleForm'),
@@ -64,12 +69,12 @@ function removeTitle(id, $tr){
 	})
 	.done(function(res) {
 		if(res.status == 1){
-			$.dialog().success({message: '删除成功', delay: 1000})
+			$.dialog().success({message: '删除成功', delay: 600})
 			setTimeout(function(){
 				if($tr.length === 1){
 					$tr.remove()
 				}
-			}, 1000)
+			}, 600)
 		}else{
 			$.dialog().fail({message: '删除失败，请稍后重试'})
 		}

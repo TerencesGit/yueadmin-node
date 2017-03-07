@@ -96,7 +96,7 @@ router.get('/partner/get_func_by_org', Partner.getFuncsByOrgId);
 router.get('/partner/set_org_status', Partner.setOrgStatus);
 
 //员工管理
-router.get('/partner/staff_manage', Partner.isPartnerPass, Partner.staffList);
+router.get('/partner/staff_manage', Partner.isPartnerPass, Partner.staffManage);
 router.post('/partner/staff_search', Partner.staffSearch);
 router.get('/partner/set_staff_org', Partner.setStaffOrganize);
 router.get('/partner/get_staff_title', Partner.getStaffTitle);
@@ -128,6 +128,7 @@ router.get('/admin/new_contract_template', Admin.newContractTemplate)
 router.post('/admin/save_template', multipartMiddleware, Admin.saveTemplateFile, Admin.saveTemplate);
 router.get('/admin/edit_contract_template', Admin.editTemplate);
 router.get('/admin/remove_contract_template', Admin.removeTemplate);
+router.get('/admin/contract_template_download', Admin.downloadTemplate);
 
 //合同管理
 router.get('/admin/contract_manage', Admin.contractManage)

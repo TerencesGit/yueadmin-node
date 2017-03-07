@@ -2,6 +2,7 @@
 const organizeTree = $('#organizeTree');
 //岗位数据表格
 const staffDataTable = $('#staffDataTable');
+const DELAY_TIME = 600;
 //渲染员工数据列表 页面加载渲染部门树 
 $(function(){
   staffDataTable.DataTable({})
@@ -38,14 +39,14 @@ function getSeletedNode(){
 }
 //渲染组织树
 function renderOrgTree(organizeTree){
-  var partnerId = organizeTree.attr('data-id');
+  const partnerId = organizeTree.data('partner');
   $.ajax({
     type: 'get',
     url: '/partner/get_organize_tree?partnerId='+ partnerId,
   })
-  .done(function(result){
-    var organizes = result.organizes;
-    var setting = {
+  .done(function(res){
+    const organizes = res.organizes;
+    const setting = {
       view: {
         selectedMulti: false,
       },
@@ -57,16 +58,23 @@ function renderOrgTree(organizeTree){
     }
     var zNode = [];
     var treeObj;
-    for(let i = 0; i <organizes.length; i++){
+    organizes.forEach(function(org){
+      var iconSkin;
+      if(!org.parentId){
+        iconSkin = 'root'
+      }else{
+        iconSkin = 'folder'
+      }
       treeObj = {
-        id: organizes[i]._id,
-        pId: organizes[i].parent_id,
-        name: organizes[i].name,
-        profile: organizes[i].profile,
-        open: true
+        id: org.orgId,
+        pId: org.parentId,
+        name: org.name,
+        profile: org.profile,
+        open: true,
+        iconSkin: iconSkin,
       };
       zNode.push(treeObj)
-    }
+    })
     $.fn.zTree.init(organizeTree, setting, zNode);
   })
   .fail(function(error){ 
@@ -129,10 +137,10 @@ function setStaffOrg(staffId, orgId){
   })
   .done(function(res) {
     if(res.status == 1){
-      $.dialog().success({message: '设置成功', delay: 1000})
+      $.dialog().success({message: '设置成功', delay: DELAY_TIME})
       setTimeout(function(){
         location.replace(location.href)
-      }, 1000)
+      }, DELAY_TIME)
     }else{
       $.dialog().fail({message: '设置失败，请稍后重试'})
     }
@@ -151,8 +159,9 @@ const titleItem = titleList.children('li').not('.active');
 const titleName = titleList.find('.title');
 //岗位回显
 btnTitle.on('click', function(e){
+  titleItem.removeClass('checked');
   staffId = getSelectedStaff(this).id;
-  getStaffTitle(staffId)
+  getStaffTitle(staffId);
 })
 function getStaffTitle(sid){
   $.ajax({
@@ -204,10 +213,10 @@ function setStaffTitle(tid, sid){
   })
   .done(function(res) {
     if(res.status == 1){
-      $.dialog().success({message: '设置成功', delay: 1000})
+      $.dialog().success({message: '设置成功', delay: DELAY_TIME})
       setTimeout(function(){
         location.replace(location.href)
-      }, 1000)
+      }, DELAY_TIME)
     }else{
       $.dialog().fail({message: '设置失败，请稍后重试'})
     }
@@ -236,10 +245,10 @@ function setStaffStatus(sid, status){
   })
   .done(function(res) {
     if(res.status == 1){
-      $.dialog().success({message: '设置成功', delay: 1000})
+      $.dialog().success({message: '设置成功', delay: DELAY_TIME})
       setTimeout(function(){
         location.replace(location.href)
-      }, 1000)
+      }, DELAY_TIME)
     }else{
       $.dialog().fail({message: '设置失败，请稍后重试'})
     }
@@ -250,5 +259,4 @@ function setStaffStatus(sid, status){
   .always(function() {
     console.log("complete");
   });
-  
 }

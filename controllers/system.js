@@ -15,15 +15,15 @@ exports.showFunctionTree = function(req, res){
 }
 //新增功能节点
 exports.newFunction = function(req, res){
-	var user = req.session.user;
-	var func = req.body.func;
+	const user = req.session.user;
+	const func = req.body.func;
 	func.creator = user._id;
 	console.log(func)
-	var _func = new Functions(func);
+	const _func = new Functions(func);
 	_func.save(function(err, func){
 		if(err) {
 			console.log(err)
-			return res.json({status: 0})
+			res.json({status: 0})
 		}
 		res.json({status: 1});
 	})
@@ -83,14 +83,15 @@ exports.getFunctionNode = function(req, res){
 
 //编辑功能节点
 exports.editFunction = function(req, res){
-	var user = req.session.user;
-	var func = req.body.func;
-	var id = func.id;
+	const user = req.session.user;
+	const func = req.body.func;
+	const id = func.id;
 	func.updater = user._id;
-	console.log(func);
+	var _func;
 	if(!id) return res.json({status: 0})
-	Functions.findById(id, function(err, funcitonNode){
-		funcitonNode.update({$set: func}, function(err, msg){
+	Functions.findById(id, function(err, funcObj){
+		_func = _.extend(funcObj, func);
+		_func.save(function(err, func){
 			if(err){
 				console.log(err)
 				res.json({status: 2})

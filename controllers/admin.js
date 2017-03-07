@@ -189,6 +189,12 @@ exports.saveTemplate = function(req, res){
 		})
 	}
 }
+//合同模板下载
+exports.downloadTemplate = function(req, res){
+	const filename = req.query.name;
+	const filepath = 'D:/YueAdmin/public/upload/contract/'+filename;
+	res.download(filepath, filename);
+}
 //合同模板编辑
 exports.editTemplate = function(req, res){
 	var id = req.query.id;

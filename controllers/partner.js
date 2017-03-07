@@ -230,11 +230,14 @@ exports.showInfo = function(req, res){
 exports.showInfoEdit = function(req, res){
 	var user = req.session.user;
 	if(user.partner){
-		Partner.find({admin: user._id})
-				 .populate('user', 'name')
-				 .exec(function(err, partner){
-				 		res.render('partner/partner_info_edit', {title: '企业信息编辑', partner: partner[0]})
-				 })
+		Partner.findOne({admin: user._id})
+					 .populate('user', 'name')
+					 .exec(function(err, partner){
+					 		res.render('partner/partner_info_edit', {
+					 			title: '企业信息编辑', 
+					 			partner: partner
+					 		})
+					 })
 	}
 }
 //企业信息编辑
@@ -276,26 +279,37 @@ exports.organizeManage = function(req, res){
 }
 //获取组织树
 exports.getOrganizeTree = function(req, res){
-	var partnerId = req.query.partnerId;
+	const partnerId = req.query.partnerId;
 	if(req.query.organizeId){
-		var organizeId = req.query.organizeId;
+		const organizeId = req.query.organizeId;
 	}
-	var userId = req.session.user._id;
+	var _organizes = [];
+	var _organize;
 	Organize.find({partner: partnerId}).exec(function(err, organizes){
 		if(organizeId){
 			User.find({partner: partnerId, organize: organizeId})
-				.populate('organize', 'name')
-				.exec(function(err, users){
-					if(err) console.log(err)
-					res.json({organizes: organizes, users: users})
-				})
+					.populate('organize', 'name')
+					.exec(function(err, users){
+						if(err) console.log(err)
+						res.json({organizes: organizes, users: users})
+					})
 		}else{
 			User.find({partner: partnerId})
-				.populate('organize', 'name')
-				.exec(function(err, users){
-					if(err) console.log(err)
-					res.json({organizes: organizes, users: users})
-				})
+					.populate('organize', 'name')
+					.exec(function(err, users){
+						if(err) console.log(err)
+							organizes.forEach(function(org){
+								_organize = {
+									orgId: org._id,
+									name: org.name,
+									parentId: org.parent_id,
+									profile: org.profile,
+									status: org.status,
+								}
+								_organizes.push(_organize);
+							})
+						res.json({organizes: _organizes, users: users})
+					})
 		}
 	})
 }
@@ -484,9 +498,9 @@ exports.setOrgStatus = function(req, res){
 }
 
 //员工管理
-exports.staffList = function(req, res){
-	var user = req.session.user;
-	var partnerId = user.partner;
+exports.staffManage = function(req, res){
+	const _user = req.session.user;
+	const partnerId = _user.partner._id;
 	User.find({partner: partnerId})
 			.populate('partner', 'name')
 			.populate('organize', 'name')
@@ -495,8 +509,12 @@ exports.staffList = function(req, res){
 			  if(err) console.log(err)
 			  	Title.find({partner: partnerId})
 			  			 .exec(function(err, titles){
-			  			 		res.render('partner/staff_manage',{title: '员工管理', users: users, 
-			  			 			user: user, titles: titles})
+			  			 		res.render('partner/staff_manage',{
+			  			 			title: '员工管理', 
+			  			 			staffList: users,
+			  			 			partner_id: partnerId,
+			  			 			titles: titles
+			  			 		})
 			  			 })
 			})
 }
