@@ -14,39 +14,6 @@
         </div>
       </div>
       <ul class="navbar-nav pull-right"> 
-        <li class="dropdown hidden">
-            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="false">
-                <i class="fa fa-bell"></i> <span class="label label-warning">8</span>
-            </a>
-            <ul class="dropdown-menu dropdown-alerts">
-                <li>
-                  <a href="mailbox.html">
-                      <div>
-                        <i class="fa fa-envelope fa-fw"></i> 您有16条未读消息
-                        <span class="pull-right text-muted small">4分钟前</span>
-                      </div>
-                  </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="profile.html">
-                        <div>
-                            <i class="fa fa-qq fa-fw"></i> 3条新回复
-                            <!-- <span class="pull-right text-muted small">12分钟钱</span> -->
-                        </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <div class="text-center link-block">
-                        <a class="J_menuItem" href="notifications.html">
-                            <strong>查看所有 </strong>
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </li>
         <li class="dropdown personal-center">
             <a href="javascript:;" class="dropdown-toggle" id="personMenu" data-toggle="dropdown" title="<%= user.name %>">
               <img src="<%if(user.avatar){%>/upload/avatar/<%=user.avatar%><%}else{%>/img/avatar.gif<%}%>" alt="头像">
@@ -61,19 +28,22 @@
                 <li role="presentation" class="divider"></li>
                 <% } %>
                 <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="/message">发表留言</a>
+                    <a href="/message" role="menuitem" tabindex="-1">发表留言</a>
                 </li>
                 <li role="presentation" class="divider"></li>
                 <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="/account">个人首页</a>
+                    <a href="/account" role="menuitem" tabindex="-1">个人首页</a>
                 </li>
                 <li role="presentation" class="divider"></li>
                 <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="/transaction">交易管理</a>
+                    <a href="/admin/merchant_manage" role="menuitem" tabindex="-1">分期贷款平台</a>
+                </li>
+                <li role="presentation">
+                    <a href="/user/installment" role="menuitem" tabindex="-1">分期贷款用户</a>
                 </li>
                 <li role="presentation" class="divider"></li>
                 <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="/logout">退出</a>
+                    <a href="/logout" role="menuitem" tabindex="-1">退出</a>
                 </li>
             </ul>
         </li>

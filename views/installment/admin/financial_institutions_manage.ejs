@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../../link') %>
+    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../../header') %>
+    <div id="main" class="main" data-page="financial_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title p-t-5">
+              <%= title%>
+              <a href="#addFinanceModal" class="pull-right btn-link" data-toggle="modal">新增机构</a>
+            </h3>
+          </div>
+          <div class="panel-body">
+               <table id="merchantDataTable" class="table table-hover table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>机构名称</th>
+                    <th>开始时间</th>
+                    <th>终止时间</th>
+                    <th>状态管理</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>蚂蚁金服</td>
+                    <td>2017-3-8</td>
+                    <td>2018-3-7</td>
+                    <td><a href="javascript:;" class="btn-status on" data-status="<%= user.status%>" title="启用状态"><i class="fa fa-toggle-on fa-2x"></i></a></td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>百度钱包</td>
+                    <td>2017-3-8</td>
+                    <td>2018-3-7</td>
+                    <td><a href="javascript:;" class="btn-status on" data-status="<%= user.status%>" title="启用状态"><i class="fa fa-toggle-on fa-2x"></i></a></td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>宜人贷</td>
+                    <td>2017-3-8</td>
+                    <td>2018-3-7</td>
+                    <td><a href="javascript:;" class="btn-status on" data-status="<%= user.status%>" title="启用状态"><i class="fa fa-toggle-on fa-2x"></i></a></td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>借贷宝</td>
+                    <td>2017-3-8</td>
+                    <td>2018-3-7</td>
+                    <td><a href="javascript:;" class="btn-status on" data-status="<%= user.status%>" title="启用状态"><i class="fa fa-toggle-on fa-2x"></i></a></td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>人人贷</td>
+                    <td>2017-3-8</td>
+                    <td>2018-3-7</td>
+                    <td><a href="javascript:;" class="btn-status on" data-status="<%= user.status%>" title="启用状态"><i class="fa fa-toggle-on fa-2x"></i></a></td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>拍拍贷</td>
+                    <td>2017-3-8</td>
+                    <td>2018-3-7</td>
+                    <td><a href="javascript:;" class="btn-status on" data-status="<%= user.status%>" title="启用状态"><i class="fa fa-toggle-on fa-2x"></i></a></td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+          <div class="warp-footer"></div>
+        </div>
+      </div>
+    	<%- include('../../footer') %>
+    </div>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="addFinanceModal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="/system/new_role" method="post" id="newRoleForm" class="form-horizontal">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">新增金融机构</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">机构名称</label>
+                  <div class="col-md-6">
+                    <input type="text" name="role[name]" id="" class="form-control" placeholder="机构名称">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">生效时间</label>
+                  <div class="col-md-6">
+                    <input type="text" id="start" class="form-control laydate-icon" placeholder="生效时间">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">到期时间</label>
+                  <div class="col-md-6">
+                    <input type="text" id="end" class="form-control laydate-icon" placeholder="到期时间">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">备注</label>
+                  <div class="col-md-6">
+                    <textarea name="role[desc]" id="newRoleDesc" class="form-control" rows="2" placeholder="备注"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="reset" data-dismiss="modal" class="btn btn-default btn-reset">取消</button>
+                <button id="newRoleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
+              </div>
+            </form>
+          </div>
+      </div>
+    </div>
+    <%- include('../../script')%>
+    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
+    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+    <script src="/plugins/laydate/laydate.js"></script>
+    <script src="/js/installment.js"></script>
+    <script>
+      laydate({elem: '#start', max: laydate.now(-1)});
+      laydate({elem: '#end', max: laydate.now(-1)});
+    </script>
+  </body>
+</html>

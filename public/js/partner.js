@@ -16,7 +16,6 @@ const registeredForm = $('#registeredForm'),
 			fileControl = $('.file-control'),
 			imgRemove = $('.img-remove'),
 			btnRegistered = $('#btnRegistered');
-
 //正则表达式   
 const regular = {
 			name: /^[\u4E00-\u9FA5A-Za-z]+$/,

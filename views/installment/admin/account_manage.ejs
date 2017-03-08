@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../../link') %>
+    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../../header') %>
+    <div id="main" class="main" data-page="account_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">账户管理</h3>
+            </div>
+            <div class="panel-body">
+              <table id="accountDataTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>账号</th>
+                    <th>姓名</th>
+                    <th>注册时间</th>
+                    <th>账户信息</th>
+                    <th>状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% users.forEach(function(user, index){ %>
+                    <tr data-id="<%= user._id%>">
+                      <td><%= index+1%></td>
+                      <td class="account"><%= user.email %></td>
+                      <td class="name"><%= user.name %></td>
+                      <td><%= moment(user.meta.createAt).format('YYYY-MM-DD') %></td>
+                      <td><a href="/admin/show_account_info">查看</a></td>
+                      <td>
+                        <%if(user.status == 0){%>
+                        <a href="javascript:;" class="btn-status" data-status="<%= user.status%>" title="禁用状态"><i class="fa fa-toggle-off fa-2x"></i></a>
+                        <%}else{%>
+                        <a href="javascript:;" class="btn-status on" data-status="<%= user.status%>" title="启用状态"><i class="fa fa-toggle-on fa-2x"></i></a>
+                        <%}%>
+                      </td>
+                    </tr>
+                  <% })%>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="warp-footer"></div>
+        </div>
+      </div>
+    	<%- include('../../footer') %>
+    </div>
+    <%- include('../../script')%>
+    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
+    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+    <script src="/js/installment.js"></script>
+  </body>
+</html>

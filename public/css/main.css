@@ -318,6 +318,10 @@ a.disabled {
   border-color: orange;
   color: #fff;
 }
+.img-control {
+  width: auto;
+  max-width: 100%
+}
 /**========== global style ==========**/
 body {
   background: #f0f3f4
@@ -393,12 +397,6 @@ input[type="file"] {
 .form-control ~.alert-info,
 .form-control ~.alert-danger {
   margin-top: 5px;
-}
-.breadcrumb {
-  background-color: #ddd;
-}
-.modal-dialog {
-  margin-top: 100px;
 }
 .table > thead > tr > th, 
 .table > tbody > tr > td {

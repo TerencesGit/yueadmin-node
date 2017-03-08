@@ -16,7 +16,7 @@ noticeSubmit.on('click', function(e){
 	e.preventDefault();
 	checkInput(noticeTitle) && 
 	checkInput(noticeCont) &&
-	checkImageRugular(noticeFile) &&
+	checkImageRegular(fileControl) &&
 	noticeForm.submit()
 })	
  //点击选择本地图片

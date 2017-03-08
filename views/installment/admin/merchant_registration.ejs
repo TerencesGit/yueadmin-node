@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../../link') %>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../../header') %>
+    <div id="main" class="main" data-page="merchant_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <%=title%>
+                <a href="javascript:history.go(-1)" class="pull-right">返回</a>
+              </h3>
+            </div> 
+            <div class="panel-body min-h-400">
+              <div class="col-md-8 col-md-offset-2 m-t">
+                <form action="/admin/merchant_manage" method="post" id="merchantForm" class="form-horizontal m-t" role="form">
+                  <div class="form-group">
+                    <label for="merchantName" class="control-label col-md-3">商家名称</label>
+                    <div class="col-md-6">
+                      <input type="text" name="merchant[name]" id="merchantName" class="form-control" placeholder="请输入商家名称" required />
+                      <span class="fa fa-check-circle"></span>
+                    </div>
+                    <div class="col-md-3 alert"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="merchantMobile" class="control-label col-md-3">账户名</label>
+                    <div class="col-md-6">
+                      <input type="text" name="merchant[mobile]" id="merchantMobile" class="form-control" placeholder="账户名为商家手机号" required />
+                      <span class="fa fa-check-circle"></span>
+                    </div>
+                    <div class="col-md-3 alert"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="userPasswd" class="control-label col-md-3 text-center">密码</label>
+                    <div class="col-md-6">
+                      <input type="password" name="merchant[password]" id="merchantPasswd" class="form-control" placeholder="设置密码" maxlength="20" required value=""/>
+                      <span class="fa fa-check-circle"></span>
+                    </div>
+                    <div class="col-md-3 alert"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="confirmPasswd" class="control-label col-md-3">确认密码</label>
+                    <div class="col-md-6">
+                      <input type="password" name="merchant[password2]" id="confirmPasswd" class="form-control" placeholder="确认密码" maxlength="20" required /> 
+                      <span class="fa fa-check-circle"></span>
+                    </div>
+                    <div class="col-md-3 alert"></div>
+                  </div>
+                  <div class="form-group">
+                    <div class=" col-md-offset-3 col-md-6 m-t">
+                      <button type="submit" id="merchantRegBtn" class="btn btn-info btn-block">立即注册</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../../footer') %>
+    </div>
+    <%- include('../../script')%>
+    <script src="/js/installment.js"></script>
+  </body>
+</html>

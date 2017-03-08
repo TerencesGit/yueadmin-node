@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%- include('../link') %>
+</head>
+<body class="login-page">
+  <div class="container animated fadeInDown">
+    <form action="/user/signin" method="post" id="signinForm" class="login-form form-horizontal">
+      <h2 class="page-header"><%=title%></h2>
+      <div class="form-group">
+        <label for="username" class="control-label col-md-3 letter-space-s">用户名</label>
+        <div class="col-md-9">
+          <input type="text" name="user[username]" id="username" class="form-control" placeholder="邮箱号/手机号" value="<%if(user){%><%= user.username%><%}%>" required />
+        </div>
+        <div class="input-tip alert"></div>
+      </div>
+      <div class="form-group">
+        <label for="password" class="control-label col-md-3 letter-space-l">密码</label>
+        <div class="col-md-9">
+          <input type="password" name="user[password]" id="password" class="form-control" placeholder="请输入密码" value="" required />
+        </div>
+        <div class="input-tip alert"></div>
+      </div>
+      <div class="form-group">
+        <label for="authcode" class="control-label col-md-3 letter-space-s">验证码</label>
+        <div class="col-md-6">
+          <input type="text" id="signinCode" name="authcode" class="form-control" placeholder="请输入验证码" required />
+        </div>
+        <div class="col-md-2">
+          <canvas id="canvasCode" class="canvas-code" width="80px" height="34px" onClick="drawCode()"></canvas>
+        </div>
+        <div class="input-tip alert"></div>
+      </div>
+      <div class="form-group remember">
+        <label class="checkbox-inline m-l">
+          <input type="checkbox" id="remember" name="user[remember]"/>
+          记住密码
+        </label> 
+      </div>
+      <div class="form-group submit">
+        <button type="submit" id="btnSignIn" class="btn btn-primary btn-block">立即登录</button>
+      </div>
+      <div class="form-group text-center">
+        <a href="/signup">尚未注册？</a>
+        <span class="vertical-line">|</span>
+        <a data-toggle="modal" href="/account/find_password">忘记密码</a>
+      </div>
+    </form>
+  </div>
+  <%- include('../script')%>
+  <script src="/js/login.js"></script>
+</body>
+</html>
