@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include('../../link') %>
-    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
+    <%- include('../link') %>
+    
   </head>
   <body>
     <%- include('./aside') %>
@@ -14,7 +14,7 @@
           <div class="panel-heading">
             <h3 class="panel-title p-t-5">
               <%= title%>
-              <a href="#addFinanceService" class="pull-right btn-link" data-toggle="modal">新增</a>
+              <a href="/admin/new_financial_service" class="pull-right btn-link">新增</a>
             </h3>
           </div>
           <div class="panel-body">
@@ -34,7 +34,7 @@
                     <td>1</td>
                     <td>蚂蚁金服</td>
                     <td>2017-3-8</td>
-                    <td>2018-3-8</td>
+                    <td>2018-3-7</td>
                     <td>50000</td>
                     <td><a href="#serviceModal" data-toggle="modal">查看</a></td>
                     <td>
@@ -47,8 +47,8 @@
                     <td>2</td>
                     <td>百度钱包</td>
                     <td>2017-3-8</td>
-                    <td>2018-3-8</td>
-                    <td>50000</td>
+                    <td>2018-3-7</td>
+                    <td>40000</td>
                     <td><a href="#serviceModal" data-toggle="modal">查看</a></td>
                     <td>
                       <a href="javascript:;" class="btn-status on" title="启用状态">
@@ -60,8 +60,21 @@
                     <td>3</td>
                     <td>宜人贷</td>
                     <td>2017-3-8</td>
-                    <td>2018-3-8</td>
+                    <td>2018-3-7</td>
                     <td>30000</td>
+                    <td><a href="#serviceModal" data-toggle="modal">查看</a></td>
+                    <td>
+                      <a href="javascript:;" class="btn-status on" title="启用状态">
+                        <i class="fa fa-toggle-on fa-2x"></i>
+                      </a>
+                    </td>
+                  </tr>
+                   <tr>
+                    <td>4</td>
+                    <td>人人贷</td>
+                    <td>2017-3-8</td>
+                    <td>2018-3-7</td>
+                    <td>20000</td>
                     <td><a href="#serviceModal" data-toggle="modal">查看</a></td>
                     <td>
                       <a href="javascript:;" class="btn-status on" title="启用状态">
@@ -78,78 +91,6 @@
         </div>
       </div>
     	<%- include('../../footer') %>
-    </div>
-    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="addFinanceService" class="modal fade">
-      <div class="modal-dialog">
-          <div class="modal-content">
-            <form action="/system/new_role" method="post" id="newRoleForm" class="form-horizontal">
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title">新增金服协议</h4>
-              </div>
-              <div class="modal-body">
-                <div class="form-group row">
-                  <label class="col-md-4 control-label">金融机构</label>
-                  <div class="col-md-6">
-                    <select name="finance" id="" class="form-control">
-                      <option value="1">蚂蚁金服</option>
-                      <option value="2">百度钱包</option>
-                      <option value="3">e贷宝</option>
-                      <option value="4">借贷宝</option>
-                      <option value="5">宜人贷</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 control-label">金融授权ID</label>
-                  <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="输入授权ID">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 control-label">最高额度</label>
-                  <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="输入金额">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 control-label">生效时间</label>
-                  <div class="col-md-6">
-                    <input type="text" id="start" class="form-control laydate-icon" placeholder="生效时间">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 control-label">到期时间</label>
-                  <div class="col-md-6">
-                    <input type="text" id="end" class="form-control laydate-icon" placeholder="到期时间">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <input type="file" class="file-control">
-                  <label class="col-md-4 control-label">合同上传</label>
-                  <div class="col-md-6">
-                    <div class="preview-area">
-                      <img src="/img/upload.png" class="pic-preview" alt="合同上传" width="200" height="100">
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <input type="file" class="file-control">
-                  <label class="col-md-4 control-label">二维码上传</label>
-                  <div class="col-md-6">
-                    <div class="preview-area">
-                      <img src="/img/upload.png" class="pic-preview" alt="合同上传" width="80" height="80">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="reset" data-dismiss="modal" class="btn btn-default btn-reset">取消</button>
-                <button id="newRoleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
-              </div>
-            </form>
-          </div>
-      </div>
     </div>
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="serviceModal" class="modal fade">
       <div class="modal-dialog w-800 m-t-50">
@@ -231,11 +172,8 @@
         </div>
       </div>
     </div>
-    <%- include('../../script')%>
-    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
-    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+    <%- include('../script')%>
     <script src="/plugins/laydate/laydate.js"></script>
-    <script src="/js/installment.js"></script>
     <script>
       laydate({elem: '#start', max: laydate.now(-1)});
       laydate({elem: '#end', max: laydate.now(-1)});

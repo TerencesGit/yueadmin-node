@@ -1,13 +1,14 @@
-var express = require('express');
-var router = express.Router();
-var User = require('../controllers/user');
-var Admin = require('../controllers/admin');
-var Message = require('../controllers/message');
-var Partner = require('../controllers/partner');
-var System = require('../controllers/system');
-var Installment = require('../controllers/installment');
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart();
+const express = require('express');
+const router = express.Router();
+const User = require('../controllers/user');
+const Admin = require('../controllers/admin');
+const Message = require('../controllers/message');
+const Partner = require('../controllers/partner');
+const System = require('../controllers/system');
+const Installment = require('../controllers/installment');
+//const Transaction = require('../controllers/transaction');
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
 
 /* GET 账户首页 */
 router.get('/', User.signinRequired, User.showAccountInfo);
@@ -177,6 +178,12 @@ router.get('/system/show_account_info', System.showAccountInfo);
 router.get('/system/set_account_status', System.setAccountStatus);
 router.get('/system/remove_account', System.removeAccount);
 
+/** 交易平台 **/
+//首页
+//router.get('/transaction/home', Transaction.home)
+
+
+
 /** 分期贷款 **/
 //平台管理
 router.get('/admin/installment', Installment.signin);
@@ -184,7 +191,9 @@ router.get('/admin/merchant_manage', Installment.home);
 router.get('/admin/merchant_agent_register', Installment.showMerchantRegistration);
 router.post('/admin/merchant_registration', Installment.merchantRegistration);
 router.get('/admin/show_merchant_info', Installment.merchantInfo);
+router.get('/admin/merchant_info_edit', Installment.merchantInfoEdit);
 router.get('/admin/financial_service', Installment.financialService);
+router.get('/admin/new_financial_service', Installment.newFinancialService);
 router.get('/admin/account_manage', Installment.accountManage);
 router.get('/admin/show_account_info', Installment.accountInfo);
 router.get('/admin/financial_manage', Installment.financialManage);
@@ -194,7 +203,9 @@ router.get('/admin/installment_manage', Installment.installmentlManage);
 router.get('/user/installment', Installment.signin);
 router.get('/user/show_installment', Installment.myInsatllment);
 router.get('/user/installment_manage', Installment.myInsatllment);
+router.get('/user/installment_share', Installment.insatllmentShare);
 router.get('/user/financial_contract', Installment.financialContract);
+router.get('/user/merchant_info', Installment.myMerchantInfo);
 
 
 /* 留言功能 */

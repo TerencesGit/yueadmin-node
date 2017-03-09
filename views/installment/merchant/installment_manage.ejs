@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include('../../link') %>
-    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
+    <%- include('../link') %>
   </head>
   <body>
     <%- include('./aside') %>
@@ -14,7 +13,6 @@
           <div class="panel-heading">
             <h3 class="panel-title">
               <%= title%>
-              <a href="#shareQrcode" class="pull-right" data-toggle="modal"><i class="fa fa-share-alt m-r-5"></i>分享二维码</a>
             </h3>
           </div>
           <div class="panel-body">
@@ -22,44 +20,54 @@
                 <thead>
                   <tr>
                     <th>序号</th>
+                    <th>申请人</th>
                     <th>放贷机构</th>
                     <th>金额</th>
                     <th>放贷时间</th>
-                    <th>还款结束时间</th>
+                    <th>还款截止时间</th>
+                    <th>还款期数</th>
                     <th>还款计划</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>1</td>
+                    <td>张**</td>
                     <td>蚂蚁金服</td>
                     <td>10000</td>
                     <td>2017-3-8 12:30:12</td>
                     <td>2018-3-7 23:59:59</td>
+                    <td>10个月</td>
                     <td><a href="#">查看</a></td>
                   </tr>
                   <tr>
                     <td>2</td>
+                    <td>张**</td>
                     <td>宜人贷</td>
                     <td>8000</td>
                     <td>2017-3-8 12:34:56</td>
                     <td>2018-3-7 23:59:59</td>
+                    <td>6个月</td>
                     <td><a href="#">查看</a></td>
                   </tr>
                   <tr>
                     <td>3</td>
+                    <td>张**</td>
                     <td>人人贷</td>
                     <td>6000</td>
                     <td>2017-3-8 12:34:56</td>
                     <td>2018-3-7 23:59:59</td>
+                    <td>8个月</td>
                     <td><a href="#">查看</a></td>
                   </tr>
                   <tr>
                     <td>4</td>
+                    <td>张**</td>
                     <td>借贷宝</td>
                     <td>5000</td>
                     <td>2017-3-8 12:34:27</td>
                     <td>2018-3-7 23:59:59</td>
+                    <td>12个月</td>
                     <td><a href="#">查看</a></td>
                   </tr>
                 </tbody>
@@ -71,25 +79,6 @@
       </div>
     	<%- include('../../footer') %>
     </div>
-    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="shareQrcode" class="modal fade">
-      <div class="modal-dialog text-center m-t-80">
-        <img src="/img/qrcode.jpg" alt="二维码" title="二维码" width="400">
-        <div class="bdsharebuttonbox" style="margin-left: 240px">
-          <a href="#" class="bds_more" data-cmd="more"></a>
-          <a href="#" class="bds_qzone" data-cmd="qzone"></a>
-          <a href="#" class="bds_tsina" data-cmd="tsina"></a>
-          <a href="#" class="bds_tqq" data-cmd="tqq"></a>
-          <a href="#" class="bds_renren" data-cmd="renren"></a>
-          <a href="#" class="bds_weixin" data-cmd="weixin"></a>
-        </div>
-      </div>
-    </div>
-    <%- include('../../script')%>
-    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
-    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
-    <script src="/js/installment.js"></script>
-    <script>
-      with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-    </script>
+    <%- include('../script')%>
   </body>
 </html>

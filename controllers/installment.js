@@ -11,17 +11,7 @@ exports.signin = function(req, res){
 }
 //分期贷款首页 商家管理
 exports.home = function(req, res){
-	Partner.fetch(function(err, partners){
-		if(err) console.log(err)
-		Role.fetch(function(err, roles){
-			if(err) console.log(err)
-			res.render('installment/admin/merchant_manage',{
-				title: '商户管理', 
-				partners: partners,
-				roles: roles
-			})
-		})
-	})
+	res.render('installment/admin/merchant_manage', {title: '商户管理'})
 }
 //商户代注册页
 exports.showMerchantRegistration = function(req, res){
@@ -36,21 +26,21 @@ exports.merchantRegistration = function(req, res){
 exports.financialService = function(req, res){
 	res.render('installment/admin/financial_service', {title: '金服协议管理'})
 }
+//金服协议管理
+exports.newFinancialService = function(req, res){
+	res.render('installment/admin/new_financial_service', {title: '新增金服协议'})
+}
 //商家信息查看
 exports.merchantInfo = function(req, res){
 	res.render('installment/admin/merchant_info', {title: '商家信息'})
 }
+//商家信息查看
+exports.merchantInfoEdit = function(req, res){
+	res.render('installment/admin/merchant_info_edit', {title: '商家信息编辑'})
+}
 //C端用户管理
 exports.accountManage = function(req, res){
-	User.find({})
-			.populate('partner', 'name')
-			.populate('organize', 'name')
-			.exec(function(err, users){
-				res.render('installment/admin/account_manage', {
-					title: 'C端用户管理',
-					users: users,
-				})
-			}) 
+	res.render('installment/admin/account_manage', {title: 'C端用户管理'})
 }
 //用户信息查看
 exports.accountInfo = function(req, res){
@@ -69,11 +59,19 @@ exports.installmentlManage = function(req, res){
 exports.signin = function(req, res){
 	res.render('installment/signin', {title: '用户登录'})
 }
+//商家信息查看
+exports.myMerchantInfo = function(req, res){
+	res.render('installment/merchant/merchant_info', {title: '企业信息'})
+}
 //分期贷查看
 exports.myInsatllment = function(req, res){
-	res.render('installment/user/installment_manage', {title: '我的分期贷'})
+	res.render('installment/merchant/installment_manage', {title: '分期贷管理'})
+}
+//分期贷分享
+exports.insatllmentShare = function(req, res){
+	res.render('installment/merchant/installment_share', {title: '二维码分享'})
 }
 //金服合同查看
 exports.financialContract = function(req, res){
-	res.render('installment/user/financial_service', {title: '金融协议查看'})
+	res.render('installment/merchant/financial_service', {title: '金融协议查看'})
 }

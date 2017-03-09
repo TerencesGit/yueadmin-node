@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include('../../link') %>
-    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
+    <%- include('../link') %>
   </head>
   <body>
     <%- include('./aside') %>
@@ -30,30 +29,66 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <%partners.forEach(function(partner, index){%>
-                  <tr data-id="<%= partner._id%>">
-                    <td><%= index+1%></td>
-                    <td class="name"><%= partner.name%></td>
-                    <td><%= moment(partner.meta.updateAt).format('YYYY-MM-DD HH:mm:ss') %></td>
+                  <tr>
+                    <td>1</td>
+                    <td>巴黎婚纱摄影</td>
+                    <td>2017-03-08</td>
+                    <td><a href="/admin/show_merchant_info">查看</a></td>
+                    <td><a href="/admin/financial_service">管理</a></td>
                     <td>
-                      <a href="/admin/show_merchant_info" class="btn btn-link">查看</a>
-                    </td>
-                    <td>
-                      <a href="/admin/financial_service" class="btn btn-link">管理</a>
-                    </td>
-                    <td>
-                      <%if(partner.status == 0){%>
-                      <a href="javascript:;" class="btn-status" data-status="<%=partner.status%>" title="禁用状态">
-                        <i class="fa fa-toggle-off fa-2x"></i>
-                      </a>
-                      <%}else{%>
-                      <a href="javascript:;" class="btn-status on" data-status="<%=partner.status%>" title="启用状态">
+                      <a href="javascript:;" class="btn-status on" title="启用状态">
                         <i class="fa fa-toggle-on fa-2x"></i>
                       </a>
-                      <%}%>
                     </td>
                   </tr>
-                  <%})%>
+                  <tr>
+                    <td>2</td>
+                    <td>伯爵婚纱摄影</td>
+                    <td>2017-03-08</td>
+                    <td><a href="/admin/show_merchant_info">查看</a></td>
+                    <td><a href="/admin/financial_service">管理</a></td>
+                    <td>
+                      <a href="javascript:;" class="btn-status" title="启用状态">
+                        <i class="fa fa-toggle-off fa-2x"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>铂爵婚纱摄影</td>
+                    <td>2017-03-08</td>
+                    <td><a href="/admin/show_merchant_info">查看</a></td>
+                    <td><a href="/admin/financial_service">管理</a></td>
+                    <td>
+                      <a href="javascript:;" class="btn-status" title="启用状态">
+                        <i class="fa fa-toggle-off fa-2x"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>**婚纱摄影</td>
+                    <td>2017-03-08</td>
+                    <td><a href="/admin/show_merchant_info">查看</a></td>
+                    <td><a href="/admin/financial_service">管理</a></td>
+                    <td>
+                      <a href="javascript:;" class="btn-status on" title="启用状态">
+                        <i class="fa fa-toggle-on fa-2x"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>**婚纱摄影</td>
+                    <td>2017-03-08</td>
+                    <td><a href="/admin/show_merchant_info">查看</a></td>
+                    <td><a href="/admin/financial_service">管理</a></td>
+                    <td>
+                      <a href="javascript:;" class="btn-status on" title="启用状态">
+                        <i class="fa fa-toggle-on fa-2x"></i>
+                      </a>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
           </div>
@@ -63,9 +98,9 @@
       </div>
     	<%- include('../../footer') %>
     </div>
-    <%- include('../../script')%>
-    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
-    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
-    <script src="/js/installment.js"></script>
+    <%- include('../script')%>
+    
+    
+    
   </body>
 </html>

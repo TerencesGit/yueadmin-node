@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include('../../link') %>
-    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
+    <%- include('../link') %>
+    
   </head>
   <body>
     <%- include('./aside') %>
@@ -27,22 +27,66 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% users.forEach(function(user, index){ %>
-                    <tr data-id="<%= user._id%>">
-                      <td><%= index+1%></td>
-                      <td class="account"><%= user.email %></td>
-                      <td class="name"><%= user.name %></td>
-                      <td><%= moment(user.meta.createAt).format('YYYY-MM-DD') %></td>
-                      <td><a href="/admin/show_account_info">查看</a></td>
-                      <td>
-                        <%if(user.status == 0){%>
-                        <a href="javascript:;" class="btn-status" data-status="<%= user.status%>" title="禁用状态"><i class="fa fa-toggle-off fa-2x"></i></a>
-                        <%}else{%>
-                        <a href="javascript:;" class="btn-status on" data-status="<%= user.status%>" title="启用状态"><i class="fa fa-toggle-on fa-2x"></i></a>
-                        <%}%>
-                      </td>
-                    </tr>
-                  <% })%>
+                  <tr>
+                    <td>1</td>
+                    <td>1234****@qq.com</td>
+                    <td>张**</td>
+                    <td>2017-03-08</td>
+                    <td><a href="/admin/show_account_info">查看</a></td>
+                    <td>
+                      <a href="javascript:;" class="btn-status" title="启用状态">
+                        <i class="fa fa-toggle-off fa-2x"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>1234****@qq.com</td>
+                    <td>张**</td>
+                    <td>2017-03-08</td>
+                    <td><a href="/admin/show_account_info">查看</a></td>
+                    <td>
+                      <a href="javascript:;" class="btn-status on" title="启用状态">
+                        <i class="fa fa-toggle-on fa-2x"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>1234****@qq.com</td>
+                    <td>张**</td>
+                    <td>2017-03-08</td>
+                    <td><a href="/admin/show_account_info">查看</a></td>
+                    <td>
+                      <a href="javascript:;" class="btn-status on" title="启用状态">
+                        <i class="fa fa-toggle-on fa-2x"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>1234****@qq.com</td>
+                    <td>张**</td>
+                    <td>2017-03-08</td>
+                    <td><a href="/admin/show_account_info">查看</a></td>
+                    <td>
+                      <a href="javascript:;" class="btn-status" title="启用状态">
+                        <i class="fa fa-toggle-off fa-2x"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>1234****@qq.com</td>
+                    <td>张**</td>
+                    <td>2017-03-08</td>
+                    <td><a href="/admin/show_account_info">查看</a></td>
+                    <td>
+                      <a href="javascript:;" class="btn-status on" title="启用状态">
+                        <i class="fa fa-toggle-on fa-2x"></i>
+                      </a>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -52,9 +96,6 @@
       </div>
     	<%- include('../../footer') %>
     </div>
-    <%- include('../../script')%>
-    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
-    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
-    <script src="/js/installment.js"></script>
+    <%- include('../script')%>
   </body>
 </html>

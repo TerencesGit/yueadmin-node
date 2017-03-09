@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include('../../link') %>
-    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
+    <%- include('../link') %>
   </head>
   <body>
     <%- include('./aside') %>
@@ -122,11 +121,11 @@
           </div>
       </div>
     </div>
-    <%- include('../../script')%>
-    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
-    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+    <%- include('../script')%>
+    
+    
     <script src="/plugins/laydate/laydate.js"></script>
-    <script src="/js/installment.js"></script>
+    
     <script>
       laydate({elem: '#start', max: laydate.now(-1)});
       laydate({elem: '#end', max: laydate.now(-1)});

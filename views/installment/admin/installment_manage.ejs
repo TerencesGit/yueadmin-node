@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include('../../link') %>
-    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
+    <%- include('../link') %>
+    
   </head>
   <body>
     <%- include('./aside') %>
@@ -22,10 +22,12 @@
                   <tr>
                     <th>序号</th>
                     <th>贷款人</th>
+                    <th>收款商家</th>
                     <th>放贷机构</th>
                     <th>金额</th>
                     <th>放贷时间</th>
-                    <th>还款结束时间</th>
+                    <th>还款截止时间</th>
+                    <th>还款期数</th>
                     <th>还款计划</th>
                   </tr>
                 </thead>
@@ -33,46 +35,56 @@
                   <tr>
                     <td>1</td>
                     <td>张**</td>
+                    <td>**婚纱影楼</td>
                     <td>蚂蚁金服</td>
                     <td>10000</td>
                     <td>2017-3-8 12:30:12</td>
                     <td>2018-3-7 23:59:59</td>
+                    <td>3个月</td>
                     <td><a href="#">查看</a></td>
                   </tr>
                   <tr>
                     <td>2</td>
                     <td>王**</td>
+                    <td>**婚纱影楼</td>
                     <td>蚂蚁金服</td>
                     <td>20000</td>
                     <td>2017-3-8 12:34:56</td>
                     <td>2018-3-7 23:59:59</td>
+                    <td>6个月</td>
                     <td><a href="#">查看</a></td>
                   </tr>
                   <tr>
                     <td>3</td>
                     <td>刘**</td>
+                    <td>**婚纱影楼</td>
                     <td>宜人贷</td>
                     <td>80000</td>
                     <td>2017-3-8 12:34:56</td>
                     <td>2018-3-7 23:59:59</td>
+                    <td>9个月</td>
                     <td><a href="#">查看</a></td>
                   </tr>
                   <tr>
                     <td>4</td>
                     <td>赵**</td>
+                    <td>**婚纱影楼</td>
                     <td>人人贷</td>
                     <td>60000</td>
                     <td>2017-3-8 12:34:56</td>
                     <td>2018-3-7 23:59:59</td>
+                    <td>12个月</td>
                     <td><a href="#">查看</a></td>
                   </tr>
                   <tr>
                     <td>5</td>
                     <td>钱**</td>
+                    <td>**婚纱影楼</td>
                     <td>借贷宝</td>
                     <td>50000</td>
                     <td>2017-3-8 12:34:27</td>
                     <td>2018-3-7 23:59:59</td>
+                    <td>18个月</td>
                     <td><a href="#">查看</a></td>
                   </tr>
                 </tbody>
@@ -84,9 +96,9 @@
       </div>
     	<%- include('../../footer') %>
     </div>
-    <%- include('../../script')%>
-    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
-    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
-    <script src="/js/installment.js"></script>
+    <%- include('../script')%>
+    
+    
+    
   </body>
 </html>

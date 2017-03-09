@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include('../../link') %>
-    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
+    <%- include('../link') %>
+    
   </head>
   <body>
     <%- include('./aside') %>
@@ -21,7 +21,7 @@
                 <thead>
                   <tr>
                     <th>序号</th>
-                    <th>申请贷款机构</th>
+                    <th>贷款机构</th>
                     <th>生效时间</th>
                     <th>到期时间</th>
                     <th>最高额度</th>
@@ -214,11 +214,11 @@
         </div>
       </div>
     </div>
-    <%- include('../../script')%>
-    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
-    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+    <%- include('../script')%>
+    
+    
     <script src="/plugins/laydate/laydate.js"></script>
-    <script src="/js/installment.js"></script>
+    
     <script>
       laydate({elem: '#start', max: laydate.now(-1)});
       laydate({elem: '#end', max: laydate.now(-1)});

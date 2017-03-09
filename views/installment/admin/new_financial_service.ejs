@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../../link') %>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../../header') %>
+    <div id="main" class="main" data-page="merchant_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <%=title%>
+                <a href="javascript:history.go(-1)" class="pull-right">返回</a>
+              </h3>
+            </div> 
+            <div class="modal-body">
+              <form action="" class="form-horizontal m-t" role="form">
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">金融机构</label>
+                  <div class="col-md-6">
+                    <select name="finance" id="" class="form-control">
+                      <option value="1">蚂蚁金服</option>
+                      <option value="2">百度钱包</option>
+                      <option value="3">e贷宝</option>
+                      <option value="4">借贷宝</option>
+                      <option value="5">宜人贷</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">金融授权ID</label>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="输入授权ID">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">最高额度</label>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="输入金额">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">生效时间</label>
+                  <div class="col-md-6">
+                    <input type="text" id="start" class="form-control laydate-icon" placeholder="生效时间">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">到期时间</label>
+                  <div class="col-md-6">
+                    <input type="text" id="end" class="form-control laydate-icon" placeholder="到期时间">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <input type="file" class="file-control">
+                  <label class="col-md-4 control-label">合同上传</label>
+                  <div class="col-md-6">
+                    <div class="preview-area">
+                      <img src="/img/upload.png" class="pic-preview" alt="合同上传" width="200" height="100">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <input type="file" class="file-control">
+                  <label class="col-md-4 control-label">二维码上传</label>
+                  <div class="col-md-6">
+                    <div class="preview-area">
+                      <img src="/img/upload.png" class="pic-preview" alt="合同上传" width="80" height="80">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <input type="file" class="file-control">
+                  <label class="col-md-4 control-label">录入协议</label>
+                  <div class="col-md-6">
+                    <textarea name="" class="form-control" cols="30" rows="10" placeholder="录入协议"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row text-center">
+                  <button type="submit" class="btn btn-info">提交</button>
+                  <button type="reset" class="btn btn-default m-l">重置</button>
+                </div>
+              </form>
+              </div>
+            </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../../footer') %>
+    </div>
+    <%- include('../script')%>
+  </body>
+</html>
