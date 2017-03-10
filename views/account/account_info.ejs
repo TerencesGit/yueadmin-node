@@ -19,12 +19,12 @@
                   </div>
                   <ul class="list-group">
                     <li class="list-group-item active">
-                      <i class="fa fa-user"></i>
+                      <i class="fa fa-id-badge"></i>
                       <a href="#collapseOne" data-toggle="collapse" class="white">账户基本信息</a>
                     </li>
                     <div id="collapseOne" class="panel-collapse collapse in">
                       <li class="list-group-item">
-                        <a href="/account/edit_info"><i class="fa fa-edit"></i>编辑账户信息</a>
+                        <a href="/account/account_info_edit"><i class="fa fa-edit"></i>编辑账户信息</a>
                       </li>
                       <li class="list-group-item">
                         <label>邮箱:</label>
@@ -42,28 +42,28 @@
                         <label>年龄:</label>
                         <span>
                           <% if(user.birthday){ %><%= new Date().getFullYear() - moment(user.birthday).format('YYYY') %>
-                          <% }else{ %>未设置<%}%>
+                          <%}else{%>未设置<%}%>
                         </span>
                       </li>
                       <li class="list-group-item">
                         <label>所在城市：</label>
                         <span>
-                          <% if(user.address){ %><%= user.address %>
-                          <% }else{ %>未设置<%}%>
+                          <%if(user.address){%><%=user.address%>
+                          <%}else{%>未设置<%}%>
                         </span>
                       </li>
                       <li class="list-group-item">
                         <label>所属公司：</label>
                         <span>
-                          <% if(user.partner){ %><%= user.partner.name %>
-                          <% }else{ %>未设置<%}%>
+                          <%if(user.partner){%><%=user.partner.name %>
+                          <%}else{%>未设置<%}%>
                         </span>
                       </li>
                       <li class="list-group-item">
                         <label>所属部门：</label>
                         <span>
                           <% if(user.organize){ %><%= user.organize.name %>
-                          <% }else{ %>未设置<%}%>
+                          <% }else{%>未设置<%}%>
                         </span>
                       </li>
                     </div>
@@ -75,7 +75,7 @@
               <div class="panel panel-primary">
                 <div class="panel-heading">
                   <h3 class="panel-title">
-                    <a href="#collapseTwo" data-toggle="collapse">账户详细信息</a>
+                    <a href="#collapseTwo" data-toggle="collapse"><i class="fa fa-id-card"></i>账户详细信息</a>
                   </h3>
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse in">
@@ -162,7 +162,7 @@
               <div class="panel panel-danger">
                 <div class="panel-heading">
                   <h3 class="panel-title">
-                    <a href="#collapseThree" data-toggle="collapse">消息动态（删除）</a>
+                    <a href="#collapseThree" data-toggle="collapse"><i class="fa fa-commenting m-r-5"></i>消息动态（删除）</a>
                     <a href="#" class="pull-right" data-dismiss="panel" aria-hidden="true">&times;</a>
                   </h3>
                 </div>

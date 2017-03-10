@@ -367,9 +367,9 @@ input[type="file"] {
   padding-right: 10px;
   color: #f20;
 }
-.list-group .fa {
+/*.list-group .fa {
   margin-right: 10px;
-}
+}*/
 .control-text {
   display: inline-block;
   padding: 7px 0 0;
@@ -428,6 +428,10 @@ dl.horizontal dd {
 }
 .input-group-btn > .btn {
   padding: 6px 12px;
+}
+.panel-title .fa {
+  margin-right: 5px;
+  vertical-align: top;
 }
 /**========== animation start ==========**/
 .animated {

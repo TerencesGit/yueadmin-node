@@ -22,7 +22,7 @@ router.post('/user/signinAsync', User.signinAsync);
 router.post('/user/signin', User.signin);
 
 //退出
-router.get('/logout', User.logout);
+router.get('/logout', User.logout); 
 
 /* 管理员操作 */
 router.get('/user/list', User.signinRequired, User.userlist);
