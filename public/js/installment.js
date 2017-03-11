@@ -127,7 +127,7 @@ $('.preview-area').on('click', function(e){
    $(this).parents('.form-group').find('.file-control').click()
 })
 $('.file-control').change(function(e){
-  const picPreview = $(this).parents('.form-group').find('.pic-preview');
-  uploadPreview(this, picPreview)
-  picPreview.parent().addClass('show');
+  const imgPreview = $(this).parents('.form-group').find('.img-preview');
+  uploadPreview(this, imgPreview)
+  imgPreview.parent().addClass('show');
 })

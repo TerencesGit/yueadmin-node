@@ -6,7 +6,7 @@ var organizeSchema = new Schema({
 	partner: {type: ObjectId, ref: 'Partner'},
 	creator: {type: ObjectId, ref: 'User'},
 	name: String,
-	profile: String,
+	desc: String,
 	parent_id: String,
 	is_partner_root: {
 		type: Number,

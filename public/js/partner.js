@@ -93,7 +93,7 @@ previewArea.on('click', function(e){
 //图片预览
 let imgPath = 
 fileControl.change(function(e){
-  const picPreview = $(this).parents('.form-group').find('.pic-preview');
+  const picPreview = $(this).parents('.form-group').find('.img-preview');
   checkImageRegular(this)
   uploadPreview(this, picPreview)
   picPreview.parent().addClass('show');

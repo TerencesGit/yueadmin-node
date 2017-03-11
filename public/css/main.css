@@ -51,6 +51,9 @@
 .p-t-5 {
   padding-top: 5px;
 }
+.p-t-7 {
+  padding-top: 7px;
+}
 .p-t-10 {
   padding-top: 10px;
 }
@@ -367,9 +370,6 @@ input[type="file"] {
   padding-right: 10px;
   color: #f20;
 }
-/*.list-group .fa {
-  margin-right: 10px;
-}*/
 .control-text {
   display: inline-block;
   padding: 7px 0 0;
@@ -377,17 +377,6 @@ input[type="file"] {
 .alert-back {
   width: 80%;
   margin: auto
-}
-.alert-back .fa {
-  margin: 0 10px
-}
-.alert-dismissable .close {
-  top: 0;
-  right: 0; 
-}
-.modal-body.modal-control {
-  height: 350px;
-  overflow-y: auto;
 }
 .alert {
   padding: 5px;
@@ -839,13 +828,15 @@ dl.horizontal dd {
 /** picture upload preview start **/
 .preview-area {
   position: relative;
-  margin-bottom: 20px;
+  margin: 7px 0 20px 0;
   cursor: pointer;
 }
-.preview-area > img,
-.preview-area > a {
-  float: left;
-  margin-top: 7px
+.img-preview {
+  padding: 4px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 .preview-area .img-remove {
   display: none;
@@ -859,26 +850,6 @@ dl.horizontal dd {
 }
 .preview-area.show:hover .img-remove {
   display: inline;
-}
-.preview-area .btn-remove,
-.preview-area .btn-update  {
-  display: none;
-  position: absolute;
-  top: -9px;
-  right: 12px;
-}
-.attach-upload {
-  position: relative;
-}
-.file-clear {
-  display: none;
-  position: absolute;
-  top: -8px;
-  right: 8px;
-  z-index: 99;
-}
-.attach-upload.has-success:hover .file-clear {
-  display: block;
 }
 /** picture upload preview end **/
 

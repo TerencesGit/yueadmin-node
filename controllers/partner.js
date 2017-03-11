@@ -303,7 +303,7 @@ exports.getOrganizeTree = function(req, res){
 									orgId: org._id,
 									name: org.name,
 									parentId: org.parent_id,
-									profile: org.profile,
+									desc: org.desc || org.profile,
 									status: org.status,
 								}
 								_organizes.push(_organize);
@@ -335,31 +335,28 @@ exports.getOrganizeStaff = function(req, res){
 }
 //创建组织节点
 exports.newOrganize = function(req, res){
-	var user = req.session.user;
-	if(!user){
-		return res.json({status: 0})
-	}
-	var _organize = req.body.organize;
-	var uid = user._id;
-	var partnerId = user.partner;
+	const user = req.session.user;
+	const _organize = req.body.organize;
+	const uid = user._id;
 	_organize.admin = uid;
 	_organize.creator = uid;
-	_organize.partner = partnerId;
+	_organize.partner = user.partner._id;
+	console.log(_organize)
 	var organize = new Organize(_organize);
 	organize.save(function(err, organize){
-		if(err) console.log(err);
-		res.json({status: 1, message: '添加成功'})
+		if(err){
+			console.log(err);
+			res.json({status: 0, message: '添加失败'})
+		}else{
+			res.json({status: 1, message: '添加成功'})
+		}
 	})
 }
 //编辑组织节点
 exports.editOrganize = function(req, res){
-	var user = req.session.user;
-	if(!user){
-		return res.json({status: 0})
-	}
-	var _organize = req.body.organize;
-	console.log(_organize)
-	var id = _organize.id;
+	const user = req.session.user;
+	const _organize = req.body.organize;
+	const id = _organize.id;
 	if(id){
 		Organize.update({_id: id}, {$set: _organize }, function(err, msg){
 			if(err) {

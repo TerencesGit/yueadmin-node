@@ -9,7 +9,7 @@ var checkInput = function($element, msg, regular){
   if(formGroup.children('.alert').length === 0) {
     formGroup.append('<div class="col-md-3 alert alert-danger"></div>')
   }
-  alert = formGroup.children('.alert');
+  const alert = formGroup.children('.alert');
   if(value == '') {
     formGroup.removeClass('has-success').addClass('has-error');
     alert.html('<i class="fa fa-minus-circle"></i>'+msgRequired);
@@ -29,7 +29,6 @@ var checkInput = function($element, msg, regular){
     return true;
   }
 }
-
 //输入框有值时验证
 const checkInputValue = function($element, msg, regular){
   if($.trim($element.val()) !== '') return checkInput($element, msg, regular)

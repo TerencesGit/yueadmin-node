@@ -216,14 +216,14 @@
         accountSubmitBtn = $('#accountSubmitBtn');
   //点击选择本地图片
   previewArea.on('click', function(e){
-     $(this).parents('.form-group').find('.file-control').click()
+    $(this).parents('.form-group').find('.file-control').click()
   })
   //图片预览
   fileControl.change(function(e){
-    const picPreview = $(this).parents('.form-group').find('.pic-preview');
+    const imgPreview = $(this).parents('.form-group').find('.img-preview');
     checkImageRegular(this) 
-    uploadPreview(this, picPreview)
-    picPreview.parent().addClass('show');
+    uploadPreview(this, imgPreview)
+    imgPreview.parent().addClass('show');
   })
   //图片删除
   imgRemove.on('click', function(e){

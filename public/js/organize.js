@@ -23,8 +23,7 @@ const roleItem = roleList.children('li').not('.active');
 const roleName = roleList.find('.role');
 //员工数据表格
 const staffDataTable = $('#staffDataTable');
-
-let isFirst = true;
+//标志位
 let flag = true;
 //部门工具栏对象
 const $btnRefresh = $('.btn-refresh'),
@@ -91,22 +90,22 @@ function getSeletedNode(){
  	return node;
 }
 //刷新操作    
-$btnRefresh.on('click', function(){
-	renderOrganizeTree(organizeTree)
-})
+// $btnRefresh.on('click', function(){
+// 	renderOrganizeTree(organizeTree)
+// })
 //新增部门表单
-const newOrganizeModal = $('#newOrganizeModal'),
-	    newModalTitle = newOrganizeModal.find('.modal-title'),
-	    newOrganizeName = $('#newOrganizeName'),
-	    newOrganizeProfile = $('#newOrganizeProfile'),
-	    newOrganizeBtn = $('#newOrganizeBtn');
+const newOrgModal = $('#newOrgModal'),
+	    newOrgTitle = newOrgModal.find('.modal-title'),
+	    newOrgName = $('#newOrgName'),
+	    newOrgDesc = $('#newOrgDesc'),
+	    newOrgBtn = $('#newOrgBtn');
 
 //编辑部门表单
-const editOrganizeModal = $('#editOrganizeModal'),
-			editModalTitle = editOrganizeModal.find('.modal-title'),
-	    editOrganizeName = $('#editOrganizeName'),
-	    editOrganizeProfile = $('#editOrganizeProfile'),
-	    editOrganizeBtn = $('#editOrganizeBtn');
+const editOrgModal = $('#editOrgModal'),
+			editOrgTitle = editOrgModal.find('.modal-title'),
+	    editOrgName = $('#editOrgName'),
+	    editOrgDesc = $('#editOrgDesc'),
+	    editOrgBtn = $('#editOrgBtn');
 
 //渲染部门树
 function renderOrganizeTree(organizeTree){
@@ -143,7 +142,7 @@ function renderOrganizeTree(organizeTree){
         id: organize.orgId,
         pId: organize.parentId,
         name: organize.name,
-        profile: organize.profile,
+        desc: organize.desc,
         status: organize.status,
         open: true,
         iconSkin: iconSkin,
@@ -198,20 +197,20 @@ $btnPlus.on('click', function(e){
 	e.preventDefault();
   if(!getSeletedNode()) return false;
   const node = getSeletedNode();
-  newModalTitle.html('新增<a>'+node.name+'</a>的下属部门');
-  newOrganizeName.val('');
-  newOrganizeProfile.val('');
+  newOrgTitle.html('新增<a>'+node.name+'</a>的下属部门');
+  $('.btn-reset').click();
+  $('.form-group').removeClass('has-success');
 })
 //新增组织表单提交
-newOrganizeBtn.on('click', function(e){
+newOrgBtn.on('click', function(e){
 	e.preventDefault()
 	if(!getSeletedNode()) return false;
-  var node = getSeletedNode();
-	if(!checkInput(newOrganizeName)) return false;
-	var organize = {
+  const node = getSeletedNode();
+	if(!(checkInput(newOrgName) && checkInput(newOrgDesc))) return false;
+	const organize = {
 		parent_id: node.id,
-		name: $.trim(newOrganizeName.val()),
-  	profile: $.trim(newOrganizeProfile.val())
+		name: $.trim(newOrgName.val()),
+  	desc: $.trim(newOrgDesc.val())
 	}
 	if(flag){
 		flag = false;
@@ -227,7 +226,7 @@ newOrganizeBtn.on('click', function(e){
 					renderOrganizeTree(organizeTree)
 				}, DELAY_TIME)
 			}else if(res.status == 2){
-				$.dialog().fail({message: '添加失败'});
+				$.dialog().fail({message: ''+res.message+''});
 			}
 			flag = true;
 		})
@@ -240,31 +239,32 @@ newOrganizeBtn.on('click', function(e){
 $btnEdit.on('click', function(e){
 	e.preventDefault();
   if(!getSeletedNode()) return false;
- 	var node = getSeletedNode();
+ 	const node = getSeletedNode();
  	if(isRoot(node)){
- 		editModalTitle.text('编辑公司名称(仅在组织树上生效)');
+ 		editOrgTitle.text('编辑公司名称(仅在组织树上生效)');
  		$('.organize-name').text('公司名称');
- 		$('.organize-profile').hide();
+ 		$('.organize-desc').hide();
  	}else{
- 		editModalTitle.text('部门编辑');
+ 		editOrgTitle.text('部门编辑');
 	 	$('.organize-name').text('部门名称');
-	 	$('.organize-profile').show();
+	 	$('.organize-desc').show();
  	}
- 	var name = node.name,
- 	    profile = node.profile;
- 	editOrganizeName.val(name);
- 	editOrganizeProfile.val(profile);
+ 	const name = node.name,
+ 	      desc = node.desc;
+ 	editOrgName.val(name);
+ 	editOrgDesc.val(desc);
+ 	$('.form-group').removeClass('has-success');
 })
 //编辑组织表单提交
-editOrganizeBtn.on('click', function(e){
+editOrgBtn.on('click', function(e){
 	e.preventDefault()
 	if(!getSeletedNode()) return false;
- 	var node = getSeletedNode();
-	if(!checkInput(editOrganizeName, msg)) return false;
-	var organize = {
+ 	const node = getSeletedNode();
+	if(!(checkInput(editOrgName) && checkInput(editOrgDesc))) return false;
+	const organize = {
 		id: node.id,
-		name: $.trim(editOrganizeName.val()),
-  	profile: $.trim(editOrganizeProfile.val())
+		name: $.trim(editOrgName.val()),
+  	profile: $.trim(editOrgDesc.val())
 	}
 	if(flag){
 		$.ajax({

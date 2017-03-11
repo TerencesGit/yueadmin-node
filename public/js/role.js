@@ -34,7 +34,7 @@ btnDel.on('click', function(e){
 	const $tr = $(this).parents('tr');
 	const id = $tr.attr('data-id');
 	const name = $tr.children('.name').text();
-	$.dialog().confirm({message: '确定删除<a>'+name+'</a>, 此操作不可恢复'})
+	$.dialog().confirm({message: '确定删除角色<a> '+name+' </a>？'})
    .on('confirm', function(){
    	removeRole(id, $tr)
    })
@@ -45,12 +45,12 @@ function removeRole(id, $tr){
 	})
 	.done(function(res) {
 		if(res.status == 1){
-			$.dialog().success({message: '删除成功', delay: 1000})
+			$.dialog().success({message: '删除成功', delay: 600})
 			setTimeout(function(){
 				if($tr.length === 1){
 					$tr.remove()
 				}
-			}, 1000)
+			}, 600)
 		}else{
 			$.dialog().fail({message: '删除失败，请稍后重试'})
 		}

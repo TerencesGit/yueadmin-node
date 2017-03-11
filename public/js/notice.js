@@ -9,7 +9,7 @@ const noticeForm = $('#noticeForm'),
 			noticeCont = $('#noticeCont'),
 			fileControl = $('.file-control'),
 			previewArea = $('.preview-area'),
-			picPreview = $('.pic-preview'),
+			picPreview = $('.img-preview'),
 			imgRemove = $('.img-remove'),
 			noticeSubmit = $('#noticeSubmit');
 noticeSubmit.on('click', function(e){
@@ -25,7 +25,7 @@ noticeSubmit.on('click', function(e){
   })
   //图片预览
   fileControl.change(function(e){
-    const picPreview = $(this).parents('.form-group').find('.pic-preview');
+    const picPreview = $(this).parents('.form-group').find('.img-preview');
     checkImageRegular(this) 
     uploadPreview(this, picPreview)
     picPreview.parent().addClass('show');
