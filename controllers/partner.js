@@ -303,7 +303,7 @@ exports.getOrganizeTree = function(req, res){
 									orgId: org._id,
 									name: org.name,
 									parentId: org.parent_id,
-									desc: org.desc || org.profile,
+									note: org.note,
 									status: org.status,
 								}
 								_organizes.push(_organize);

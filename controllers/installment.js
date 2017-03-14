@@ -48,7 +48,11 @@ exports.accountInfo = function(req, res){
 }
 //金融机构管理
 exports.financialManage = function(req, res){
-	res.render('installment/admin/financial_institutions_manage', {title: '金融机构管理'})
+	res.render('installment/admin/financial_institution_manage', {title: '金融机构管理'})
+}
+//新增金融机构
+exports.newFinancial = function(req, res){
+	res.render('installment/admin/new_financial_institution', {title: '新增金融机构'})
 }
 //分期贷管理
 exports.installmentlManage = function(req, res){

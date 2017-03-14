@@ -197,9 +197,10 @@ router.get('/admin/new_financial_service', Installment.newFinancialService);
 router.get('/admin/account_manage', Installment.accountManage);
 router.get('/admin/show_account_info', Installment.accountInfo);
 router.get('/admin/financial_manage', Installment.financialManage);
+router.get('/admin/new_financial_institution', Installment.newFinancial);
 router.get('/admin/installment_manage', Installment.installmentlManage);
 
-//用户操作
+//商家操作
 router.get('/user/installment', Installment.signin);
 router.get('/user/show_installment', Installment.myInsatllment);
 router.get('/user/installment_manage', Installment.myInsatllment);

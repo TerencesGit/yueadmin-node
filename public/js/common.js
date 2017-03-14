@@ -42,13 +42,12 @@ const checkInputValue = function($element, msg, regular){
 
 //输入框简单验证
 const simpleCheckInput = function($element){
-  const value = $.trim($element.val());
   const formGroup = $element.parents('.form-group');
-  if(value == ''){
-    formGroup.removeClass('has-success').addClass('has-error');
+  if($.trim($element.val()) == ''){
+    formGroup.addClass('has-error');
     return false;
   }else{
-    formGroup.removeClass('has-error').addClass('has-success');
+    formGroup.removeClass('has-error');
     return true;
   }
 }
@@ -326,7 +325,7 @@ const checkDocument = function(fileControl){
     $alert.removeClass('hidden').html('<i class="fa fa-minus-circle"></i>'+ msg);
     return false;
   }else{
-    $alert && $alert.remove()
+    $alert.length === 1 && $alert.remove()
     return true;
   }
 }
@@ -359,6 +358,7 @@ const uploadPreview = function(fileControl, $image){
   }
   reader.readAsDataURL(fileControl.files[0])
 }
+
 //清空上传控件的值
 const clearFile = function($fileControl){
   const fileParent = $fileControl.parent();
@@ -376,7 +376,7 @@ const checkImageRegular = function(fileControl, msg, regular, sizeLimit){
   if(!hasFile(fileControl)) return true;
 	if(!(fileControl instanceof jQuery || fileControl.nodeType === 1)) 
 	throw new Error(fileControl + '不是DOM或jQuery对象！');
-	const msgRegular = msg && msg.regular || '图片格式有误',
+	const msgRegular = msg && msg.regular || '文件类型不支持',
 	 		  msgSize = msg && msg.size || '图片大小超过限制';
 	regular = regular || /\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/,
 	sizeLimit = sizeLimit || 1024;

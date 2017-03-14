@@ -37,9 +37,9 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 control-label">最高额度</label>
+                  <label class="col-md-4 control-label">授信金额上限</label>
                   <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="输入金额">
+                    <input type="text" class="form-control" placeholder="输入授信金额">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -55,28 +55,50 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <input type="file" class="file-control">
-                  <label class="col-md-4 control-label">合同上传</label>
+                  <label class="col-md-4 control-label">是否启用</label>
                   <div class="col-md-6">
-                    <div class="preview-area">
-                      <img src="/img/upload.png" class="pic-preview" alt="合同上传" width="200" height="100">
+                    <select name="status" id="" class="form-control">
+                      <option value="1">启用</option>
+                      <option value="0">禁用</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">授权二维码</label>
+                  <div class="col-md-6">
+                    <div class="preview-area w-120">
+                      <input type="file" class="file-control">
+                      <img src="/img/upload.png" class="img-preview" width="100" height="100" alt="二维码上传" title="二维码上传">
+                      <a href="javascript:;" class="img-remove"></a>
                     </div>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <input type="file" class="file-control">
-                  <label class="col-md-4 control-label">二维码上传</label>
-                  <div class="col-md-6">
-                    <div class="preview-area">
-                      <img src="/img/upload.png" class="pic-preview" alt="合同上传" width="80" height="80">
+                  <label class="col-md-4 control-label">合同协议 
+                    <p class="text-info">（最多可上传10张）</p>
+                  </label>
+                  <div class="col-md-8">
+                    <div class="preview-area w-120 pull-left">
+                      <input type="file" class="file-control">
+                      <img src="/img/upload.png" class="img-preview img-upload" alt="合同上传" width="100" height="100">
+                      <a href="javascript:;" class="img-remove"></a>
                     </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <input type="file" class="file-control">
-                  <label class="col-md-4 control-label">录入协议</label>
-                  <div class="col-md-6">
-                    <textarea name="" class="form-control" cols="30" rows="10" placeholder="录入协议"></textarea>
+                    <div class="preview-area show w-120 pull-left">
+                      <input type="file" class="file-control">
+                      <img src="/img/logo.png" class="img-preview" alt="合同上传" width="100" height="100">
+                      <a href="javascript:;" class="img-remove"></a>
+                    </div>
+                    <div class="preview-area show w-120 pull-left">
+                      <input type="file" class="file-control">
+                      <img src="/img/logo.png" class="img-preview" alt="合同上传" width="100" height="100">
+                      <a href="javascript:;" class="img-remove"></a>
+                    </div>
+                    <div class="preview-area show w-120 pull-left">
+                      <input type="file" class="file-control">
+                      <img src="/img/logo.png" class="img-preview" alt="合同上传" width="100" height="100">
+                      <a href="javascript:;" class="img-remove"></a>
+                    </div>
+                    
                   </div>
                 </div>
                 <div class="form-group row text-center">

@@ -1,30 +1,29 @@
 /** 部门管理 **/
 //部门组织树
 const organizeTree = $('#organizeTree');
+//企业ID
+const partnerId = organizeTree.data('partner');
 //角色对应功能节点树
 const roleFunctionTree = $('#roleFunctionTree');
 //部门对应功能节点树
 const orgFunctionTree = $('#orgFunctionTree');
-//企业ID
-const partnerId = organizeTree.attr('data-id');
 //部门ID
 const departmentId = $('#departmentId');
 //部门名称
 const departmentName = $('#departmentName');
-//注册员工表单对象
-const userForm = $('#userForm');
-//弹出框延迟时间
-const DELAY_TIME = 800;
 //权限列表对象
 const roleList = $('#roleList');
-//权限单元
+//权限条目
 const roleItem = roleList.children('li').not('.active');
 //权限名称
 const roleName = roleList.find('.role');
 //员工数据表格
 const staffDataTable = $('#staffDataTable');
+//弹出框延迟时间
+const DELAY_TIME = 800;
 //标志位
 let flag = true;
+
 //部门工具栏对象
 const $btnRefresh = $('.btn-refresh'),
 	 		$btnPlus = $('.btn-plus'),
@@ -35,9 +34,10 @@ const $btnRefresh = $('.btn-refresh'),
 		  $btnUnlock = $('.btn-unlock'),
 		  $btnBan = $('.btn-ban'),
 	    $btnUser = $('.btn-user');
+
 $(function(){
 	//页面加载渲染部门树
-  renderOrganizeTree(organizeTree);
+  renderOrganizeTree();
   //DataTable初始化配置
   staffDataTable.dataTable({
     paging: true,
@@ -55,20 +55,18 @@ $(function(){
 })
 //组织节点点击事件(显示部门名称，并获取该部门下员工)
 function HandlerClick(event, treeId, treeNode){
-	//组织树对象
-  const name = treeNode.name;
   const organizeId = treeNode.id;
-  const status= treeNode.status;
-  if(status){
+  departmentName.text(treeNode.name);
+ 	departmentId.val(organizeId);
+  //展示该节点启用或禁用状态
+  if(treeNode.status){
   	$btnUnlock.addClass('disabled').parent().addClass('disabled');
   	$btnBan.removeClass('disabled').parent().removeClass('disabled');
   }else{
   	$btnBan.addClass('disabled').parent().addClass('disabled');
   	$btnUnlock.removeClass('disabled').parent().removeClass('disabled');
   }
-  departmentName.text(name);
- 	departmentId.val(organizeId);
- 	//渲染员工列表
+ 	//加载该节点下员工列表
  	renderStaffList(organizeId);
 }
 //判断父节点
@@ -91,7 +89,7 @@ function getSeletedNode(){
 }
 //刷新操作    
 // $btnRefresh.on('click', function(){
-// 	renderOrganizeTree(organizeTree)
+// 	renderOrganizeTree()
 // })
 //新增部门表单
 const newOrgModal = $('#newOrgModal'),
@@ -108,15 +106,14 @@ const editOrgModal = $('#editOrgModal'),
 	    editOrgBtn = $('#editOrgBtn');
 
 //渲染部门树
-function renderOrganizeTree(organizeTree){
-	var partnerId = organizeTree.attr('data-id');
+function renderOrganizeTree(){
   $.ajax({
-    type: 'get',
+    type: 'GET',
     url: '/partner/get_organize_tree?partnerId='+ partnerId,
   })
   .done(function(res){
-    var organizes = res.organizes;
-    var setting = {
+    const organizes = res.organizes;
+    const setting = {
     	view: {
     		selectedMulti: false,
     	},
@@ -132,7 +129,7 @@ function renderOrganizeTree(organizeTree){
     var zNode = [];
     var treeObj;
     organizes.forEach(function(organize){
-    	var iconSkin = '';
+    	var iconSkin;
     	if(!organize.parentId){
     		iconSkin = 'root';
     	}else{
@@ -142,7 +139,7 @@ function renderOrganizeTree(organizeTree){
         id: organize.orgId,
         pId: organize.parentId,
         name: organize.name,
-        desc: organize.desc,
+        note: organize.note,
         status: organize.status,
         open: true,
         iconSkin: iconSkin,
@@ -210,7 +207,7 @@ newOrgBtn.on('click', function(e){
 	const organize = {
 		parent_id: node.id,
 		name: $.trim(newOrgName.val()),
-  	desc: $.trim(newOrgDesc.val())
+  	note: $.trim(newOrgDesc.val())
 	}
 	if(flag){
 		flag = false;
@@ -223,7 +220,7 @@ newOrgBtn.on('click', function(e){
 			if(res.status == 1){
 				$.dialog().success({message: ''+res.message+'', delay: DELAY_TIME})
 				setTimeout(function(){
-					renderOrganizeTree(organizeTree)
+					renderOrganizeTree()
 				}, DELAY_TIME)
 			}else if(res.status == 2){
 				$.dialog().fail({message: ''+res.message+''});
@@ -250,9 +247,9 @@ $btnEdit.on('click', function(e){
 	 	$('.organize-desc').show();
  	}
  	const name = node.name,
- 	      desc = node.desc;
+ 	      note = node.note;
  	editOrgName.val(name);
- 	editOrgDesc.val(desc);
+ 	editOrgDesc.val(note);
  	$('.form-group').removeClass('has-success');
 })
 //编辑组织表单提交
@@ -260,11 +257,11 @@ editOrgBtn.on('click', function(e){
 	e.preventDefault()
 	if(!getSeletedNode()) return false;
  	const node = getSeletedNode();
-	if(!(checkInput(editOrgName) && checkInput(editOrgDesc))) return false;
+	if(!checkInput(editOrgName)) return false;
 	const organize = {
 		id: node.id,
 		name: $.trim(editOrgName.val()),
-  	profile: $.trim(editOrgDesc.val())
+  	note: $.trim(editOrgDesc.val())
 	}
 	if(flag){
 		$.ajax({
@@ -273,14 +270,13 @@ editOrgBtn.on('click', function(e){
 			data: {organize: organize},
 		})
 		.done(function(res) {
-			console.log(res)
 			if(res.status == 1){
 				$.dialog().success({message: '编辑成功', delay: DELAY_TIME})
 				setTimeout(function(){
-					renderOrganizeTree(organizeTree)
+					renderOrganizeTree()
 				}, DELAY_TIME)
 			}else if(res.status == 2){
-				$.dialog().fail({message: '编辑失败'})
+				$.dialog().fail({message: '编辑失败，请稍后重试'})
 			}
 			flag = true;
 		})
@@ -293,9 +289,9 @@ editOrgBtn.on('click', function(e){
 $btnRemove.on('click', function(e){
 	e.preventDefault();
 	if(!getSeletedNode()) return false;
-	var node = getSeletedNode();
-	var id = node.id,
-	    name = node.name;
+	const node = getSeletedNode();
+	const orgId = node.id,
+	      name = node.name;
 	if(isRoot(node)){
 		$.dialog().alert({message: '企业节点不可删除！'});
 		return false;
@@ -306,22 +302,20 @@ $btnRemove.on('click', function(e){
 	}
 	$.dialog().confirm({message: '确定删除<a> '+name+ '</a> ? 此操作不可恢复'})
 	.on('confirm', function(){
-		removeOrganize(id)
-	})
-	.on('cancel', function(){
+		removeOrganize(orgId)
 	})
 })
 //异步删除方法
-function removeOrganize(id){
+function removeOrganize(orgId){
 	$.ajax({
-		type: 'get',
-		url: '/partner/remove_organize?id=' + id,
+		type: 'GET',
+		url: '/partner/remove_organize?id=' + orgId,
 	})
 	.done(function(res){
 		if(res.status == 1){
 			$.dialog().success({message: '删除成功', delay: DELAY_TIME})
 			setTimeout(function(){
-				renderOrganizeTree(organizeTree)
+				renderOrganizeTree()
 			}, DELAY_TIME)
 		}else if(res.status == 2){
 			$.dialog().fail({message: '该部门有下属部门，不可删除'})
@@ -341,8 +335,8 @@ function removeOrganize(id){
 $btnCog.on('click', function(e){
 	e.preventDefault()
 	if(!getSeletedNode()) return false;
- 	var node = getSeletedNode();
-  var orgId = node.id;
+ 	const node = getSeletedNode();
+  const orgId = node.id;
   roleItem.map(function(index, item){
   	$(item).removeClass('checked')
   })
@@ -359,22 +353,21 @@ function getRoleByOrgId(orgId){
 		const roleIdList = orgRoles.map(getRoleId);
 		for(let i = 0; i < roleItem.length; i++){
 			for(let j = 0; j < roleIdList.length; j++){
-				if(roleItem[i].getAttribute('data-id') == roleIdList[j]){
+				if($(roleItem[i]).data('role') == roleIdList[j]){
 					$(roleItem[i]).addClass('checked')
 					break;
 				}
 			}
 		}
 	})
-	.fail(function() {
-		console.log("error");
+	.fail(function(error) {
+		console.log(error);
 	})
 }
 //点击权限查看对应功能
 roleName.on('click', function(e){
 	e.stopPropagation();
-	let roleId = $(this).parent().attr('data-id');
-	getFuncByRole(roleId)
+	getFuncByRole($(this).parent().data('role'))
 })
 
 //获取权限对应的功能点
@@ -393,9 +386,6 @@ function getFuncByRole(roleId){
           enable: true
         }
       },
-		  callback: {
-		    onClick: HandlerClick,
-		  }
 		}
     var zNode = [];
     var treeObj;
@@ -414,7 +404,7 @@ function getFuncByRole(roleId){
   	console.log("error");
   })
 }
-//选择权限(选中显示对号，非选中反之)
+//选择权限
 roleItem.on('click', function(){
 	if($(this).hasClass('checked')){
 		$(this).removeClass('checked').children('.check').hide()
@@ -431,7 +421,7 @@ $('#setRoleBtn').on('click', function(e){
 	const checkedList = roleList.children('.checked');
 	const roleIdList= [];
 	checkedList.each(function(index, roleItem){
-		roleIdList.push(roleItem.getAttribute('data-id'))
+		roleIdList.push($(roleItem).data('role'))
 	})
 	const org_role = {
 		org_id: orgId,
@@ -450,12 +440,10 @@ $('#setRoleBtn').on('click', function(e){
 			}else{
 				$.dialog().fail({message: '设置失败, 请稍后重试'})
 			}
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function(){
 			flag = true;
+		})
+		.fail(function(error) {
+			console.log(error);
 		})
 	}
 })
@@ -463,10 +451,7 @@ $('#setRoleBtn').on('click', function(e){
 $btnFunc.on('click', function(e){
 	e.preventDefault();
 	if(!getSeletedNode()) return false;
- 	const node = getSeletedNode();
-  const orgId = node.id;
-  const name = node.name;
-  getFuncByOrg(orgId);
+  getFuncByOrg(getSeletedNode().id);
 })
 
 //获取部门所拥有的全部功能
@@ -509,8 +494,8 @@ function getFuncByOrg(orgId){
     })
     $.fn.zTree.init(orgFunctionTree, setting, zNode);
 	})
-	.fail(function() {
-		console.log("error");
+	.fail(function(error) {
+		console.log(error);
 	})
 }
 //部门启用
@@ -518,28 +503,19 @@ $btnUnlock.on('click', function(e){
 	e.preventDefault();
 	if(!getSeletedNode()) return false;
  	const node = getSeletedNode();
-  const orgId = node.id;
-  const name = node.name;
-  $.dialog().confirm({message: '确定将<a>'+name+'</a>设置为启用状态?'})
-	.on('confirm', function(){
-		setOrgStatus(orgId, true, $(this))
+  $.dialog().confirm({message: '确定将<a>'+node.name+'</a>设置为启用状态?'})
+	 .on('confirm', function(){
+		 setOrgStatus(node.id, true)
 	})
-	.on('cancel', function(){
-	})
-  console.log(orgId)
 })
 //部门禁用
 $btnBan.on('click', function(e){
 	e.preventDefault();
 	if(!getSeletedNode()) return false;
  	const node = getSeletedNode();
-  const orgId = node.id;
-  const name = node.name;
-  $.dialog().confirm({message: '确定将<a>'+name+'</a>设置为禁用状态?'})
-	.on('confirm', function(){
-		setOrgStatus(orgId, false)
-	})
-	.on('cancel', function(){
+  $.dialog().confirm({message: '确定将<a>'+node.name+'</a>设置为禁用状态?'})
+	 .on('confirm', function(){
+		setOrgStatus(node.id, false)
 	})
 })
 //设置部门状态
@@ -566,15 +542,14 @@ function setOrgStatus(orgId, status){
 			$.dialog().fail({message: '设置失败，请稍后重试'})
 		}
 	})
-	.fail(function() {
-		console.log("error");
+	.fail(function(error) {
+		console.log(error);
 	})
 }
 //注册员工
 $btnUser.on('click', function(e){
 	e.preventDefault()
 	if(!getSeletedNode()) return false;
- 	const node = getSeletedNode();
  	if(departmentId.val() == '') return;
- 	userForm.submit()
+ 	$('#staffForm').submit();
 })

@@ -21,7 +21,7 @@
                 </div>
                 <div id="collapseTree" class="panel-collapse collapse in">
                   <div class="panel-body min-h-450">
-                    <ul id="organizeTree" class="ztree" data-id="<%= user.partner._id%>"></ul>
+                    <ul id="organizeTree" class="ztree" data-partner="<%= user.partner._id%>"></ul>
                   </div>
                 </div>
               </div>
@@ -89,7 +89,7 @@
                           <i class="fa fa-user-plus"></i>
                           <span>注册员工</span>
                         </a> 
-                        <form action="/partner/agent_register" method="get" id="userForm" class="hidden">
+                        <form action="/partner/agent_register" method="get" id="staffForm" class="hidden">
                           <input type="hidden" name="orgId" id="departmentId" value="">
                         </form>
                       </li>
@@ -129,13 +129,13 @@
                 <div class="form-group row">
                   <label class="col-md-3 control-label">部门名称</label>
                   <div class="col-md-6">
-                    <input type="text" name="organize[name]" id="newOrgName" class="form-control" placeholder="部门名称">
+                    <input type="text" id="newOrgName" class="form-control" placeholder="部门名称">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-3 control-label">部门简介</label>
                   <div class="col-md-6">
-                    <textarea name="organize[desc]" id="newOrgDesc" class="form-control" rows="3" placeholder="部门简介"></textarea>
+                    <textarea id="newOrgDesc" class="form-control" rows="3" placeholder="部门简介"></textarea>
                   </div>
                 </div>
               </div>
@@ -159,13 +159,13 @@
                 <div class="form-group row">
                   <label for="organizeName" class="col-md-3 control-label organize-name">部门名称</label>
                   <div class="col-md-6">
-                    <input type="text" name="organize[name]" id="editOrgName" class="form-control">
+                    <input type="text" id="editOrgName" class="form-control">
                   </div>
                 </div>
-                <div class="form-group row organize-desc">
+                <div class="form-group row organize-note">
                   <label for="editOrgDesc" class="col-md-3 control-label">部门简介</label>
                   <div class="col-md-6">
-                    <textarea name="organize[desc]" id="editOrgDesc" class="form-control" rows="3" placeholder="部门简介"></textarea>
+                    <textarea id="editOrgDesc" class="form-control" rows="3" placeholder="部门简介"></textarea>
                   </div>
                 </div>
               </div>
@@ -195,7 +195,7 @@
                     权限列表
                     </li>
                     <% roles.forEach(function(role){%>
-                    <li class="list-group-item" data-id="<%= role._id%>">
+                    <li class="list-group-item" data-role="<%= role._id%>">
                       <a href="javascript:;" class="check"><i class="fa fa-check pull-right"></i></a>
                       <a href="javascript:;" class="role"><%= role.name%></a>
                     </li>
@@ -223,7 +223,7 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title">查看功能</h4>
             </div>
-            <div class="modal-body modal-control">
+            <div class="modal-body min-h-300">
               <ul id="orgFunctionTree" class="ztree"></ul>
             </div>
             <div class="modal-footer">
@@ -235,7 +235,7 @@
       </div>
     </div>
     <%- include('../script')%>
-    <script src="/plugins/zTree/js/jquery.zTree.all.min.js"></script>
+    <script src="/plugins/zTree/js/jquery.ztree.all.min.js"></script>
     <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
     <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
     <script src="/js/organize.js"></script>

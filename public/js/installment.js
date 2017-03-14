@@ -100,22 +100,29 @@ const drawCode = function() {
   cxt.fillStyle = '#444';
   cxt.fillText(createCode(), 8, 24)
 }
-//判断是否上传文件
-const hasFile = function(fileControl){
-  fileControl = fileControl instanceof jQuery ? fileControl[0] : fileControl;
-  return fileControl.files && fileControl.files[0];
-}
-//上传图片预览
 const uploadPreview = function(fileControl, $image){
-  if(!hasFile(fileControl)) return;
-  const reader = new FileReader();
-  reader.onload = function(e){
-    $image.attr('src', e.target.result)
+  fileControl = fileControl instanceof jQuery ? fileControl[0] : fileControl;
+  if(fileControl.files && fileControl.files[0]){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      $image.attr('src', e.target.result)
+    }
+    reader.readAsDataURL(fileControl.files[0])
+  }else{
+    return false;
   }
-  reader.readAsDataURL(fileControl.files[0])
 }
-$('#merchantDataTable').length === 1 && $('#merchantDataTable').dataTable();
-$('#accountDataTable').length === 1 && $('#accountDataTable').dataTable();
+const clearFile = function($fileControl){
+  const fileParent = $fileControl.parent();
+  fileParent.append('<form></form>');
+  const fileForm = fileParent.children('form');
+  fileForm.append($fileControl)
+  fileForm[0].reset()
+  fileParent.prepend($fileControl)
+  fileForm.remove()
+  return true;
+}
+$('#dataTable').length === 1 && $('#dataTable').dataTable();
 $('.btn-status').on('click', function(e){
   if($(this).hasClass('on')){
     $(this).removeClass('on').find('.fa').removeClass('fa-toggle-on').addClass('fa-toggle-off');
@@ -123,11 +130,16 @@ $('.btn-status').on('click', function(e){
     $(this).addClass('on').find('.fa').removeClass('fa-toggle-off').addClass('fa-toggle-on');
   }
 })
-$('.preview-area').on('click', function(e){
-   $(this).parents('.form-group').find('.file-control').click()
+$('.img-preview').on('click', function(e){
+   $(this).prev().click()
 })
 $('.file-control').change(function(e){
-  const imgPreview = $(this).parents('.form-group').find('.img-preview');
-  uploadPreview(this, imgPreview)
+  const imgPreview = $(this).next();
+  uploadPreview(this, imgPreview);
   imgPreview.parent().addClass('show');
+})
+$('.img-remove').on('click', function(e){
+  e.stopPropagation()
+  clearFile($(this).parent().children('.file-control'))
+  $(this).prev().attr('src', '/img/upload.png').parent().removeClass('show');
 })

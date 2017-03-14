@@ -72,11 +72,17 @@
 .no-padding {
   padding: 0;
 }
+.w-120 {
+  width: 120px;
+}
 .w-150 {
   width: 150px;
 }
 .w-170 {
   width: 170px;
+}
+.w-200 {
+  width: 200px;
 }
 .w-245 {
   width: 245px;
@@ -829,14 +835,14 @@ dl.horizontal dd {
 .preview-area {
   position: relative;
   margin: 7px 0 20px 0;
-  cursor: pointer;
 }
 .img-preview {
-  padding: 4px;
+  padding: 2px;
   line-height: 1.42857143;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
+  cursor: pointer;
 }
 .preview-area .img-remove {
   display: none;
