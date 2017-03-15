@@ -141,8 +141,8 @@ function renderOrganizeTree(){
         name: organize.name,
         note: organize.note,
         status: organize.status,
-        open: true,
         iconSkin: iconSkin,
+        open: true,
       };
       zNode.push(treeObj)
     })

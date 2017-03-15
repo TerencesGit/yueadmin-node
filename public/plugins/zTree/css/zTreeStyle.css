@@ -106,19 +106,19 @@ ul.ztree.zTreeDragUL {margin:0; padding:0; position:absolute; width:auto; height
   vertical-align: top;
   background: url(./img/diy/1_close.png) no-repeat scroll 0 0 transparent; 
 }
-.ztree li span.button.folder_ico_close{
- 	margin-right: 2px;
-  background-position: -110px 0;
+.ztree li span.button.root_ico_docu{
+  margin-right: 2px; 
   vertical-align: top;
-}
-.ztree li span.button.folder_ico_close{
- 	margin-right: 2px;
-  background-position: -110px 0;
-  vertical-align: top;
+  background: url(./img/diy/1_close.png) no-repeat scroll 0 0 transparent; 
 }
 .ztree li span.button.folder_ico_open{
 	margin-right: 2px;
   background-position: -110px -16px;
+  vertical-align: top;
+}
+.ztree li span.button.folder_ico_close{
+  margin-right: 2px;
+  background-position: -110px 0;
   vertical-align: top;
 }   
 .ztree li span.button.folder_ico_docu{   

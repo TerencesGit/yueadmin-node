@@ -6,13 +6,13 @@
   <body>
     <%- include('../aside') %>
     <%- include('../header') %>
-    <div id="main" class="main" data-page="jurisdiction_manage">
+    <div id="main" class="main" data-page="partner_manage">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
-          <div class="panel panel-secondary">
+        <div class="panel panel-secondary">
           <div class="panel-heading">
               <h3 class="panel-title">
-               <i class="fa fa-home"></i>企业信息
+               <i class="fa fa-home fa-lg"></i><%=title%>
                <a href="javascript:history.go(-1)" class="pull-right">返回</a>
               </h3>
           </div>
@@ -70,16 +70,16 @@
               </dl>
               <dl class="dl-horizontal">
                 <dt>企业LOGO：</dt>
-                <dd><img src="/upload/logo/<%= partner.logo%>" id="logoPic" class="part_logo" width="200" height="200" title="企业LOGO" alt="企业LOGO上传"></dd>
+                <dd><img src="/upload/logo/<%= partner.logo%>" width="150" height="150" title="企业LOGO" alt="企业LOGO"></dd>
               </dl>
               <dl class="dl-horizontal">
                 <dt>营业执照：</dt>
-                <dd><img src="/upload/license/<%= partner.license%>" id="licensePic" class="part_license" width="550" height="350" title="营业执照" alt="营业执照上传"></dd>
+                <dd><img src="/upload/license/<%= partner.license%>" width="600" height="350" title="营业执照" alt="营业执照"></dd>
               </dl>
             </div>
           </div>
         </div>
-          <div class="warp-footer"></div>
+        <div class="warp-footer"></div>
         </div>
       </div>
     	<%- include('../footer') %>

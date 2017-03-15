@@ -276,6 +276,7 @@ const validateCode = function($element, msg, focus) {
 }
 //判断是否上传文件
 const hasFile = function(fileControl){
+  console.log(fileControl)
   fileControl = fileControl instanceof jQuery ? fileControl[0] : fileControl;
   return fileControl.files && fileControl.files[0];
 }

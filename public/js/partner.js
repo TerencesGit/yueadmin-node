@@ -70,8 +70,8 @@ btnRegistered.on('click', function(e){
 	e.preventDefault()
 	checkInput(partnerName) &&
 	checkPartnerForm() &&
-	checkImage(logoFile) &&
-	checkImage(licenseFile) &&
+	// checkImage(logoFile) &&
+	// checkImage(licenseFile) &&
 	registeredForm.submit()
 })		
 
@@ -91,7 +91,6 @@ previewArea.on('click', function(e){
   $(this).parents('.form-group').find('.file-control').click();
 })
 //图片预览
-let imgPath = 
 fileControl.change(function(e){
   const picPreview = $(this).parents('.form-group').find('.img-preview');
   checkImageRegular(this)

@@ -1,6 +1,6 @@
   <header id="header" class="header">
     <div class="container-fluid">
-      <div class="navbar-header">
+      <div class="pull-left">
         <a href="javascript:;" id="btnToggle" class="btn-toggle">
           <i class="fa fa-bars"></i>
         </a>
@@ -13,41 +13,39 @@
             </ul>
         </div>
       </div>
-      <ul class="navbar-nav pull-right"> 
-        <li class="dropdown personal-center">
-            <a href="javascript:;" class="dropdown-toggle" id="personMenu" data-toggle="dropdown" title="<%= user.name %>">
+      <ul class="pull-right"> 
+        <li class="dropdown user-center">
+            <a href="javascript:;" class="dropdown-toggle" id="userLink" data-toggle="dropdown" title="<%= user.name %>">
               <img src="<%if(user.avatar){%>/upload/avatar/<%=user.avatar%><%}else{%>/img/avatar.gif<%}%>" alt="头像">
-              <span class="username"><%= user.name %></span>
+              <span class="username"><%=user.name%></span>
               <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="personMenu">
+            <ul class="dropdown-menu user-link" role="menu" aria-labelledby="userLink">
+                <li class="menu-caret"><i class="fa fa-caret-up fa-2x"></i></li>
                 <%if(user && user.role > 20){%>
-                <li role="presentation">
-                    <a href="/user/list" role="menuitem" tabindex="-1">用户列表</a>
+                <li>
+                    <a href="/user/list" role="menuitem" tabindex="-1"><i class="fa fa-user"></i>用户列表</a>
                 </li>
-                <li role="presentation" class="divider"></li>
                 <% } %>
-                <li role="presentation">
+                <!-- <li>
                     <a href="/message" role="menuitem" tabindex="-1">发表留言</a>
+                </li> -->
+                <li>
+                    <a href="/account" role="menuitem" tabindex="-1"><i class="fa fa-user"></i>个人首页</a>
                 </li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation">
-                    <a href="/account" role="menuitem" tabindex="-1">个人首页</a>
+                <li>
+                    <a href="/transaction/home" role="menuitem" tabindex="-1"><i class="fa fa-money"></i>交易平台</a>
                 </li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation">
-                    <a href="/transaction/home" role="menuitem" tabindex="-1">交易平台</a>
-                </li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation">
+                <li>
                     <a href="/admin/merchant_manage" role="menuitem" tabindex="-1">分期贷平台</a>
                 </li>
-                <li role="presentation">
+                <li>
                     <a href="/user/installment_manage" role="menuitem" tabindex="-1">分期贷-商家</a>
                 </li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation">
-                    <a href="/logout" role="menuitem" tabindex="-1">退出</a>
+                <li>
+                    <a href="/logout" role="menuitem" tabindex="-1">
+                      <i class="fa fa-sign-out"></i>退出
+                    </a>
                 </li>
             </ul>
         </li>

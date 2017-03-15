@@ -27,7 +27,7 @@ function getANotB(a, b){
  return arr;
 }
 //商家列表 条件查询加分页
-exports.managePartner = function(req, res){
+exports.partnerExamine = function(req, res){
 	var search = req.query.search || {};
 	switch(search){
 		case '0':
@@ -50,7 +50,7 @@ exports.managePartner = function(req, res){
 	if(req.query.page){
 		pageIndex = req.query.page < 1 ? 1 : req.query.page;
 	}
-	var pageSize = 5;
+	var pageSize = 10;
 	var skipFrom = (pageIndex * pageSize) - pageSize;
 	Partner.find(search)
 				 .sort('-meta.updateAt')
@@ -66,7 +66,7 @@ exports.managePartner = function(req, res){
 				 				console.log(err)
 				 			}else{
 				 				var pageCount = Math.ceil(count / pageSize)
-				 				res.render('admin/partner_manage', {
+				 				res.render('admin/partner_examine', {
 									title: '商家审核',
 									partners: partners,
 									pageCount: pageCount,
@@ -79,15 +79,15 @@ exports.managePartner = function(req, res){
 				 })
 }
 //商家审核
-exports.verifiedPartner = function(req, res){
-	var id = req.query.id;
+exports.examiningPartner = function(req, res){
+	const id = req.query.partner_id;
 	Partner.findOne({_id: id}, function(err, partner){
 		if(err) console.log(err);
-		res.render('admin/verified_partner',{title: '商家审核', partner: partner})
+		res.render('admin/examining_partner',{title: '商家审核', partner: partner})
 	})
 }
 //商家信息审核通过
-exports.verifiedPass = function(req, res){
+exports.partnerExamThrough = function(req, res){
 	var id = req.query.id;
 	var _organize = {};
 	if(id){
@@ -102,7 +102,7 @@ exports.verifiedPass = function(req, res){
 					console.log(err)
 				}else{
 					Partner.update({_id: id}, {$set: {is_verified: 1}}, function(err, msg){
-						res.redirect('/admin/manage_partner')
+						res.redirect('/admin/partner_examine')
 					})
 				}
 			})
@@ -112,20 +112,123 @@ exports.verifiedPass = function(req, res){
 	}
 }
 //商家信息审核不通过 
-exports.verifiedNoPass = function(req, res){
+exports.partnerExamReject = function(req, res){
 	var partner = req.body.partner;
 	var id = partner.id,
 	    info = Trim(partner.reject_info);
 	if(partner){
 		Partner.update({_id: id}, {$set: {is_verified: 2, reject_info: info}}, function(err, msg){
 			if(err) console.log(err)
-			res.redirect('/admin/partner_manage')
+			res.redirect('/admin/partner_examine')
 		})
 	}else{
 		res.redirect('/')
 	}    
 }
 
+//商家管理
+exports.partnerManage = function(req, res){
+	Partner.find({})
+				 .sort('-meta.createAt')
+				 .populate('admin', 'name')
+				 .exec(function(err, partners){
+				 	if(err) console.log(err)
+					Role.fetch(function(err, roles){
+						if(err) console.log(err)
+						res.render('admin/partner_manage',{
+							title: '商家管理', 
+							partners: partners,
+							roles: roles
+						})
+					})
+				 })
+}
+//企业信息查看
+exports.showPartnerInfo = function(req, res){
+	const partnerId = req.query.id;
+	if(partnerId){
+		Partner.findById(partnerId, function(err, partner){
+			res.render('admin/show_partner_info', {title: '企业信息查看', partner: partner})
+		})
+	}
+}
+//企业管理员信息查看
+exports.showAdminInfo = function(req, res){
+	const id = req.query.id;
+	User.findOne({_id: id})
+			.populate('partner', 'name')
+			.populate('organize', 'name')
+			.exec(function(err, admin){
+				res.render('admin/show_admin_info', {title: '管理员信息', account: admin})
+			})
+}
+//设置企业权限
+exports.setPartnerRole = function(req, res){
+	const partRole = req.body.part_role;
+	//企业Id
+	const partId = partRole.part_id;
+	//权限列表
+	const roleList = partRole.role_list;
+	const partRoleObj = {
+		partner: partId,
+	};
+	var _partRole;
+	PartRole.find({partner: partId}, function(err, partRoles){
+		//获取原有权限列表
+		const getRoleId = partRole => partRole.role;
+		const originalRoleList = partRoles.map(getRoleId);
+		//获取新增权限列表
+		const newRoleList = getANotB(roleList, originalRoleList);
+		//保存新增权限列表
+		if(newRoleList.length !== 0){
+			newRoleList.forEach(function(role){
+				partRoleObj.role = role;
+				console.log(partRoleObj)
+				_partRole = new PartRole(partRoleObj);
+				_partRole.save(function(err, partrole){
+					if(err) console.log(err)
+				})
+			})
+		}
+		//获取被移除权限列表
+		const removeRoleList = getANotB(originalRoleList, roleList);
+		//删除被移除的权限列表
+		if(removeRoleList.length !== 0){
+			removeRoleList.forEach(function(role){
+				PartRole.remove({partner: partId, role: role}, function(err, msg){
+					if(err) console.log(err)
+				})
+			})
+		}
+		res.json({status: 1})
+	})
+}
+//获取企业权限列表
+exports.getRoleByPartner = function(req, res){
+	const partId = req.query.id;
+	PartRole.find({partner: partId}, function(err, partRoles){
+		if(err){
+			console.log(err)
+		}else{
+			res.json({partRoles: partRoles})
+		}
+	})
+}
+//设置企业状态
+exports.setPartnerStatus = function(req, res){
+	var pid = req.query.pid;
+	var stid = req.query.stid;
+	console.log(pid)
+	console.log(stid)
+	if(pid){
+		Partner.update({_id: pid}, {$set: {status: stid}}, function(err, msg){
+			if(err) console.log(err)
+				res.json({status: 1})
+		})
+	}else{ 
+		res.json({status: 0})
+	}
+}
 //合同模板管理
 exports.contractTemplateManage = function(req, res){
 	Template.find({})
@@ -315,92 +418,4 @@ exports.removeContract = function(req, res){
 	 			res.redirect('/admin/contract_manage');
  	 	})
 	 }
-}
-//权限管理
-exports.jurisdictionManage = function(req, res){
-	Partner.fetch(function(err, partners){
-		if(err) console.log(err)
-		Role.fetch(function(err, roles){
-			if(err) console.log(err)
-			res.render('admin/jurisdiction_manage',{
-				title: '权限管理', 
-				partners: partners,
-				roles: roles
-			})
-		})
-	})
-}
-//企业详情
-exports.showPartnerInfo = function(req, res){
-	var id = req.query.id;
-	Partner.findById(id, function(err, partner){
-		res.render('admin/partner_info', {title: '企业信息', partner: partner})
-	})
-}
-//设置企业权限
-exports.setPartnerRole = function(req, res){
-	const partRole = req.body.part_role;
-	//企业Id
-	const partId = partRole.part_id;
-	//权限列表
-	const roleList = partRole.role_list;
-	const partRoleObj = {
-		partner: partId,
-	};
-	var _partRole;
-	PartRole.find({partner: partId}, function(err, partRoles){
-		//获取原有权限列表
-		const getRoleId = partRole => partRole.role;
-		const originalRoleList = partRoles.map(getRoleId);
-		//获取新增权限列表
-		const newRoleList = getANotB(roleList, originalRoleList);
-		//保存新增权限列表
-		if(newRoleList.length !== 0){
-			newRoleList.forEach(function(role){
-				partRoleObj.role = role;
-				console.log(partRoleObj)
-				_partRole = new PartRole(partRoleObj);
-				_partRole.save(function(err, partrole){
-					if(err) console.log(err)
-				})
-			})
-		}
-		//获取被移除权限列表
-		const removeRoleList = getANotB(originalRoleList, roleList);
-		//删除被移除的权限列表
-		if(removeRoleList.length !== 0){
-			removeRoleList.forEach(function(role){
-				PartRole.remove({partner: partId, role: role}, function(err, msg){
-					if(err) console.log(err)
-				})
-			})
-		}
-		res.json({status: 1})
-	})
-}
-//获取企业权限列表
-exports.getRoleByPartner = function(req, res){
-	const partId = req.query.id;
-	PartRole.find({partner: partId}, function(err, partRoles){
-		if(err){
-			console.log(err)
-		}else{
-			res.json({partRoles: partRoles})
-		}
-	})
-}
-//设置企业状态
-exports.setPartnerStatus = function(req, res){
-	var pid = req.query.pid;
-	var stid = req.query.stid;
-	console.log(pid)
-	console.log(stid)
-	if(pid){
-		Partner.update({_id: pid}, {$set: {status: stid}}, function(err, msg){
-			if(err) console.log(err)
-				res.json({status: 1})
-		})
-	}else{ 
-		res.json({status: 0})
-	}
 }

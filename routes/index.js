@@ -119,10 +119,18 @@ router.get('/partner/remove_title', Partner.removeTitle)
 /* 管理员操作 */
 
 //企业审核
-router.get('/admin/partner_manage', Admin.managePartner);
-router.get('/admin/verify_partner', Admin.verifiedPartner);
-router.get('/admin/verify_partner_pass', Admin.verifiedPass);
-router.post('/admin/verify_partner_nopass', Admin.verifiedNoPass);
+router.get('/admin/partner_examine', Admin.partnerExamine);
+router.get('/admin/examining_partner', Admin.examiningPartner);
+router.get('/admin/partner_examine_through', Admin.partnerExamThrough);
+router.post('/admin/partner_examine_reject', Admin.partnerExamReject);
+
+//商家管理
+router.get('/admin/partner_manage', Admin.partnerManage);
+router.get('/admin/show_partner_info', Admin.showPartnerInfo);
+router.get('/admin/show_admin_info', Admin.showAdminInfo);
+router.post('/admin/set_partner_role', Admin.setPartnerRole);
+router.get('/admin/get_role_by_partner', Admin.getRoleByPartner);
+router.get('/admin/set_partner_status', Admin.setPartnerStatus);
 
 //合同模板管理
 router.get('/admin/contract_template_manage', Admin.contractTemplateManage);
@@ -138,13 +146,6 @@ router.get('/admin/new_contract', Admin.newContract)
 router.post('/admin/save_contract', multipartMiddleware, Admin.attachUpload1, Admin.saveContract)
 router.get('/admin/edit_contract', Admin.editContract)
 router.get('/admin/remove_contract', Admin.removeContract)
-
-//权限管理
-router.get('/admin/jurisdiction_manage', Admin.jurisdictionManage);
-router.get('/admin/show_partner_info', Admin.showPartnerInfo);
-router.post('/admin/set_partner_role', Admin.setPartnerRole);
-router.get('/admin/get_role_by_partner', Admin.getRoleByPartner);
-router.get('/admin/set_partner_status', Admin.setPartnerStatus);
 
 /* 系统管理 */
 
