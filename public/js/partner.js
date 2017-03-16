@@ -25,7 +25,6 @@ const regular = {
 		  address: /[\u4e00-\u9fa5]/,
 		  post: /[1-9]\d{5}(?!\d)/,
 		  licenseId: /\d{15}/,
-		  password: /^.{8,20}$/,
 }
 //错误信息提示			
 const msg = {
@@ -55,15 +54,6 @@ const msg = {
 			regular: '邮箱格式不正确',
 			existed: '该邮箱号已被占用'
 		},
-		password: {
-      tip: '密码长度为8-20位',
-      required: '请输入密码',
-      regular: '密码长度为8-20位',
-    },
-    confirmPasswd: {
-    	tip: '请再次输入密码',
-    	inconsistent: '两次密码输入不一致'
-    }
 }
 //企业注册提交		
 btnRegistered.on('click', function(e){
@@ -111,54 +101,6 @@ savePratnerBtn.on('click', function(e){
 	e.preventDefault();
   checkPartnerForm() && partnerForm.submit()
 })   
-
-//用户代注册表单
-const agentRegForm = $('#agentRegForm'),
-      userName = $('#userName'),
-      userEmail = $('#userEmail'),
-      userPasswd = $('#userPasswd'),
-      confirmPasswd = $('#confirmPasswd'),
-      agentRegBtn = $('#agentRegBtn');
-agentRegBtn.on('click', function(e){
-  e.preventDefault();
-  var status = $(this).attr('data-status');
-  if(status == 0) return;
-  checkRegForm() && agentRegForm.submit()
-})
-//输入框焦点事件
-focusEvent(userName, msg.name, regular.name, validateForm);
-focusEvent(userPasswd, msg.password, regular.password, validateForm);
-focusEvent(confirmPasswd, msg.confirmPasswd, regular.password, checkConsistency, userPasswd);
-userEmail.focus(function(){
-	if($.trim($(this).val()) == ''){
-    onFocus($(this), msg.email)
-  }
-})
-let _tempEmail;
-userEmail.blur(function(){
-	const value = $.trim($(this).val());
-	if(value == ''){
-		clearTip($(this));
-		return;
-	}
-	if(_tempEmail == value) return;
-	_tempEmail = value;
-	validateForm(userEmail, msg.email, regular.email) &&
-	queryEmail(userEmail, msg.email, agentRegBtn, 'null')
-})
-if(userEmail.length === 1){
-	userEmail[0].oninput = function(){
-	  onFocus($(this), msg.email)
-	}
-}
-
-//用户代注册表单校验
-function checkRegForm(){
-	return validateForm(userName, msg.name, regular.name) &&
-  validateForm(userEmail, msg.email, regular.email) &&
-  validateForm(userPasswd, msg.password, regular.password) &&
-  checkConsistency(confirmPasswd, userPasswd, msg.confirmPasswd)
-}
 
 //商家信息审核表单
 var verifiedPartnerForm = $('#verifiedPartnerForm'),

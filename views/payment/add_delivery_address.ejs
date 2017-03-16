@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./link') %>
+   <style>
+  .panel-body{
+  padding: 20px 30px;
+}
+.bank-head{
+  height: 36px;
+  border: 1px solid #c9d5e2;
+  line-height: 36px;
+  background: #e5f5ff;
+  padding: 0 20px;
+}
+.bank-head i{
+  font-size: 20px;
+  color: #0483cf;
+  margin-right: 8px;
+}
+.form-horizontal{
+  padding-top: 30px;
+}
+  </style>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="bank_card_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+        <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">添加收货地址<a class="pull-right" href="javascript:history.go(-1)">返回</a></h3>
+        </div>
+        <div class="panel-body">
+            <div class="bank-head">
+              <p><i class="fa">&#xf06a;</i>最多添加<span>5</span>个收货地址，你还可以添加<span>5</span>个收货地址</p>
+            </div>
+            <form action="" method="post" id="adressForm" class="form-horizontal" role="form">
+              <div class="form-group">
+                <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>收货人姓名</label>
+                <div class="col-md-3">
+                  <input type="text" name="" id="realName" class="form-control" placeholder="请输入姓名">
+                  <i class="fa fa-check-circle"></i>
+              </div>
+              <div class="col-md-3 input-tip alert"></div>
+              </div>
+              <div class="form-group">
+                <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>收货地址</label>
+                <div class="col-md-3">
+                  <input name="" id="start1" autocomplete="off" type="text" placeholder = "请选择/输入城市名称" class="form-control city_input  inputFocus proCityQueryAll proCitySelAll" ov="请选择/输入城市名称">
+                  <i class="fa fa-check-circle"></i>
+                </div>
+                <div class="col-md-3 input-tip alert"></div>
+              </div>
+              <div class="form-group">
+                <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>详细地址</label>
+                <div class="col-md-3">
+                  <textarea name="" class="form-control" id="detailAdress" rows="3">
+                  </textarea>
+                <i class="fa fa-check-circle"></i>
+              </div>
+              <div class="col-md-3 input-tip alert"></div>
+              </div>
+              <div class="form-group">
+                <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>邮政编码</label>
+                <div class="col-md-3">
+                  <input type="text" name="" id="postCode" class="form-control" placeholder="请输入邮政编码">
+                  <i class="fa fa-check-circle"></i>
+                </div>
+                <div class="col-md-3 input-tip alert"></div>
+              </div>  
+              <div class="form-group">
+                <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>联系方式</label>
+                <div class="col-md-3">
+                  <input type="text" name="" id="mobile" class="form-control" placeholder="请输入手机号码或者固定电话号码">
+                  <i class="fa fa-check-circle"></i>
+                </div>
+                <div class="col-md-3 input-tip alert"></div>
+              </div>               
+              <div class="form-group submit">
+                <div class="col-md-offset-4 col-md-1">
+                  <button type="submit" id="addressSubmit" class="btn btn-warning btn-block">保存</button>
+                </div> 
+              </div>          
+            </form> 
+        </div>
+      </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+  </body>
+</html>

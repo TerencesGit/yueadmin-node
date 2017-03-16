@@ -24,23 +24,23 @@
                 <li class="menu-caret"><i class="fa fa-caret-up fa-2x"></i></li>
                 <%if(user && user.role > 20){%>
                 <li>
-                    <a href="/user/list" role="menuitem" tabindex="-1"><i class="fa fa-user"></i>用户列表</a>
+                    <a href="/user/list" role="menuitem" tabindex="-1"><i class="fa fa-user"></i>用户管理</a>
                 </li>
                 <% } %>
-                <!-- <li>
-                    <a href="/message" role="menuitem" tabindex="-1">发表留言</a>
-                </li> -->
                 <li>
-                    <a href="/account" role="menuitem" tabindex="-1"><i class="fa fa-user"></i>个人首页</a>
+                    <a href="/account" role="menuitem" tabindex="-1"><i class="fa fa-user"></i>账户首页</a>
                 </li>
                 <li>
-                    <a href="/transaction/home" role="menuitem" tabindex="-1"><i class="fa fa-money"></i>交易平台</a>
+                    <a href="/payment/home" role="menuitem" tabindex="-1"><i class="fa fa-money"></i>支付平台</a>
+                </li>
+                 <li>
+                    <a href="/transaction/home" role="menuitem" tabindex="-1"><i class="fa fa-gg-circle"></i>交易平台</a>
                 </li>
                 <li>
-                    <a href="/admin/merchant_manage" role="menuitem" tabindex="-1">分期贷平台</a>
+                    <a href="/admin/merchant_manage" role="menuitem" tabindex="-1"><i class="fa fa-desktop"></i>分期贷-平台</a>
                 </li>
                 <li>
-                    <a href="/user/installment_manage" role="menuitem" tabindex="-1">分期贷-商家</a>
+                    <a href="/user/installment_manage" role="menuitem" tabindex="-1"><i class="fa fa-user-secret"></i>分期贷-商家</a>
                 </li>
                 <li>
                     <a href="/logout" role="menuitem" tabindex="-1">

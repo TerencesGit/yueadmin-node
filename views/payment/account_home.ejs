@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./link') %>
+    <style type="text/css">
+    .account-content{
+      padding: 20px 30px;
+    }
+    .accountc-td{
+      text-align: right;
+    }
+    .table>tbody>tr>td{
+      padding: 36px 0;
+    }
+    .table>tbody>tr>td>span{
+      color: #a59ca2;
+    }
+    .accountc-portrait,.portrait{
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      text-align: center;
+    } 
+    .accountc-a{
+      margin: 0 8px;
+    }
+    .accountc-span{
+      color: #0c3;
+    }
+    .fa-lock{
+      color: #0483cf;
+      margin-left: 8px;
+      font-size: 18px;
+    } 
+    .accountc-td a{
+      padding: 0 5px;
+    }
+    </style>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="account_info">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">基本信息</h3>
+            </div>
+            <div class="panel-body account-content">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="accountc-portrait">
+                    <img src="https://tfs.alipayobjects.com/images/partner/T1PzBeXoFlXXXXXXXX" class="portrait" title="头像" alt="头像">
+                  </div> 
+                </div>
+                <div class="col-md-10">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="col-md-4"></th>
+                        <th class="col-md-6"></th>
+                        <th class="col-md-2"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>真实姓名</td>
+                        <td><span>林青霞 | 已认证</span></td>
+                        <td class="accountc-td"><a href="payment_id_check.html">查看</a></td>
+                      </tr>
+                      <tr>
+                        <td>邮箱</td>
+                        <td><span>1234562@163.com</span></td>
+                        <td class="accountc-td"><a href="payment_bind_emil.html">修改</a></td>
+                      </tr>
+                      <tr>
+                        <td>手机</td>
+                        <td><span>183****1234</span></td>
+                        <td class="accountc-td"><a href="payment_modify_phone.html">修改</a></td>
+                      </tr>
+                      <tr>
+                        <td>支付密码<i class="fa fa-lock"></i></td>
+                        <td><span>在账户资金变动，修改账户信息时需要输入的密码</span></td>
+                        <td class="accountc-td"><a href="payment_reset_pwd.html">重置</a></td>
+                      </tr>
+                      <tr>
+                        <td>注册时间</td>
+                        <td><span>2017年03月11日</span></td>
+                        <td class="accountc-td"><a href="payment_id_check.html">查看账户</a></td>
+                      </tr>
+                      <tr>
+                        <td>银行卡管理</td>
+                        <td><span>未绑定银行卡</span></td>
+                        <td class="accountc-td"><a class="accountc-a" href="payment_bank_card.html">添加</a><!-- |<a  class="accountc-a" href="">管理</a> --></td>
+                      </tr>
+                      <tr>
+                        <td>收货地址</td>
+                        <td><span>已添加 <span class="accountc-span">1</span> 个地址，最多可添加<span class="accountc-span">5</span>个地址</span></td>
+                        <td class="accountc-td"><a href="payment_receive_address.html">添加</a>|<a href="payment_address_manage.html">管理</a></td>
+                      </tr>
+                    </tbody>
+                  </table>            
+                </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+  </body>
+</html>

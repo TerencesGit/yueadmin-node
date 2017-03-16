@@ -1,13 +1,13 @@
-var User = require('../models/user');
-var Partner = require('../models/partner');
-var Organize = require('../models/organize');
-var Template = require('../models/contract_template');
-var Contract = require('../models/contract');
-var Role = require('../models/role');
-var PartRole = require('../models/part_role');
-var fs = require('fs');
-var path = require('path');
-var _ = require('lodash');
+const User = require('../models/user');
+const Partner = require('../models/partner');
+const Organize = require('../models/organize');
+const Template = require('../models/contract_template');
+const Contract = require('../models/contract');
+const Role = require('../models/role');
+const PartRole = require('../models/part_role');
+const fs = require('fs');
+const path = require('path');
+const _ = require('lodash');
 //去除前后空格
 function Trim(str){ 
   return str.replace(/(^\s*)|(\s*$)/g, ''); 

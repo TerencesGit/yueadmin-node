@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./link') %>
+   <style>
+  .panel-body{
+    padding: 20px 30px;
+  }
+  .bank-head{
+    height: 36px;
+    border: 1px solid #c9d5e2;
+    line-height: 36px;
+    background: #e5f5ff;
+    padding: 0 20px;
+  }
+  .bank-head i{
+    font-size: 20px;
+    color: #0483cf;
+    margin-right: 8px;
+  }
+  .form-horizontal{
+    padding-top: 30px;
+  }
+  .address-add {
+    margin-top: 20px;
+    border: 1px solid #e2e8ed;
+  }
+  .address-add-list {
+    padding: 16px 20px;
+    border-bottom: 1px dashed #e2e8ed;
+    height: auto;
+    background: url(public/img/address.png) no-repeat 20px 20px;
+    zoom: 1;
+  }
+  .address-add-list-det {
+    padding-left: 35px;
+    width: 650px;
+    float: left;
+  }
+  .name {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    padding-bottom: 4px;
+    color: #4d4d4d;
+  }
+  .mobile {
+    font-weight: 400;
+    padding-left: 10px;
+  }
+  .det {
+    color: #4d4d4d;
+  }
+  .fn-hide {
+    display: none;
+  }
+  .address-add-list-action{
+    line-height: 35px;
+    width: 85px;
+    float: right;
+    text-align: right;
+  }
+  .fn-clear:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+  .address-add-list-action a{
+    color: #08c;
+    cursor: pointer;
+  }
+  .ui-separator {
+    padding: 0 5px;
+    color: #ccc;
+  }
+  .address-add-link {
+    text-align: center;
+    line-height: 50px;
+  }
+  .address-add-form{
+    padding: 10px 0 20px;
+    border-bottom: 1px dashed #e2e8ed;
+    height: auto;
+  }
+  .address-add-form1{
+    padding: 10px 0 20px;
+    border-bottom: 1px dashed #e2e8ed;
+    height: auto;
+  }
+  .form-hide{
+    display: none;
+  }
+  </style>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="bank_card_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">收货地址管理<a class="return" href="javascript:history.go(-1)">返回</a></h3>
+        </div>
+        <div class="panel-body">
+          <div class="bank-head">
+            <p><i class="fa">&#xf06a;</i>最多添加<span>5</span>个收货地址，你还可以添加<span>1</span>个收货地址</p>
+          </div>
+          <div class="address-add">
+            <div class="address-add-list  fn-clear">
+              <div class="address-add-list-det">
+                <p class="tit">
+                  <span class="name" data-name="林青霞" title="林青霞">林青霞</span>
+                  <span class="mobile" data-mobile=""  data-phone="">(   183****1234  )</span>
+                </p>
+                <p class="det">
+                  北京 北京市 丰台区
+                  <span class="street" data-street="西城区">西城区</span>
+                  ( <span class="code" data-code="100071">100071</span> )</p>
+              </div>
+              <div class="address-add-list-action">
+                <p><a data-edit="253503271" id="address-edit" class="account-address-edit" title="修改">修改</a><span class="ui-separator">|</span><a href="javascript:;" data-del="253503271" class="account-address-del" title="删除">删除</a></p>
+              </div>
+            </div>
+            <!-- 表单开始部分 -->
+            <div class="address-add-form fn-hide">
+               <form action="" method="post" id="" class="form-horizontal" role="form">
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>收货人姓名</label>
+                  <div class="col-md-4">
+                    <input type="text" name="" id="" class="form-control" placeholder="请输入姓名">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>收货地址</label>
+                  <div class="col-md-4">
+                    <input name="" id="start1" autocomplete="off" type="text" placeholder = "请选择/输入城市名称" class="form-control city_input  inputFocus proCityQueryAll proCitySelAll" ov="请选择/输入城市名称">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>详细地址</label>
+                  <div class="col-md-4">
+                    <textarea name="" class="form-control" rows="3">
+                    </textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>邮政编码</label>
+                  <div class="col-md-4">
+                    <input type="text" name="" id="" class="form-control" placeholder="请输入邮政编码">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>联系方式</label>
+                  <div class="col-md-2">
+                    <input type="text" name="" id="" class="form-control" placeholder="请输入手机号码或者固定电话号码">
+                  </div>
+                </div>               
+                <div class="form-group submit">
+                  <div class="col-md-offset-5 col-md-1">
+                    <button type="submit" id="" class="btn btn-warning ">保存</button>
+                  </div>
+                  <div class="col-md-1">
+                    <button id="cancel" class="btn btn-info">取消</button>
+                  </div> 
+                </div>          
+              </form> 
+            </div>
+            <div class="address-add-link " id="J_address_add"><a href="/payment/add_delivery_address" title="添加收货地址">+ 添加收货地址</a></div> 
+          </div>
+            <!-- 表单修改部分开始 -->
+            <div class="address-add-form1 form-hide">
+               <form action="" method="post" id="" class="form-horizontal" role="form">
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>收货人姓名</label>
+                  <div class="col-md-4">
+                    <input type="text" name="" id="" class="form-control" value="林青霞">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>收货地址</label>
+                  <div class="col-md-4">
+                    <input name="" id="start1" autocomplete="off" type="text" placeholder = "请选择/输入城市名称" class="form-control city_input  inputFocus proCityQueryAll proCitySelAll" ov="请选择/输入城市名称" value="北京 北京市 丰台区">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>详细地址</label>
+                  <div class="col-md-4">
+                    <textarea name="" class="form-control" rows="3">北京 北京市 丰台区 西城区
+                    </textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>邮政编码</label>
+                  <div class="col-md-4">
+                    <input type="text" name="" id="" class="form-control" placeholder="请输入邮政编码" value="100071">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2"><i>*</i>联系方式</label>
+                  <div class="col-md-4">
+                    <input type="text" name="" id="" class="form-control" placeholder="请输入手机号码或者固定电话号码" value=" 183****1234">
+                  </div>
+                </div>               
+                <div class="form-group submit">
+                  <div class="col-md-offset-5 col-md-1">
+                    <button type="submit" id="" class="btn btn-warning ">确认修改</button>
+                  </div>
+                  <div class="col-md-1">
+                    <button id="cancel" class="btn btn-info">取消</button>
+                  </div> 
+                </div>          
+              </form> 
+            </div>
+             <!-- 表单修改部分结束 -->
+        </div>
+      </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+  </body>
+</html>

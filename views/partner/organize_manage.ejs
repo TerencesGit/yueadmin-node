@@ -85,13 +85,13 @@
                         </a> 
                       </li>
                       <li>
-                        <a href="javascript:;" class="btn-user" title="注册员工">
+                        <a href="#agentRegModal" class="btn-reg" data-toggle="modal" title="注册员工">
                           <i class="fa fa-user-plus"></i>
                           <span>注册员工</span>
                         </a> 
-                        <form action="/partner/agent_register" method="get" id="staffForm" class="hidden">
+                        <!-- <form action="/partner/agent_register" method="get" id="staffForm" class="hidden">
                           <input type="hidden" name="orgId" id="departmentId" value="">
-                        </form>
+                        </form> -->
                       </li>
                     </ul>
                     <h3 class="page-header m-t">部门员工</h3>
@@ -196,9 +196,11 @@
                     </li>
                     <% roles.forEach(function(role){%>
                     <li class="list-group-item" data-role="<%= role._id%>">
-                      <a href="javascript:;" class="check"><i class="fa fa-check pull-right"></i></a>
+                      <a href="javascript:;" class="pull-right">
+                        <i class="fa fa-square-o fa-lg"></i>
+                        <i class="fa fa-check-square fa-lg"></i>
+                      </a>
                       <a href="javascript:;" class="role"><%= role.name%></a>
-                      <input type="checkbox" class="pull-right">
                     </li>
                     <%})%>
                   </ul>
@@ -224,7 +226,7 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title">查看功能</h4>
             </div>
-            <div class="modal-body min-h-300">
+            <div class="modal-body max-h-400 min-h-200">
               <ul id="orgFunctionTree" class="ztree"></ul>
             </div>
             <div class="modal-footer">
@@ -233,6 +235,53 @@
             </div>
           </form>
         </div>
+      </div>
+    </div>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="agentRegModal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <form class="form-horizontal">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">注册员工</h4>
+              </div>
+              <div class="modal-body">
+                  <input type="hidden" id="userOrg" name="user[organize]" value="">
+                  <div class="form-group row">
+                    <label for="userName" class="control-label col-md-3">员工姓名</label>
+                    <div class="col-md-6">
+                      <input type="text" name="user[name]" id="userName" class="form-control" placeholder="请输入员工姓名" required />
+                    </div>
+                    <div class="col-md-3 alert"></div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="userEmail" class="control-label col-md-3">邮箱号</label>
+                    <div class="col-md-6">
+                      <input type="text" name="user[email]" id="userEmail" class="form-control" placeholder="请输入真实有效的邮箱号" required />
+                    </div>
+                    <div class="col-md-3 alert"></div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="userPasswd" class="control-label col-md-3 text-center">密码</label>
+                    <div class="col-md-6">
+                      <input type="password" name="user[password]" id="userPasswd" class="form-control" placeholder="设置密码" maxlength="20" required value=""/>
+                    </div>
+                    <div class="col-md-3 alert"></div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="confirmPasswd" class="control-label col-md-3">确认密码</label>
+                    <div class="col-md-6">
+                      <input type="password" name="user[password2]" id="confirmPasswd" class="form-control" placeholder="确认密码" maxlength="20" required /> 
+                    </div>
+                    <div class="col-md-3 alert"></div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="reset" class="btn btn-default btn-reset" data-dismiss="modal">取消</button>
+                <button id="agentRegBtn" class="btn btn-success" data-dismiss="modal">提交</button>
+              </div>
+            </form>
+          </div>
       </div>
     </div>
     <%- include('../script')%>

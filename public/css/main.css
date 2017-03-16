@@ -135,6 +135,9 @@
   max-width: 600px;
   margin: auto;
 }
+.min-h-200 {
+  min-height: 200px;
+}
 .min-h-300 {
   min-height: 300px;
 }
@@ -756,12 +759,13 @@ dl.horizontal dd {
 }
 .dropdown-menu.user-link > li > a:hover {
   color: #23b7e5;
+  background: #fff;
 }
 .dropdown-menu.user-link > li > a > .fa {
   margin-right: 10px
 }
 .dropdown-menu.user-link > li:nth-child(2) > a,
-.dropdown-menu.user-link > li:nth-child(2) > a:hover {
+.dropdown-menu.user-link > li:nth-child(2) > a:hover{
    border-top-right-radius: 4px;
    border-top-left-radius: 4px;
 }
@@ -1046,9 +1050,11 @@ dl.horizontal dd {
   font-size: 18px
 }
 /* list-group check */
-.modal-body .list-group > li > .check{
+.list-group > li .fa-check-square,
+.list-group > li.checked .fa-square-o {
   display: none
 }
-.modal-body .list-group > li.checked > .check{
+.list-group > li .fa-square-o,
+.list-group > li.checked .fa-check-square{
   display: inline
 }

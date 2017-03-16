@@ -1,0 +1,27 @@
+<aside id="aside" class="sidebar-warp">
+	<div class="sidebar">
+  	<div class="sidebar-header">
+      <a href="/" class="brand ellipsis">
+				<i class="fa fa-flag"></i>
+				<strong><%=user.partner.name%></strong>
+			</a>
+    </div>
+    <div class="divide-line"></div>
+    <nav>
+      <ul id="accordion" class="accordion">
+         <li>
+          <div class="link">
+            <i class="fa fa-user"></i>账户管理<i class="fa fa-chevron-down"></i>
+          </div>
+          <ul class="submenu">
+            <li><a href="/payment/home" data-href="account_info">账户首页</a></li>
+            <li><a href="/payment/modify_password" data-href="modify_password">修改密码</a></li>
+            <li><a href="/payment/bank_card_manage" data-href="bank_card_manage">银行卡管理</a></li>
+            <li><a href="/payment/delivery_address_manage" data-href="delivery_address_manage">收货地址管理</a></li>
+          </ul>
+        </li>
+        
+      </ul>
+    </nav>
+	</div>   
+</aside>

@@ -71,25 +71,24 @@ function Trim(str){
 exports.signup = function(req, res){
 	var _user = req.body.user;
 	var email = Trim(_user.email);
-	var sessionUser  = req.session.user;
+	var sessionUser = req.session.user;
 	if(sessionUser){
-		var id = sessionUser._id;
-		User.findById(id, function(err, userObj){
-			_user.partner = userObj.partner;
-		})
+		_user.partner = sessionUser.partner._id;
 	}
 	User.findOne({email: email}, function(err, user){
 		if(err) console.log(err)
 		if(!user){
-			_user.name = email;
-			var user = new User(_user);
-			user.save(function(err, user){
+			if(!_user.name){
+				_user.name = email;
+			}
+			var userObj = new User(_user);
+			userObj.save(function(err, user){
 				if(err){
 					_user.error = '注册失败，系统错误';
 					return res.render('signup', {title: '欢迎注册', user: _user})
 				}
 				if(sessionUser){
-					return res.redirect('/partner/staff_manage')
+					return res.json({status: 1})
 				}
 				req.session.user = user;
 				res.redirect('/')

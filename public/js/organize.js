@@ -33,7 +33,7 @@ const $btnRefresh = $('.btn-refresh'),
 		  $btnFunc = $('.btn-func'),
 		  $btnUnlock = $('.btn-unlock'),
 		  $btnBan = $('.btn-ban'),
-	    $btnUser = $('.btn-user');
+	    $btnReg = $('.btn-reg');
 
 $(function(){
 	//页面加载渲染部门树
@@ -53,9 +53,10 @@ $(function(){
   	]
   });
 })
+var organizeId;
 //组织节点点击事件(显示部门名称，并获取该部门下员工)
 function HandlerClick(event, treeId, treeNode){
-  const organizeId = treeNode.id;
+  organizeId = treeNode.id;
   departmentName.text(treeNode.name);
  	departmentId.val(organizeId);
   //展示该节点启用或禁用状态
@@ -179,7 +180,7 @@ function renderStaffList(organizeId){
 		  		"gender": gender, 
 		  		"email": user.email, 
 		  		"orgName": user.organize.name, 
-		  		"btn": '<a href="/partner/staff_manage" class="btn btn-link">员工管理</a>'
+		  		"btn": '<a href="/partner/staff_manage" class="btn btn-link">管理</a>'
 		  	};
 	  	dataArr.push(_user)
 	  })
@@ -407,9 +408,9 @@ function getFuncByRole(roleId){
 //选择权限
 roleItem.on('click', function(){
 	if($(this).hasClass('checked')){
-		$(this).removeClass('checked').children('.check').hide()
+		$(this).removeClass('checked')
 	}else{
-		$(this).addClass('checked').children('.check').show()
+		$(this).addClass('checked')
 	}
 })
 // 设置权限
@@ -546,10 +547,103 @@ function setOrgStatus(orgId, status){
 		console.log(error);
 	})
 }
-//注册员工
-$btnUser.on('click', function(e){
+//员工代注册表单
+const agentRegModal = $('#agentRegModal'),
+      regModalTitle = agentRegModal.find('.modal-title'),
+      formGroup = agentRegModal.find('.form-group'),
+      resetBtn = agentRegModal.find('.btn-reset'),
+      userOrg = $('#userOrg'),
+      userName = $('#userName'),
+      userEmail = $('#userEmail'),
+      userPasswd = $('#userPasswd'),
+      confirmPasswd = $('#confirmPasswd'),
+      agentRegBtn = $('#agentRegBtn');
+//正则表达式   
+const regular = {
+			name: /^[\u4E00-\u9FA5A-Za-z]+$/,
+		  email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+		  password: /^.{8,20}$/,
+}
+//错误信息提示			
+const msg = {
+	name: {
+		required: '请输入姓名',
+		regular: '姓名只能是中文或英文'
+	},
+	email: {
+		required: '请输入邮箱',
+		regular: '邮箱格式不正确',
+		existed: '该邮箱号已被占用'
+	},
+	password: {
+    required: '请输入密码',
+    regular: '密码长度为8-20位',
+  },
+  confirmPasswd: {
+  	required: '请再次输入密码',
+  	inconsistent: '两次密码输入不一致'
+  }
+}
+$btnReg.on('click', function(e){
 	e.preventDefault()
 	if(!getSeletedNode()) return false;
- 	if(departmentId.val() == '') return;
- 	$('#staffForm').submit();
+	const node = getSeletedNode();
+ 	regModalTitle.html('注册员工（'+node.name+'）');
+ 	userOrg.val(node.id);
 })
+agentRegBtn.on('click', function(e){
+  e.preventDefault();
+  let status = $(this).attr('data-status');
+  if(status == 0) return false;
+  if(validateForm(userName, msg.name, regular.name) &&
+    validateForm(userEmail, msg.email, regular.email) &&
+    validateForm(userPasswd, msg.password, regular.password) &&
+    checkConsistency(confirmPasswd, userPasswd, msg.confirmPasswd)){
+  	agentRegistered()
+  }else{
+  	return false;
+  }
+})
+onBlurValidate(userName, msg.name, regular.name, validateForm)
+onBlurValidate(userPasswd, msg.password, regular.password, validateForm)
+onBlurValidate(confirmPasswd, msg.confirmPasswd, regular.confirmPasswd, checkConsistency, userPasswd)
+let _tempEmail;
+userEmail.blur(function(){
+	const value = $.trim($(this).val());
+	if(value == ''){
+		clearTip($(this));
+		return;
+	}
+	if(_tempEmail == value) return;
+	_tempEmail = value;
+	validateForm(userEmail, msg.email, regular.email) &&
+	queryEmail(userEmail, msg.email, agentRegBtn, 'null')
+})
+function agentRegistered(){
+	const userObj = {
+		organize: $.trim(userOrg.val()),
+		name: $.trim(userName.val()),
+		email: $.trim(userEmail.val()),
+		password: $.trim(userPasswd.val()),
+	}
+	$.ajax({
+		url: '/user/signup',
+		type: 'POST',
+		data: {user: userObj},
+	})
+	.done(function(res) {
+		if(res.status == 1){
+			$.dialog().success({message: '注册成功', delay: DELAY_TIME})
+			formGroup.removeClass('has-success');
+			resetBtn.click();
+			setTimeout(function(){
+				renderStaffList(organizeId);
+			}, DELAY_TIME)
+		}else{
+			$.dialog().fail({message: '注册失败，请稍后重试'})
+		}
+	})
+	.fail(function(error) {
+		console.log(error);
+	})
+}

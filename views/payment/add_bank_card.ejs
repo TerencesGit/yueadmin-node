@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./link') %>
+     <style>
+  .panel-body{
+    padding: 20px 30px;
+  }
+  .bank-head{
+    height: 36px;
+    border: 1px solid #c9d5e2;
+    line-height: 36px;
+    background: #e5f5ff;
+    padding: 0 20px;
+  }
+  .bank-head i{
+    font-size: 20px;
+    color: #0483cf;
+    margin-right: 8px;
+  }
+  .form-horizontal{
+    padding-top: 30px;
+  }
+  .bank-agree{
+    color: #999;
+  }
+  .bank-tip{
+    font-size: 14px;
+    color: #999; 
+    padding-top: 10px;
+  }
+   .form-group {
+    position: relative;
+  }
+  .fa{
+      margin: 0 5px;
+  }
+  .form-group .fa-check-circle {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #3c763d;
+  }
+  .form-group .has-success .fa-check-circle{
+    display: inline-block;
+  }
+
+  </style>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="bank_card_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">添加银行卡<a class="return" href="javascript:history.go(-1)">返回</a></h3>
+          </div>
+          <div class="panel-body">
+              <div class="bank-head">
+                <p><i class="fa">&#xf06a;</i>请填写以下信息，用于开通快捷支付等功能。</p>
+              </div>
+              <form action="" method="post" id="bankForm" class="form-horizontal" role="form">
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2">真实姓名</label>
+                  <div class="col-md-4">
+                    <input type="text" name="" id="realName" class="form-control" placeholder="请输入姓名">
+                    <i class="fa fa-check-circle"></i>
+                  </div>
+                  <div class="col-md-3 input-tip alert"></div>
+                </div>
+                <!-- <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2">身份证号</label>
+                  <div class="col-md-4">
+                    <input type="text" name="" id="idCard" class="form-control" placeholder="请输入身份证号">
+                    <i class="fa fa-check-circle"></i>
+                  </div>
+                  <div class="col-md-3 input-tip alert"></div>
+                </div> -->
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2">银行卡号</label>
+                  <div class="col-md-4">
+                    <input type="text" name="" id="bankNum" class="form-control" placeholder="请输入银行卡号">
+                    <i class="fa fa-check-circle"></i>
+                  </div>
+                  <div class="col-md-3 input-tip alert"></div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 col-md-2">手机号</label>
+                  <div class="col-md-4">
+                    <input type="text" name="" id="mobile" class="form-control" placeholder="请输入手机号">
+                    <p class="bank-tip">请填写您在银行卡预留的手机号，已验证银行卡是否属于您本人</p>
+                    <i class="fa fa-check-circle"></i>
+                  </div>
+                  <div class="col-md-3 input-tip alert"></div>
+                </div>
+                <div class="form-group submit">
+                  <div class="col-md-offset-4 col-md-2">
+                    <button type="submit" id="bankSubmit" class="btn btn-warning btn-block">同意协议并确定</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-offset-4 col-md-3">
+                    <a href="" class="bank-agree">《悦视觉快捷支付服务协议》</a>
+                  </div>
+                </div>             
+              </form> 
+          </div>
+        </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+  </body>
+</html>

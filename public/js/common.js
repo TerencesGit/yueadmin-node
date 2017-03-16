@@ -76,6 +76,16 @@ function onFocus($element, msg){
   const alert = formGroup.find('.alert');
   alert.addClass('alert-info').removeClass('alert-danger').html('<i class="fa fa-exclamation-circle"></i>'+msg.tip);
 }
+//失去焦点验证
+function onBlurValidate($element, msg, regular, next, target){
+  $element.blur(function(){
+    if($.trim($element.val()) == ''){
+      clearTip($element)
+    }else{
+      target ? next($element, target, msg) : next($element, msg, regular)
+    }
+  })
+}
 //清空提示信息
 function clearTip($element){
   const formGroup = $element.parents('.form-group');

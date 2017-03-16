@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./link') %>
+    <style>
+  .panel-body{
+    padding: 20px 30px; 
+  }
+  .bank-detail{
+    height: 368px;
+    margin: 20px 30px 40px;
+  }
+  .bank-main{
+    position: relative; 
+  }
+  .bankm-brief{
+    width: 231px;
+    position: absolute;
+    z-index: 100;
+    top: 15px;
+    left: 16px;
+    border: 3px solid rgba(175, 178, 183, 0.25);
+    border-radius: 7px;
+  }
+  .bankm-brief .bankm-logo {
+    position: relative;
+    border-radius: 4px 4px 0 0;
+    border: 1px solid #B6B9BE;
+    border-bottom: none;
+    background: #fff;
+    padding: 10px 0 0 15px;
+  }
+  .bankm-logo img{
+    display: block;
+    margin-bottom: 24px;
+  }
+  .card-type{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    overflow: hidden;
+    width: 49px;
+    height: 18px;
+    text-indent: -9999px;
+    background: url(public/img/spritemap2.png) no-repeat -120px 0;
+  }
+  .bankm-account{
+    font-size: 14px !important;
+    padding-bottom: 10px
+  }
+  .bankm-brief .bankm-name{
+    padding: 7px 5px 7px 15px;
+    background: #FAFAFA;
+    border: 1px solid #B6B9BE;
+    border-top: 1px dashed #B6B9BE;
+    color: #999999;
+    border-radius: 0 0 4px 4px;
+  }
+  .bankm-info{ 
+    position: relative;
+    padding: 0 0 0 220px;
+    background-color: #F2F2F2;
+    border: 1px solid #E6E6E6;
+    height: 88px;
+  } 
+  .bankm-concent{
+    height: 30px;
+    padding: 18px 0 40px;
+    color: #808080;
+  } 
+  .bankm-unbind{
+    position: absolute;
+    top: 58px;
+    right: 10px;
+  } 
+  .bankm-unbind .unbind-btn{
+    color: #808080;
+    font-weight: 400;
+    padding: 0 9px 0;
+    height: 19px;
+    line-height: 19px;
+    background: #F3F3F3;
+    box-shadow: 0px 0px 1px 0px #FFF inset;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #B3B3B3;
+  }
+  .bankm-attribute{
+    padding: 65px 20px 30px 20px;
+    background: #FFFFFF;
+    border: 1px solid #ccc;
+    border-top: 3px solid #4B90B6; 
+  }
+  .attribute-list{
+    overflow: hidden;
+    zoom: 1;
+    position: relative;
+    padding: 42px 0;
+    border-bottom: 1px dashed #D9D9D9;
+  }
+  .attribute-map{
+    position: absolute;
+    top: 25px;
+    left: 0;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    background: url(public/img/spritemap2.png) no-repeat -40px -40px;
+  }
+  .attribute-name{
+    position: absolute;
+    top: 35px;
+    left: 50px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .attribute-value {
+    position: absolute;
+    top: 35px;
+    left: 168px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #FF6600;
+  }
+  .attribute-value span{
+    font-size: 12px;
+    font-weight: 400;
+    color: #666666;
+  }
+  .attribute-app {
+    position: absolute;
+    top: 34px;
+    right: 0px;
+    text-align: right;
+    color: #999999;
+  }
+  .close-btn{
+    color: #0088CC;
+    padding: 0 9px 0 8px;
+    text-align: right;
+  }
+  .tb-container{
+    background-color: #f4fee3;
+    border: 1px solid #ededdf;
+    margin-top: 35px;
+    width: 400px;
+    padding-left: 10px;
+  }
+  .tb-content {
+    line-height: 1.5;
+    padding: 20px 0px 11px 36px;
+    color: #000;
+    font-size: 12px;
+    background: url(public/img/baodan.png) no-repeat center left;
+    background-size: 26px 26px;
+  }
+  .tb-href{
+    color: #0088cc;
+    text-decoration: none;
+    padding-left: 15px;
+  }
+  </style>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="bank_card_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+       <div class="panel   panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">银行卡详情<a class="pull-right" href="javascript:history.go(-1)">返回</a></h3>
+        </div>
+        <div class="panel-body">
+          <div class="bank-detail bank-main">
+            <div class="">
+            <!-- 个人信息开始 -->
+              <div class="bankm-brief">
+                <div class="bankm-logo">
+                  <img src="public/img/zhaoshangall.png" alt="招商银行" width="88" height="24">
+                  <span class="card-type"></span>
+                  <span class="bankm-account">**** **** **** 8583</span>
+                  <div class="bankm-account" title="林青霞">林青霞</div>
+                </div>
+                <div class="bankm-name">
+                  <div class="hotline">客服电话：4008205555</div>
+                </div>
+              </div>
+              <!-- 个人信息结束 -->
+              <div class="bankm-info">
+                <div class="bankm-concent"> </div>  
+                <div class="bankm-unbind">
+                  <a href="" class="unbind-btn">删除</a>
+                </div>           
+              </div>
+              <div class="bankm-attribute">
+                <div class="attribute-list">
+                  <div class="attribute-map" title=""></div>
+                  <div class="attribute-name">快捷支付</div>
+                  <div class="attribute-value">
+                    <span>银行预留电话：183****1234</span>
+                  </div>
+                  <div class="attribute-app">开通时间：2016.12.14
+                    <a href="" class="close-btn">
+                      关闭
+                    </a>
+                  </div>
+                </div>
+                <div class="tb-container">
+                  <div class="tb-content"><span>悦视觉支付账户安全险正在保障你的资金安全</span>
+                  <p>账户资金被盗，最高可赔100万
+                  <a class="tb-href" href="">查看保单</a></p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+  </body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./link') %>
+     <style>
+  .panel-body{
+    padding: 20px 30px;
+    background: #eff0f1;
+  }
+  .card-box{
+    float: left;
+    overflow: hidden;
+    width: 230px;
+    height: 160px;
+    margin: 0 38px 20px 0;
+    background: #EFF0F1;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border: 1px solid #ddd;
+  }
+  .card-bhead{
+    border-radius: 4px 4px 0 0;
+    height: 46px;
+    font-size: 12px;
+    line-height: 46px;
+  }
+  .bank-logo{
+    padding-left: 12px;
+  }
+  .bank-name{
+    padding-right: 38px;
+  }
+  .bank-type{
+    width: 49px;
+    height: 18px;
+    display: line-block;
+    background: url(public/img/spritemap2.png) no-repeat -120px 0;
+    float: right;
+    margin-right: 4px;
+    margin-top: 14px;
+  }
+  .card-bmain{
+    height: 37px;
+    margin: 0 0 15px 0;
+    background: #CFD2D4;
+    border-top: 1px solid #ABADAF;
+  }
+  .express-status{
+    float: left;
+    padding: 9px 0 0 10px;
+    font-size: 12px;
+  }
+  .express-asset{
+    width: 55px;
+    height: 14px;
+    background: url(public/img/spritemap2.png) no-repeat -120px -120px;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .express-else a{
+    font-size: 12px;
+    color: #0088cc;
+    float: right;
+    padding: 9px 10px 0 0;
+  }
+  .add-card{
+    float: left;
+    overflow: hidden;
+    width: 232px;
+    height: 160px;
+    margin: 0 38px 20px 0;
+    background: #fff;
+  }
+  .add-card a{
+    display: block;
+    overflow: hidden;
+    zoom: 1;
+    height: 160px;
+    padding: 48px 0 0 0;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 700;
+    border: 1px dashed #AACCDD;
+    background: #FAFAFB;
+    outline: none;
+    cursor: pointer;
+    -webkit-transition: all 0.15s ease-in;
+    transition: all 0.15s ease-in;
+}
+  .fa-plus{
+    display: block;
+    margin: 0 auto;
+    vertical-align: -5px;
+    font-size: 36px;
+    color: #A8B5C4;
+    cursor: pointer;
+    font-style: normal;
+    font-weight: normal;
+  }
+  </style>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="bank_card_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">我的银行卡
+            <a href="javascript:history.go(-1)" class="pull-right">返回</a>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="bank-head">
+          <!-- 银行卡开始部分 -->
+           <div class="card-box">
+             <div class="card-bhead">
+                <span class="bank-logo"><a href=""><img src="public/img/zhaoshang.png" alt="" width="16" height="16"></a></span>
+               <span class="bank-name" title="招商银行">招商银行</span>
+               <span class="bank-num">尾号8586</span>
+               <span class="bank-type"></span>
+             </div>
+             <div class="card-bmain">
+                <div class="express-status">
+                  <span class="express-asset"></span>
+                  <span>已开通</span>
+                </div>
+                <div class="express-else">
+                  <a href="/payment/bank_card_detail">管理</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-box">
+             <div class="card-bhead">
+                <span class="bank-logo"><a href=""><img src="public/img/zhaoshang.png" alt="" width="16" height="16"></a></span>
+               <span class="bank-name" title="招商银行">招商银行</span>
+               <span class="bank-num">尾号8586</span>
+               <span class="bank-type"></span>
+             </div>
+             <div class="card-bmain">
+                <div class="express-status">
+                  <span class="express-asset"></span>
+                  <span>已开通</span>
+                </div>
+                <div class="express-else">
+                  <a href="/payment/bank_card_detail">管理</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-box">
+             <div class="card-bhead">
+                <span class="bank-logo"><a href=""><img src="public/img/zhaoshang.png" alt="" width="16" height="16"></a></span>
+               <span class="bank-name" title="招商银行">招商银行</span>
+               <span class="bank-num">尾号8586</span>
+               <span class="bank-type"></span>
+             </div> 
+             <div class="card-bmain">
+                <div class="express-status">
+                  <span class="express-asset"></span>
+                  <span>已开通</span>
+                </div>
+                <div class="express-else">
+                  <a href="/payment/bank_card_detail">管理</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-box">
+             <div class="card-bhead">
+                <span class="bank-logo"><a href=""><img src="public/img/zhaoshang.png" alt="" width="16" height="16"></a></span>
+               <span class="bank-name" title="招商银行">招商银行</span>
+               <span class="bank-num">尾号8586</span>
+               <span class="bank-type"></span>
+             </div>
+             <div class="card-bmain">
+                <div class="express-status">
+                  <span class="express-asset"></span>
+                  <span>已开通</span>
+                </div>
+                <div class="express-else">
+                  <a href="/payment/bank_card_detail">管理</a>
+                </div>
+              </div>
+            </div>
+            <div class="add-card">
+              <a href="/payment/add_bank_card" class="">
+                <i class="fa fa-plus"></i>
+                添加银行卡
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+  </body>
+</html>

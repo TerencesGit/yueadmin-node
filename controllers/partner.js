@@ -1,13 +1,13 @@
-var Partner = require('../models/partner');
-var User = require('../models/user');
-var Organize = require('../models/organize');
-var Role = require('../models/role');
-var OrgRole = require('../models/org_role');
-var RoleFunc = require('../models/role_func');
-var Title = require('../models/title');
-var fs = require('fs');
-var path = require('path');
-var _ = require('lodash');
+const Partner = require('../models/partner');
+const User = require('../models/user');
+const Organize = require('../models/organize');
+const Role = require('../models/role');
+const OrgRole = require('../models/org_role');
+const RoleFunc = require('../models/role_func');
+const Title = require('../models/title');
+const fs = require('fs');
+const path = require('path');
+const _ = require('lodash');
 
 //去除前后空格
 function Trim(str){ 
@@ -420,29 +420,33 @@ exports.setOrgRole = function(req, res){
 			orgRoleList.push(orgRole.role)
 		})
 		//被移除的角色列表
-		var removeRoleList = complement(orgRoleList, roleList);
-		removeRoleList.forEach(function(role){
-			OrgRole.remove({organize: orgId, role: role}, function(err, msg){
-				if(err){
-					console.log(err);
-					return res.json({status: 0})
-				}
+		const removeRoleList = complement(orgRoleList, roleList);
+		if(removeRoleList.length !== 0){
+			removeRoleList.forEach(function(role){
+				OrgRole.remove({organize: orgId, role: role}, function(err, msg){
+					if(err){
+						console.log(err);
+						return res.json({status: 0})
+					}
+				})
 			})
-		})
+		}
 		//新增的角色列表
-		var newRoleList = complement(roleList, orgRoleList);
-		newRoleList.forEach(function(role){
-		orgRoleObj.role = role;
-		console.log(orgRoleObj)
-		_orgRole = new OrgRole(orgRoleObj);
-		_orgRole.save(function(err, orgRole){
-			if(err){
-				console.log(err);
-				return res.json({status: 0})
-			}
-			res.json({status: 1})
-		})
-	})
+		const newRoleList = complement(roleList, orgRoleList);
+		if(newRoleList.length !== 0){
+			newRoleList.forEach(function(role){
+				orgRoleObj.role = role;
+				console.log(orgRoleObj)
+				_orgRole = new OrgRole(orgRoleObj);
+				_orgRole.save(function(err, orgRole){
+					if(err){
+						console.log(err);
+						return res.json({status: 0})
+					}
+					res.json({status: 1})
+				})
+			})
+		}
 	})
 }
 //根据部门Id获取角色列表
