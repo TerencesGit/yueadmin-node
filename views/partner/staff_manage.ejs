@@ -92,10 +92,10 @@
                                 <a href="#setTitleModal" class="btn btn-title" data-toggle="modal">岗位设置</a>
                               </li>
                               <li>
-                                <%if(user.status){%>
-                                <a href="javascript:;" class="btn btn-status" data-id="<%= user.status%>">禁用</a>
+                                <%if(staff.status == '1'){%>
+                                <a href="javascript:;" class="btn btn-status" data-status="<%=staff.status%>">禁用</a>
                                 <%}else{%>
-                                <a href="javascript:;" class="btn btn-status" data-id="<%= user.status%>">启用</a>
+                                <a href="javascript:;" class="btn btn-status" data-status="<%=staff.status%>">启用</a>
                                 <%}%>
                               </li>
                           </ul>

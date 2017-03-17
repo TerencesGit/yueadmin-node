@@ -185,16 +185,33 @@ router.get('/system/remove_account', System.removeAccount);
 //router.get('/transaction/home', Transaction.home)
 
 /** 支付平台 **/
-//注册账号
+//账户信息设置
 router.get('/payment/home', Payment.home)
-router.get('/payment/modify_password', Payment.modifyPassword)
+router.get('/payment/set_identity_info', Payment.setIdentityInfo)
+router.get('/payment/set_payment_method', Payment.setPaymentMethod)
+router.get('/payment/register_success', Payment.registerSuccess)
+router.get('/payment/show_authentication', Payment.showAuthentication)
+router.get('/payment/find_password', Payment.findPassword)
 router.get('/payment/reset_password', Payment.resetPassword)
 router.get('/payment/reset_password_success', Payment.resetPasswordSuccess)
+router.get('/payment/modify_password', Payment.modifyPassword)
+router.get('/payment/modify_password_setting', Payment.modifyPasswordSetting)
+router.get('/payment/modify_password_success', Payment.modifyPasswordSuccess)
+router.get('/payment/modify_cellphone', Payment.modifyCellphone)
 router.get('/payment/bank_card_manage', Payment.bankCardManage)
 router.get('/payment/add_bank_card', Payment.addBankCard)
 router.get('/payment/bank_card_detail', Payment.bankCardDetail)
 router.get('/payment/delivery_address_manage', Payment.deliveryAddressManage)
 router.get('/payment/add_delivery_address', Payment.addDeliveryAddress)
+
+//支付管理
+router.get('/payment/account_recharge', Payment.accountRecharge)
+router.get('/payment/account_recharge_confirm', Payment.accountRechargeConfirm)
+router.get('/payment/balance_withdrawals', Payment.balanceWithdrawals)
+router.get('/payment/income_and_expenditure', Payment.incomeAndExpenditure)
+router.get('/payment/transaction_record', Payment.transactionRecord)
+router.get('/payment/transaction_search_result', Payment.transactionSearchResult)
+
 
 /** 分期贷款 **/
 //平台管理

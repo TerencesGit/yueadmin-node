@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./link') %>
+    <style>
+   .container-bot{
+      background: #e3e3e3;
+      height: 40px;
+    }
+    .container-bot .navbar-text{
+      margin-top: 0;
+      margin-bottom: 0;
+      line-height: 40px;
+    }
+    select{
+      border: 1px solid #ccc;
+    }
+    .search-dt{
+      text-align: center;
+    }
+    .search-select{
+      padding: 4px 10px;
+      font-size: 14px;
+      background: #f7f7f7;
+    }
+    .search-text{
+      width: 100px;
+      height:28px;
+      float: right;
+    }
+    .searchtext-left{
+      float: left;
+    }
+    .search-label{
+      font-size: 12px;
+    }
+    .form-horizontal{
+      margin-top: 20px;
+      background: #fbfdff;
+      padding: 20px 0;
+    }
+    .record-main{
+      margin-bottom: 40px;
+    }
+    .record-main h3{
+      border-bottom: 2px solid #b3cfef;
+      line-height: 40px;
+      margin:10px;
+    }
+    .record-mright{
+      font-size: 12px;
+      float: right;
+    }
+    .record-mright b{
+      color: #53a000;
+    }
+    .record-mright a{
+      margin: 0 5px;
+    }
+    .fa-trash{
+      margin-right: 5px;
+    }
+    .record-form{
+      background: #fff;
+    }
+    .navbar-text{
+      padding: 0 15px;
+    }
+    .navbar-active{
+      background: #f2f2f2;
+    }
+    .record-list li{
+      background: #d9edf7;
+      border: 1px solid #eee;
+      height: 40px;
+      font-size: 16px;
+      line-height: 40px;
+      text-align: center;
+    }  
+    .record-list li a{
+      color: #000;
+    }
+    .record-list li:first-child a{
+      font-weight: bold;
+      color: #00aaee;
+    }
+    /*表格部分开始*/
+    .table>tbody>tr>td{
+      padding: 14px 8px 0;
+    }
+    table>tbody>tr>td>p{
+      line-height: 18px;
+    }
+    .time {
+      padding-left: 20px;
+      width: 60px;
+      text-align: left;
+    }
+    .memo {
+      text-align: center;
+    }
+    .ft-bar {
+      margin: 0 5px;
+      padding: 0;
+      color: #aaa;
+    }
+    .amount,.status{
+      text-align: right;
+    }
+    .action {
+      padding-right: 20px;
+      text-align: right;
+    }
+    .ft-gray {
+      color: #9a9a9a;
+    }
+    .consume-title a {
+      color: #4d4d4d;
+      outline: 0 none;
+    }
+    .consume-title a:hover{
+      color: #08c;
+      cursor: pointer;
+      text-decoration: underline; 
+    }
+    .other .name {
+      max-width: 130px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .amount-pay {
+      font-weight: 700;
+      color: gray;
+    }
+    .detail .record-icon {
+      width: 14px;
+      height: 16px;
+      display: block;
+      background: url(/payment/img/spritemap4.png) no-repeat 0 -100px;
+    }
+    .action .current-item {
+      color: #0188CC;
+      padding: 2px 7px;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-block;
+      zoom: 1;
+      line-height: 17px;
+      height: 17px;
+    }
+    .current-item .down-icon {
+      display: block;
+      zoom: 1;
+      width: 12px;
+      height: 12px;
+      background: url(/payment/img/spritemap4.png) no-repeat 0 -217px;
+      margin: 5px 0 0 5px;
+      float: right;
+    }
+    .action{
+      position: relative;
+    }
+    .custom-menu{
+      width: 52px; 
+      z-index: 99; 
+      position: absolute; 
+      left: 74px; 
+      top: 16px; 
+      background: #fff;
+      text-align: center;
+      color: #0188CC;
+      border-radius: 2px;
+      box-shadow: 0 2px 4px rgba(0,0,0,.25);
+      display: none;
+    }
+    .custom-menu li{
+      border-left: 1px solid #c4c4c4;
+      border-right: 1px solid #c4c4c4;
+      cursor: pointer;
+      line-height: 24px;
+    }
+    .custom-menu li:first-child{
+      border-top: 1px solid #c4c4c4;
+      border-radius: 3px 3px 0 0;
+    }
+    .custom-menu li:last-child{
+      border-bottom: 1px solid #c4c4c4;
+      border-radius: 3px 3px 0 0;
+    }
+    .custom-menu-item:hover{
+      background:#ff6600;
+    }
+    .custom-menu-item:hover a{
+      color:#fff;
+    }
+    /*点击查看明细*/
+    .detail{
+      position: relative;
+    }
+    .poptip-shadow{
+      width: 120px;
+      z-index: 99;
+      position: absolute;
+      left: -24%;
+      top: -34%;
+      color: #db7c22; 
+      font-size: 12px;
+      display: none;
+    }
+    .poptip-container{
+      position: relative;
+      background-color: #fffcef;
+      border: 1px solid #ffbb76;
+      border-radius: 2px;
+      padding: 5px 15px;
+      zoom: 1;
+    }
+    .poptip-down{
+      position: absolute;
+      width: 12px;
+      height: 8px;
+      left: 20px;
+      bottom: -7px;
+      background: url(/payment/img/spritemap4.png) no-repeat 0 -360px;
+      z-index: 99;
+    }
+
+    /*备注的显示*/
+    .memo .record-flag{
+      display: block;
+      width: 14px;
+      height: 14px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .memo .record-flag .fa-flag{
+      color: #ccc;
+      font-size: 14px;
+    }
+    .memo .record-flag .fa-flag:hover{
+       color: #0088cc;
+    }
+    /*点击查看备注*/
+    .memo{
+      position: relative;
+    }
+    .content-memo{
+      width: 220px;
+      z-index: 99;
+      position: absolute;
+      left: -22%;
+      bottom: 95%;
+      color: #db7c22; 
+      font-size: 12px;
+      display: none;
+    }
+    .memo-poptip{
+      position: relative;
+      background-color: #fffcef;
+      border: 1px solid #ffbb76;
+      border-radius: 2px;
+      padding: 5px 15px;
+      zoom: 1;
+    }
+    .memo-poptip .fn-clear,.security-tips{
+      text-align: left;
+      font-size: 14px;
+    }
+    .memo-poptip .security-tips{
+      border-top: 1px dashed #ffbb76;
+      margin-top: 5px;
+      padding-top: 5px;
+      color: #878787;
+    }
+    .memo-down{
+      position: absolute;
+      width: 12px;
+      height: 8px;
+      left: 20px;
+      bottom: -8px;
+      background: url(/payment/img/spritemap4.png) no-repeat 0 -360px;
+      z-index: 99;
+    }
+    /*弹出框样式*/
+    .modal-dialog{
+      width: 520px;
+      height: 414px;
+      background-color: rgba(0,0,0,.5);
+      padding: 6px;
+    }
+    .modal-header{
+      padding: 0 20px;
+      background: #f6f6f6;
+      border-bottom: 1px solid #E6E6E6;
+    }
+    .modal-header .modal-title{
+      font-size: 14px;
+      font-weight: bold;
+      height: 39px;
+      line-height: 39px;
+    }
+    .modal-header .close{
+      margin-top: 8px;
+    }
+    .modal-body{
+      height: 358px;
+    }
+    .security{
+      margin-bottom: 10px;
+      margin-left: 50px;
+    }
+    .security .tiptext{
+      width: 380px;
+      background: #ffff8d;
+      border: 1px solid #e7c560;
+      padding: 4px 8px;
+    }
+    .security .tiptext .fa{
+      font-size: 16px;
+      color: #ffa72e;
+    }
+    .horizontal{
+      background: #fff;
+      padding: 0;
+    }
+    .textarea textarea{
+      width: 360px;
+      height: 80px;
+    }
+    #info{
+      padding: 3px 0;
+      font-family: "microsoft yahei";
+      font-size: 14px;
+      margin-left: 80px;
+    }
+
+
+  </style>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="transaction_record">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+        <!-- <nav class="navbar-default row" role="navigation"> 
+          <div class="container-bot">
+            <div class="">
+              <a href="payment_transaction_record.html" class="navbar-text navbar-left navbar-active">交易记录</a>
+              <a href="payment_searchresult_tip.html" class="navbar-text navbar-left">充值记录</a>
+              <a href="payment_searchresult_tip.html" class="navbar-text navbar-left">提现记录</a>
+              <a href="payment_searchresult_tip.html" class="navbar-text navbar-left">电子对账单</a>
+            </div>
+          </div>
+        </nav> -->
+        <!-- 头部导航结束 -->
+        <!-- 主体部分开始 -->
+        <div class="record-main">
+          <h3>交易记录<span class="record-mright">可用余额<b>1000.00</b>元<a href="/payment/payment_revenue_expenditure.html">余额收支明细</a>|<a href="/payment/payment_recycle_bill.html"><i class="fa fa-trash"></i>回收站</a></span></h3>
+          <form action="/payment/transaction_search_result" method="get" id="" class="form-horizontal" role="form">
+            <div class="from-group row">
+              <dl class="col-md-5">
+                <dt class="col-sm-4 search-dt">交易时间:</dt>
+                <dd class="col-sm-4"><select name="" id="" class="search-select">
+                  <option value="">最近一周</option>
+                  <option value="">最近一月</option>
+                  <option value="">最近三个月</option>
+                  <option value="">最近六个月</option>
+                  <option value="">最近一年</option>
+                  <option value="">自定义时间</option>   
+                  </select></dd>
+              </dl>
+              <dl class="col-md-5">
+                <dt class="col-sm-4 search-dt">交易状态:</dt>
+                <dd class="col-sm-4"><select name="" id="" class="search-select">
+                <option value="">所有状态</option>
+                <option value="">进行中</option>
+                <option value="">等待付款</option>
+                <option value="">所有状态</option>
+                <option value="">进行中</option>
+                <option value="">等待付款</option>  
+                </select></dd>
+              </dl>
+            </div>
+            <div class="from-group row">
+              <dl class="col-md-5">
+                <dt class="col-sm-4 search-dt">关键词:</dt>
+                <dd class="col-sm-8"><select name="" id="" class="search-select">
+                  <option value="">流水号</option>
+                  <option value="">进行中</option>
+                  <option value="">等待付款</option>   
+                  </select>
+                  <input type="text" class="search-text">
+                </dd>
+              </dl>
+              <dl class="col-md-5">
+                <dt class="col-sm-4 search-dt">时间类型:</dt>
+                <dd class="col-sm-4"><select name="" id="" class="search-select">
+                  <option value="">创建时间</option>
+                  <option value="">进行中</option>
+                  <option value="">等待付款</option> 
+                  </select></dd>
+              </dl>              
+            </div>
+            <div class="from-group row">
+              <dl class="col-md-5">
+                <dt class="col-sm-4 search-dt">金额范围:</dt>
+                <dd class="col-sm-8">
+                  <input type="text" class="search-text searchtext-left">
+                  <input type="text" class="search-text">
+                </dd>
+              </dl>
+              <dl class="col-md-5">
+                <dt class="col-sm-4 search-dt">资金流向:</dt>
+                <dd class="col-sm-4"><select name="" id="" class="search-select">
+                  <option value="">全部</option>
+                  <option value="">进行中</option>
+                  <option value="">等待付款</option>   
+                  </select></dd>
+              </dl>        
+            </div>
+            <div class="from-group row">
+              <dl class="col-md-5">
+                <dt class="col-sm-4 search-dt">交易方式:</dt>
+                <dd class="col-sm-8">
+                  <input type="checkbox" name="" value="" id="">
+                  <label class="search-label" for="" autocomplete="off">担保交易</label>
+                  <input type="checkbox" name="" value="" id="">
+                  <label class="search-label" for="" autocomplete="off">即时到账</label>
+                  <input type="checkbox" name="" value="" id="">
+                  <label class="search-label" for="" autocomplete="off">货到付款</label>
+                </dd>
+              </dl>
+              <dl class="col-md-5">
+                <dt class="col-sm-4 search-dt">交易分类:</dt>
+                <dd class="col-sm-4"><select name="" id="" class="search-select">
+                  <option value="">全部</option>
+                  <option value="">进行中</option>
+                  <option value="">等待付款</option>
+                  </select></dd>
+              </dl>    
+            </div>
+            <div class="form-group">
+              <div class="col-md-offset-1 col-md-1">
+                <button type="submit" id="" class="btn btn-warning btn-block">搜索</button>
+              </div>    
+            </div>
+          </form>
+        </div>
+        <!-- 表格部分开始 -->
+        <div class="record-form">
+       <!--      <ul class="record-list">
+             <li class="col-md-1"><a href="/payment/transaction_record">所有状态</a></li>
+             <li class="col-md-1"><a href="/payment/transaction_record">进行中</a></li>
+             <li class="col-md-1"><a href="/payment/transaction_record">等待付款</a></li>
+             <li class="col-md-1"><a href="/payment/transaction_record">等待发货</a></li>
+             <li class="col-md-1"><a href="/payment/transaction_record">确认发货</a></li>
+             <li class="col-md-1"><a href="/payment/transaction_record">退款</a></li>
+             <li class="col-md-1"><a href="/payment/transaction_record">成功</a></li>
+             <li class="col-md-1"><a href="/payment/transaction_record">失败</a></li>
+             <li class="col-md-1"><a href="/payment/transaction_record">维权</a></li>
+             <li class="col-md-3"></li>
+            </ul> -->
+            <table class="table table-striped">
+              <thead>
+                  <tr>
+                    <th class="time" width="">创建时间</th>
+                    <th class="memo" width="3%"></th>
+                    <th class="name" width="">名称</th>
+                    <th class="tradeNo" width="19%">商户订单号<em class="ft-bar">|</em>交易号</th>
+                    <th class="other" width="12%">对方</th>
+                    <th class="amount" width="12%">金额<em class="ft-bar">|</em></th>
+                    <th class="detail" width="5%">明细</th>
+                    <th class="status" width="11%">状态</th>
+                    <th class="action" width="12%">操作</th>
+                  </tr>
+                </thead>
+              <tbody>
+                <tr>
+                  <td class="time">
+                    <span>2017.03.07</span>
+                    <p class="ft-gray">04:39</p>
+                  </td>
+                  <td class="memo"></td>
+                  <td class="name">
+                    <p class="consume-title"><a href="/payment/transaction_record">余额宝-2017.03.06-收益发放</a></p>
+                  </td>
+                  <td class="tradeNo ft-gray">
+                    <p>流水号:20170307100271752611</p>
+                  </td> 
+                  <td class="other">
+                    <p class="name">天弘基金管理有限公司天弘基金管理有限公司</p>
+                  </td>
+                  <td class="amount">
+                   <p class="amount-pay">+ 0.59</p> 
+                  </td>
+                  <td class="detail">
+                    <span class="record-icon"></span>
+                    <div class="poptip-shadow">
+                      <div class="poptip-down"></div>
+                      <div class="poptip-container">
+                          <a href="/payment/transaction_record">点击查看明细</a>
+                      </div>  
+                    </div>  
+                  </td>
+                  <td class="status">
+                    <p>交易成功</p>
+                    <p></p>
+                    <p class="ft-gray"></p> 
+                  </td>
+                  <td class="action">
+                    <div class="current-item">
+                        <span class="item-text">备注</span>
+                        <span class="down-icon"></span>
+                    </div>
+                    <!-- 备注定位 -->
+                    <ul class="custom-menu">
+                      <li class="custom-menu-item">
+                        <a href="/payment/transaction_record" data-toggle="modal" data-target="#myModal">备注</a>
+                      </li>
+                      <li class="custom-menu-item">
+                        <a class="delete">删除</a>
+                      </li>  
+                    </ul>
+                  </td></tr>
+                  <tr>
+                    <td class="time">
+                      <span>2017.03.07</span>
+                      <p class="ft-gray">04:39</p>
+                    </td>
+                    <td class="memo">
+                      <a class="record-flag" data-toggle="modal" data-target="#myModal"><i class="fa fa-flag"></i></a>
+                      <div class="content-memo">
+                        <div class="memo-poptip">
+                          <div class="memo-down"></div>
+                          <div class="fn-clear">
+                            <span class="fn-left">备注：</span>
+                            <span class="memo-info">转账</span>
+                          </div>
+                          <div class="security-tips">请勿备注个人敏感信息</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="name">
+                      <p class="consume-title"><a href="/payment/transaction_record">余额宝-2017.03.06-收益发放</a></p>
+                    </td>
+                    <td class="tradeNo ft-gray">
+                      <p>流水号:20170307100271752611</p>
+                    </td> 
+                    <td class="other">
+                      <p class="name">天弘基金管理有限公司天弘基金管理有限公司</p>
+                    </td>
+                    <td class="amount">
+                     <p class="amount-pay">+ 0.59</p> 
+                    </td>
+                    <td class="detail">
+                      <span class="record-icon"></span>
+                      <div class="poptip-shadow">
+                        <div class="poptip-down"></div>
+                        <div class="poptip-container">
+                            <a href="/payment/transaction_record">点击查看明细</a>
+                        </div>  
+                      </div>  
+                    </td>
+                    <td class="status">
+                      <p>交易成功</p>
+                      <p></p>
+                      <p class="ft-gray"></p> 
+                    </td>
+                    <td class="action">
+                      <div class="current-item">
+                          <span class="item-text">详情</span>
+                          <span class="down-icon"></span>
+                      </div>
+                      <!-- 备注定位 -->
+                      <ul class="custom-menu">
+                        <li class="custom-menu-item">
+                          <a href="/payment/payment_bill_detail.html">详情</a>
+                        </li>
+                        <li class="custom-menu-item">
+                          <a href="/payment/transaction_record" data-toggle="modal" data-target="#myModal">备注</a>
+                        </li>
+                        <li class="custom-menu-item">
+                          <a class="delete">删除</a>
+                        </li>  
+                      </ul>
+                    </td></tr>
+                    <tr>
+                    <td class="time">
+                      <span>2017.03.07</span>
+                      <p class="ft-gray">04:39</p>
+                    </td>
+                    <td class="memo">
+                      <a class="record-flag" data-toggle="modal" data-target="#myModal"><i class="fa fa-flag"></i></a>
+                      <div class="content-memo">
+                        <div class="memo-poptip">
+                          <div class="memo-down"></div>
+                          <div class="fn-clear">
+                            <span class="fn-left">备注：</span>
+                            <span class="memo-info">转账</span>
+                          </div>
+                          <div class="security-tips">请勿备注个人敏感信息</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="name">
+                      <p class="consume-title"><a href="/payment/transaction_record">余额宝-2017.03.06-收益发放</a></p>
+                    </td>
+                    <td class="tradeNo ft-gray">
+                      <p>流水号:20170307100271752611</p>
+                    </td> 
+                    <td class="other">
+                      <p class="name">天弘基金管理有限公司天弘基金管理有限公司</p>
+                    </td>
+                    <td class="amount">
+                     <p class="amount-pay">+ 0.59</p> 
+                    </td>
+                    <td class="detail">
+                      <span class="record-icon"></span>
+                      <div class="poptip-shadow">
+                        <div class="poptip-down"></div>
+                        <div class="poptip-container">
+                            <a href="/payment/transaction_record">点击查看明细</a>
+                        </div>  
+                      </div>  
+                    </td>
+                    <td class="status">
+                      <p>交易成功</p>
+                      <p></p>
+                      <p class="ft-gray"></p> 
+                    </td>
+                    <td class="action">
+                      <div class="current-item">
+                          <span class="item-text">详情</span>
+                          <span class="down-icon"></span>
+                      </div>
+                      <!-- 备注定位 -->
+                      <ul class="custom-menu">
+                        <li class="custom-menu-item">
+                          <a href="/payment/payment_bill_detail.html">详情</a>
+                        </li>
+                        <li class="custom-menu-item">
+                          <a href="/payment/transaction_record" data-toggle="modal" data-target="#myModal">备注</a>
+                        </li>
+                        <li class="custom-menu-item">
+                          <a class="delete">删除</a>
+                        </li>  
+                      </ul>
+                    </td></tr>
+                    <tr>
+                  <td class="time">
+                    <span>2017.03.07</span>
+                    <p class="ft-gray">04:39</p>
+                  </td>
+                  <td class="memo"></td>
+                  <td class="name">
+                    <p class="consume-title"><a href="/payment/transaction_record">余额宝-2017.03.06-收益发放</a></p>
+                  </td>
+                  <td class="tradeNo ft-gray">
+                    <p>流水号:20170307100271752611</p>
+                  </td> 
+                  <td class="other">
+                    <p class="name">天弘基金管理有限公司天弘基金管理有限公司</p>
+                  </td>
+                  <td class="amount">
+                   <p class="amount-pay">+ 0.59</p> 
+                  </td>
+                  <td class="detail">
+                    <span class="record-icon"></span>
+                    <div class="poptip-shadow">
+                      <div class="poptip-down"></div>
+                      <div class="poptip-container">
+                          <a href="/payment/transaction_record">点击查看明细</a>
+                      </div>  
+                    </div>  
+                  </td>
+                  <td class="status">
+                    <p>交易成功</p>
+                    <p></p>
+                    <p class="ft-gray"></p> 
+                  </td>
+                  <td class="action">
+                    <div class="current-item">
+                        <span class="item-text">备注</span>
+                        <span class="down-icon"></span>
+                    </div>
+                    <!-- 备注定位 -->
+                    <ul class="custom-menu">
+                      <li class="custom-menu-item">
+                        <a href="/payment/transaction_record" data-toggle="modal" data-target="#myModal">备注</a>
+                      </li>
+                      <li class="custom-menu-item">
+                        <a class="delete">删除</a>
+                      </li>  
+                    </ul>
+                  </td></tr>
+              </tbody>
+            </table>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('./script')%>
+    <script src="/payment/js/manhua_hoverTips.js"></script>
+    <script>
+  //操作备注显示和隐藏
+    $('.action').on('mouseover',function(){
+      $(this).find('.custom-menu').show()
+    })
+    $('.action').on('mouseout',function(){
+      $(this).find('.custom-menu').hide()
+    })
+  //金额明细的显示和隐藏
+    $('.record-icon').on('mouseover',function(){
+      $(this).siblings('.poptip-shadow').show()
+    })
+    $('.record-icon').on('mouseout',function(){
+      $(this).siblings('.poptip-shadow').hide()
+    })
+    $('.record-flag').on('mouseover',function(){
+      $(this).siblings('.content-memo').show()
+    })
+    $('.record-flag').on('mouseout',function(){
+      $(this).siblings('.content-memo').hide()
+    })
+    $('.content-memo').on('mouseover',function(){
+      $(this).show()
+    })
+    $('.content-memo').on('mouseout',function(){
+        $(this).hide()
+    })   
+    // 删除
+    $('.delete').on('click',function(){
+      $(this).parent().parent().parent().parent('tr').remove()
+    })
+  </script>
+  </body>
+</html>

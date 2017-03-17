@@ -1,7 +1,7 @@
 <aside id="aside" class="sidebar-warp">
 	<div class="sidebar">
   	<div class="sidebar-header">
-      <a href="/" class="brand ellipsis">
+      <a href="/" class="brand ellipsis" title="<%=user.partner.name%>">
 				<i class="fa fa-flag"></i>
 				<strong><%=user.partner.name%></strong>
 			</a>
@@ -9,18 +9,30 @@
     <div class="divide-line"></div>
     <nav>
       <ul id="accordion" class="accordion">
-         <li>
+        <li>
           <div class="link">
             <i class="fa fa-user"></i>账户管理<i class="fa fa-chevron-down"></i>
           </div>
           <ul class="submenu">
             <li><a href="/payment/home" data-href="account_info">账户首页</a></li>
-            <li><a href="/payment/modify_password" data-href="modify_password">修改密码</a></li>
+            <li><a href="/payment/set_identity_info" data-href="set_identity_info">设置身份信息/注册</a></li>
+            <li><a href="/payment/modify_password" data-href="modify_password">重置支付密码</a></li>
+            <li><a href="/payment/modify_cellphone" data-href="modify_cellphone">修改手机号码</a></li>
             <li><a href="/payment/bank_card_manage" data-href="bank_card_manage">银行卡管理</a></li>
             <li><a href="/payment/delivery_address_manage" data-href="delivery_address_manage">收货地址管理</a></li>
           </ul>
         </li>
-        
+        <li>
+          <div class="link">
+            <i class="fa fa-money"></i>支付管理<i class="fa fa-chevron-down"></i>
+          </div>
+          <ul class="submenu">
+            <li><a href="/payment/account_recharge" data-href="account_recharge">账户充值</a></li>
+            <li><a href="/payment/balance_withdrawals" data-href="balance_withdrawals">余额提现</a></li>
+            <li><a href="/payment/income_and_expenditure" data-href="income_and_expenditure">收支明细</a></li>
+            <li><a href="/payment/transaction_record" data-href="transaction_record">交易记录</a></li>
+          </ul>
+        </li>
       </ul>
     </nav>
 	</div>   

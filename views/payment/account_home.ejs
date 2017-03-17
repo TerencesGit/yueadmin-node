@@ -55,7 +55,7 @@
                   </div> 
                 </div>
                 <div class="col-md-10">
-                  <table class="table">
+                  <table class="table table-hover">
                     <thead>
                       <tr>
                         <th class="col-md-4"></th>
@@ -67,37 +67,37 @@
                       <tr>
                         <td>真实姓名</td>
                         <td><span>林青霞 | 已认证</span></td>
-                        <td class="accountc-td"><a href="payment_id_check.html">查看</a></td>
+                        <td class="accountc-td"><a href="/payment/show_authentication">查看</a></td>
                       </tr>
                       <tr>
                         <td>邮箱</td>
                         <td><span>1234562@163.com</span></td>
-                        <td class="accountc-td"><a href="payment_bind_emil.html">修改</a></td>
+                        <td class="accountc-td">已绑定</td>
                       </tr>
                       <tr>
                         <td>手机</td>
                         <td><span>183****1234</span></td>
-                        <td class="accountc-td"><a href="payment_modify_phone.html">修改</a></td>
+                        <td class="accountc-td"><a href="/payment/modify_cellphone">修改</a></td>
                       </tr>
                       <tr>
                         <td>支付密码<i class="fa fa-lock"></i></td>
                         <td><span>在账户资金变动，修改账户信息时需要输入的密码</span></td>
-                        <td class="accountc-td"><a href="payment_reset_pwd.html">重置</a></td>
+                        <td class="accountc-td"><a href="/payment/modify_password">重置</a></td>
                       </tr>
                       <tr>
                         <td>注册时间</td>
                         <td><span>2017年03月11日</span></td>
-                        <td class="accountc-td"><a href="payment_id_check.html">查看账户</a></td>
+                        <td class="accountc-td"><a href="/payment/show_authentication">查看账户</a></td>
                       </tr>
                       <tr>
                         <td>银行卡管理</td>
                         <td><span>未绑定银行卡</span></td>
-                        <td class="accountc-td"><a class="accountc-a" href="payment_bank_card.html">添加</a><!-- |<a  class="accountc-a" href="">管理</a> --></td>
+                        <td class="accountc-td"><a class="accountc-a" href="/payment/add_bank_card">添加</a><!-- |<a  class="accountc-a" href="">管理</a> --></td>
                       </tr>
                       <tr>
                         <td>收货地址</td>
                         <td><span>已添加 <span class="accountc-span">1</span> 个地址，最多可添加<span class="accountc-span">5</span>个地址</span></td>
-                        <td class="accountc-td"><a href="payment_receive_address.html">添加</a>|<a href="payment_address_manage.html">管理</a></td>
+                        <td class="accountc-td"><a href="/payment/add_delivery_address">添加</a>|<a href="/payment/delivery_address_manage">管理</a></td>
                       </tr>
                     </tbody>
                   </table>            
@@ -110,6 +110,6 @@
       </div>
     	<%- include('../footer') %>
     </div>
-    <%- include('../script')%>
+    <%- include('./script')%>
   </body>
 </html>

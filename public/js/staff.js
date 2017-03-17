@@ -232,16 +232,17 @@ function setStaffTitle(tid, sid){
 btnStatus.on('click', function(e){
   staffId = getSelectedStaff(this).id;
   let name = getSelectedStaff(this).name;
-  const status = parseInt($(this).attr('data-id'));
+  const status = parseInt($(this).data('status'));
   const info = status ? '禁用状态' : '启用状态';
+  console.log(staffId, status)
   $.dialog().confirm({message: '确定要将<a>'+name+'</a>设置为'+info})
    .on('confirm', function(){
     setStaffStatus(staffId, status)
    })
 })
-function setStaffStatus(sid, status){
+function setStaffStatus(uid, status){
   $.ajax({
-    url: '/partner/set_staff_status?sid='+ sid+'&&status='+status,
+    url: '/partner/set_staff_status?uid='+ uid+'&&status='+status,
   })
   .done(function(res) {
     if(res.status == 1){

@@ -29,7 +29,7 @@
     padding: 16px 20px;
     border-bottom: 1px dashed #e2e8ed;
     height: auto;
-    background: url(public/img/address.png) no-repeat 20px 20px;
+    background: url(/payment/img/address.png) no-repeat 20px 20px;
     zoom: 1;
   }
   .address-add-list-det {
@@ -98,12 +98,12 @@
   <body>
     <%- include('./aside') %>
     <%- include('../header') %>
-    <div id="main" class="main" data-page="bank_card_manage">
+    <div id="main" class="main" data-page="delivery_address_manage">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">收货地址管理<a class="return" href="javascript:history.go(-1)">返回</a></h3>
+          <h3 class="panel-title">收货地址管理<a class="pull-right" href="javascript:history.go(-1)">返回</a></h3>
         </div>
         <div class="panel-body">
           <div class="bank-head">
@@ -169,7 +169,7 @@
                 </div>          
               </form> 
             </div>
-            <div class="address-add-link " id="J_address_add"><a href="/payment/add_delivery_address" title="添加收货地址">+ 添加收货地址</a></div> 
+            <div class="address-add-link " id="J_address_add"><a href="#" title="添加收货地址">+ 添加收货地址</a></div> 
           </div>
             <!-- 表单修改部分开始 -->
             <div class="address-add-form1 form-hide">
@@ -223,6 +223,22 @@
       </div>
     	<%- include('../footer') %>
     </div>
-    <%- include('../script')%>
+    <%- include('./script')%>
+    <script src="/payment/js/payment_receive_address.js"></script>
+    <script>
+    $('#J_address_add').on('click',function(){
+      $('.address-add-form').removeClass('fn-hide')
+    })
+    $('#cancel').on('click',function(){
+      $('.address-add-form').addClass('fn-hide')
+    })
+
+
+    $('#address-edit').on('click',function(){
+      $('.address-add-form1').removeClass('form-hide')
+      $('.address-add').addClass('fn-hide')
+    })
+    
+  </script>   
   </body>
 </html>

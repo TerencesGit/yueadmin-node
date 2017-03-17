@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./link') %>
+   <style type="text/css">
+      .paycheck-head{
+        padding: 10px 0;
+        border-bottom: 1px solid #d8dad9;
+      }
+      .pay-box{
+        float: left;
+        font-size: 14px;
+        margin-right: 10px;
+      }
+      .pay-money b{
+        color: #598e17;
+      }
+      .paycheck-main{
+        margin-top: 20px;
+      }
+      .paycheckm-bank{
+        width: 190px;
+        height: 38px;
+        border: 1px solid #ddd;
+        background: #fff;
+        margin: 0;
+        padding: 0;
+        line-height: 38px;
+      }
+      .bank-logo{
+        width: 126px;
+        padding: 0;
+        background: url(/payment/img/zhaoshangall.png) no-repeat 5px center;
+        background-size: 80px 20px;
+        display: inline-block;
+        height: 38px;
+        float: left;
+      }
+      .form-group .control-label .security{
+        color: #26bc00;
+        font-size: 16px;
+      }
+      .paycheckm-pwd{
+        width: 180px;
+        cursor: text;
+        background: #fff;
+        position: relative;
+        padding: 0;
+        margin: 0;
+        padding: 10px 0;
+        border: 1px solid #cccccc;
+        border-radius: 2px;
+        margin-right: 8px;
+      }
+      /*.active{
+        border: 1px solid red;
+      }*/
+      .form-group{
+        margin-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="account_recharge">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+         <div class="panel panel-primary">
+          <div class="panel-heading">
+              <h3 class="panel-title">账户充值<a class="return" href="javascript:history.go(-1)">返回</a></h3>
+          </div>
+          <div class="panel-body">
+            <div class="paycheck-head">
+              <div class="pay-box"><span class="">充值到<b>余额</b></span></div>
+              <span class="pay-money"><b>1000.00</b>元</span>
+            </div>
+            <div class="paycheck-main">
+              <form action="" method="post" id="" class="form-horizontal" role="form">
+                <div class="form-group">
+                  <label for="" class="control-label col-md-2">充值方式</label>
+                  <div class="paycheckm-bank col-md-4">
+                    <span class="bank-logo"></span>
+                    <span class="">**8385</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label col-md-2">充值金额</label>
+                  <div class="col-md-2">
+                     <input type="text" name="" id="" class="form-control" placeholder="">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label col-md-offset-2 "><i class="fa security">&#xf058;</i>你在安全的环境中，请放心使用！</label>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label col-md-2">支付宝密码</label>
+                  <div class="col-md-2">
+                    <input type="" name="" id="bankPhone" class="form-control" placeholder="请输入6位数字的支付宝密码">
+                    <i class="fa fa-check-circle"></i>
+                  </div>
+                  <label for="" class="control-label"><a href="payment_forget_password.html">忘记密码？</a></label>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-offset-2 col-md-2">
+                    <button type="submit" id="btnSubmit" class="btn btn-info btn-block">确认充值</button>
+                  </div>    
+                </div>
+              </form>  
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                  &times;
+                </button>
+                <span class="modal-title" id="myModalLabel">
+                  选择银行
+                </span>
+              </div>
+              <div class="modal-body">
+                <div class="address">
+                  开户银行:<input name="" id="start1" autocomplete="off" type="text" placeholder = "请选择/输入城市名称" class="address-city city_input  inputFocus proCityQueryAll proCitySelAll" ov="请选择/输入城市名称">
+                </div>
+                <div class="bank-box">
+                  <ul class="bank-list" data-area="">
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-info">
+                  下一步
+                </button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal -->
+        </div>
+    <%- include('./script')%>
+  </body>
+</html>

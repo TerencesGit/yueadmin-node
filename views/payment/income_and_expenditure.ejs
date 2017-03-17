@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./link') %>
+    <style type="text/css">
+    .account-nav{    
+      height: 150px;
+      background: #1e1b29;
+    }
+    .account-content{
+      background: #f4f5fa;
+      padding: 0 30px
+    }
+    .account-content h3{
+      line-height: 40px;
+      margin-bottom: 20px;
+      font-size: 18px;
+      border-bottom: 1px solid #c6c8d2;
+    }
+    .account-content h3 a{
+      font-size: 12px;
+      margin-left: 10px;
+    }
+    .accountc-return{
+      float: right;
+    }
+    .accountc-return i{
+      margin-right: 5px;
+      font-size: 14px;
+    }
+    .accountn-li{
+      line-height: 150px;
+      text-align: center;
+    }
+    .accountn-li a{
+      color: #999;
+      font-size: 18px;
+    }
+    .account-content> form > .from-group > ul{
+      margin-bottom: 20px;
+    }
+    .accountc-select{
+      padding: 4px 10px;
+      font-size: 14px;
+    }
+    .account-list{
+      background: #fff;
+    }
+    .table>tbody>tr>td{
+      vertical-align: middle;
+      padding: 20px 0;
+    }
+    .accountl-head{
+      padding: 60px 0;
+    }
+    .accountl-head p:nth-child(1) span{
+      color: #1eb974;
+      font-size: 18px;
+    }
+    .accountl-head p:nth-child(2) span{
+      color: #ff7b0e;
+      font-size: 18px;
+    }
+    .accountBtn,.accountBtn1{
+      color: #0ae;
+      cursor: pointer;
+    }
+    .account-content> form > .accountcBasic > .from-group > ul{
+      margin-bottom: 20px;
+    }
+    .accountcBasic,.accountcBtn1{
+      display: none;
+    }
+    .accountc-fa{
+      margin-left: 5px;
+    }
+    table>tbody>tr>td:nth-child(4){
+      color: #1bb974;
+    }
+    table>tbody>tr>td:nth-child(5){
+      color: #ff7b0e;
+    }
+    </style>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="income_and_expenditure">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="account-content">
+            <h3>资产明细<a href="">使用遇到问题?</a><a class="accountc-return" href="javascript:history.go(-1)"><i class="fa">&#xf104;</i>返回</a></h3>
+            <form action="" method="post" id="" class="form-horizontal" role="form">
+              <div class="from-group row">
+                <ul class="col-md-2">
+                  <li class="accountc-li"><select name="" id="" class="accountc-select">
+                    <option value=""><a href="">账户余额|支付宝</a></option>
+                    <option value=""><a href="">最近一月</a></option>
+                    <option value=""><a href="">最近三个月</a></option>
+                    <option value=""><a href="">最近六个月</a></option>
+                    <option value=""><a href="">最近一年</a></option>
+                    <option value=""><a href="">自定义时间</a></option>   
+                    </select></li>
+                </ul>
+              </div>
+              <div class="from-group row">
+                <ul class="col-md-12">
+                  <li class="col-md-1 accountc-li">时间:</li>
+                  <li class="col-md-9">
+                    <input type="text" name="" id="datastar" class="col-sm-2"  value="" placeholder="开始日期">
+                    <input type="text" name="" id="dataend" class="col-sm-offset-1 col-sm-2" value="" placeholder="结束日期">
+                    <div class="col-sm-6">
+                      最近：
+                      <span>1周</span>
+                      <span>1个月</span>
+                      <span>1年</span>
+                      <span>|按月选择</span>
+                    </div>
+                  </li>
+                  <li class="col-md-2 accountcBtn"><a class="">高级筛选<i class="fa accountc-fa">&#xf0d7;</i></a></li>
+                </ul>           
+              </div>
+              <div class="accountcBasic">
+              <div class="from-group row ">
+                <ul class="col-md-8">
+                  <li class="col-md-2 accountc-li">资金流向:</li>
+                  <li class="col-md-1">收入</li>
+                  <li class="col-md-1">支出</li>
+                </ul>           
+              </div>
+              <div class="from-group row">
+                <ul class="col-md-8">
+                  <li class="col-md-2 accountc-li">类型:</li>
+                  <li class="col-md-1">充值</li>
+                  <li class="col-md-1">提现</li>
+                  <li class="col-md-1">其他</li>
+                </ul>           
+              </div>
+              <div class="from-group row ">
+                <ul class="col-md-8">
+                  <li class="col-md-2 accountc-li">金额区间:</li>
+                  <li class="col-md-6">
+                    <input type="text" class="col-sm-3">
+                    <input type="text" class="col-sm-offset-1 col-sm-3">元
+                  </li>
+                </ul>           
+              </div>
+              <div class="from-group row">
+                <ul class="col-md-8">
+                  <li class="col-md-2 accountc-li">关键词:</li>
+                  <li class="col-md-10">
+                    <input type="text" class="col-sm-7" style="font-size: 12px;" placeholder="输入银行名称、网店合作商、消费卡、备注等关键词">
+                  </li>
+                </ul>           
+              </div>
+               <div class="form-group">
+                <div class="col-md-offset-1 col-md-1">
+                  <button type="submit" id="" class="btn btn-warning btn-block">筛选</button>
+                </div>
+                <div class="col-md-offset-8 col-md-2"><a class="accountcBtn1">基本筛选<i class="fa accountc-fa">&#xf0d8;</i></a></div>    
+              </div>
+              </div>
+             
+            </form>
+          </div>
+          <!-- 主体部分结束 -->
+          <!-- 列表部分开始 -->
+          <div class="account-list">
+            <div class="accountl-head row">
+              <p class="col-md-offset-4 col-md-2">收入：<span>22734.96</span>元</p>
+              <p class="col-md-2">支出：<span>22734.96</span>元</p>
+            </div>
+            <div>
+              <table class="table">
+                <thead>
+                    <tr>
+                      <th class="col-md-2">流水号</th>
+                      <th class="col-md-2">日期</th>
+                      <th class="col-md-2">名称|备注</th>
+                      <th class="col-md-1">收入（元）</th>
+                      <th class="col-md-1">支出（元）</th>
+                      <th class="col-md-2">账户余额（元）</th>
+                      <th class="col-md-1">支付方式</th>
+                      <!-- <th class="col-md-1">详情</th> --></tr>
+                  </thead>
+                <tbody>
+                  <tr>
+                    <td>12345678901234567</td>
+                    <td>2017-02-17 12:09</td>
+                    <td>提现</td>
+                    <td>9.00</td>
+                    <td></td>
+                    <td>0.00</td>
+                    <td>招商银行</td></tr>
+                  <tr>
+                    <td>12345678901234567</td>
+                    <td>2017-02-17 12:09</td>
+                    <td>提现</td>
+                    <td></td>
+                    <td>-6.00</td>
+                    <td>0.00</td>
+                    <td>招商银行</td></tr>
+                  <tr>
+                    <td>12345678901234567</td>
+                    <td>2017-02-17 12:09</td>
+                    <td>提现</td>
+                    <td></td>
+                    <td>-6.00</td>
+                    <td>0.00</td>
+                    <td>招商银行</td></tr>
+                  <tr>
+                    <td>12345678901234567</td>
+                    <td>2017-02-17 12:09</td>
+                    <td>提现</td>
+                    <td></td>
+                    <td>-6.00</td>
+                    <td>0.00</td>
+                    <td>招商银行</td></tr>
+                  <tr>
+                    <td>12345678901234567</td>
+                    <td>2017-02-17 12:09</td>
+                    <td>提现</td>
+                    <td></td>
+                    <td>-6.00</td>
+                    <td>0.00</td>
+                    <td>招商银行</td></tr>
+                  <tr>
+                    <td>12345678901234567</td>
+                    <td>2017-02-17 12:09</td>
+                    <td>提现</td>
+                    <td></td>
+                    <td>-6.00</td>
+                    <td>0.00</td>
+                    <td>招商银行</td></tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('./script')%>
+  </body>
+</html>

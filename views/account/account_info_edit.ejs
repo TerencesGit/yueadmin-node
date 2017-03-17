@@ -41,17 +41,17 @@
                     <label class="col-md-2 control-label">性别</label>
                     <div class="col-md-6">
                       <% if(user.gender == '0'){ %> 
-                      <label class="checkbox-inline">
+                      <label class="radio-inline">
                         <input type="radio" name="user[gender]" value="0" checked>男
                       </label>
-                      <label class="checkbox-inline">
+                      <label class="radio-inline">
                         <input type="radio" name="user[gender]" value="1">女
                       </label>
                       <% }else{ %>
-                      <label class="checkbox-inline">
+                      <label class="radio-inline">
                         <input type="radio" name="user[gender]" value="0" >男
                       </label>
-                      <label class="checkbox-inline">
+                      <label class="radio-inline">
                         <input type="radio" name="user[gender]" value="1" checked>女
                       </label>
                       <%}%>

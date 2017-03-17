@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./link') %>
+   <style type="text/css">
+    .panel-body{
+      padding: 40px 30px;
+    }
+    .withdrawt{
+      border:1px solid #bcccf0;
+      background:#fcfcfd;
+      height:auto;
+    }
+    .withdrawt-tit{
+      padding:15px 30px;
+      height:29px;
+      border-bottom:1px solid #afbedf;
+      background: url(/payment/img/reflect.png) repeat-x 0 0;
+      height: 60px;
+    }
+    .withdrawt-tit .title{
+      float:left;
+      display:inline-block;      
+      color:#4d4d4d;
+      font:700 18px/28px \5FAE\8F6F\96C5\9ED1;
+      margin:0;
+    }
+    .withdrawt-tit .amount{
+      float:left;
+      display:inline-block;
+      padding-left:30px;
+      line-height:28px;
+      font-size:12px;
+    }
+    .withdrawt-tit .amount .number{
+      font-size:20px;
+      font-family:Tahoma;
+      color:#fc491e;
+      padding-right:3px;
+    }
+    .withdrawt-tit .link{
+      float:right;
+      height:28px;
+      line-height:28px;
+      font-size:14px;
+    }
+    .withdrawt-tit .link .add{
+      padding-left:24px;
+      background: url(/payment/img/reflect.png) no-repeat -184px -68px; 
+    }
+    .withdrawt-tit .link .separator{
+      padding:0 5px;
+      color:#b2b2b2;
+    }
+    .withdrawt-det{
+      padding: 20px 30px
+    }
+    .choose{
+      position: relative;
+      min-height: 55px;
+      height: 90px;
+    }
+    .choose-more {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 50px;
+      height: 20px;
+      padding: 8px 0;
+      font-size: 14px;
+      padding-left: 10px;
+    }  
+    .choose-more .link{
+      color: #08c;
+      padding-left: 25px;
+      height: 20px;
+      line-height:21px;
+      display: block;
+      background: url(/payment/img/reflect.png) no-repeat  -184px -293px;
+    }
+    .choose-list{
+      background: #ecf3f8;
+      height: 48px;
+      padding: 7px;
+      position: absolute;
+      border: 1px solid #90c1dc;
+      border-radius: 3px 3px;
+      left: 0;
+      z-index: 100;
+      cursor: pointer;
+      zoom: 1;
+    }
+    .b-radio {
+      float: left;
+      margin-top: 6px;
+    }
+    .b-logo {
+      float: left;
+      margin-left: 5px;
+      padding: 1px 0;
+      height: 30px;
+      line-height: 30px;
+      color: #030303;
+      font-size: 14px;  
+    }
+    .choose-radio{
+      margin: 4px 0 0;
+    }
+    .b-logo .bank {
+      display: inline-block;
+      float: left;
+      line-height: 30px;
+    }
+    .b-logo .bank .icon-bank{
+      margin: 8px 3px 7px 0;
+      height: 15px;
+      width: 25px;
+      float: left;
+      display: block;
+      overflow: hidden;
+      background: url(/payment/img/zhaoshang.png) no-repeat center;
+    }
+    .b-logo .num {
+      display: inline-block;
+      float: left;
+      color: #363c47;
+      line-height: 30px;
+      padding-left: 10px;
+    }
+    .b-logo .bank-map {
+      display: inline-block;
+      float: left;
+      color: #fefefe;
+      background: #73a6cb;
+      height: 16px;
+      line-height: 14px;
+      font-size: 12px;
+      padding: 0 1px;
+      margin: 8px 0 8px 5px;
+      border-radius: 1px 1px;
+      vertical-align: middle;
+      zoom: 1;
+    }
+    .b-logo .b-time {
+      float: left;
+      height: 16px;
+      line-height: 16px;
+      padding: 8px 90px;
+    }
+    .t-pentagon {
+      display: inline-block;
+      height: 16px;
+      line-height: 14px;
+      font-size: 12px;
+      padding-left: 8px;
+      overflow: hidden;
+      background: url(/payment/img/reflect.png) no-repeat 0 -91px;
+    }
+    .t-pentagon-text {
+      padding: 1px 1px;
+      background: #75a6c9;
+      color: #fefefe;
+      display: inline-block;
+    }
+    .b-amount {
+      float: left;
+      height: 18px;
+      color: #9a9a9a;
+      font-size: 14px;
+    }
+    .b-action {
+      float: right;
+      margin-left: 8px;
+      padding-top: 2px;
+      font-size: 14px;
+      height: 30px;
+    }
+    .form-horizontal .text-left{
+      text-align: left;
+    }
+     .form-horizontal .text-left input{
+      margin-right: 5px;
+     }
+    </style>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="balance_withdrawals">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+       <div class="panel panel-primary">
+          <div class="panel-heading">
+              <h3 class="panel-title">余额提现<a class="return" href="javascript:history.go(-1)">返回</a></h3>
+          </div>
+          <div class="panel-body">
+            <div class="withdrawt">
+              <div class="withdrawt-tit">
+                <h2 class="title">提取余额到银行卡</h2>
+                <p class="amount">余额：<span class="number">42.02</span>元</p>
+                <div class="link">
+                  <a class="add J-addBank" href="/payment/add_bank_card">添加银行卡</a>
+                  <span class="separator">|</span>
+                  <a href="" title="提现记录" target="" class="record">提现记录</a>
+                </div>
+              </div>
+              <!-- //withdrawt-tit -->
+              <div class="withdrawt-det">
+                <form action="" method="post" id="" class="form-horizontal" role="form">
+                  <div class="form-group">
+                    <label for="" class="control-label col-md-2">选择银行卡</label>
+                    <div class="col-md-10 choose">
+                      <div class="choose-list col-md-10">
+                        <div class="b-radio">
+                          <input type="radio" class="choose-radio" value="">
+                        </div>
+                        <div class="b-logo col-md-11">
+                          <div class="bank">
+                            <span class="icon-bank"></span>
+                            <span>招商银行</span>
+                          </div>
+                          <div class="num">尾号：<span>8583</span></div>
+                          <div class="bank-map">
+                            <span>快捷</span>
+                          </div>
+                          <div class="b-time">
+                            <div class="t-pentagon">
+                              <span class="t-pentagon-text">次日</span>
+                            </div>
+                          </div>
+                          <div class="b-amount">
+                            <span>单笔500000.00，单日...</span>
+                          </div>
+                          <div class="b-action">管理</div>
+                        </div>
+                      </div>
+                      <div class="choose-more">
+                        <a href="" class="link">选择其他银行</a>
+                      </div>
+                    </div>
+                  </div>  
+                  <div class="form-group">
+                    <label for="" class="control-label col-md-2">提现金额</label>
+                    <div class="col-md-2">
+                      <input type="text" name="" id="" class="form-control" placeholder="">
+                    </div>
+                    <label for="" class="control-label">元</label>
+                  </div> 
+                  <div class="form-group">
+                    <label for="" class="control-label col-md-2">到账时间</label>
+                    <label for="" class="control-label col-md-2 text-left"><input type="radio">次日到账</label>
+                  </div>                  
+                  <div class="form-group submit">
+                    <div class="col-md-offset-2 col-md-2">
+                      <button type="submit" id="btnFindPasswd" class="btn btn-warning btn-block">下一步</button>
+                    </div>
+                  </div>                    
+                </form> 
+              </div>
+          </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('./script')%>
+  </body>
+</html>

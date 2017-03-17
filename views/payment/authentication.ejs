@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./link') %>
+    <style>
+    .panel-body{
+      padding: 60px 40px;
+    }
+    .checkh-img{
+      float: left;
+      width: 80px;
+      height: 80px;
+      margin-right: 40px;
+    }
+    .checkh-img .avatar{
+      width: 80px;
+      height: 80px;
+      border-radius: 4px;
+    }
+    .cert-name{
+      color: #262626;
+      line-height: 29px;
+      text-align: left;
+      font-size: 20px;
+    }
+    .cert-pass{
+      color: #0ae;
+      border: 1px solid #0ae;
+      display: inline-block;
+      padding: 3px 7px;
+      line-height: 1;
+      border-radius: 4px;
+      position: relative;
+      top: -3px;
+      margin-left: 10px;
+    }
+    .check-main{
+      /*border-bottom: 1px solid #e5e5e5;*/
+      margin-bottom: 30px;
+    }
+    .main-title{
+      font-size: 16px;
+      color: #1a1a1a;
+      line-height: 22px;
+      margin-bottom: 10px;
+      margin-top: 70px;
+      border-top: 1px solid #e5e5e5;
+      padding-top: 30px;
+    }
+    .account-count {
+      color: #0ae;
+      padding: 0 6px;
+    }
+    .sub-title {
+      margin-left: 5px;
+      font-size: 16px;
+      color: gray;
+    }
+    .account-item {
+      font-size: 16px;
+      color: gray;
+      line-height: 22px;
+      margin-top: 10px;
+    }
+    .account-item {
+      font-size: 16px;
+      color: gray;
+      line-height: 22px;
+      margin-top: 10px;
+    }
+    .fa{
+      font-size: 22px;
+      color: #0ae;
+    }
+  </style>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="set_identity_info">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+        <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">身份校验<a class="pull-right" href="javascript:history.go(-1)">返回</a></h3>
+        </div>
+        <div class="panel-body">
+            <div class="checkh-img">
+              <img src="https://tfsimg.alipay.com/images/partner/T1PzBeXoFlXXXXXXXX" class="avatar">
+            </div> 
+            <div class="checkh-person">
+              <span class="cert-name">林青霞</span>
+              <span class="cert-pass">已实名</span>
+            </div> 
+            <div class="main-title">
+              你的名下共有<span class="account-count">1</span>个账户
+              <span class="sub-title">以下账户共享身份信息以及收付款额度</span>
+            </div>
+            <div class="account-item">
+              <span class="account-logonid">htt****@163.com</span>
+              （绑定手机：183****1234）
+              <i class="fa">&#xf058;</i>
+            </div>  
+        </div>
+      </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('./script')%>
+  </body>
+</html>

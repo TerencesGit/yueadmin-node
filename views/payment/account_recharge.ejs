@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./link') %>
+  <style type="text/css">
+    .rechargeh-left{
+      border: 3px solid #bbcbef;
+      font-size: 14px;
+      color: #333;
+      display: block;
+      height: 66px;
+      padding: 14px 20px 0;
+    }
+   .recharge-main{
+      border: 3px solid #bbcbef;
+    }
+    /*.fa{
+      font-size: 40px;
+      color: #b5de70;  
+    }*/
+    .rechargeh-span{
+      float: left;
+      padding-top: 10px;
+    }
+    .rechargeh-fa{
+       float: left;
+      margin-right: 10px;
+    }
+    .rechargeh-money{
+      float: right;
+      padding-top: 10px;
+    }
+    .rechargeh-money b{
+      color: #688e00;
+    }
+    .recharge-main{
+      margin-top: 30px;
+      padding: 5px 10px;
+    }
+    .rechargem-main{
+       background-color: #f4f6fd;
+       height: 165px;
+    }
+    .kj-area{
+      background-color: #f4f6fd;
+      padding: 20px 0 0 10px;
+      margin-bottom: 30px;
+    }
+    .icon{
+      float: left;
+      width: 92px;
+      height: 26px;
+      margin-top: 4px;
+      margin-left: 5px;
+      background: url(/payment/img/spritemap3.png) no-repeat 0 -616px;
+      padding: 0 10px;
+      color: #07F;
+      font-weight: bold;
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+    }
+    .kuaiicon {
+      float: left;
+      width: 106px;
+      height: 17px;
+      line-height: 26px;
+      margin-top: 10px;
+      margin-right: 15px;
+      background: url(/payment/img/spritemap3.png) no-repeat 0 -651px;
+    }
+    .poptip{
+      float: left;
+      margin-right: 10px;
+      z-index: 101;
+      zoom: 1;
+      line-height: 30px;
+      padding: 0 10px;
+      font-size: 12px;
+      background: #fff;
+      border: 1px solid #bbcbef;
+    }
+    .poptip-map{
+      height: 20px;
+      width: 22px;
+      line-height: 30px;
+      float: left;
+      margin-top: 5px;
+      margin-right: 5px;
+      background: url(/payment/img/spritemap3.png) no-repeat 0 -680px;
+    }
+    .long-logo{
+      padding: 40px 20px 0 10px;
+    }
+    .logo-main{
+      float: left;
+      margin: 0 10px;
+    }
+    .logo-main input{
+      float: left;
+      margin-top: 14px;
+    }
+    .bank-logo{
+      border: 1px solid #ddd;
+      width: 190px;
+      line-height: 36px;
+      float: left;
+      margin-left: 5px;
+      background: #fff;    
+    }
+    .logo{
+      float: left;
+      width: 126px;
+      padding: 0;
+      background: url(/payment/img/zhaoshangall.png) no-repeat 5px center;
+      background-size: 80px 20px;
+      display: inline-block;
+      height: 38px;
+    }
+    .more{
+      float: right;
+      padding-top: 6px;
+    }
+    .more-icon{
+      display: block;
+      height: 12px;
+      margin: 0 auto;
+      width: 14px;
+      height: 8px;
+      background: url(/payment/img/spritemap3.png) no-repeat -150px -35px;
+    }
+    .form-group{
+      margin-top: 40px;
+    }
+
+    /*模态窗*/
+    .modal-content{
+      width: 700px;
+      height: 530px;
+    }
+    .modal-body{
+      height: 420px;
+    }
+    .modal-title{
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .address-city{
+      width: 160px;
+      margin-left: 10px;
+    }
+    .bank-box{
+      height: 350px;
+      overflow: hidden;
+      overflow-y:auto;
+      margin-top: 15px;
+    }
+    .bank-list{
+      overflow: hidden;   
+    }
+    .bank-list-logo{
+      float: left;
+      margin: 20px 30px 0 0;
+      width: 180px;
+    }
+    .bank-list-left{
+      margin-left: 20px;
+    }
+    .bank-list-logo input{
+      margin: 14px 6px 0 0;
+      float: left;
+
+    }
+    .bank-map{
+      width: 160px;
+      height: 38px;
+     /* border: 1px solid #fa3!important;*/
+      float: left;
+      border: 1px solid #ddd;
+    }
+    .map{
+      width: 126px;
+      height: 38px;
+      background: url(/payment/img/nonghang.png) no-repeat;
+      background-size: 126px 36px;
+      display: inline-block;
+      float: left;
+    }
+    .modal-footer{
+      text-align: left;
+    }
+    </style>
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="account_recharge">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+           <div class="panel panel-primary">
+          <div class="panel-heading">
+              <h3 class="panel-title">账户充值<a class="pull-right" href="javascript:history.go(-1)">返回</a></h3>
+          </div>
+          <div class="panel-body">
+            <div class="rechargeh-left">
+              <div class="rechargeh-fa"><i class="fa">&#xf058;</i></div>
+              <div class="rechargeh-span"><span class="">充值到<b>余额</b></span></div>
+              <span class="rechargeh-money"><b>1000.00</b>元</span>
+            </div>
+            <div class="recharge-main">
+              <form action="/payment/account_recharge_confirm" method="get" id="" class="form-horizontal" role="form">
+                <h3 class="rechargem-head">储蓄卡</h3>
+                <div class="rechargem-main">
+                  <div class="kj-area">
+                    <span class="icon"></span>
+                    <span class="kuaiicon"></span>
+                    <div class="poptip">
+                      <span class="poptip-map"></span>
+                      <span class="">付款过程安全流畅</span>
+                    </div>
+                  </div>
+                  <ul class="long-logo">
+                    <li class="logo-main">
+                      <input type="radio" class="radio1">
+                      <div class="bank-logo">
+                        <span class="logo"></span>
+                        **8385
+                      </div>
+                    </li>
+                     <li class="logo-main">
+                      <input type="radio"  class="radio1">
+                      <div class="bank-logo">
+                        <span class="logo"></span>
+                        **8385
+                      </div>
+                    </li>
+                     <li class="logo-main">
+                      <input type="radio"  class="radio1">
+                      <div class="bank-logo">
+                        <span class="logo"></span>
+                        **8385
+                      </div>
+                    </li>
+                     <li class="more">
+                        <a href=""  data-toggle="modal" data-target="#myModal">选择其他<b class="more-icon"></b></a>
+                    </li>
+                </ul>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-offset-1 col-md-1">
+                    <button type="submit" id="btnSubmit" class="btn btn-info btn-block">下一步</button>
+                  </div>    
+                </div>
+              </form>  
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                  &times;
+                </button>
+                <span class="modal-title" id="myModalLabel">
+                  选择银行
+                </span>
+              </div>
+              <div class="modal-body">
+                <div class="address">
+                  开户银行:<input name="" id="start1" autocomplete="off" type="text" placeholder = "请选择/输入城市名称" class="address-city city_input  inputFocus proCityQueryAll proCitySelAll" ov="请选择/输入城市名称">
+                </div>
+                <div class="bank-box">
+                  <ul class="bank-list" data-area="">
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                    <li class="bank-list-logo bank-list-left">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                     <li class="bank-list-logo">
+                       <input type="radio">
+                        <div class="bank-map">
+                          <span class="map"></span>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-info">
+                  下一步
+                </button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal -->
+        </div>
+    <%- include('./script')%>
+  </body>
+</html>

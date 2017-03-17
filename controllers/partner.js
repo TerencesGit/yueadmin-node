@@ -572,19 +572,37 @@ exports.setStaffTitle = function(req, res){
 		res.json({status: 0})
 	}
 }
-//设置部门状态
+//设置员工状态
 exports.setStaffStatus = function(req, res){
-	var sid = req.query.sid;
-	var status = parseInt(req.query.status) ? 0 : 1;
-	console.log(sid, status)
-	if(sid){
-		User.update({_id: sid}, {$set: {status: status}}, function(err, msg){
-			if(err) console.log(err)
-				res.json({status: 1})
-		})
-	}else{
-		res.json({status: 0})
-	}
+	const uid = req.query.uid;
+	const statu = parseInt(req.query.status) ? 0 : 1;
+	console.log(uid, statu)
+	User.findById(uid, function(err, user){
+		console.log(user.name)
+		if(err) {
+			console.log(err);
+			return res.json({status: 0})
+		}else{
+			if(user.status == statu){
+				console.log('已经设置过')
+				return res.json({status: 0})
+			}else{
+				user.update({$set: {status: statu}}, function(err, msg){
+					if(err) console.log(err)
+					  res.json({status: 1})
+				})
+			}
+		}
+	})
+	// if(uid){
+	// 	User.update({_id: uid}, {$set: {status: status}}, function(err, msg){
+	// 		if(err) console.log(err)
+
+	// 		res.json({status: 1})
+	// 	})
+	// }else{
+	// 	res.json({status: 0})
+	// }
 }
 
 //账户代注册
