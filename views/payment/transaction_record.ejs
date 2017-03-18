@@ -334,7 +334,34 @@
       font-size: 14px;
       margin-left: 80px;
     }
+    .arrow_box {
+      position: relative;
+      background: #d5c1a4;
+      border: 3px solid #f58e40;
+    }
+    .arrow_box:after, .arrow_box:before {
+      top: 100%;
+      left: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
 
+    .arrow_box:after {
+      border-color: rgba(213, 193, 164, 0);
+      border-top-color: #d5c1a4;
+      border-width: 30px;
+      margin-left: -30px;
+    }
+    .arrow_box:before {
+      border-color: rgba(245, 142, 64, 0);
+      border-top-color: #f58e40;
+      border-width: 34px;
+      margin-left: -34px;
+    }
 
   </style>
   </head>
@@ -356,6 +383,7 @@
         </nav> -->
         <!-- 头部导航结束 -->
         <!-- 主体部分开始 -->
+        <div class="arrow_box">123456</div>
         <div class="record-main">
           <h3>交易记录<span class="record-mright">可用余额<b>1000.00</b>元<a href="/payment/payment_revenue_expenditure.html">余额收支明细</a>|<a href="/payment/payment_recycle_bill.html"><i class="fa fa-trash"></i>回收站</a></span></h3>
           <form action="/payment/transaction_search_result" method="get" id="" class="form-horizontal" role="form">
@@ -716,15 +744,15 @@
     $('.record-icon').on('mouseover',function(){
       $(this).siblings('.poptip-shadow').show()
     })
-    $('.record-icon').on('mouseout',function(){
-      $(this).siblings('.poptip-shadow').hide()
-    })
+    // $('.record-icon').on('mouseout',function(){
+    //   $(this).siblings('.poptip-shadow').hide()
+    // })
     $('.record-flag').on('mouseover',function(){
       $(this).siblings('.content-memo').show()
     })
-    $('.record-flag').on('mouseout',function(){
-      $(this).siblings('.content-memo').hide()
-    })
+    // $('.record-flag').on('mouseout',function(){
+    //   $(this).siblings('.content-memo').hide()
+    // })
     $('.content-memo').on('mouseover',function(){
       $(this).show()
     })

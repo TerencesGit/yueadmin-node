@@ -458,7 +458,7 @@ body {
 .form-control, .btn, 
 .modal-content, .alert {
   border-radius: 0;
-}
+} 
 .ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;

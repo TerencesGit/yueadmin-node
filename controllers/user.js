@@ -527,7 +527,7 @@ exports.registeredPartnerResult = function(req, res){
 exports.userlist = function(req, res){
 	var page = {
 		number: req.query.page || 1,
-		limit: 5
+		limit: 10
 	}
 	var search = req.query.search || {};
 	if(req.query.page){
@@ -537,12 +537,19 @@ exports.userlist = function(req, res){
 		page: page,
 	  search: search
 	}
+	var totalNumber;
+	User.find({})
+			.exec(function(err, users){
+				if(err) console.log(err)
+					totalNumber = users.length;
+			})
 	User.findByPagination(model, function(err, pageIndex, pageCount, users){
 		res.render('admin/userlist', {
 				title: '用户列表',
 				users: users,
 				pageCount: pageCount,
-				pageIndex: pageIndex
+				pageIndex: pageIndex,
+				totalNumber: totalNumber
 			})
 	})
 }

@@ -16,8 +16,8 @@
               <tr class="success">
                 <th>用户名</th>
                 <th>Email</th>
-                <th>手机号</th>
-                <th>QQ</th>
+                <!-- <th>手机号</th>
+                <th>QQ</th> -->
                 <th>生日</th>
                 <th>地址</th>
                 <th>身份证号</th>
@@ -34,13 +34,12 @@
                 <tr data-id="<%= user._id%>">
                   <td class="name"><%= user.name %></td>
                   <td class="email"><%= user.email %></td>
-                  <td><%= user.mobile %></td>
-                  <td><%= user.qq %></td>
+                 <!--  <td><%= user.mobile %></td>
+                  <td><%= user.qq %></td> -->
                   <td><% if(user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD') %><%}%></td>
                   <td><%= user.address %></td>
                   <td><%= user.idcard %></td>
                   <td><% if(user.gender == '0') {%> 男 <% }else{%> 女 <%}%></td>
-                  <!-- <%= moment(user.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %> -->
                   <td><%= moment(user.meta.createAt).format('YYYY-MM-DD HH:mm:ss') %></td>
                   <td><%if(user.partner){%><%= user.partner.name %><%}%></td>
                   <td><%if(user.organize){%><%= user.organize.name %><%}%></td>
@@ -53,13 +52,16 @@
               <% })%>
             </tbody>
           </table>
-          <ul class="pagination">
-            <li class="<%if(pageIndex == 1){%>disabled<%}%>"><a href="/user/list?page=<%= pageIndex*1-1 == 0 ? 1 : pageIndex*1-1 %>">&laquo;</a></li>
-            <% for(var i = 1; i <= pageCount; i++){%>
-              <li class="<%if(pageIndex == i){%>active<%}%>"><a href="/user/list?page=<%=i%>"><%=i%></a></li>
-            <% }%>  
-            <li class="<%if(pageIndex == pageCount){%>disabled<%}%>"><a href="/user/list?page=<%= pageIndex*1 == pageCount ? pageCount : pageIndex*1+1 %>">&raquo;</a></li> 
-          </ul>
+          <div class="clearfix">
+            <p class="pull-right">第<%=pageIndex%>页，共<%=pageCount%>页，共<%=totalNumber%>条数据</p>
+            <ul class="pagination pull-left">
+              <li class="<%if(pageIndex == 1){%>disabled<%}%>"><a href="/user/list?page=<%= pageIndex*1-1 == 0 ? 1 : pageIndex*1-1 %>">&laquo;</a></li>
+              <% for(var i = 1; i <= pageCount; i++){%>
+                <li class="<%if(pageIndex == i){%>active<%}%>"><a href="/user/list?page=<%=i%>"><%=i%></a></li>
+              <% }%>  
+              <li class="<%if(pageIndex == pageCount){%>disabled<%}%>"><a href="/user/list?page=<%= pageIndex*1 == pageCount ? pageCount : pageIndex*1+1 %>">&raquo;</a></li> 
+            </ul>
+          </div>
           <div class="warp-footer"></div>
         </div>
       </div>
