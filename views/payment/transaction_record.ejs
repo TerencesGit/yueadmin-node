@@ -165,8 +165,8 @@
       width: 52px; 
       z-index: 99; 
       position: absolute; 
-      left: 74px; 
-      top: 16px; 
+      left: 65px; 
+      /*top: 16px; */
       background: #fff;
       text-align: center;
       color: #0188CC;
@@ -182,11 +182,11 @@
     }
     .custom-menu li:first-child{
       border-top: 1px solid #c4c4c4;
-      border-radius: 3px 3px 0 0;
+      /*border-radius: 3px 3px 0 0;*/
     }
     .custom-menu li:last-child{
       border-bottom: 1px solid #c4c4c4;
-      border-radius: 3px 3px 0 0;
+      /*border-radius: 3px 3px 0 0;*/
     }
     .custom-menu-item:hover{
       background:#ff6600;
@@ -335,13 +335,20 @@
       margin-left: 80px;
     }
     .arrow_box {
-      position: relative;
-      background: #d5c1a4;
-      border: 3px solid #f58e40;
+      display: none;
+      position: absolute;
+      top: -20px;
+      left: -10px;
+      width: 110px;
+      padding: 5px 12px;
+      font-size: 12px;
+      background: #FFFCEF;
+      border: 1px solid #ffbb76;
+      border-radius: 3px
     }
     .arrow_box:after, .arrow_box:before {
       top: 100%;
-      left: 50%;
+      left: 20%;
       border: solid transparent;
       content: " ";
       height: 0;
@@ -352,17 +359,32 @@
 
     .arrow_box:after {
       border-color: rgba(213, 193, 164, 0);
-      border-top-color: #d5c1a4;
-      border-width: 30px;
-      margin-left: -30px;
+      border-top-color: #FFFCEF;
+      border-width: 6px;
+      margin-left: -6px;
     }
     .arrow_box:before {
       border-color: rgba(245, 142, 64, 0);
-      border-top-color: #f58e40;
-      border-width: 34px;
-      margin-left: -34px;
+      border-top-color: #ffbb76;
+      border-width: 7px;
+      margin-left: -7px;
     }
-
+    .detail:hover .arrow_box {
+      display: block;
+    }
+    .memo:hover .content-memo {
+      display: block;
+    }
+    .current-item .custom-menu {
+      display: none;
+      position: absolute;
+    }
+    .current-item:hover .custom-menu {
+      display: block;
+    }
+    .current-item:hover {
+      background: #fff
+    }
   </style>
   </head>
   <body>
@@ -383,7 +405,6 @@
         </nav> -->
         <!-- 头部导航结束 -->
         <!-- 主体部分开始 -->
-        <div class="arrow_box">123456</div>
         <div class="record-main">
           <h3>交易记录<span class="record-mright">可用余额<b>1000.00</b>元<a href="/payment/payment_revenue_expenditure.html">余额收支明细</a>|<a href="/payment/payment_recycle_bill.html"><i class="fa fa-trash"></i>回收站</a></span></h3>
           <form action="/payment/transaction_search_result" method="get" id="" class="form-horizontal" role="form">
@@ -524,13 +545,14 @@
                    <p class="amount-pay">+ 0.59</p> 
                   </td>
                   <td class="detail">
+                    <div class="arrow_box"><a href="#">点击查看明细</a></div>
                     <span class="record-icon"></span>
-                    <div class="poptip-shadow">
+                    <!-- <div class="poptip-shadow">
                       <div class="poptip-down"></div>
                       <div class="poptip-container">
                           <a href="/payment/transaction_record">点击查看明细</a>
                       </div>  
-                    </div>  
+                    </div>   -->
                   </td>
                   <td class="status">
                     <p>交易成功</p>
@@ -539,18 +561,23 @@
                   </td>
                   <td class="action">
                     <div class="current-item">
-                        <span class="item-text">备注</span>
+                        <a href="#" class="item-text">备注</a>
                         <span class="down-icon"></span>
+                        <ul class="custom-menu">
+                          <li class="custom-menu-item">
+                            <a href="#" class="delete">删除</a>
+                          </li>  
+                        </ul>
                     </div>
                     <!-- 备注定位 -->
-                    <ul class="custom-menu">
+                 <!--    <ul class="custom-menu">
                       <li class="custom-menu-item">
                         <a href="/payment/transaction_record" data-toggle="modal" data-target="#myModal">备注</a>
                       </li>
                       <li class="custom-menu-item">
                         <a class="delete">删除</a>
                       </li>  
-                    </ul>
+                    </ul> -->
                   </td></tr>
                   <tr>
                     <td class="time">
@@ -583,13 +610,14 @@
                      <p class="amount-pay">+ 0.59</p> 
                     </td>
                     <td class="detail">
+                      <div class="arrow_box"><a href="#">点击查看明细</a></div>
                       <span class="record-icon"></span>
-                      <div class="poptip-shadow">
+                      <!-- <div class="poptip-shadow">
                         <div class="poptip-down"></div>
                         <div class="poptip-container">
                             <a href="/payment/transaction_record">点击查看明细</a>
                         </div>  
-                      </div>  
+                      </div>  --> 
                     </td>
                     <td class="status">
                       <p>交易成功</p>
@@ -645,13 +673,14 @@
                      <p class="amount-pay">+ 0.59</p> 
                     </td>
                     <td class="detail">
+                      <div class="arrow_box"><a href="#">点击查看明细</a></div>
                       <span class="record-icon"></span>
-                      <div class="poptip-shadow">
+                      <!-- <div class="poptip-shadow">
                         <div class="poptip-down"></div>
                         <div class="poptip-container">
                             <a href="/payment/transaction_record">点击查看明细</a>
                         </div>  
-                      </div>  
+                      </div>   -->
                     </td>
                     <td class="status">
                       <p>交易成功</p>
@@ -695,13 +724,14 @@
                    <p class="amount-pay">+ 0.59</p> 
                   </td>
                   <td class="detail">
+                  <div class="arrow_box"><a href="#">点击查看明细</a></div>
                     <span class="record-icon"></span>
-                    <div class="poptip-shadow">
+                    <!-- <div class="poptip-shadow">
                       <div class="poptip-down"></div>
                       <div class="poptip-container">
                           <a href="/payment/transaction_record">点击查看明细</a>
                       </div>  
-                    </div>  
+                    </div>   -->
                   </td>
                   <td class="status">
                     <p>交易成功</p>
@@ -747,18 +777,18 @@
     // $('.record-icon').on('mouseout',function(){
     //   $(this).siblings('.poptip-shadow').hide()
     // })
-    $('.record-flag').on('mouseover',function(){
-      $(this).siblings('.content-memo').show()
-    })
+    // $('.record-flag').on('mouseover',function(){
+    //   $(this).siblings('.content-memo').show()
+    // })
     // $('.record-flag').on('mouseout',function(){
     //   $(this).siblings('.content-memo').hide()
     // })
-    $('.content-memo').on('mouseover',function(){
-      $(this).show()
-    })
-    $('.content-memo').on('mouseout',function(){
-        $(this).hide()
-    })   
+    // $('.content-memo').on('mouseover',function(){
+    //   $(this).show()
+    // })
+    // $('.content-memo').on('mouseout',function(){
+    //     $(this).hide()
+    // })   
     // 删除
     $('.delete').on('click',function(){
       $(this).parent().parent().parent().parent('tr').remove()
