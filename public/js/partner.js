@@ -108,7 +108,7 @@ var verifiedPartnerForm = $('#verifiedPartnerForm'),
 		btnVerified = $('#btnVerified');
 btnVerified.on('click', function(e){
 	e.preventDefault()
-	if($.trim(rejectInfo.val()).length >= 5){
+	if($.trim(rejectInfo.val()).length >= 10){
 		verifiedPartnerForm.submit()
 	}else{
 		rejectInfo.parents('.form-group').addClass('has-error')

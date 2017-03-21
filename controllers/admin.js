@@ -131,8 +131,10 @@ exports.partnerManage = function(req, res){
 	Partner.find({})
 				 .sort('-meta.createAt')
 				 .populate('admin', 'name')
+				 .populate('managed_by_org', 'name')
 				 .exec(function(err, partners){
 				 	if(err) console.log(err)
+				 		console.log(partners)
 					Role.fetch(function(err, roles){
 						if(err) console.log(err)
 						res.render('admin/partner_manage',{
@@ -161,6 +163,21 @@ exports.showAdminInfo = function(req, res){
 			.exec(function(err, admin){
 				res.render('admin/show_admin_info', {title: '管理员信息', account: admin})
 			})
+}
+//设置企业所属主管部门
+exports.setPartManagedByOrg = function(req, res){
+	const partnerId = req.body.partnerId;
+	const orgId = req.body.orgId;
+	console.log('===partnerId, orgId===============')
+	console.log(partnerId, orgId)
+	if(partnerId && orgId){
+		Partner.update({_id: partnerId}, {$set: {managed_by_org: orgId}}, function(err, msg){
+			if(err) console.log(err)
+				res.json({status: 1})
+		})
+	}else{
+		res.json({status: 0})
+	}
 }
 //设置企业权限
 exports.setPartnerRole = function(req, res){

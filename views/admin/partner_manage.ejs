@@ -28,6 +28,7 @@
                     <th>企业管理员</th>
                     <th>注册时间</th>
                     <th>企业信息</th>
+                    <th>所属主管部门</th>
                     <th>权限</th>
                     <th>状态</th>
                   </tr>
@@ -44,6 +45,9 @@
                     <td><%= moment(partner.meta.createAt).format('YYYY-MM-DD') %></td>
                     <td>
                       <a href="/admin/show_partner_info?id=<%= partner._id%>" class="btn btn-link">查看</a>
+                    </td>
+                    <td>
+                       <a href="#setOrgModal" class="btn btn-link btn-jurisdiction" data-toggle="modal"><%if(partner.managed_by_org){%><%= partner.managed_by_org.name%><%}else{%>设置<%}%></a>
                     </td>
                     <td>
                        <a href="#setJurisdictionModal" class="btn btn-link btn-jurisdiction" data-toggle="modal">设置</a>
@@ -70,6 +74,25 @@
       </div>
     	<%- include('../footer') %>
     </div>
+   <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="setOrgModal" class="modal fade">
+       <div class="modal-dialog">
+          <div class="modal-content max-w-400">
+            <form action="/partner/set_organize" method="post" id="setOrganizeForm" class="form-horizontal">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">所属部门设置</h4>
+              </div>
+              <div class="modal-body max-h-400">
+                <ul id="organizeTree" class="ztree" data-partner="<%=user.partner._id%>"></ul>
+              </div>
+              <div class="modal-footer">
+                <button type="reset" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button id="setOrgBtn" class="btn btn-success" data-dismiss="modal">提交</button>
+              </div>
+            </form>
+          </div>
+      </div>
+   </div>
    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="setJurisdictionModal" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -89,7 +112,10 @@
                     </li>
                     <% roles.forEach(function(role){%>
                     <li class="list-group-item" data-role="<%= role._id%>">
-                      <a href="javascript:;" class="check"><i class="fa fa-check pull-right"></i></a>
+                      <a href="javascript:;" class="pull-right">
+                        <i class="fa fa-square-o fa-lg"></i>
+                        <i class="fa fa-check-square fa-lg"></i>
+                      </a>
                       <a href="javascript:;" class="role"><%= role.name%></a>
                     </li>
                     <%})%>
@@ -112,6 +138,6 @@
     <script src="/plugins/zTree/js/jquery.ztree.all.min.js"></script>
     <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
     <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
-    <script src="/js/jurisdiction.js"></script>
+    <script src="/js/partner_manage.js"></script>
   </body>
 </html>

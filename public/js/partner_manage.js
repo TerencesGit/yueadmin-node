@@ -1,11 +1,70 @@
+//商家管理
+//平台部门树
+const organizeTree = $('#organizeTree');
 //企业表格
 const partnerDataTable = $('#partnerDataTable');
 //企业数据表格渲染
 $(function(){
+	renderOrgTree(organizeTree)
 	partnerDataTable.DataTable()
 })
+//获取被选中的单个节点
+function getSeletedNode(){
+	var treeObj = $.fn.zTree.getZTreeObj("organizeTree");
+  var node = treeObj.getSelectedNodes()[0];
+  if(!node){
+  	$.dialog().alert({message: '请选择部门！'})
+    return false;
+  }
+ 	return node;
+}
+//渲染组织树
+function renderOrgTree(organizeTree){
+  const partnerId = organizeTree.data('partner');
+  $.ajax({
+    type: 'get',
+    url: '/partner/get_organize_tree?partnerId='+ partnerId,
+  })
+  .done(function(res){
+    const organizes = res.organizes;
+    const setting = {
+      view: {
+        selectedMulti: false,
+      },
+      data: {
+        simpleData: {
+          enable: true
+        }
+      },
+    }
+    var zNode = [];
+    var treeObj;
+    organizes.forEach(function(org){
+      var iconSkin;
+      if(!org.parentId){
+        iconSkin = 'root'
+      }else{
+        iconSkin = 'folder'
+      }
+      treeObj = {
+        id: org.orgId,
+        pId: org.parentId,
+        name: org.name,
+        profile: org.profile,
+        open: true,
+        iconSkin: iconSkin,
+      };
+      zNode.push(treeObj)
+    })
+    $.fn.zTree.init(organizeTree, setting, zNode);
+  })
+  .fail(function(error){ 
+    console.log(error)
+  })
+}
 //功能树
 const roleFunctionTree = $('#roleFunctionTree');
+const DELAY_TIME = 600;
 let flag = true;
 //权限列表对象
 const roleList = $('#roleList');
@@ -51,6 +110,38 @@ function getRoleByPartId(partId){
 					break;
 				}
 			}
+		}
+	})
+	.fail(function() {
+		console.log("error");
+	})
+}
+//所属主管部门设置
+const setOrgBtn = $('#setOrgBtn');
+setOrgBtn.on('click', function(e){
+	e.preventDefault();
+  if(!getSeletedNode()) return false;
+	const orgId = getSeletedNode().id;
+	if(partnerId && orgId){
+		setPartManagedByOrg(partnerId, orgId)
+	}else{
+		return false;
+	}
+})
+function setPartManagedByOrg(partnerId, orgId){
+	$.ajax({
+		url: '/admin/set_partner_mamaged_by_org',
+		type: 'POST',
+		data: {partnerId: partnerId, orgId: orgId},
+	})
+	.done(function(res) {
+		if(res.status == 1){
+			$.dialog().success({message: '设置成功', delay: DELAY_TIME})
+			setTimeout(function(){
+				location.replace(location.href)
+			}, DELAY_TIME)
+		}else{
+			$.dialog().fail({message: '设置失败, 请稍后重试'})
 		}
 	})
 	.fail(function() {
@@ -129,7 +220,7 @@ $('#setJurisdictionBtn').on('click', function(e){
 		})
 		.done(function(res) {
 			if(res.status == 1){
-				$.dialog().success({message: '设置成功', delay: 1000})
+				$.dialog().success({message: '设置成功', delay: DELAY_TIME})
 			}else{
 				$.dialog().fail({message: '设置失败, 请稍后重试'})
 			}
@@ -164,7 +255,7 @@ function setPartnerStatus(pid, status, target){
 	})
 	.done(function(res) {
 		if(res.status == 1){
-			$.dialog().success({message: '设置成功', delay: 600})
+			$.dialog().success({message: '设置成功', delay: DELAY_TIME})
       setTimeout(function(){
         let title = status == 0 ? '禁用状态' : '启用状态';
         if(status == 0){
@@ -174,7 +265,7 @@ function setPartnerStatus(pid, status, target){
           target.attr('title', title).attr('data-status', 1).children('.fa')
                 .removeClass('fa-toggle-off').addClass('fa-toggle-on');
         }
-      }, 600)
+      }, DELAY_TIME)
 		}else{
 			$.dialog().fail({message: '设置失败，请稍后重试'})
 		}

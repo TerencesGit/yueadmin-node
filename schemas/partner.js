@@ -2,39 +2,40 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 var partnerSchema = new Schema({
-	admin: {type: ObjectId, ref: 'User'},
-	name: String,
-	corporation: String,
-	license_id: String,
-	contact_name: String,
-	contact_mobile: String,
-	email: String,
-	telephone: String,
-	mobile: String,
-	address: String,
-	post: String,
-	profile: String,
-	logo: String,
-	license: String,
-	status:  {
-		type: Number,
-		default: 1
-	},
-	is_verified: {
-		type: Number,
-		default: 0
-	},
-	reject_info: String,
-	meta: {
-		createAt: {
-			type: Date,
-			default: Date.now()
+		admin: {type: ObjectId, ref: 'User'},
+		name: String,
+		corporation: String,
+		license_id: String,
+		contact_name: String,
+		contact_mobile: String,
+		email: String,
+		telephone: String,
+		mobile: String,
+		address: String,
+		post: String,
+		profile: String,
+		logo: String,
+		license: String,
+		status: {
+			type: Number,
+			default: 1
 		},
-		updateAt: {
-			type: Date,
-			default: Date.now()
+		is_verified: {
+			type: Number,
+			default: 0
+		},
+		reject_info: String,
+		managed_by_org: {type: ObjectId, ref: 'Organize'},
+		meta: {
+			createAt: {
+				type: Date,
+				default: Date.now()
+			},
+			updateAt: {
+				type: Date,
+				default: Date.now()
+			}
 		}
-	}
 })
 partnerSchema.pre('save',function(next){
 	if(this.isNew){

@@ -130,6 +130,7 @@ router.get('/admin/partner_manage', Admin.partnerManage);
 router.get('/admin/show_partner_info', Admin.showPartnerInfo);
 router.get('/admin/show_admin_info', Admin.showAdminInfo);
 router.post('/admin/set_partner_role', Admin.setPartnerRole);
+router.post('/admin/set_partner_mamaged_by_org', Admin.setPartManagedByOrg);
 router.get('/admin/get_role_by_partner', Admin.getRoleByPartner);
 router.get('/admin/set_partner_status', Admin.setPartnerStatus);
 

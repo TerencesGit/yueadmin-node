@@ -3,6 +3,8 @@
 const functionTree = $('#functionTree');
 //角色数据表格
 const roleDataTable = $('#roleDataTable');
+
+const DELAY_TIME = 600;
 //判断父节点
 function isParent(treeNode){
 	return treeNode.isParent;
@@ -45,12 +47,12 @@ function removeRole(id, $tr){
 	})
 	.done(function(res) {
 		if(res.status == 1){
-			$.dialog().success({message: '删除成功', delay: 600})
+			$.dialog().success({message: '删除成功', delay: DELAY_TIME})
 			setTimeout(function(){
 				if($tr.length === 1){
 					$tr.remove()
 				}
-			}, 600)
+			}, DELAY_TIME)
 		}else{
 			$.dialog().fail({message: '删除失败，请稍后重试'})
 		}
@@ -177,7 +179,7 @@ $('#setRoleBtn').on('click', function(e){
 	})
 	.done(function(res) {
 		if(res.status == 1){
-			$.dialog().success({message: '配置成功', delay: 600})
+			$.dialog().success({message: '配置成功', delay: DELAY_TIME})
 		}else{
 			$.dialog().fail({message: '配置失败，请稍后重试'})
 		}
