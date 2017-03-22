@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+  </head>
+  <body>
+    <%- include('../aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="partner_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-secondary">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <span><%=title%></span>（<span id="partner" data-id="<%=partner._id%>"><%=partner.name%></span>）
+                <a href="javascript:history.go(-1)" class="pull-right">返回</a>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <table id="contractDataTables" class="table table-bordered table-hover table-striped">
+                <caption>已绑定合同</caption>
+                <thead>
+                  <tr class="">
+                    <th>序号</th>
+                    <th>合同甲方</th>
+                    <th>合同乙方</th>
+                    <th>合同丙方</th>
+                    <th>签署时间</th>
+                    <th>模板</th>
+                    <th>创建者</th>
+                    <th>创建时间</th>
+                    <th>描述</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <%if(bindContracts.length === 0){%>
+                <tr>
+                  <td colspan="10">暂无合同</td>
+                </tr>
+                <%}%>
+                <%bindContracts.forEach(function(contract, index){%>
+                    <tr data-id="<%=contract._id%>">
+                      <td><%= index+1%></td>
+                      <td><%= contract.party_a_name%></td>
+                      <td><%= contract.party_b_name%></td>
+                      <td><%= contract.party_c_name%></td>
+                      <td><%= contract.sign_time%></td>
+                      <td><%= contract.template.name%></td>
+                      <td><%= contract.creator.name%></td>
+                      <td><%= moment(contract.create_time).format('YYYY-MM-DD')%></td>
+                      <td><%= contract.note%></td>
+                      <td>
+                        <a href="/admin/unbind_contract?contract_id=<%=contract._id%>&&partner_id=<%=partner._id%>" class="btn btn-danger btn-unbind">解绑</a>
+                      </td>
+                    </tr>
+                 <%})%>
+                </tbody>
+              </table>
+              <table id="contractDataTables" class="table table-bordered table-hover table-striped">
+                <caption>未绑定合同</caption>
+                <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>合同甲方</th>
+                    <th>合同乙方</th>
+                    <th>合同丙方</th>
+                    <th>签署时间</th>
+                    <th>模板</th>
+                    <th>创建者</th>
+                    <th>创建时间</th>
+                    <th>描述</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <%if(notBindContracts.length === 0){%>
+                <tr>
+                  <td colspan="10">暂无合同</td>
+                </tr>
+                <%}%>
+                <%notBindContracts.forEach(function(contract, index){%>
+                    <tr data-id="<%=contract._id%>">
+                      <td><%= index+1%></td>
+                      <td><%= contract.party_a_name%></td>
+                      <td><%= contract.party_b_name%></td>
+                      <td><%= contract.party_c_name%></td>
+                      <td><%= contract.sign_time%></td>
+                      <td><%= contract.template.name%></td>
+                      <td><%= contract.creator.name%></td>
+                      <td><%= moment(contract.create_time).format('YYYY-MM-DD')%></td>
+                      <td><%= contract.note%></td>
+                      <td>
+                        <a href="/admin/bind_contract?contract_id=<%=contract._id%>&&partner_id=<%=partner._id%>" class="btn btn-success btn-bind">绑定</a>
+                      </td>
+                    </tr>
+                 <%})%>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+    <script src="/js/partner_manage.js"></script>
+  </body>
+</html>

@@ -24,6 +24,7 @@
                     <th>序号</th>
                     <th>合同甲方</th>
                     <th>合同乙方</th>
+                    <th>合同丙方</th>
                     <th>签署时间</th>
                     <th>模板</th>
                     <th>创建者</th>
@@ -38,6 +39,11 @@
                       <td><%= index+1%></td>
                       <td><%= contract.party_a_name%></td>
                       <td><%= contract.party_b_name%></td>
+                      <td>
+                      <%if(contract.party_c_name){%>
+                        <%= contract.party_c_name%>
+                      <%}else{%>/<%}%>
+                      </td>
                       <td><%= contract.sign_time%></td>
                       <td><%= contract.template.name%></td>
                       <td><%= contract.creator.name%></td>

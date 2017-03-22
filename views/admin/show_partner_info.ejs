@@ -12,7 +12,7 @@
         <div class="panel panel-secondary">
           <div class="panel-heading">
               <h3 class="panel-title">
-               <i class="fa fa-home fa-lg"></i><%=title%>
+               <span><%=title%></span>
                <a href="javascript:history.go(-1)" class="pull-right">返回</a>
               </h3>
           </div>
@@ -21,6 +21,10 @@
               <dl class="dl-horizontal">
                 <dt>企业名称：</dt>
                 <dd><%= partner.name%></dd>
+              </dl>
+              <dl class="dl-horizontal">
+                <dt>企业管理员：</dt>
+                <dd><%= partner.admin.name%></dd>
               </dl>
               <dl class="dl-horizontal">
                 <dt>法定代表人：</dt>

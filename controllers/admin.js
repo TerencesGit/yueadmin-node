@@ -134,7 +134,6 @@ exports.partnerManage = function(req, res){
 				 .populate('managed_by_org', 'name')
 				 .exec(function(err, partners){
 				 	if(err) console.log(err)
-				 		console.log(partners)
 					Role.fetch(function(err, roles){
 						if(err) console.log(err)
 						res.render('admin/partner_manage',{
@@ -149,9 +148,14 @@ exports.partnerManage = function(req, res){
 exports.showPartnerInfo = function(req, res){
 	const partnerId = req.query.id;
 	if(partnerId){
-		Partner.findById(partnerId, function(err, partner){
-			res.render('admin/show_partner_info', {title: '企业信息查看', partner: partner})
-		})
+		Partner.findOne({_id: partnerId})
+					 .populate('admin', 'name')
+					 .exec(function(err, partner){
+					 	 res.render('admin/show_partner_info', {
+					 	 	title: '企业信息查看', 
+					 	 	partner: partner
+					 	 })
+					 })
 	}
 }
 //企业管理员信息查看
@@ -168,8 +172,6 @@ exports.showAdminInfo = function(req, res){
 exports.setPartManagedByOrg = function(req, res){
 	const partnerId = req.body.partnerId;
 	const orgId = req.body.orgId;
-	console.log('===partnerId, orgId===============')
-	console.log(partnerId, orgId)
 	if(partnerId && orgId){
 		Partner.update({_id: partnerId}, {$set: {managed_by_org: orgId}}, function(err, msg){
 			if(err) console.log(err)
@@ -177,6 +179,60 @@ exports.setPartManagedByOrg = function(req, res){
 		})
 	}else{
 		res.json({status: 0})
+	}
+}
+//企业合同设置
+exports.setPartnerContract = function(req, res){
+	const pid = req.query.id;
+	var _partner;
+	Partner.findById(pid, function(err, partner){
+		if(partner){
+			_partner = partner;
+		}else{
+			return res.render('500', {title: '服务器错误'})
+		}
+	})
+	Contract.find({partner_id: ''})
+					.populate('creator', 'name')
+					.populate('template', 'name')
+					.exec(function(err, notBindContracts){
+						Contract.find({partner_id: pid})
+										.populate('creator', 'name')
+										.populate('template', 'name')
+										.exec(function(err, bindContracts){
+											res.render('admin/set_partner_contract', {
+													title: '企业合同设置', 
+													partner: _partner,
+													bindContracts: bindContracts,
+													notBindContracts: notBindContracts
+											})
+										})						
+					})
+}
+//合同绑定
+exports.bindContract = function(req, res){
+	const pid = req.query.partner_id,
+				cid = req.query.contract_id;
+	if(pid && cid){
+		Contract.update({_id: cid}, {$set: {partner_id: pid}}, function(err, msg){
+			if(err) console.log(err)
+				res.redirect('/admin/show_partner_contract?id='+pid+'')
+		})
+	}else{
+		res.redirect('/admin/show_partner_contract?id='+pid+'')
+	}
+}
+//合同解绑
+exports.unBindContract = function(req, res){
+	const cid = req.query.contract_id,
+				pid = req.query.partner_id;
+	if(cid){
+		Contract.update({_id: cid}, {$set: {partner_id: ''}}, function(err, msg){
+			if(err) console.log(err)
+			res.redirect('/admin/show_partner_contract?id='+pid+'')
+		})
+	}else{
+		res.redirect('/admin/show_partner_contract?id='+pid+'')
 	}
 }
 //设置企业权限

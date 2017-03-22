@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 var contractTemplateSchema = new Schema({
+	partner_id: String,
 	party_a_name: String,
 	party_b_name: String,
 	party_c_name: String,

@@ -133,6 +133,9 @@ router.post('/admin/set_partner_role', Admin.setPartnerRole);
 router.post('/admin/set_partner_mamaged_by_org', Admin.setPartManagedByOrg);
 router.get('/admin/get_role_by_partner', Admin.getRoleByPartner);
 router.get('/admin/set_partner_status', Admin.setPartnerStatus);
+router.get('/admin/set_partner_contract', Admin.setPartnerContract);
+router.get('/admin/bind_contract', Admin.bindContract);
+router.get('/admin/unbind_contract', Admin.unBindContract);
 
 //合同模板管理
 router.get('/admin/contract_template_manage', Admin.contractTemplateManage);

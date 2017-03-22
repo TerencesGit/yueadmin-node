@@ -5,8 +5,8 @@ const organizeTree = $('#organizeTree');
 const partnerDataTable = $('#partnerDataTable');
 //企业数据表格渲染
 $(function(){
-	renderOrgTree(organizeTree)
-	partnerDataTable.DataTable()
+	organizeTree.length === 1 && renderOrgTree(organizeTree)
+	partnerDataTable.length === 1 && partnerDataTable.DataTable()
 })
 //获取被选中的单个节点
 function getSeletedNode(){
@@ -274,3 +274,24 @@ function setPartnerStatus(pid, status, target){
 		console.log("error");
 	})
 }
+//企业合同绑定
+const btnBind = $('.btn-bind'),
+      btnUnbind = $('.btn-unbind');
+//绑定合同      
+btnBind.on('click', function(e){
+  e.preventDefault();
+  const _this = $(this);
+  $.dialog().confirm({message: '确定绑定该合同?'})
+    .on('confirm', function(){
+      location.href = _this.attr('href');
+  })
+})
+//合同解绑
+btnUnbind.on('click', function(e){
+  e.preventDefault();
+  const _this = $(this);
+  $.dialog().confirm({message: '确定解绑该合同?'})
+   .on('confirm', function(){
+    location.href = _this.attr('href');
+  })
+})

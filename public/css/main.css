@@ -111,6 +111,24 @@
 .min-w-500 {
   min-width: 500px;
 }
+.max-w-50 {
+  max-width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.max-w-100 {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.max-w-150 {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .max-w-200 {
   max-width: 200px;
   margin: auto;
@@ -379,7 +397,7 @@ input[type="file"] {
   color: #333;
 }
 .control-label i {
-  padding-right: 10px;
+  padding-right: 5px;
   color: #f20;
 }
 .control-text {

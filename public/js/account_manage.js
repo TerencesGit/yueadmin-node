@@ -1,9 +1,8 @@
 /** 账户管理 **/
-
 //账户表格
 const accountDataTable = $('#accountDataTable');
 $(function(){
-  accountDataTable.DataTable()
+  accountDataTable.length === 1 &&& accountDataTable.DataTable()
 })
 //获取点击按钮所在行的数据      
 function getRowData($target){
