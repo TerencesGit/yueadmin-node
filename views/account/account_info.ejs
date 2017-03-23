@@ -14,7 +14,8 @@
               <div class="panel panel-primary">
                 <div class="panel-body">
                   <div class="text-center m-b">
-                    <img src="<%if(user.avatar){%>/upload/avatar/<%= user.avatar %><%}else{%>/img/avatar.gif<%}%>" class="img-circle" width="200" height="200" title="<%= user.name %>" alt="头像">
+                    <img src="<%if(user.avatar){%>/upload/avatar/<%= user.avatar %><%}else{%>/img/avatar.gif<%}%>" class="img-circle pointer" width="200" height="200" title="更换头像" alt="头像">
+                    <button class="btn btn-primary btn-block m-t hidden">上传</button>
                     <h4 class="m-t text-info"><%= user.name %></h4>
                   </div>
                   <ul class="list-group">

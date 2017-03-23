@@ -51,6 +51,7 @@ removeBtn.on('click', function(e){
 /* 合同录入页 */
 //合同表单
 const contractForm = $('#contractForm'),
+			contractCode = $('#contractCode'),
 			partyAName = $('#partyAName'),
 			partyBName = $('#partyBName'),
 			partyCName = $('#partyCName'),
@@ -81,7 +82,8 @@ contractSubmit.on('click', function(e){
 })
 //合同表单验证
 function checkContractForm(){
-	return checkInput(partyAName, msg.name, regular.name) &&
+	return checkInput(contractCode) && 
+	checkInput(partyAName, msg.name, regular.name) &&
 	checkInput(partyBName, msg.name, regular.name) &&
 	checkInputValue(partyCName, msg.name, regular.name) &&
 	checkInput(signDate, msg.date, regular.date) &&

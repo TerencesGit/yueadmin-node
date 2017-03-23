@@ -111,23 +111,17 @@
 .min-w-500 {
   min-width: 500px;
 }
-.max-w-50 {
-  max-width: 50px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 .max-w-100 {
   max-width: 100px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  margin: auto;
+}
+.max-w-130 {
+  max-width: 130px;
+  margin: auto;
 }
 .max-w-150 {
   max-width: 150px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  margin: auto;
 }
 .max-w-200 {
   max-width: 200px;
@@ -222,6 +216,9 @@
 .border-left {
   border-left: 1px solid #ccc
 }
+.dashed {
+  border: 1px dashed #ccc;
+}
 .scale:hover {
   transform: scale(.5);
   transition: all .5s;
@@ -242,6 +239,9 @@ a.disabled {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.pointer {
+  cursor: pointer;
 }
 .white, .white:hover {
   color: white;
@@ -579,18 +579,20 @@ dl.horizontal dd {
 }
 
 .sidebar-header {
-  padding: 8px 40px;
+  padding: 6px 12px;
+  text-align: left
 }
 
-.sidebar-header .brand {
+.sidebar-header > .brand {
   display: block;
   margin: 10px 0;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 16px;
   line-height: 1.1;
   color: #DFE4ED;
 }
-
+.sidebar-header > .brand > .fa {
+  margin-right: 2px;
+}
 .divide-line {
   width: 100%;
   height: 2px;

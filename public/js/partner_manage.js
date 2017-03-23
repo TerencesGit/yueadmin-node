@@ -3,10 +3,16 @@
 const organizeTree = $('#organizeTree');
 //企业表格
 const partnerDataTable = $('#partnerDataTable');
+//已绑定合同表格
+const bindContractDataTable = $('#bindContractDataTable');
+//未绑定合同表格
+const unbindContractDataTable = $('#unbindContractDataTable');
 //企业数据表格渲染
 $(function(){
-	organizeTree.length === 1 && renderOrgTree(organizeTree)
-	partnerDataTable.length === 1 && partnerDataTable.DataTable()
+	organizeTree.length === 1 && renderOrgTree(organizeTree);
+	partnerDataTable.length === 1 && partnerDataTable.DataTable();
+  bindContractDataTable.length === 1 && bindContractDataTable.DataTable();
+  unbindContractDataTable.length === 1 && unbindContractDataTable.DataTable();
 })
 //获取被选中的单个节点
 function getSeletedNode(){

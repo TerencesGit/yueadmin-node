@@ -216,10 +216,10 @@ exports.bindContract = function(req, res){
 	if(pid && cid){
 		Contract.update({_id: cid}, {$set: {partner_id: pid}}, function(err, msg){
 			if(err) console.log(err)
-				res.redirect('/admin/show_partner_contract?id='+pid+'')
+				res.redirect('/admin/set_partner_contract?id='+pid+'')
 		})
 	}else{
-		res.redirect('/admin/show_partner_contract?id='+pid+'')
+		res.redirect('/admin/set_partner_contract?id='+pid+'')
 	}
 }
 //合同解绑
@@ -229,10 +229,10 @@ exports.unBindContract = function(req, res){
 	if(cid){
 		Contract.update({_id: cid}, {$set: {partner_id: ''}}, function(err, msg){
 			if(err) console.log(err)
-			res.redirect('/admin/show_partner_contract?id='+pid+'')
+			res.redirect('/admin/set_partner_contract?id='+pid+'')
 		})
 	}else{
-		res.redirect('/admin/show_partner_contract?id='+pid+'')
+		res.redirect('/admin/set_partner_contract?id='+pid+'')
 	}
 }
 //设置企业权限
@@ -454,6 +454,7 @@ exports.saveContract = function(req, res){
 			})
 		})
 	}else{
+		contract.partner_id = '';
 		contract.creator = user._id;
 		_contract = new Contract(contract);
 		_contract.save(function(err, contract){
@@ -465,6 +466,19 @@ exports.saveContract = function(req, res){
 		})
 	}
 }
+//合同查看
+exports.showContract = function(req, res){
+	const id = req.query.id;
+	Contract.findOne({_id: id})
+					.populate('creator', 'name')
+					.populate('updater', 'name')
+					.populate('template', 'name')
+					.exec(function(err, contract){
+						if(err) console.log(err)
+							console.log(contract)
+						res.render('admin/contract_detail', {title: '合同查看', contract: contract})
+					})
+}
 //合同编辑
 exports.editContract = function(req, res){
 	var id = req.query.id;
@@ -473,6 +487,8 @@ exports.editContract = function(req, res){
 			if(err) console.log(err)
 			Template.fetch(function(err, templates){
 				if(err) console.log(err)
+					console.log(contract)
+					console.log(templates)
 				res.render('admin/contract_input', {
 					title: '合同编辑', 
 					contract: contract,

@@ -17,7 +17,7 @@
                 <a href="/admin/new_contract" class="pull-right" data-toggle="modal"><i class="fa fa-plus-square m-r-5"></i>新增</a>
               </h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body min-h-450">
               <table id="contractDataTable" class="table table-bordered table-hover table-striped">
                 <thead>
                   <tr class="">
@@ -26,10 +26,10 @@
                     <th>合同乙方</th>
                     <th>合同丙方</th>
                     <th>签署时间</th>
-                    <th>模板</th>
+                    <th>合同模板</th>
                     <th>创建者</th>
                     <th>创建时间</th>
-                    <th>描述</th>
+                    <th>详情</th>
                     <th>操作</th>
                   </tr>
                 </thead>
@@ -37,21 +37,22 @@
                  <%contracts.forEach(function(contract, index){%>
                     <tr>
                       <td><%= index+1%></td>
-                      <td><%= contract.party_a_name%></td>
-                      <td><%= contract.party_b_name%></td>
-                      <td>
+                      <td class="max-w-130 ellipsis" title="<%= contract.party_a_name%>"><%= contract.party_a_name%></td>
+                      <td class="max-w-130 ellipsis" title="<%= contract.party_b_name%>"><%= contract.party_b_name%></td>
+                      <td class="max-w-130 ellipsis" title="<%= contract.party_c_name%>">
                       <%if(contract.party_c_name){%>
                         <%= contract.party_c_name%>
-                      <%}else{%>/<%}%>
+                      <%}else{%>-<%}%>
                       </td>
                       <td><%= contract.sign_time%></td>
                       <td><%= contract.template.name%></td>
                       <td><%= contract.creator.name%></td>
                       <td><%= moment(contract.create_time).format('YYYY-MM-DD')%></td>
-                      <td><%= contract.note%></td>
+                      <td><a href="/admin/show_contract_detail?id=<%=contract._id%>" class="btn btn-link" title="查看">查看</a>
+                      </td>
                       <td>
-                        <a href="/admin/edit_contract?id=<%= contract._id%>" class="btn btn-warning">编辑</a>
-                        <a href="/admin/remove_contract?id=<%= contract._id%>" class="btn btn-danger btn-contract-remove">删除</a>
+                        <a href="/admin/edit_contract?id=<%= contract._id%>" class="btn btn-warning" title="查看">编辑</a>
+                        <a href="/admin/remove_contract?id=<%= contract._id%>" class="btn btn-danger btn-contract-remove" title="删除">删除</a>
                       </td>
                     </tr>
                  <%})%>

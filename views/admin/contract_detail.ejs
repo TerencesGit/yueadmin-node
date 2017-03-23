@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+  </head>
+  <body>
+    <%- include('../aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="contract_manage">
+      <div class="wrapper animated fadeInRight">
+        <div class="container-fluid">
+          <div class="panel panel-secondary">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <span><%=title%></span>
+                <a href="javascript:history.go(-1)" class="pull-right">返回</a>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-10 col-md-offset-1 m-t">
+                <dl class="dl-horizontal">
+                  <dt>甲方姓名：</dt>
+                  <dd><%=contract.party_a_name%></dd>
+                </dl>
+                <dl class="dl-horizontal">
+                  <dt>乙方姓名：</dt>
+                  <dd><%=contract.party_b_name%></dd>
+                </dl>
+                <%if(contract.party_c_name){%>
+                <dl class="dl-horizontal">
+                  <dt>丙方姓名：</dt>
+                  <dd><%=contract.party_c_name%></dd>
+                </dl>
+                <%}%>
+                <dl class="dl-horizontal">
+                  <dt>签署时间：</dt>
+                  <dd><%=contract.sign_time%></dd>
+                </dl>
+                <dl class="dl-horizontal">
+                  <dt>生效时间：</dt>
+                  <dd><%=contract.effetive_date%></dd>
+                </dl>
+                <dl class="dl-horizontal">
+                  <dt>失效时间：</dt>
+                  <dd><%=contract.expire_date%></dd>
+                </dl>
+                <dl class="dl-horizontal">
+                  <dt>合同模板：</dt>
+                  <dd><%=contract.template.name%></dd>
+                </dl>
+                <dl class="dl-horizontal">
+                  <dt>附件1：</dt>
+                  <dd><%= contract.attach_file_1%></dd>
+                </dl>
+                <dl class="dl-horizontal">
+                  <dt>附件2：</dt>
+                  <dd><%= contract.attach_file_2%></dd>
+                </dl>
+                 <dl class="dl-horizontal">
+                  <dt>附件3：</dt>
+                  <dd><%= contract.attach_file_3%></dd>
+                </dl>
+                <dl class="dl-horizontal">
+                  <dt>附件4：</dt>
+                  <dd><%= contract.attach_file_4%></dd>
+                </dl>
+                <dl class="dl-horizontal">
+                  <dt>合同备注：</dt>
+                  <dd><%= contract.note%></dd>
+                </dl>
+                <div class="dashed m-b-20"></div>
+                <div class="col-md-6">
+                  <h4>创建者：<span><%= contract.creator.name%></span></h4>
+                </div>
+                <div class="col-md-6">
+                 <h4>创建时间：<span><%= moment(contract.create_time).format('YYYY-MM-DD HH:mm:ss')%></span></h4>
+                </div>
+                <%if(contract.updater){%>
+                <div class="col-md-6">
+                  <h4>更新者：<span><%= contract.updater.name%></span></h4>
+                </div>
+                <div class="col-md-6">
+                 <h4>更新时间：<span><%= moment(contract.update_time).format('YYYY-MM-DD HH:mm:ss')%></span></h4>
+                </div>
+                <%}%>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+  </body>
+</html>

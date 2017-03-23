@@ -12,7 +12,7 @@
           <div class="panel panel-secondary">
             <div class="panel-heading">
               <h3 class="panel-title">
-                合同录入
+                <span><%=title%></span>
                 <a href="javascript:history.go(-1)" class="pull-right">返回</a>
               </h3>
             </div>
@@ -26,6 +26,12 @@
               </div>
               <form action="/admin/save_contract" method="post" id="contractForm" class="form-horizontal m-t" role="form" enctype="multipart/form-data">
                 <input type="hidden" name="contract[id]" value="<%=contract._id%>">
+                <div class="form-group row">
+                  <label class="control-label col-md-2"><i>*</i>合同编号</label>
+                  <div class="col-md-7">
+                    <input type="text" name="contract[contract_code]" id="contractCode" class="form-control" placeholder="请输入合同编号" value="<%=contract.contract_code%>"/>
+                  </div>
+                </div>
                 <div class="form-group row">
                   <label class="control-label col-md-2"><i>*</i>甲方姓名</label>
                   <div class="col-md-7">
@@ -65,8 +71,11 @@
                 <div class="form-group row">
                   <label class="control-label col-md-2">选择模板</label>
                   <div class="col-md-7">
-                    <select name="contract[template]" id="contractTemplate" class="form-control">
-                      <% templates.forEach(function(template){%>
+                    <%if(contract.template){%>
+                    <input type="hidden" id="contractId" value="<%=contract.template%>"/>
+                    <%}%>
+                    <select name="contract[template]" id="contractTemplate" class="form-control selector">
+                      <% templates.forEach(function(template, index){%>
                       <option value="<%= template._id%>"><%= template.name%></option>
                       <%})%>
                     </select>
@@ -170,6 +179,7 @@
       laydate(sign)
       laydate(effetive)
       laydate(expire)
+      $('#contractId').length === 1 && $('.selector').val($('#contractId').val());
     </script>
   </body>
 </html>

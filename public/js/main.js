@@ -4,6 +4,11 @@ $(function(){
   const dataPage = $('#main').data('page');
   const _link = $('a[data-href= '+dataPage+' ]');
   _link.parent('li').addClass('active').parents('li').addClass('open');
+  if($('#flashMessage').length === 1){
+    setTimeout(function(){
+      $('#flashMessage').fadeOut(1000)
+    }, 3000)
+  }
 })
 let toggle = false;
 const speed = 200;

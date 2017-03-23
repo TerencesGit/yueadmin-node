@@ -37,7 +37,7 @@
                   <%partners.forEach(function(partner, index){%>
                   <tr data-id="<%= partner._id%>">
                     <td><%= index+1%></td>
-                    <td class="name max-w-150" title="<%= partner.name%>"><%= partner.name%></td>
+                    <td class="name max-w-150 ellipsis" title="<%= partner.name%>"><%= partner.name%></td>
                     <td><%= partner.corporation%></td>
                     <td><%= moment(partner.meta.createAt).format('YYYY-MM-DD') %></td>
                     <td>

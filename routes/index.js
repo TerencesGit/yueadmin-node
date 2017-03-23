@@ -151,6 +151,7 @@ router.get('/admin/new_contract', Admin.newContract)
 router.post('/admin/save_contract', multipartMiddleware, Admin.attachUpload1, Admin.saveContract)
 router.get('/admin/edit_contract', Admin.editContract)
 router.get('/admin/remove_contract', Admin.removeContract)
+router.get('/admin/show_contract_detail', Admin.showContract)
 
 /* 系统管理 */
 
