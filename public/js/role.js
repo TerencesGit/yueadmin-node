@@ -15,15 +15,14 @@ $(function(){
 	getFunctionTree()
 })
 //角色设置按钮
-var btnCreate = $('.btn-create'),
-		btnDel = $('.btn-del'),
-		btnSet = $('.btn-set');
+const btnDel = $('.btn-del'),
+		  btnSet = $('.btn-set');
 
 //创建角色
-var newRoleForm = $('#newRoleForm'),
-	  newRoleName = $('#newRoleName'),
-	  newRoleDesc = $('#newRoledesc'),
-	  newRoleBtn = $('#newRoleBtn');
+const newRoleForm = $('#newRoleForm'),
+	    newRoleName = $('#newRoleName'),
+	    newRoleDesc = $('#newRoleDesc'),
+	    newRoleBtn = $('#newRoleBtn');
 newRoleBtn.on('click', function(e){
 	e.preventDefault();
 	if(!simpleCheckInput(newRoleName)) return false;

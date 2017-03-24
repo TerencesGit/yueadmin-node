@@ -171,6 +171,10 @@ router.post('/system/assign_function', System.assignFunction);
 router.get('/system/role_func_list', System.roleFuncList);
 router.get('/system/get_role_func', System.getRoleFunc);
 
+//商家类型管理
+router.get('/system/partner_type_manage', System.partnerTypeManage);
+router.post('/system/save_partner_type', System.savePartnerType);
+
 //公告管理
 router.get('/system/notice_manage', System.noticeManage);
 router.get('/system/notice_release', System.noticeRelease);

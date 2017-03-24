@@ -1,12 +1,13 @@
-var Functions = require('../models/function');
-var Role = require('../models/role');
-var RoleFunc = require('../models/role_func');
-var Message = require('../models/message');
-var Notice = require('../models/notice');
-var User = require('../models/user');
-var fs = require('fs');
-var path = require('path');
-var _ = require('lodash');
+const Functions = require('../models/function');
+const Role = require('../models/role');
+const RoleFunc = require('../models/role_func');
+const PartnerType = require('../models/partner_type');
+const Message = require('../models/message');
+const Notice = require('../models/notice');
+const User = require('../models/user');
+const fs = require('fs');
+const path = require('path');
+const _ = require('lodash');
 
 /* 系统功能树 */
 //功能树管理页
@@ -230,13 +231,24 @@ exports.assignFunction = function(req, res){
 //获取单个角色的功能点
 exports.getRoleFunc = function(req, res){
 	var roleId = req.query.id;
+	var funcs = [];
+  var funcObj = {};
 	RoleFunc.find({role: roleId, status: 1})
 					.populate('func', 'name parent_id')
 					.exec(function(err, role_funcs){
 						if(err){
 							console.log(err)
 						}
-						res.json({role_funcs: role_funcs})
+						role_funcs.forEach(function(roleFunc){
+							funcObj = {
+								funcId: roleFunc.func._id,
+								parentId: roleFunc.func.parent_id,
+								name: roleFunc.func.name,
+							}
+							funcs.push(funcObj)
+						})
+						console.log(funcs)
+						res.json({funcs: funcs})
 					})
 }
 //角色功能列表
@@ -246,6 +258,55 @@ exports.roleFuncList = function(req, res){
 		console.log(role_func)
 		res.redirect('/system/role_manage')
 	})
+}
+//商家类型管理
+exports.partnerTypeManage = function(req, res){
+	PartnerType.find({})
+			.sort('meta.createAt')
+			.populate('creator', 'name')
+			.exec(function(err, partnerTypes){
+				if(err) console.log(err);
+				Role.fetch(function(err, roles){
+					res.render('system/partner_type_manage', {
+						title: '商家类型管理', 
+						partnerTypes: partnerTypes,
+						roles: roles
+					})
+				})
+			})
+}
+//保存商家类型
+exports.savePartnerType = function(req, res){
+	const user = req.session.user;
+	const partnerType = req.body.partner_type;
+	const id = partnerType.id;
+	var _partType;
+	if(id){
+		partnerType.updater = user._id;
+		PartnerType.findById(id, function(err, partType){
+			_partType = _.extend(partType, partnerType);
+			_partType.save(function(err, msg){
+				if(err) {
+					console.log(err)
+					res.json({status: 0})
+				}else{
+					res.json({status: 1})
+				}
+			})
+		})
+	}else{
+		partnerType.creator = user._id;
+		var partType = new PartnerType(partnerType);
+		console.log(partType)
+		partType.save(function(err, partType){
+			if(err) {
+				console.log(err)
+				res.json({status: 0})
+			}else{
+				res.json({status: 1})
+			}
+		})
+	}
 }
 //公告信息管理
 exports.noticeManage = function(req, res){

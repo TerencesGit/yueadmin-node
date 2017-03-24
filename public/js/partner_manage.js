@@ -197,7 +197,7 @@ function getFuncByRole(roleId){
 }
 //选择权限
 roleItem.on('click', function(e){
-	const _this = $(e.target);
+	const _this = $(this);
 	_this.hasClass('checked') && 
 	_this.removeClass('checked').children('.check').hide() ||
 	_this.addClass('checked').children('.check').show()
