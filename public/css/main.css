@@ -204,6 +204,10 @@
 .text-indent {
   text-indent: 2em
 }
+.border {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
 .border-top {
   border-top: 1px solid #ccc
 }
@@ -376,6 +380,14 @@ a:hover,
 a:active {
   text-decoration: none;
   outline: 0
+}
+.btn.active.focus, 
+.btn.active:focus, 
+.btn.focus, 
+.btn:active.focus, 
+.btn:active:focus, 
+.btn:focus {
+  outline: none;
 }
 textarea {
   resize: vertical;

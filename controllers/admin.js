@@ -5,6 +5,7 @@ const Template = require('../models/contract_template');
 const Contract = require('../models/contract');
 const Role = require('../models/role');
 const PartRole = require('../models/part_role');
+const PartType = require('../models/partner_type');
 const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
@@ -83,7 +84,14 @@ exports.examiningPartner = function(req, res){
 	const id = req.query.partner_id;
 	Partner.findOne({_id: id}, function(err, partner){
 		if(err) console.log(err);
-		res.render('admin/examining_partner',{title: '商家审核', partner: partner})
+		PartType.fetch(function(err, partTypes){
+			if(err) console.log(err)
+			res.render('admin/examining_partner',{
+				title: '商家审核', 
+				partner: partner,
+				partTypes: partTypes
+			})
+		})
 	})
 }
 //商家信息审核通过

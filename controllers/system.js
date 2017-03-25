@@ -2,6 +2,7 @@ const Functions = require('../models/function');
 const Role = require('../models/role');
 const RoleFunc = require('../models/role_func');
 const PartnerType = require('../models/partner_type');
+const PartTypeRole = require('../models/partType_role');
 const Message = require('../models/message');
 const Notice = require('../models/notice');
 const User = require('../models/user');
@@ -300,6 +301,67 @@ exports.savePartnerType = function(req, res){
 		console.log(partType)
 		partType.save(function(err, partType){
 			if(err) {
+				console.log(err)
+				res.json({status: 0})
+			}else{
+				res.json({status: 1})
+			}
+		})
+	}
+}
+//设置商家类型权限
+exports.setPartTypeRole = function(req, res){
+	const user = req.session.user;
+	const partTypeRole = req.body.typeRole,
+				typeId = partTypeRole.partType,
+				roleList = partTypeRole.roleList;
+	var typeRole = {
+		creator: user._id,
+		partType: typeId,
+	};
+	var _typeRole;
+	roleList.forEach(function(role){
+		typeRole.role = role;
+		_typeRole = new PartTypeRole(typeRole);
+		console.log(_typeRole)
+		_typeRole.save(function(err, partrole){
+			if(err) {
+				console.log(err)
+				res.json({status: 0})
+			}
+		})
+	})
+	res.json({status: 1})
+}
+//获取商家类型拥有的权限
+exports.getRoleByPartType = function(req, res){
+	const typeId = req.body.id;
+	console.log(typeId)
+	var roleObj;
+	var roles = [];
+	PartTypeRole.find({partType: typeId})
+							.populate('role', 'name')
+							.exec(function(err, partRoles){
+								if(err) console.log(err)
+									console.log(partRoles)
+								partRoles.forEach(function(partRole){
+									roleObj = {
+										id: partRole.role._id,
+										name: partRole.role.name
+									}
+									roles.push(roleObj)
+								})
+								console.log(roles)
+								res.json({roles: roles})
+							})
+}
+//商家类型状态设置
+exports.setPartnerTypeStatus = function(req, res){
+	const id = req.body.id;
+	const status = parseInt(req.body.statu) ? 0 : 1;
+	if(id){
+		PartnerType.update({_id: id}, {$set: {status: status}}, function(err, msg){
+			if(err){
 				console.log(err)
 				res.json({status: 0})
 			}else{

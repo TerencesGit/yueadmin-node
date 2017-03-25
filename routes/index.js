@@ -174,6 +174,9 @@ router.get('/system/get_role_func', System.getRoleFunc);
 //商家类型管理
 router.get('/system/partner_type_manage', System.partnerTypeManage);
 router.post('/system/save_partner_type', System.savePartnerType);
+router.post('/system/set_partner_type_status', System.setPartnerTypeStatus);
+router.post('/system/set_partType_role', System.setPartTypeRole);
+router.post('/system/get_role_by_partType', System.getRoleByPartType);
 
 //公告管理
 router.get('/system/notice_manage', System.noticeManage);
