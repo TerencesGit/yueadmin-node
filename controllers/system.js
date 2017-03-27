@@ -36,18 +36,21 @@ exports.getFunctionTree = function(req, res){
 	var _func;
 	Functions.fetch(function(err, functions){
 		if(err) console.log(err)
-			functions.forEach(function(funcs){
+			functions.forEach(function(func){
 				_func = {
-					funcId: funcs._id,
-					parentId: funcs.parent_id,
-          name: funcs.name,
-          funcUrl: funcs.router,
-          funcDesc: funcs.desc,
-          funcLevel: funcs.level,
-          funcSeq: funcs.seq,
-          funcType: funcs.type,
-          status: funcs.status,
-          createTime: funcs.meta.createAt,
+					funcId: func._id,
+					parentId: func.parent_id,
+          name: func.name,
+          viewname: func.viewname,
+          funcMd5: func.code,
+          funcIco: func.ico,
+          funcUrl: func.router,
+          funcDesc: func.desc,
+          funcLevel: func.level,
+          funcSeq: func.seq,
+          funcType: func.type,
+          status: func.status,
+          updateTime: func.meta.updateAt,
 				}
 				_functions.push(_func)
 			})
@@ -59,28 +62,31 @@ exports.getFunctionNode = function(req, res){
 	const id = req.query.id;
 	var _func;
 	Functions.findOne({_id: id})
-				.populate('creator', 'name')
-				.populate('updater', 'name')
-				.exec(function(err, func){
-					if(err){
-						console.log(err)
-						res.json({status: 0})
-					}else{
-						_func = {
-							funcId: func._id,
-							parentId: func.parent_id,
-		          name: func.name,
-		          funcUrl: func.router,
-		          funcDesc: func.desc,
-		          funcLevel: func.level,
-		          funcSeq: func.seq,
-		          funcType: func.type,
-		          status: func.status,
-		          createTime: func.meta.createAt,
+					 .populate('creator', 'name')
+					 .populate('updater', 'name')
+					 .exec(function(err, func){
+						if(err){
+							console.log(err)
+							res.json({status: 0})
+						}else{
+							_func = {
+								funcId: func._id,
+								parentId: func.parent_id,
+			          name: func.name,
+			          viewname: func.viewname,
+			          funcMd5: func.code,
+			          funcIco: func.ico,
+			          funcUrl: func.router,
+			          funcDesc: func.desc,
+			          funcLevel: func.level,
+			          funcSeq: func.seq,
+			          funcType: func.type,
+			          status: func.status,
+			          createTime: func.meta.createAt,
+							}
+							res.json({func: _func})
 						}
-						res.json({func: _func})
-					}
-				})
+					})
 }
 
 //编辑功能节点
@@ -91,6 +97,7 @@ exports.editFunction = function(req, res){
 	func.updater = user._id;
 	var _func;
 	if(!id) return res.json({status: 0})
+	console.log(func)
 	Functions.findById(id, function(err, funcObj){
 		_func = _.extend(funcObj, func);
 		_func.save(function(err, func){

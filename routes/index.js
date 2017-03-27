@@ -122,7 +122,7 @@ router.get('/partner/remove_title', Partner.removeTitle)
 //企业审核
 router.get('/admin/partner_examine', Admin.partnerExamine);
 router.get('/admin/examining_partner', Admin.examiningPartner);
-router.get('/admin/partner_examine_through', Admin.partnerExamThrough);
+router.post('/admin/partner_examine_through', Admin.partnerExamThrough);
 router.post('/admin/partner_examine_reject', Admin.partnerExamReject);
 
 //商家管理

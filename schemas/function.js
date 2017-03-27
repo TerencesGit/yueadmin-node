@@ -4,10 +4,13 @@ var ObjectId = Schema.Types.ObjectId;
 var functionSchema = new Schema({
 	creator: {type: ObjectId, ref: 'User'},
 	updater: {type: ObjectId, ref: 'User'},
+	parent_id: String,
 	name: String,
+	code: String,
 	router: String,
 	desc: String,
-	parent_id: String,
+	viewname: String,
+	ico: String,
 	level: {
 		type: Number,
 		default: 1
@@ -24,7 +27,6 @@ var functionSchema = new Schema({
 		type: Number,
 		default: 1
 	},
-	viewname: String,
 	is_function_root: {
 		type: Number,
 		default: 0

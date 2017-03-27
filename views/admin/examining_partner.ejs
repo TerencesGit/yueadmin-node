@@ -73,32 +73,31 @@
                <dl class="col-md-offset-2 col-md-8 dl-horizontal">
                 <dt>企业LOGO</dt>
                 <dd>
-                  <img src="/upload/logo/<%= partner.logo%>" class="extend-l" width="150" height="150" title="企业LOGO" alt="企业LOGO">
+                  <img src="/upload/logo/<%= partner.logo%>" class="relative scale-md" width="150" height="150" title="企业LOGO" alt="企业LOGO">
                 </dd>
               </dl>
               <dl class="col-md-offset-2 col-md-8 dl-horizontal">
                 <dt>营业执照</dt>
                 <dd>
-                  <img src="/upload/license/<%= partner.license%>" class="extend-m" width="550" height="350" title="营业执照" alt="营业执照">
+                  <img src="/upload/license/<%= partner.license%>" class="relative scale-sm" width="500" height="350" title="营业执照" alt="营业执照">
                 </dd>
               </dl>
               <div class="col-md-offset-2 col-md-8">
                 <div class="btn-group m-b">
-                  <button id="through" class="btn btn-default active">通过</button>
-                  <button id="reject" class="btn btn-default">驳回</button>
+                  <button id="through" class="btn btn-default btn-examine active">通过</button>
+                  <button id="reject" class="btn btn-default btn-examine">驳回</button>
                 </div>
-                <form action="/admin/partner_examine_reject" method="post" id="rejectPartnerForm" class="check-partner hidden">
+                <form action="/admin/partner_examine_reject" method="post" id="rejectPartnerForm" class="hidden">
                   <input type="hidden" name="partner[id]" value="<%=partner._id%>">
                   <div class="form-group">
-                    <!-- <label for="rejectInfo">请填写驳回原因：</label> -->
-                    <textarea name="partner[reject_info]" id="rejectInfo" class="form-control" cols="30" rows="5" placeholder="请填写驳回原因，不少于10个字"></textarea>
+                    <textarea name="partner[reject_info]" id="rejectInfo" class="form-control" cols="30" rows="8" placeholder="请填写驳回原因，不少于10个字"></textarea>
                   </div>
                   <div class="form-group text-center">
-                    <button type="submit" id="btnVerified" class="btn btn-primary">确定</button>
+                    <button type="submit" id="rejectPartBtn" class="btn btn-primary">确定</button>
                     <button class="btn btn-default m-l" onClick="history.go(-1)">返回</button>
                   </div>
                 </form>
-                <form action="/admin/partner_examine_through" method="post" id="throughPartnerForm" class="">
+                <form action="/admin/partner_examine_through" method="post" id="throughPartnerForm" class="form-horizontal">
                   <div class="panel panel-default">
                     <div class="panel-body">
                       <input type="hidden" name="partner[id]" value="<%=partner._id%>">
@@ -107,9 +106,9 @@
                         <%partTypes.forEach(function(partType){%>
                         <div class="radio m-l">
                           <label class="w-120">
-                            <input type="radio" name="partner[type]" id="optionsRadios1" value="<%=partType._id%>" checked><%=partType.name%>
+                            <input type="radio" name="partner[type]" value="<%=partType._id%>"><%=partType.name%>
                           </label>
-                          <label>描述：<span class="text-info"><%=partType.note%></span></label>
+                          <p class="inline-block">描述：<span class="text-info"><%=partType.note%></span></p>
                         </div>
                         <%})%>
                       </div>
@@ -130,14 +129,6 @@
     	<%- include('../footer') %>
     </div>
     <%- include('../script')%>
-    <script src="/js/partner.js"></script>
-    <script>
-      $('.btn').on('click', function(){
-        const _this = $(this);
-        if(!_this.hasClass('active')){
-          _this.addClass('active').siblings().removeClass('active')
-        }
-      })
-    </script>
+    <script src="/js/partner_examine.js"></script>
   </body>
 </html>

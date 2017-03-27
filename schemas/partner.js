@@ -24,7 +24,8 @@ var partnerSchema = new Schema({
 			type: Number,
 			default: 0
 		},
-		reject_info: String,
+		reject_info: String,	
+		partner_type: {type: ObjectId, ref: 'PartnerType'},
 		managed_by_org: {type: ObjectId, ref: 'Organize'},
 		meta: {
 			createAt: {

@@ -45,6 +45,7 @@ const simpleCheckInput = function($element){
   const formGroup = $element.parents('.form-group');
   if($.trim($element.val()) == ''){
     formGroup.addClass('has-error');
+    $element.focus();
     return false;
   }else{
     formGroup.removeClass('has-error');

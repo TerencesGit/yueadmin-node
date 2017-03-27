@@ -67,11 +67,10 @@
                           <th>名称</th>
                           <th>URL</th>
                           <th>描述</th>
-                          <th>级别</th>
-                          <th>序列</th>
+                          <th>是否菜单项</th>
                           <th>类型</th>
                           <th>状态</th>
-                          <th>创建时间</th>
+                          <th>更新时间</th>
                         </tr>
                       </thead>
                       <tbody></tbody>
@@ -102,24 +101,47 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 control-label">URL地址</label>
-                  <div class="col-md-6">
-                    <input type="text" id="newFuncRouter" class="form-control" placeholder="URL地址">
-                  </div>
-                </div>
-                <div class="form-group row">
                   <label class="col-md-4 control-label">功能点描述</label>
                   <div class="col-md-6">
-                    <textarea id="newFuncDesc" class="form-control" rows="2" placeholder="功能点描述"></textarea>
+                    <textarea id="newFuncDesc" class="form-control" rows="1" placeholder="功能点描述"></textarea>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 control-label">功能点级别</label>
+                  <label class="col-md-4 control-label">功能点视图</label>
+                  <div class="col-md-6">
+                    <input type="text" id="newFuncView" class="form-control" placeholder="如在菜单功能点则为菜单名">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">功能点页面编码</label>
+                  <div class="col-md-6">
+                    <input type="text" id="newFuncCode" class="form-control" placeholder="功能点页面编码">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">功能点图标</label>
+                  <div class="col-md-6">
+                    <input type="text" id="newFuncIco" class="form-control" placeholder="功能点图标（选填）">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">URL地址</label>
+                  <div class="col-md-6">
+                    <input type="text" id="newFuncUrl" class="form-control" placeholder="URL地址">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">在父节点下的排序</label>
+                  <div class="col-md-6">
+                    <input type="text" id="newFuncSeq" class="form-control" placeholder="在父节点下的排序">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">是否在菜单中显示</label>
                   <div class="col-md-6">
                      <select id="newFuncLevel" class="form-control">
-                      <option value="1">1级</option>
-                      <option value="2">2级</option>
-                      <option value="3">3级</option>
+                      <option value="0">否</option>
+                      <option value="1">是</option>
                     </select>
                   </div>
                 </div>
@@ -127,8 +149,9 @@
                   <label class="col-md-4 control-label">功能点类型</label>
                   <div class="col-md-6">
                     <select id="newFuncType" class="form-control">
-                      <option value="1">实功能点</option>
                       <option value="0">虚功能点</option>
+                      <option value="1">实功能点（页面）</option>
+                      <option value="2">实功能点（接口）</option>
                     </select>
                   </div>
                 </div>
@@ -141,15 +164,9 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group row">
-                  <label class="col-md-4 control-label">在父节点下的排序</label>
-                  <div class="col-md-6">
-                    <input type="text" id="newFuncSeq" class="form-control" placeholder="在父节点下的排序">
-                  </div>
-                </div>
               </div>
               <div class="modal-footer">
-                <button type="reset" id="btnReset" data-dismiss="modal" class="btn btn-default">取消</button>
+                <button type="reset" id="newFuncResetBtn" data-dismiss="modal" class="btn btn-default">取消</button>
                 <button id="newFuncBtn" class="btn btn-success" data-dismiss="modal">提交</button>
               </div>
             </form>
@@ -166,15 +183,39 @@
               </div>
               <div class="modal-body">
                 <div class="form-group row">
-                  <label class="col-md-4 control-label organize-name">功能名称</label>
+                  <label class="col-md-4 control-label">功能点名称</label>
                   <div class="col-md-6">
                     <input type="text" id="editFuncName" class="form-control">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 control-label organize-name">路由地址</label>
+                  <label class="col-md-4 control-label">功能描述</label>
                   <div class="col-md-6">
-                    <input type="text" id="editFuncRouter" class="form-control">
+                    <textarea id="editFuncDesc" class="form-control" rows="1"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">功能点视图</label>
+                  <div class="col-md-6">
+                    <input type="text" id="editFuncView" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">功能点页面编码</label>
+                  <div class="col-md-6">
+                    <input type="text" id="editFuncCode" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">功能点图标</label>
+                  <div class="col-md-6">
+                    <input type="text" id="editFuncIco" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">URL地址</label>
+                  <div class="col-md-6">
+                    <input type="text" id="editFuncUrl" class="form-control">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -184,18 +225,17 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 control-label">功能描述</label>
+                  <label class="col-md-4 control-label">在父节点下的排序</label>
                   <div class="col-md-6">
-                    <textarea id="editFuncDesc" class="form-control" rows="2"></textarea>
+                    <input type="text" id="editFuncSeq" class="form-control" placeholder="在父节点下的排序">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 control-label">功能点级别</label>
+                  <label class="col-md-4 control-label">是否在菜单中显示</label>
                   <div class="col-md-6">
                      <select id="editFuncLevel" class="form-control">
-                      <option value="1">1级</option>
-                      <option value="2">2级</option>
-                      <option value="3">3级</option>
+                      <option value="0">否</option>
+                      <option value="1">是</option>
                     </select>
                   </div>
                 </div>
@@ -203,8 +243,9 @@
                   <label class="col-md-4 control-label">功能点类型</label>
                   <div class="col-md-6">
                     <select id="editFuncType" class="form-control">
-                      <option value="1">实功能点</option>
                       <option value="0">虚功能点</option>
+                      <option value="1">实功能点（页面）</option>
+                      <option value="2">实功能点（接口）</option>
                     </select>
                   </div>
                 </div>
@@ -217,15 +258,9 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group row">
-                  <label class="col-md-4 control-label">在父节点下的排序</label>
-                  <div class="col-md-6">
-                    <input type="text" id="editFuncSeq" class="form-control" placeholder="在父节点下的排序">
-                  </div>
-                </div>
               </div>
               <div class="modal-footer">
-                <button data-dismiss="modal" class="btn btn-default" type="reset">取消</button>
+                <button data-dismiss="modal" class="btn btn-default">取消</button>
                 <button id="editFuncBtn" class="btn btn-success" data-dismiss="modal">提交</button>
               </div>
             </form>

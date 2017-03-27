@@ -96,7 +96,10 @@ exports.examiningPartner = function(req, res){
 }
 //商家信息审核通过
 exports.partnerExamThrough = function(req, res){
-	var id = req.query.id;
+	const partner = req.body.partner,
+				id = partner.id,
+				part_type = partner.type;
+	console.log(partner)
 	var _organize = {};
 	if(id){
 		Partner.findById(id, function(err, partner){
@@ -109,7 +112,7 @@ exports.partnerExamThrough = function(req, res){
 				if(err){
 					console.log(err)
 				}else{
-					Partner.update({_id: id}, {$set: {is_verified: 1}}, function(err, msg){
+					Partner.update({_id: id}, {$set: {is_verified: 1, partner_type: part_type}}, function(err, msg){
 						res.redirect('/admin/partner_examine')
 					})
 				}
@@ -139,6 +142,7 @@ exports.partnerManage = function(req, res){
 	Partner.find({})
 				 .sort('-meta.createAt')
 				 .populate('admin', 'name')
+				 .populate('partner_type', 'name')
 				 .populate('managed_by_org', 'name')
 				 .exec(function(err, partners){
 				 	if(err) console.log(err)

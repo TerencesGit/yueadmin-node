@@ -227,6 +227,22 @@
   transform: scale(.5);
   transition: all .5s;
 }
+.scale-sm:hover {
+  transform: scale(1.2);
+  transition: all .5s;
+  z-index: 99;
+}
+.scale-md:hover {
+  transform: scale(1.5);
+  transition: all .5s;
+  z-index: 99
+}
+.inline {
+  display: inline;
+}
+.inline-block {
+  display: inline-block;
+}
 .relative {
   position: relative;
 }
