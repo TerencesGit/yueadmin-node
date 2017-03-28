@@ -1,48 +1,106 @@
 /* 系统角色管理 */
 //功能树
 const functionTree = $('#functionTree');
-//角色数据表格
-const roleDataTable = $('#roleDataTable');
-
 const DELAY_TIME = 600;
+//渲染数据表格 加载功能树
+$(function(){
+	$('#roleDataTable').dataTable();
+	getFunctionTree();
+})
 //判断父节点
 function isParent(treeNode){
 	return treeNode.isParent;
 } 
-//渲染数据表格 加载功能树
-$(function(){
-	roleDataTable.dataTable();
-	getFunctionTree()
+//操作按钮
+const btnNew = $('.btn-new'),
+			btnEdit = $('.btn-edit'),
+			btnConfig = $('.btn-config'),
+			btnRemove = $('.btn-remove');
+//角色表单对象
+const roleModal = $('#roleModal'),
+			roleTitle = roleModal.find('.modal-title'),
+			roleForm = $('#roleForm'),
+	    roleName = $('#roleName'),
+	    roleDesc = $('#roleDesc'),
+	    roleBtn = $('#roleBtn'),
+	    btnReset = $('#btnReset');
+//表单验证
+function checkRoleForm(){
+	return simpleCheckInput(roleName) && simpleCheckInput(roleDesc)
+}
+var roleId;
+var title;
+//获取选中行数据
+function getRowData(target){
+	const $tr = $(target).parents('tr');
+	roleId = $tr.data('role');
+	const rowData = {
+		id: roleId,
+		name: $tr.find('.name').text(),
+		desc: $tr.find('.desc').text()
+	}
+	return rowData;
+}
+//角色新增
+btnNew.on('click', function(e){0
+	roleId = '';
+	title = '新增';
+	btnReset.click()
 })
-//角色设置按钮
-const btnDel = $('.btn-del'),
-		  btnSet = $('.btn-set');
-
-//创建角色
-const newRoleForm = $('#newRoleForm'),
-	    newRoleName = $('#newRoleName'),
-	    newRoleDesc = $('#newRoleDesc'),
-	    newRoleBtn = $('#newRoleBtn');
-newRoleBtn.on('click', function(e){
+//角色编辑
+btnEdit.on('click', function(e){
+	const role = getRowData(this);
+	roleId = role.id;
+	title = '编辑';
+	roleTitle.text('角色编辑')
+	roleName.val(role.name);
+	roleDesc.val(role.desc);
+})
+//角色保存
+roleBtn.on('click', function(e){
 	e.preventDefault();
-	if(!simpleCheckInput(newRoleName)) return false;
-	newRoleForm.submit()
+	if(!checkRoleForm()) return false;
+	const roleObj = {
+		id: roleId,
+		name: $.trim(roleName.val()),
+		desc: $.trim(roleDesc.val()),
+	}
+	saveRole(roleObj, title)
 })
-
+function saveRole(roleObj, title){
+	$.ajax({
+		url: '/system/save_role',
+		type: 'POST',
+		data: {role: roleObj},
+	})
+	.done(function(res) {
+		if(res.status == 1){
+			$.dialog().success({message: ''+title+'成功', delay: DELAY_TIME})
+			setTimeout(function(){
+				location.replace(location.href)
+			}, DELAY_TIME)
+		}else{
+			$.dialog().fail({message: ''+title+'失败，请稍后重试'})
+		}
+	})
+	.fail(function() {
+		console.log("error");
+	})
+}
 //角色删除
-btnDel.on('click', function(e){
+btnRemove.on('click', function(e){
 	e.preventDefault();
 	const $tr = $(this).parents('tr');
-	const id = $tr.attr('data-id');
+	const roleId = $tr.data('role');
 	const name = $tr.children('.name').text();
-	$.dialog().confirm({message: '确定删除角色<a> '+name+' </a>？'})
+	$.dialog().confirm({message: '确定删除角色<a>'+name+'</a>？'})
    .on('confirm', function(){
-   	removeRole(id, $tr)
+   	  removeRole(roleId, $tr)
    })
 })
-function removeRole(id, $tr){
+function removeRole(roleId, $tr){
 	$.ajax({
-		url: '/system/role_remove?id='+ id,
+		url: '/system/remove_role?id='+ roleId,
 	})
 	.done(function(res) {
 		if(res.status == 1){
@@ -52,18 +110,19 @@ function removeRole(id, $tr){
 					$tr.remove()
 				}
 			}, DELAY_TIME)
+		}else if(res.status == 2){
+			$.dialog().fail({message: '该角色拥有功能点，删除失败'})
 		}else{
 			$.dialog().fail({message: '删除失败，请稍后重试'})
 		}
 	})
-	.fail(function() {
+	.fail(function(){
 		console.log("error");
 	})
 }
-var roleId;
-btnSet.on('click', function(e){
-	var $tr = $(this).parents('tr');
-	roleId = $tr.attr('data-id');
+//角色配置功能
+btnConfig.on('click', function(e){
+	roleId = getRowData(this).id;
 	getFuncByRole(roleId)
 })
 //获取功能树
@@ -73,8 +132,8 @@ function getFunctionTree(){
 		type: 'GET',
 	})
 	.done(function(res) {
-		var functions = res.functions;
-		var setting = {
+		const funcs = res.funcs;
+		const setting = {
     	view: {
     		selectedMulti: false,
     	},
@@ -89,7 +148,7 @@ function getFunctionTree(){
 		}
     var zNode = [];
     var treeObj;
-    functions.forEach(function(func){
+    funcs.forEach(function(func){
     	var iconSkin;
       if(!func.parentId){
         iconSkin = 'root'
@@ -123,23 +182,23 @@ function getFuncByRole(roleId){
 		url: '/system/get_role_func?id='+ roleId,
 	})
 	.done(function(res) {
-		var roleFuncs = res.role_funcs;
-    var treeObj = $.fn.zTree.getZTreeObj("functionTree");
-		var nodes = treeObj.transformToArray(treeObj.getNodes());
-		for (let i = 0; i < nodes.length; i++) {
+		const funcs = res.funcs;
+    const treeObj = $.fn.zTree.getZTreeObj("functionTree");
+		const nodes = treeObj.transformToArray(treeObj.getNodes());
+		for(let i = 0; i < nodes.length; i++) {
 			treeObj.checkNode(nodes[i], false, true);
 		}
     var temp = [];
     var targetNodes = [];
-    for(let i = 0; i < roleFuncs.length; i++){
-    	temp[roleFuncs[i].func._id] = true;
+    for(let i = 0; i < funcs.length; i++){
+    	temp[funcs[i].funcId] = true;
     }
     for(let i = 0; i < nodes.length; i++){
     	if(temp[nodes[i].id] && !isParent(nodes[i])){
     		targetNodes.push(nodes[i])
     	}
     }
-		for (let i = 0; i < targetNodes.length; i++) {
+		for(let i = 0; i < targetNodes.length; i++) {
 			treeObj.checkNode(targetNodes[i], true, true);
 		}
 	})
@@ -147,12 +206,10 @@ function getFuncByRole(roleId){
 		console.log("error");
 	})
 }
-//设置角色拥有的功能
-$('#setRoleBtn').on('click', function(e){
-	var treeObj = $.fn.zTree.getZTreeObj("functionTree");
-	var nodes = treeObj.getCheckedNodes(true);
-	console.log(nodes)
-	if(nodes.length === 0) return false;
+//配置角色功能
+$('#configRoleBtn').on('click', function(e){
+	const treeObj = $.fn.zTree.getZTreeObj("functionTree");
+	const nodes = treeObj.getCheckedNodes(true);
 	//传统写法
 	// const funcList = [];
 	// nodes.forEach(function(node){
@@ -161,18 +218,15 @@ $('#setRoleBtn').on('click', function(e){
 	// 	}
 	// })
 	//ES6语法
-	//获取被选中节点不包括其父节点，暂时注释
-	//const isCheckNode = node => node.check_Child_State === -1;
+	const isCheckNode = node => node.check_Child_State === -1;
 	const getNodeId = node => node.id;
-	const funcIdList = nodes.map(getNodeId)
-	console.log(funcIdList)
-	
+	const funcIdList = nodes.filter(isCheckNode).map(getNodeId);
 	const role_func = {
 		roleId: roleId,
-		funcList: funcIdList
+		funcList: funcIdList,
 	}
 	$.ajax({
-		url: '/system/assign_function',
+		url: '/system/config_role_func',
 		type: 'POST',
 		data: {role_func: role_func},
 	})
@@ -187,3 +241,43 @@ $('#setRoleBtn').on('click', function(e){
 		console.log("error");
 	})
 })
+//设置角色状态
+$('.btn-status').on('click', function(e){
+	const _this = $(this);
+	const $tr = _this.parents('tr');
+	const status = parseInt(_this.attr('data-status'));
+	const roleId = $tr.data('role');
+	const name = $tr.find('.name').text();
+	const info = status ? '禁用状态' : '启用状态';
+	$.dialog().confirm({message: '确定将<a>'+name+'</a>设为'+info+'？'})
+	 .on('confirm', function(){
+ 		setRoleStatus(roleId, status, _this)
+	 })
+})
+function setRoleStatus(roleId, status, toggleBtn){
+	$.ajax({
+		url: '/system/set_role_status',
+		type: 'POST',
+		data: {id: roleId, status: status},
+	})
+	.done(function(res) {
+		if(res.status == 1){
+			$.dialog().success({message: '设置成功', delay: DELAY_TIME})
+			console.log(roleId, status, toggleBtn)
+			setTimeout(function(){
+				if(status == 1){
+					toggleBtn.attr('data-status', 0).attr('title', '禁用状态')
+									 .children('.fa').removeClass('fa-toggle-on').addClass('fa-toggle-off');
+				}else{
+					toggleBtn.attr('data-status', 1).attr('title', '启用状态')
+									 .children('.fa').removeClass('fa-toggle-off').addClass('fa-toggle-on');
+				}
+			}, DELAY_TIME)
+		}else{
+			$.dialog().fail({message: '设置失败，请稍后再试'})
+		}
+	})
+	.fail(function() {
+		console.log("error");
+	})
+}

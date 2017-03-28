@@ -26,6 +26,9 @@ function HandlerClick(event, treeId, treeNode){
 $(function(){
 	getFunctionTree()
 })
+function getFont(treeId, node) {
+	return node.font ? node.font : {};
+}
 //获取功能树
 function getFunctionTree(){
 	$.ajax({

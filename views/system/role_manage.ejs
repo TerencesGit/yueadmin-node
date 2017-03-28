@@ -15,7 +15,7 @@
             <div class="panel-heading clearfix">
               <h3 class="panel-title">
                 <span>角色管理</span>
-                <a href="#newRoleModal" class="pull-right" data-toggle="modal">创建角色</a>
+                <a href="#roleModal" class="btn-new pull-right" data-toggle="modal">创建角色</a>
               </h3>
             </div>
             <div class="panel-body">
@@ -24,21 +24,35 @@
                   <tr>
                     <th>序号</th>
                     <th>角色名称</th>
+                    <th>角色描述</th>
                     <th>创建者</th>
-                    <th>创建时间</th>
+                    <th>更新时间</th>
+                    <th>功能</th>
                     <th>操作</th>
+                    <th>状态</th>
                   </tr>
                 </thead>
                 <tbody>
-                <% roles.forEach(function(role, index){%>
-                  <tr data-id="<%= role._id%>">
-                    <td><%= index+1%></td>
-                    <td class="name"><%= role.name%></td>
-                    <td><%= role.creator.name%></td>
-                    <td><%= moment(role.meta.createAt).format('YYYY-MM-DD HH:mm:ss')%></td>
+                <%roles.forEach(function(role, index){%>
+                  <tr data-role="<%= role._id%>">
+                    <td><%=index+1%></td>
+                    <td class="name"><%=role.name%></td>
+                    <td class="desc"><%=role.desc%></td>
+                    <td><%=role.creator.name%></td>
+                    <td><%=moment(role.meta.updateAt).format('YYYY-MM-DD')%></td>
                     <td>
-                      <a href="#editRoleModal" class="btn btn-info btn-set" data-toggle="modal">配置功能</a>
-                      <button class="btn btn-danger btn-del m-l">删除</button>
+                      <a href="#configFuncModal" class="btn btn-info btn-config" data-toggle="modal">配置</a>
+                    </td>
+                    <td>
+                      <a href="#roleModal" class="btn btn-warning btn-edit" data-toggle="modal">编辑</a>
+                      <button class="btn btn-danger btn-remove m-l">删除</button>
+                    </td>
+                    <td>
+                      <%if(role.status == 1){%>
+                      <a href="#" class="btn-status" data-status="<%=role.status%>" title="启用状态"><i class="fa fa-toggle-on fa-2x"></i></a>
+                      <%}else{%>
+                      <a href="#" class="btn-status" data-status="<%=role.status%>" title="禁用状态"><i class="fa fa-toggle-off fa-2x"></i></a>
+                      <%}%>
                     </td>
                   </tr>
                 <%})%>
@@ -51,37 +65,37 @@
       </div>
     	<%- include('../footer') %>
     </div>
-    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="newRoleModal" class="modal fade">
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="roleModal" class="modal fade">
       <div class="modal-dialog">
           <div class="modal-content">
-            <form action="/system/new_role" method="post" id="newRoleForm" class="form-horizontal">
+            <form action="/system/save_role" method="post" id="roleForm" class="form-horizontal">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                   <h4 class="modal-title">创建角色</h4>
               </div>
               <div class="modal-body">
                 <div class="form-group row">
-                  <label class="col-md-offset-1 col-md-2 control-label organize-name">角色名称</label>
+                  <label class="col-md-4 control-label">角色名称</label>
                   <div class="col-md-6">
-                    <input type="text" name="role[name]" id="newRoleName" class="form-control" placeholder="必填">
+                    <input type="text" name="role[name]" id="roleName" class="form-control" placeholder="角色名称">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-offset-1 col-md-2 control-label">角色描述</label>
+                  <label class="col-md-4 control-label">角色描述</label>
                   <div class="col-md-6">
-                    <textarea name="role[desc]" id="newRoleDesc" class="form-control" rows="3" placeholder="选填"></textarea>
+                    <textarea name="role[desc]" id="roleDesc" class="form-control" rows="3" placeholder="角色描述"></textarea>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="reset" data-dismiss="modal" class="btn btn-default btn-reset">取消</button>
-                <button id="newRoleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
+                <button type="reset" id="btnReset" data-dismiss="modal" class="btn btn-default">取消</button>
+                <button id="roleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
               </div>
             </form>
           </div>
       </div>
     </div>
-    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editRoleModal" class="modal fade">
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="configFuncModal" class="modal fade">
       <div class="modal-dialog">
           <div class="modal-content max-w-350">
             <form class="form-horizontal">
@@ -94,7 +108,7 @@
               </div>
               <div class="modal-footer">
                 <button type="reset" data-dismiss="modal" class="btn btn-default">取消</button>
-                <button id="setRoleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
+                <button id="configRoleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
               </div>
             </form>
           </div>

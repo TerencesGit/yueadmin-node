@@ -10,6 +10,20 @@ const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
 
+//获取数组a与数组b不重复的部分
+function getANotB(a, b){
+	var temp = [];
+	var arr = [];
+	for(var i = 0; i < b.length; i++){
+		temp[b[i]] = true;
+	}
+ for(var j = 0; j < a.length; j++){
+ 	if(!temp[a[j]]){
+ 		arr.push(a[j])
+ 	}
+ }
+ return arr;
+}
 /* 系统功能树 */
 //功能树管理页
 exports.showFunctionTree = function(req, res){
@@ -32,7 +46,7 @@ exports.newFunction = function(req, res){
 }
 //获取功能节点树
 exports.getFunctionTree = function(req, res){
-	const _functions = [];
+	const _funcs = [];
 	var _func;
 	Functions.fetch(function(err, functions){
 		if(err) console.log(err)
@@ -52,9 +66,9 @@ exports.getFunctionTree = function(req, res){
           status: func.status,
           updateTime: func.meta.updateAt,
 				}
-				_functions.push(_func)
+				_funcs.push(_func)
 			})
-		res.json({functions: _functions})
+		res.json({funcs: _funcs})
 	})
 }
 //获取单个功能节点
@@ -134,7 +148,7 @@ exports.removeFunction = function(req, res){
 //角色管理页
 exports.showRoleManage = function(req, res){
 	Role.find({})
-			.sort('meta.createAt')
+			.sort('-meta.updateAt')
 			.populate('creator', 'name')
 			.exec(function(err, roles){
 				if(err) console.log(err);
@@ -142,87 +156,102 @@ exports.showRoleManage = function(req, res){
 			})
 }
 
-//角色创建
-exports.newRole = function(req, res){
-	var user = req.session.user;
-	var role = req.body.role;
-	role.creator = user._id;
-	console.log(role)
-	var _role = new Role(role);
-	_role.save(function(err, role){
-		if(err) console.log(err);
-		res.redirect('/system/role_manage')
-	})
+//角色保存
+exports.saveRole = function(req, res){
+	const user = req.session.user;
+	const role = req.body.role;
+	const id = role.id;
+	var _role;
+	if(id){
+		Role.findById(id, function(err, roleObj){
+			role.updater = user._id;
+			_role = _.extend(roleObj, role);
+			_role.save(function(err, role){
+				if(err){
+					console.log(err)
+					res.json({status: 0})
+				}else{
+					res.json({status: 1})
+				}
+			})
+		})
+	}else{
+		role.creator = user._id;
+		_role = new Role(role);
+		_role.save(function(err, role){
+			if(err) console.log(err);
+			res.json({status: 1})
+		})
+	}
 }
 
 //角色删除
 exports.removeRole = function(req, res){
-	var id = req.query.id;
-	if(id){
-		Role.remove({_id: id}, function(err, msg){
-			if(err) {
-				console.log(err);
-				res.json({status: 0})
-			}else{
-				RoleFunc.find({role: id}).exec(function(err, roleFuncs){
-					if(err) console.log(err)
-					roleFuncs.forEach(function(roleFunc){
-						RoleFunc.remove({_id: roleFunc._id}, function(err, msg){
-							if(err) console.log(err)
-								res.json({status: 1})
-						})
-					})
+	const id = req.query.id;
+	RoleFunc.find({role: id}).exec(function(err, roleFuncs){
+		if(err) console.log(err)
+			console.log(roleFuncs)
+		  if(roleFuncs.length === 0){
+		  	Role.remove({_id: id}, function(err, msg){
+					if(err){
+						console.log(err);
+						return res.json({status: 0})
+					}else{
+						return res.json({status: 1})
+					}
 				})
-			}
-		})
-	}else{
-		res.json({status: 0})
-	}
+		  }else{
+		  	return res.json({status: 2})
+				// roleFuncs.forEach(function(roleFunc){
+				// 	console.log(roleFunc._id)
+				// 	RoleFunc.remove({_id: roleFunc._id}, function(err, msg){
+				// 		if(err) console.log(err)
+				// 			return res.json({status: 1})
+				// 	})
+				// })
+		  }
+	})
 }
 //为角色分配功能
-exports.assignFunction = function(req, res){
-	var user = req.session.user;
-	var roleFunc = req.body.role_func;
-	var funcList = roleFunc.funcList;
-	var roleId = roleFunc.roleId
-	roleFunc.role = roleId;
-	roleFunc.creator = user._id;
-	var tempArr = [];
-	var cancelFuncList = [];
-	var temp = [];
-	var _funcList = [];
-	RoleFunc.find({role: roleId}).exec(function(err, roleFuncs){
-		if(err) console.log(err)
-		//获取取消选中的功能点
-    for(var i = 0; i < funcList.length; i++){
-    	tempArr[funcList[i]] = true;
-    }
-    for(var i = 0; i < roleFuncs.length; i++){
-    	if(!tempArr[roleFuncs[i].func]){
-    		cancelFuncList.push(roleFuncs[i].func)
-    	}
-    }
-		//删除取消选中的功能点
-		if(cancelFuncList.length !== 0){
-			for(var i = 0; i < cancelFuncList.length; i++){
-	    	RoleFunc.remove({role: roleId, func: cancelFuncList[i]}, function(err, msg){
+exports.configRoleFunc = function(req, res){
+	const user = req.session.user;
+	const roleFunc = req.body.role_func;
+	const newFuncList = roleFunc.funcList || [];
+	const roleId = roleFunc.roleId;
+	console.log(newFuncList)
+	if(newFuncList.length === 0){
+		RoleFunc.find({role: roleId}).exec(function(err, roleFuncs){
+			roleFuncs.forEach(function(roleFunc){
+				console.log(roleFunc)
+				RoleFunc.remove({role: roleId, func: roleFunc.func}, function(err, msg){
 	    		if(err) console.log(err)
 	    	})
-	    }
-		}
-	  //获取新添加的功能点
-		for(var i = 0; i < roleFuncs.length; i++){
-			temp[roleFuncs[i].func] = true;
-		}
-		for(var i = 0; i < funcList.length; i++){
-			if(!temp[funcList[i]]){
-				_funcList.push(funcList[i])
-			}
+			})
+			return res.json({status: 1})
+		})
+	}
+	roleFunc.role = roleId;
+	roleFunc.creator = user._id;
+	RoleFunc.find({role: roleId}).exec(function(err, roleFuncs){
+		if(err) console.log(err)
+		const getFuncList = roleFunc => roleFunc.func;
+		const oldFuncList = roleFuncs.map(getFuncList);
+    const removeFuncList = getANotB(oldFuncList, newFuncList)
+    const addFuncList = getANotB(newFuncList, oldFuncList)
+		console.log(removeFuncList)
+		console.log(addFuncList)
+		//删除取消选中的功能点
+		if(removeFuncList.length !== 0){
+			removeFuncList.forEach(function(func){
+				RoleFunc.remove({role: roleId, func: func}, function(err, msg){
+	    		if(err) console.log(err)
+	    	})
+			})
 		}
 		//保存新添加的功能点
-		if(_funcList.length !== 0) {
+		if(addFuncList.length !== 0) {
 			var _roleFunc;
-			_funcList.forEach(function(func){
+			addFuncList.forEach(function(func){
 				roleFunc.func = func;
 		  	_roleFunc = new RoleFunc(roleFunc);
 		  	_roleFunc.save(function(err, role_func){
@@ -238,15 +267,13 @@ exports.assignFunction = function(req, res){
 }
 //获取单个角色的功能点
 exports.getRoleFunc = function(req, res){
-	var roleId = req.query.id;
+	const roleId = req.query.id;
 	var funcs = [];
   var funcObj = {};
-	RoleFunc.find({role: roleId, status: 1})
+	RoleFunc.find({role: roleId})
 					.populate('func', 'name parent_id')
 					.exec(function(err, role_funcs){
-						if(err){
-							console.log(err)
-						}
+						if(err){console.log(err)}
 						role_funcs.forEach(function(roleFunc){
 							funcObj = {
 								funcId: roleFunc.func._id,
@@ -266,6 +293,22 @@ exports.roleFuncList = function(req, res){
 		console.log(role_func)
 		res.redirect('/system/role_manage')
 	})
+}
+//设置角色状态
+exports.setRoleStatus = function(req, res){
+	const id = req.body.id;
+	const statu = parseInt(req.body.status) ? 0 : 1;
+	console.log(id, statu)
+	if(id){
+		Role.update({_id: id}, {$set: {status: statu}}, function(err, msg){
+			if(err){
+				console.log(err)
+				res.json({status: 0})
+			}else{
+				res.json({status: 1})
+			}
+		})
+	}
 }
 //商家类型管理
 exports.partnerTypeManage = function(req, res){

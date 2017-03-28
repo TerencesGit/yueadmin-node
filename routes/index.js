@@ -165,11 +165,12 @@ router.get('/system/get_function_node', System.getFunctionNode);
 
 //角色管理
 router.get('/system/role_manage', System.showRoleManage);
-router.post('/system/new_role', System.newRole);
-router.get('/system/role_remove', System.removeRole);
-router.post('/system/assign_function', System.assignFunction);
+router.post('/system/save_role', System.saveRole);
+router.get('/system/remove_role', System.removeRole);
+router.post('/system/config_role_func', System.configRoleFunc);
 router.get('/system/role_func_list', System.roleFuncList);
 router.get('/system/get_role_func', System.getRoleFunc);
+router.post('/system/set_role_status', System.setRoleStatus);
 
 //商家类型管理
 router.get('/system/partner_type_manage', System.partnerTypeManage);
