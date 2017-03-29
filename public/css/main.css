@@ -275,6 +275,21 @@ a.disabled {
 .green {
   color: green;
 }
+.info-group {
+  border: 1px solid #ccc;
+}
+.group-title {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #666
+}
+.group-title span {
+  padding: 6px 12px;
+  color: #fff;
+  background: #666;
+}
+.back-primary {
+  background: #337ab7
+}
 /** custom button **/
 .btn-secondary {
   color: #fff !important;

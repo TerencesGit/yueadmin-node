@@ -25,7 +25,7 @@
                     <th>序号</th>
                     <th>角色名称</th>
                     <th>角色描述</th>
-                    <th>创建者</th>
+                    <!-- <th>创建者</th> -->
                     <th>更新时间</th>
                     <th>功能</th>
                     <th>操作</th>
@@ -36,22 +36,22 @@
                 <%roles.forEach(function(role, index){%>
                   <tr data-role="<%= role._id%>">
                     <td><%=index+1%></td>
-                    <td class="name"><%=role.name%></td>
-                    <td class="desc"><%=role.desc%></td>
-                    <td><%=role.creator.name%></td>
-                    <td><%=moment(role.meta.updateAt).format('YYYY-MM-DD')%></td>
+                    <td class="name" title="<%=role.name%>"><%=role.name%></td>
+                    <td class="desc max-w-200 ellipsis" title="<%=role.desc%>"><%=role.desc%></td>
+                    <!-- <td><%=role.creator.name%></td> -->
+                    <td><%=moment(role.meta.updateAt).format('YYYY-MM-DD HH:mm:ss')%></td>
                     <td>
-                      <a href="#configFuncModal" class="btn btn-info btn-config" data-toggle="modal">配置</a>
+                      <a href="#configFuncModal" class="btn btn-info btn-config" data-toggle="modal" title="功能配置">配置</a>
                     </td>
                     <td>
-                      <a href="#roleModal" class="btn btn-warning btn-edit" data-toggle="modal">编辑</a>
-                      <button class="btn btn-danger btn-remove m-l">删除</button>
+                      <a href="#roleModal" class="btn btn-warning btn-edit" data-toggle="modal" title="编辑">编辑</a>
+                      <button class="btn btn-danger btn-remove m-l" title="删除">删除</button>
                     </td>
                     <td>
                       <%if(role.status == 1){%>
-                      <a href="#" class="btn-status" data-status="<%=role.status%>" title="启用状态"><i class="fa fa-toggle-on fa-2x"></i></a>
+                      <a href="javascript:;" class="btn-status" data-status="<%=role.status%>" title="启用状态"><i class="fa fa-toggle-on fa-2x"></i></a>
                       <%}else{%>
-                      <a href="#" class="btn-status" data-status="<%=role.status%>" title="禁用状态"><i class="fa fa-toggle-off fa-2x"></i></a>
+                      <a href="javascript:;" class="btn-status" data-status="<%=role.status%>" title="禁用状态"><i class="fa fa-toggle-off fa-2x"></i></a>
                       <%}%>
                     </td>
                   </tr>

@@ -103,17 +103,25 @@ exports.partnerExamThrough = function(req, res){
 	var _organize = {};
 	if(id){
 		Partner.findById(id, function(err, partner){
-			_organize.partner = id;
-			_organize.admin = partner.admin;
-			_organize.name = partner.name;
-			_organize.is_partner_root = 1;
-			var organize = new Organize(_organize);
-			organize.save(function(err, organize){
-				if(err){
-					console.log(err)
-				}else{
+			Organize.findOne({partner: id}).exec(function(err, org){
+				if(org){
 					Partner.update({_id: id}, {$set: {is_verified: 1, partner_type: part_type}}, function(err, msg){
-						res.redirect('/admin/partner_examine')
+						return res.redirect('/admin/partner_examine')
+					})
+				}else{
+					_organize.partner = id;
+					_organize.admin = partner.admin;
+					_organize.name = partner.name;
+					_organize.is_partner_root = 1;
+					var organize = new Organize(_organize);
+					organize.save(function(err, organize){
+						if(err){
+							console.log(err)
+						}else{
+							Partner.update({_id: id}, {$set: {is_verified: 1, partner_type: part_type}}, function(err, msg){
+								res.redirect('/admin/partner_examine')
+							})
+						}
 					})
 				}
 			})

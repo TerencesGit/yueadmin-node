@@ -4,6 +4,8 @@ const Organize = require('../models/organize');
 const Role = require('../models/role');
 const OrgRole = require('../models/org_role');
 const RoleFunc = require('../models/role_func');
+const PartnerType = require('../models/partner_type');
+const PartTypeRole = require('../models/partType_role');
 const Title = require('../models/title');
 const fs = require('fs');
 const path = require('path');
@@ -255,13 +257,12 @@ exports.EditInfo = function(req, res){
 }
 //组织管理
 exports.organizeManage = function(req, res){
-	var user = req.session.user;
-	if(!user) return res.redirect('/signin');
-	var partnerId = user.partner;
-	User.find({partner: partnerId})
+	const user = req.session.user;
+	const partnerId = user.partner;
+	const roles = [];
+	User.findOne({partner: partnerId})
 			.populate('partner', 'is_verified _id name')
-			.exec(function(err, users){
-				var user = users[0];
+			.exec(function(err, user){
 				if(!user){
 					return res.render('account/registered_partner', {title: '注册我的企业'})
 				}
@@ -271,8 +272,24 @@ exports.organizeManage = function(req, res){
 					res.render('account/registered_partner_result',{title: '未通过审核', partner: partner})
 				}else{
 					if(err) console.log(err);
-					Role.fetch(function(err, roles){
-						res.render('partner/organize_manage', {title: '部门管理', user: user, roles: roles})
+					Partner.findById(partnerId, function(err, partner){
+						PartTypeRole.find({partType: partner.partner_type})
+												.populate('role', 'name')
+												.exec(function(err, typeRoles){
+													var roleObj;
+													typeRoles.forEach(function(typeRole){
+														roleObj = {
+															_id: typeRole.role._id,
+															name: typeRole.role.name,
+														}
+														roles.push(roleObj)
+													})
+													res.render('partner/organize_manage', {
+														title: '部门管理', 
+														user: user, 
+														roles: roles,
+													})
+												})
 					})
 				}
 			})

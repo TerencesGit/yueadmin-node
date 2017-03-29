@@ -29,7 +29,8 @@ function checkRoleForm(){
 	return simpleCheckInput(roleName) && simpleCheckInput(roleDesc)
 }
 var roleId;
-var title;
+var msg;
+var router;
 //获取选中行数据
 function getRowData(target){
 	const $tr = $(target).parents('tr');
@@ -42,19 +43,22 @@ function getRowData(target){
 	return rowData;
 }
 //角色新增
-btnNew.on('click', function(e){0
+btnNew.on('click', function(e){
 	roleId = '';
-	title = '新增';
-	btnReset.click()
+	msg = '新增';
+	roleTitle.text('角色新增');
+	btnReset.click();
+	router = '/system/add_role';
 })
 //角色编辑
 btnEdit.on('click', function(e){
 	const role = getRowData(this);
 	roleId = role.id;
-	title = '编辑';
-	roleTitle.text('角色编辑')
 	roleName.val(role.name);
 	roleDesc.val(role.desc);
+	msg = '编辑';
+	roleTitle.text('角色编辑');
+	router = '/system/edit_role';
 })
 //角色保存
 roleBtn.on('click', function(e){
@@ -65,9 +69,9 @@ roleBtn.on('click', function(e){
 		name: $.trim(roleName.val()),
 		desc: $.trim(roleDesc.val()),
 	}
-	saveRole(roleObj, title)
+	saveRole(roleObj, router, msg)
 })
-function saveRole(roleObj, title){
+function saveRole(roleObj, router, msg){
 	$.ajax({
 		url: '/system/save_role',
 		type: 'POST',
@@ -75,12 +79,12 @@ function saveRole(roleObj, title){
 	})
 	.done(function(res) {
 		if(res.status == 1){
-			$.dialog().success({message: ''+title+'成功', delay: DELAY_TIME})
+			$.dialog().success({message: ''+msg+'成功', delay: DELAY_TIME})
 			setTimeout(function(){
 				location.replace(location.href)
 			}, DELAY_TIME)
 		}else{
-			$.dialog().fail({message: ''+title+'失败，请稍后重试'})
+			$.dialog().fail({message: ''+msg+'失败，请稍后重试'})
 		}
 	})
 	.fail(function() {
@@ -129,7 +133,6 @@ btnConfig.on('click', function(e){
 function getFunctionTree(){
 	$.ajax({
 		url: '/system/get_function_tree',
-		type: 'GET',
 	})
 	.done(function(res) {
 		const funcs = res.funcs;
@@ -185,22 +188,18 @@ function getFuncByRole(roleId){
 		const funcs = res.funcs;
     const treeObj = $.fn.zTree.getZTreeObj("functionTree");
 		const nodes = treeObj.transformToArray(treeObj.getNodes());
-		for(let i = 0; i < nodes.length; i++) {
-			treeObj.checkNode(nodes[i], false, true);
-		}
-    var temp = [];
-    var targetNodes = [];
-    for(let i = 0; i < funcs.length; i++){
-    	temp[funcs[i].funcId] = true;
-    }
-    for(let i = 0; i < nodes.length; i++){
-    	if(temp[nodes[i].id] && !isParent(nodes[i])){
-    		targetNodes.push(nodes[i])
-    	}
-    }
-		for(let i = 0; i < targetNodes.length; i++) {
-			treeObj.checkNode(targetNodes[i], true, true);
-		}
+		const temp = [];
+		nodes.forEach(function(node){
+			treeObj.checkNode(node, false, true);
+		})
+    funcs.forEach(function(func){
+    	temp[func.funcId] = true;
+    })
+    const checkedNode = node => temp[node.id] && !isParent(node);
+		const checkedNodes = nodes.filter(checkedNode);
+    checkedNodes.forEach(function(node){
+    	treeObj.checkNode(node, true, true)
+    })
 	})
 	.fail(function() {
 		console.log("error");
@@ -210,17 +209,9 @@ function getFuncByRole(roleId){
 $('#configRoleBtn').on('click', function(e){
 	const treeObj = $.fn.zTree.getZTreeObj("functionTree");
 	const nodes = treeObj.getCheckedNodes(true);
-	//传统写法
-	// const funcList = [];
-	// nodes.forEach(function(node){
-	// 	if(node.check_Child_State === -1){
-	// 		funcList.push(node.id)
-	// 	}
-	// })
-	//ES6语法
-	const isCheckNode = node => node.check_Child_State === -1;
+	//const isCheckNode = node => node.check_Child_State === -1;
 	const getNodeId = node => node.id;
-	const funcIdList = nodes.filter(isCheckNode).map(getNodeId);
+	const funcIdList = nodes.map(getNodeId);
 	const role_func = {
 		roleId: roleId,
 		funcList: funcIdList,

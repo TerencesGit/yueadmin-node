@@ -525,3 +525,17 @@ function isSameNumber(arr){
   }
   return isSame;
 }
+//获取数组a与数组b不重复的部分
+function getANotB(a, b){
+  var temp = [];
+  var arr = [];
+  for(var i = 0; i < b.length; i++){
+    temp[b[i]] = true;
+  }
+ for(var j = 0; j < a.length; j++){
+  if(!temp[a[j]]){
+    arr.push(a[j])
+  }
+ }
+ return arr;
+}

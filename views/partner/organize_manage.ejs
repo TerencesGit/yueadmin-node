@@ -61,12 +61,12 @@
                         </a> 
                       </li>
                       <li>
-                        <a href="#setRoleModal" class="btn-cog" data-toggle="modal" title=" 部门权限">
+                        <a href="#setRoleModal" class="btn-cog" data-toggle="modal" title="权限设置">
                           <i class="fa fa-cog"></i>
                           <span>权限</span>
                         </a> 
                       </li>
-                      <li>
+                      <li class="hidden">
                         <a href="#showFuncModal" class="btn-func" data-toggle="modal" title=" 查看功能">
                           <i class="fa fa-lock"></i>
                           <span>功能</span>
@@ -80,7 +80,7 @@
                       </li>
                       <li>
                         <a href="javascript:;" class="btn-ban"  title="部门禁用">
-                          <i class="fa fa-ban"></i>
+                          <i class="fa fa-ban "></i>
                           <span>禁用</span>
                         </a> 
                       </li>
@@ -89,9 +89,6 @@
                           <i class="fa fa-user-plus"></i>
                           <span>注册员工</span>
                         </a> 
-                        <!-- <form action="/partner/agent_register" method="get" id="staffForm" class="hidden">
-                          <input type="hidden" name="orgId" id="departmentId" value="">
-                        </form> -->
                       </li>
                     </ul>
                     <h3 class="page-header m-t">部门员工</h3>
@@ -190,7 +187,7 @@
                 <div class="alert alert-info m-l m-r m-b">
                   <i class="fa fa-info-circle"></i>提示：点击权限名称显示对应的功能</div>
                 <div class="col-md-6">
-                  <ul id="roleList" class="list-group role-list hidden">
+                  <ul id="roleList" class="list-group role-list">
                     <li class="list-group-item active">
                     权限列表
                     </li>
@@ -213,25 +210,6 @@
             <div class="modal-footer">
               <button type="reset" data-dismiss="modal" class="btn btn-default">取消</button>
               <button id="setRoleBtn" class="btn btn-success" data-dismiss="modal">提交</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="showFuncModal" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content max-w-400">
-          <form class="form-horizontal">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">查看功能</h4>
-            </div>
-            <div class="modal-body max-h-400 min-h-200">
-              <ul id="orgFunctionTree" class="ztree"></ul>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-default" data-dismiss="modal">关闭</button>
-              <button class="btn btn-success" data-dismiss="modal">确定</button>
             </div>
           </form>
         </div>

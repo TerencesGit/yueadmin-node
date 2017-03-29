@@ -227,8 +227,8 @@ exports.configRoleFunc = function(req, res){
 	    		if(err) console.log(err)
 	    	})
 			})
-			return res.json({status: 1})
 		})
+		return res.json({status: 1})
 	}
 	roleFunc.role = roleId;
 	roleFunc.creator = user._id;
@@ -282,7 +282,6 @@ exports.getRoleFunc = function(req, res){
 							}
 							funcs.push(funcObj)
 						})
-						console.log(funcs)
 						res.json({funcs: funcs})
 					})
 }
