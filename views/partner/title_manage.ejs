@@ -48,13 +48,13 @@
                     <% titles.forEach(function(title, index){ %>
                       <tr data-id="<%=title._id%>">
                         <td><%= index+1 %></td>
-                        <td class="title-name"><%= title.name%></td>
-                        <td class="title-desc"><%= title.desc%></td>
+                        <td class="title-name" title="<%= title.name%>"><%= title.name%></td>
+                        <td class="title-desc max-w-130 ellipsis" title="<%= title.desc%>"><%= title.desc%></td>
                         <td class="title-creator"><%= title.creator.name%></td>
-                        <td><%= moment(title.meta.createAt).format('YYYY-MM-DD')%></td>
+                        <td><%= moment(title.meta.createAt).format('YYYY-MM-DD HH:mm:ss')%></td>
                         <td>
-                          <a href="#editTitleModal" class="btn btn-warning btn-sm btn-edit" data-toggle="modal">编辑</a>
-                          <button class="btn btn-danger btn-remove btn-sm m-l">删除</button>
+                          <a href="#editTitleModal" class="btn btn-warning btn-edit" data-toggle="modal">编辑</a>
+                          <button class="btn btn-danger btn-remove m-l">删除</button>
                         </td>
                       </tr>
                     <%})%>

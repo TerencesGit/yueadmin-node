@@ -671,6 +671,7 @@ exports.editTitle = function(req, res){
 //岗位删除
 exports.removeTitle = function(req, res){
 	var id = req.query.id;
+	throw new Error('xxxx');
 	if(id){
 		Title.remove({_id: id}, function(err, msg){
 			if(err) {

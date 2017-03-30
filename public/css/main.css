@@ -32,6 +32,9 @@
 .m-l {
   margin-left: 15px;
 }
+.m-l-60 {
+  margin-left: 60px;
+}
 .m-r {
   margin-right: 15px;
 }
@@ -183,6 +186,12 @@
 .font-20 {
   font-size: 20px
 }
+.font-22 {
+  font-size: 22px
+}
+.font-24 {
+  font-size: 24px
+}
 .font-bold{
   font-weight: bold
 }
@@ -223,19 +232,27 @@
 .dashed {
   border: 1px dashed #ccc;
 }
-.scale:hover {
-  transform: scale(.5);
+.scale {
   transition: all .5s;
+  position: relative;
+  z-index: 99;
 }
 .scale-sm:hover {
   transform: scale(1.2);
   transition: all .5s;
-  z-index: 99;
 }
 .scale-md:hover {
   transform: scale(1.5);
   transition: all .5s;
-  z-index: 99
+}
+.rotate-45 {
+  transform: rotate(45deg);
+}
+.rotate-135 {
+  transform: rotate(135deg);
+}
+.rotate-225 {
+  transform: rotate(225deg);
 }
 .inline {
   display: inline;
@@ -386,6 +403,13 @@ a.disabled {
   border-color: orange;
   color: #fff;
 }
+.panel-border {
+  border-color: #f5f5f5;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+}
+/*.panel-hover:hover {
+  background: #f9f9f9
+}*/
 .img-control {
   width: auto;
   max-width: 100%
@@ -494,6 +518,10 @@ dl.horizontal dd {
 .panel-title .fa {
   margin-right: 5px;
   vertical-align: top;
+}
+.panel-title .fa-tag {
+  margin-top: -11px;
+  transform: rotate(225deg)
 }
 /**========== animation start ==========**/
 .animated {
@@ -903,7 +931,7 @@ dl.horizontal dd {
   margin: 7px 0 20px 0;
 }
 .img-preview {
-  padding: 2px;
+  padding: 3px;
   line-height: 1.42857143;
   background-color: #fff;
   border: 1px solid #ddd;
@@ -927,25 +955,29 @@ dl.horizontal dd {
 
 /** tools start **/
 .tools {
-  padding: 0 0 5px 15px;
+  margin-top: -15px;
+  padding: 5px 15px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
 }
 .tools > li{
   display: inline-block;
-  margin: 0 8px;
   text-align: center;
 } 
 .tools > li > a{
   display: block;
-  color: #337ab7;
-  font-size: 12px;
-}
-.tools > li .fa{
-  padding: 8px;
-  font-size: 16px;
+  padding: 4px 12px;
+  color: #666;
+  font-size: 14px;
   border-radius: 5px;
 }
-.tools > li > a:hover .fa{
+.tools > li > a.btn-reg {
+  padding: 4px;
+}
+.tools > li > a:hover {
   background-color: #f0f0f0;
+}
+.tools > li .fa{
+  font-size: 20px;
 }
 .tools > li.disabled .fa,
 .tools > li.disabled span {
@@ -953,19 +985,6 @@ dl.horizontal dd {
 }
 .tools > li > a > span {
    display: block;
-   padding-top: 3px;
-}
-.tools .fa-refresh{
-  color: #b0d93d;
-}
-.tools .fa-plus-square{
-  color: #3699c3;
-}
-.tools .fa-edit{
-  color: #c5ad57;
-}   
-.tools .fa-remove{
-  color: #d75931;
 }
 /** tools end **/ 
 

@@ -67,7 +67,7 @@ function removeTitle(id, $tr){
 	$.ajax({
 		url: '/partner/remove_title?id='+ id,
 	})
-	.done(function(res) {
+	.done(function(res, status, xhr) {
 		if(res.status == 1){
 			$.dialog().success({message: '删除成功', delay: 600})
 			setTimeout(function(){
@@ -78,9 +78,13 @@ function removeTitle(id, $tr){
 		}else{
 			$.dialog().fail({message: '删除失败，请稍后重试'})
 		}
-		console.log("success");
 	})
-	.fail(function() {
-		console.log("error");
+	.fail(function(xhr, status) {
+		console.log(status)
+		if(xhr.status == 302){
+			location.replace(location.href)
+		}else{
+			$.dialog().fail({message: '服务器响应失败，请稍后重试'})
+		}
 	})
 }

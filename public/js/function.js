@@ -35,7 +35,7 @@ function getFunctionTree(){
 		url: '/system/get_function_tree',
 	})
 	.done(function(res) {
-		const functions = res.functions;
+		const funcs = res.funcs;
 		const setting = {
     	view: {
     		selectedMulti: false,
@@ -51,7 +51,7 @@ function getFunctionTree(){
 		}
     const zNode = [];
     var treeObj;
-    functions.forEach(function(func){
+    funcs.forEach(function(func){
     	var iconSkin;
     	var isOpen;
     	if(!func.parentId){

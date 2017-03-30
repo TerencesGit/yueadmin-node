@@ -17,71 +17,99 @@
           </div>
           <div class="panel-body">
             <div class="row m-t">
-              <dl class="col-md-offset-2 col-md-8 dl-horizontal">
-                <dt>企业名称</dt>
-                <dd><%= partner.name%></dd>
-              </dl>
-              <dl class="col-md-offset-2 col-md-8 dl-horizontal">
-                <dt>法定代表人</dt>
-                <dd><%= partner.corporation%></dd>
-              </dl>
-              <dl class="col-md-offset-2 col-md-8 dl-horizontal">
-                <dt>营业执照注册号</dt>
-                <dd><%= partner.license_id%></dd>
-              </dl>
-              <dl class="col-md-offset-2 col-md-8 dl-horizontal">
-                <dt>联系人</dt>
-                <dd><%= partner.contact_name%></dd>
-              </dl>
-              <dl class="col-md-offset-2 col-md-8 dl-horizontal">
-                <dt>地址</dt>
-                <dd><%= partner.address%></dd>
-              </dl>
-              <dl class="col-md-offset-2 col-md-8 dl-horizontal">
-                <dt>邮编</dt>
-                <dd><%= partner.post%></dd>
-              </dl>
-              <dl class="col-md-offset-2 col-md-8 dl-horizontal">
-                <dt>联系电话</dt>
-                <dd>
-                  <%if(partner.telephone){%><%= partner.telephone%>
-                  <%}else{%>未填写<%}%>
-                </dd>
-              </dl>
-              <dl class="col-md-offset-2 col-md-8 dl-horizontal">
-                <dt>联系手机</dt>
-                <dd>
-                  <%if(partner.mobile){%><%= partner.mobile%>
-                  <%}else{%>未填写<%}%>
-                </dd>
-              </dl>
-              <dl class="col-md-offset-2 col-md-8 dl-horizontal">
-                <dt>企业邮箱</dt>
-                <dd>
-                  <%if(partner.email){%><%= partner.email%>
-                  <%}else{%>未填写<%}%>
-                </dd>
-              </dl>
-              <dl class="col-md-offset-2 col-md-8 dl-horizontal">
-                <dt>企业简介</dt>
-                <dd>
-                  <%if(partner.profile){%><%= partner.profile%>
-                  <%}else{%>企业简介企业简介企业简介企业简介企业简介企业简介
-                  企业简介企业简介企业简介企业简介企业简介企业简介<%}%>
-                </dd>
-              </dl>
-               <dl class="col-md-offset-2 col-md-8 dl-horizontal">
-                <dt>企业LOGO</dt>
-                <dd>
-                  <img src="/upload/logo/<%= partner.logo%>" class="relative scale-md" width="150" height="150" title="企业LOGO" alt="企业LOGO">
-                </dd>
-              </dl>
-              <dl class="col-md-offset-2 col-md-8 dl-horizontal">
-                <dt>营业执照</dt>
-                <dd>
-                  <img src="/upload/license/<%= partner.license%>" class="relative scale-sm" width="500" height="350" title="营业执照" alt="营业执照">
-                </dd>
-              </dl>
+              <div class="col-md-offset-1 col-md-10 m-t">
+                <div class="panel panel-border">
+                  <div class="panel-heading text-info">
+                    <h3 class="panel-title font-22">基本信息</h3>
+                  </div>
+                  <div class="panel-body ">
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>企业名称：</dt>
+                        <dd><%= partner.name%></dd>
+                      </dl> 
+                      <dl class="dl-horizontal">
+                        <dt>企业法人：</dt>
+                        <dd><%= partner.corporation%></dd>
+                      </dl>
+                      <dl class="dl-horizontal">
+                        <dt>企业联系人：</dt>
+                        <dd><%= partner.contact_name%></dd>
+                      </dl>
+                      <dl class="dl-horizontal">
+                        <dt>营业执照号：</dt>
+                        <dd><%= partner.license_id%></dd>
+                      </dl>
+                      <dl class="dl-horizontal">
+                        <dt>企业地址：</dt>
+                        <dd><%= partner.address%></dd>
+                      </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt class="hidden">企业LOGO：</dt>
+                        <dd>
+                          <img src="/upload/logo/<%= partner.logo%>" class="img-rounded" width="150" height="150" title="企业LOGO" alt="企业LOGO">
+                        </dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel panel-border">
+                  <div class="panel-heading text-info">
+                    <h3 class="panel-title font-22"><span>联系方式</span></h3>
+                  </div>
+                  <div class="panel-body">
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>联系手机：</dt>
+                        <dd>
+                          <%if(partner.mobile){%><%= partner.mobile%>
+                          <%}else{%>尚未设置<%}%>
+                        </dd>
+                      </dl>
+                      <dl class="dl-horizontal">
+                        <dt>联系电话：</dt>
+                        <dd>
+                          <%if(partner.telephone){%><%= partner.telephone%>
+                          <%}else{%>尚未设置<%}%>
+                        </dd>
+                      </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="dl-horizontal">
+                        <dt>企业邮箱：</dt>
+                        <dd>
+                          <%if(partner.email){%><%= partner.email%>
+                          <%}else{%>尚未设置<%}%>
+                        </dd>
+                      </dl>
+                      <dl class="dl-horizontal">
+                        <dt>企业邮编：</dt>
+                        <dd><%= partner.post%></dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel panel-border">
+                  <div class="panel-heading text-info">
+                    <h3 class="panel-title font-22"><span>企业简介</span></h3>
+                  </div>
+                  <div class="panel-body">
+                    <p class="text-indent font-18">
+                      <%if(partner.profile){%><%= partner.profile%>
+                      <%}else{%>尚未设置<%}%></p>
+                  </div>
+                </div>
+                <div class="panel panel-border">
+                  <div class="panel-heading text-info">
+                    <h3 class="panel-title font-22"><span>营业执照</span></h3>
+                  </div>
+                  <div class="panel-body text-center">
+                    <img src="/upload/license/<%= partner.license%>" width="700" height="350" class="scale scale-sm" title="营业执照" alt="营业执照">
+                  </div>
+                </div>
+              </div>
               <div class="col-md-offset-2 col-md-8">
                 <div class="btn-group m-b">
                   <button id="through" class="btn btn-default btn-examine active">通过</button>
@@ -90,7 +118,7 @@
                 <form action="/admin/partner_examine_reject" method="post" id="rejectPartnerForm" class="hidden">
                   <input type="hidden" name="partner[id]" value="<%=partner._id%>">
                   <div class="form-group">
-                    <textarea name="partner[reject_info]" id="rejectInfo" class="form-control" cols="30" rows="8" placeholder="请填写驳回原因，不少于10个字"></textarea>
+                    <textarea name="partner[reject_info]" id="rejectInfo" class="form-control" rows="6" placeholder="请填写驳回原因，不少于10个字"></textarea>
                   </div>
                   <div class="form-group text-center">
                     <button type="submit" id="rejectPartBtn" class="btn btn-primary">确定</button>
@@ -102,13 +130,13 @@
                     <div class="panel-body">
                       <input type="hidden" name="partner[id]" value="<%=partner._id%>">
                       <label for="">请选择商家类型：</label>
-                      <div class="form-group">
+                      <div class="form-group m-horizontal-0 m-b-0">
                         <%partTypes.forEach(function(partType){%>
                         <div class="radio m-l">
                           <label class="w-120">
                             <input type="radio" name="partner[type]" value="<%=partType._id%>"><%=partType.name%>
                           </label>
-                          <p class="inline-block">描述：<span class="text-info"><%=partType.note%></span></p>
+                          <p class="inline-block m-b-0">描述：<span class="text-info"><%=partType.note%></span></p>
                         </div>
                         <%})%>
                       </div>
