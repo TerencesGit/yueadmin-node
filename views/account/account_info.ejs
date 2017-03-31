@@ -8,163 +8,175 @@
     <%- include('../header') %>
     <div id="main" class="main" data-page="account_info">
       <div class="wrapper animated fadeInRight">
-        <div class="container-fluid account">
+        <div class="container-fluid">
           <div class="row">
             <div class="col-md-3">
-              <div class="panel panel-primary">
+              <div class="panel panel-border">
                 <div class="panel-body">
                   <div class="text-center m-b">
-                    <img src="<%if(user.avatar){%>/upload/avatar/<%= user.avatar %><%}else{%>/img/avatar.gif<%}%>" class="img-circle" width="200" height="200" title="头像" alt="头像">
-                    <button class="btn btn-primary btn-block m-t hidden">上传</button>
-                    <h4 class="m-t text-info"><%= user.name %></h4>
+                    <img src="<%if(user.avatar){%>/upload/avatar/<%= user.avatar %><%}else{%>/img/avatar.gif<%}%>" class="img-circle" width="200" height="200" title="<%=user.name%>" alt="头像">
+                    <h4 class="m-t text-info"><%=user.name%></h4>
                   </div>
                   <ul class="list-group">
-                    <li class="list-group-item active">
-                      <span>账户基本信息</span>
+                    <li class="list-group-item">
+                      <a href="/account/account_info_edit"><i class="fa fa-edit m-r-5"></i>编辑账户信息</a>
                     </li>
-                      <li class="list-group-item">
-                        <a href="/account/account_info_edit"><i class="fa fa-edit m-r-5"></i>编辑账户信息</a>
-                      </li>
-                      <li class="list-group-item">
-                        <label>邮箱:</label>
-                        <span><%= user.email %></span>
-                      </li>
-                      <li class="list-group-item hidden">
-                        <label>性别:</label>
-                        <span>
-                        <% if(user.gender == '0'){ %>男
-                        <% }else if(user.gender == '1'){ %>女
-                        <% }else{ %> 未知 <%}%>
-                        </span>
-                      </li>
-                      <li class="list-group-item hidden">
-                        <label>年龄:</label>
-                        <span>
-                          <% if(user.birthday){ %><%= new Date().getFullYear() - moment(user.birthday).format('YYYY') %>
-                          <%}else{%>未设置<%}%>
-                        </span>
-                      </li>
-                      <li class="list-group-item">
-                        <label>所在城市：</label>
-                        <span>
-                          <%if(user.address){%><%=user.address%>
-                          <%}else{%>未设置<%}%>
-                        </span>
-                      </li>
-                      <li class="list-group-item">
-                        <label>所属公司：</label>
-                        <span>
-                          <%if(user.partner){%><%=user.partner.name %>
-                          <%}else{%>未设置<%}%>
-                        </span>
-                      </li>
-                      <li class="list-group-item">
-                        <label>所属部门：</label>
-                        <span>
-                          <% if(user.organize){ %><%= user.organize.name %>
-                          <% }else{%>未设置<%}%>
-                        </span>
-                      </li>
+                    <li class="list-group-item">
+                      <label>邮箱：</label>
+                      <span><%=user.email%></span>
+                    </li>
+                    <li class="list-group-item">
+                      <label>年龄：</label>
+                      <span>
+                        <%if(user.birthday){%>
+                        <%= new Date().getFullYear() - moment(user.birthday).format('YYYY')%>
+                        <%}else{%>未知<%}%>
+                      </span>
+                    </li>
+                    <li class="list-group-item">
+                      <label>所在城市：</label>
+                      <span>
+                        <%if(user.address){%><%=user.address%>
+                        <%}else{%>未设置<%}%>
+                      </span>
+                    </li>
+                    <li class="list-group-item">
+                      <label>所属公司：</label>
+                      <span>
+                        <%if(user.partner){%><%=user.partner.name%>
+                        <%}else{%>暂无<%}%>
+                      </span>
+                    </li>
+                    <li class="list-group-item">
+                      <label>所属部门：</label>
+                      <span>
+                        <%if(user.organize){%><%=user.organize.name%>
+                        <%}else{%>暂无<%}%>
+                      </span>
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
             <div class="col-md-9">
-              <div class="panel panel-primary">
-                <div class="panel-heading">
-                  <h3 class="panel-title">
-                    <a href="#collapseTwo" data-toggle="collapse">账户详细信息</a>
+              <div class="panel panel-border">
+                <div class="panel-heading text-info">
+                  <h3 class="panel-title font-20">
+                    <a href="#collapseOne" data-toggle="collapse">基本信息</a>
                   </h3>
                 </div>
-                <div id="collapseTwo" class="panel-collapse collapse in">
-                  <div class="panel-body min-h-520 m-t">
+                <div id="collapseOne" class="panel-collapse collapse in">
+                  <div class="panel-body ">
                     <div class="col-md-6">
                       <dl class="horizontal clearfix">
-                        <dt>姓名</dt>
-                        <dd><%= user.name%></dd>
+                        <dt>姓名：</dt>
+                        <dd><%=user.name%></dd>
                       </dl>
-                    </div>
-                    <div class="col-md-6">
                       <dl class="horizontal clearfix">
-                        <dt>邮箱</dt>
-                        <dd><%= user.email%></dd>
+                        <dt>邮箱：</dt>
+                        <dd><%=user.email%></dd>
                       </dl>
-                    </div>
-                    <div class="col-md-6">
                       <dl class="horizontal clearfix">
-                        <dt>手机号</dt>
-                        <dd><%if(user.mobile){%><%= user.mobile%><%}else{%>暂无<%}%></dd>
+                        <dt>所在城市：</dt>
+                        <dd><%if(user.address){%><%= user.address%>
+                            <%}else{%>暂无<%}%></dd>
                       </dl>
-                    </div>
-                    <div class="col-md-6">
                       <dl class="horizontal clearfix">
-                        <dt>qq</dt>
-                        <dd><%if(user.qq){%><%= user.qq%><%}else{%>暂无<%}%></dd>
-                      </dl>
-                    </div>
-                    <div class="col-md-6">
-                      <dl class="horizontal clearfix">
-                        <dt>性别</dt>
+                        <dt>所属公司：</dt>
                         <dd>
-                        <% if(user.gender == '0'){ %> 男
-                        <% }else if(user.gender == '1'){ %> 女
-                        <% }else{ %> 未知 <% } %>
+                          <%if(user.partner){%><%=user.partner.name %>
+                          <%}else{%>未设置<%}%>
                         </dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
                       <dl class="horizontal clearfix">
-                        <dt>生日</dt>
+                        <dt>性别：</dt>
+                        <dd>
+                          <%if(user.gender == '0'){%>男<%}else{%>女<%}%>
+                        </dd>
+                      </dl>
+                      <dl class="horizontal clearfix">
+                        <dt>生日：</dt>
                         <dd><%if(user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD')%><%}else{%>暂无<%}%></dd>
                       </dl>
-                    </div>
-                    <div class="col-md-6">
                       <dl class="horizontal clearfix">
-                        <dt>身份证号</dt>
-                        <dd><%if(user.idcard){%> <%= user.idcard%><%}else{%>暂无<%}%></dd>
+                        <dt>身份证号：</dt>
+                        <dd><%if(user.idcard){%><%= user.idcard%><%}else{%>暂无<%}%></dd>
                       </dl>
-                    </div>
-                    <div class="col-md-6">
                       <dl class="horizontal clearfix">
-                        <dt>籍贯</dt>
-                        <dd><%if(user.address){%> <%= user.address %><%}else{%>暂无<%}%></dd>
-                      </dl>
-                    </div>
-                    <div class="col-md-6">
-                      <dl class="horizontal clearfix">
-                        <dt>身份证正面</dt>
+                        <dt>所属部门：</dt>
                         <dd>
-                          <%if(user.idcard_front){%>
-                          <img src="/upload/idcard/<%= user.idcard_front %>" width="245" height="158" class="img-rounded" title="身份证正面" alt="身份证正面">
-                          <%}else{%>
-                          <span>暂无</span>
-                          <%}%>
-                        </dd>
-                      </dl>
-                    </div>
-                    <div class="col-md-6">
-                      <dl class="horizontal clearfix">
-                        <dt>身份证反面</dt>
-                        <dd>
-                          <%if(user.idcard_back){%>
-                          <img src="/upload/idcard/<%= user.idcard_back %>" width="245" height="158" class="img-rounded" title="身份证反面" alt="身份证反面">
-                          <%}else{%> 
-                          <span>暂无</span>
-                          <%}%>
+                          <%if(user.organize){%><%=user.organize.name%>
+                          <%}else{%>未设置<%}%>
                         </dd>
                       </dl>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="panel panel-danger">
-                <div class="panel-heading">
-                  <h3 class="panel-title">
-                    <a href="#collapseThree" data-toggle="collapse"><i class="fa fa-commenting m-r-5"></i>消息动态（删除）</a>
-                    <a href="#" class="pull-right" data-dismiss="panel" aria-hidden="true">&times;</a>
+              <div class="panel panel-border">
+                <div class="panel-heading text-info">
+                  <h3 class="panel-title font-20">
+                    <a href="#collapseTwo" data-toggle="collapse">联系方式</a>
+                  </h3>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in">
+                  <div class="panel-body ">
+                    <div class="col-md-6">
+                      <dl class="horizontal clearfix">
+                        <dt>手机号码：</dt>
+                        <dd><%if(user.mobile){%><%= user.mobile%><%}else{%>暂无<%}%></dd>
+                      </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="horizontal clearfix">
+                        <dt>QQ：</dt>
+                        <dd><%if(user.qq){%><%=user.qq%><%}else{%>暂无<%}%></dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-border">
+                <div class="panel-heading text-info">
+                  <h3 class="panel-title font-20">
+                    <a href="#collapseThree" data-toggle="collapse">身份证件</a>
                   </h3>
                 </div>
                 <div id="collapseThree" class="panel-collapse collapse in">
+                  <div class="panel-body ">
+                    <div class="col-md-6">
+                      <dl class="horizontal clearfix">
+                          <dt>身份证正面</dt>
+                          <dd>
+                            <%if(user.idcard_front){%>
+                            <img src="/upload/idcard/<%=user.idcard_front%>" width="245" height="158" class="img-rounded" title="身份证正面" alt="身份证正面">
+                            <%}else{%><span>暂无</span><%}%>
+                          </dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-6">
+                      <dl class="horizontal clearfix">
+                          <dt>身份证背面</dt>
+                          <dd>
+                            <%if(user.idcard_back){%>
+                            <img src="/upload/idcard/<%=user.idcard_back%>" width="245" height="158" class="img-rounded" title="身份证背面" alt="身份证背面">
+                            <%}else{%><span>暂无</span><%}%>
+                          </dd>
+                        </dl>
+                    </div>
+                  </div>
+                </div>
+              </div>   
+              <div class="panel panel-danger">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <a href="#collapseFour" data-toggle="collapse"><i class="fa fa-commenting m-r-5"></i>消息动态（删除）</a>
+                    <a href="#" class="pull-right" data-dismiss="panel" aria-hidden="true">&times;</a>
+                  </h3>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse out">
                   <div class="panel-body">
                     <ul class="media-list">
                       <% messages.forEach(function(message){ %>
@@ -189,7 +201,7 @@
                           </div>
                         </div>
                       </li>
-                      <% }) %>
+                      <%})%>
                     </ul>
                   </div>
                 </div>
@@ -202,6 +214,5 @@
     	<%- include('../footer') %>
     </div>
     <%- include('../script')%>
-    <script src="/js/message.js"></script>
   </body>
 </html>

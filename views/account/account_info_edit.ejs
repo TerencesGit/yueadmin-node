@@ -58,12 +58,6 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-md-2 control-label">身份证号</label>
-                    <div class="col-md-6">
-                       <input type="text" name="user[idcard]" id="idcard" class="form-control" value="<%if(user.idcard){%><%=user.idcard %><%}%>" placeholder="请输入身份证号">
-                    </div>
-                  </div>
-                  <div class="form-group">
                     <label class="col-md-2 control-label">生日</label>
                     <div class="col-md-6">
                       <input type="text" name="user[birthday]" id="birthday" class="form-control laydate-icon" value="<%if(user.birthday){%><%=moment(user.birthday).format('YYYY-MM-DD')%><%}%>" placeholder="请选择生日">
@@ -74,6 +68,12 @@
                      <div class="col-md-6">
                       <input type="text" name="user[address]" id="start1" class="proCityQueryAll proCitySelAll form-control city-icon" placeholder="请选择/输入城市名称" value="<%if(user.address){%><%= user.address%><%}%>">
                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">身份证号</label>
+                    <div class="col-md-6">
+                       <input type="text" name="user[idcard]" id="idcard" class="form-control" value="<%if(user.idcard){%><%=user.idcard %><%}%>" placeholder="请输入身份证号">
+                    </div>
                   </div>               
                   <div class="form-group">
                     <h3 class="col-md-2 control-label m-t text-info">附件上传</h3>
