@@ -10,7 +10,7 @@
     <div id="main" class="main" data-page="title_manage">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
-          <div class="panel panel-info">
+          <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">
                 <a href="#collapseOne" data-toggle="collapse">岗位管理</span>
@@ -19,14 +19,14 @@
             </div>
             <div id="collapseOne" class="panel-collapse collapse in">
               <div class="panel-body">
-                <div class="alert alert-info m-b">
+                <div id="flashMessage"  class="alert alert-info m-b">
                   <i class="fa fa-info-circle"></i>
                   创建岗位数量不超过20个
                   <a class="close" data-dismiss="alert" href="#" aria-hidden="true">
                     &times;
                   </a>
                 </div>
-                <div id="flashMessage" class="alert alert-danger m-b">
+                <div class="alert alert-danger m-b hidden">
                   <i class="fa fa-info-circle"></i>
                   创建岗位数量已达到限制
                   <a class="close" data-dismiss="alert" href="#" aria-hidden="true">
@@ -35,7 +35,7 @@
                 </div>
                 <table id="titleDataTable" class="table table-bordered table-hover table-striped">
                   <thead>
-                    <tr class="">
+                    <tr class="bg-primary">
                       <th>序号</th>
                       <th>名称</th>
                       <th>描述</th>

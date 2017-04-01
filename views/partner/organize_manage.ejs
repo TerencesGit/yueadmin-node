@@ -13,7 +13,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-3">
-              <div class="panel panel-info">
+              <div class="panel panel-primary">
                 <div class="panel-heading">
                   <h3 class="panel-title">
                     <a href="#collapseTree" data-toggle="collapse"><i class="fa fa-tree"></i>部门组织结构</a>
@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="col-md-9">
-              <div class="panel panel-info">
+              <div class="panel panel-primary">
                 <div class="panel-heading">
                   <h3 class="panel-title">
                     <a href="#collapseTwo" data-toggle="collapse"><i class="fa fa-cogs"></i>部门管理（<span id="departmentName"><%= user.partner.name%></span>）</a>
@@ -85,8 +85,8 @@
                         </a> 
                       </li>
                     </ul>
-                    <h3 class="page-header m-t-20">部门员工</h3>
-                    <table id="staffDataTable" class="table table-hover table-striped table-bordered">
+                    <table id="staffDataTable" class="table table-hover table-striped table-bordered m-t">
+                      <caption class="caption bg-primary">部门员工列表</caption>
                       <thead>
                         <tr>
                           <th>序号</th>

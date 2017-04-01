@@ -11,11 +11,11 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-3">
-              <div class="panel panel-border">
+              <div class="panel panel-primary">
                 <div class="panel-body">
                   <div class="text-center m-b">
                     <img src="<%if(user.avatar){%>/upload/avatar/<%= user.avatar %><%}else{%>/img/avatar.gif<%}%>" class="img-circle" width="200" height="200" title="<%=user.name%>" alt="头像">
-                    <h4 class="m-t text-info"><%=user.name%></h4>
+                    <h4 class="m-t text-primary"><%=user.name%></h4>
                   </div>
                   <ul class="list-group">
                     <li class="list-group-item">
@@ -59,29 +59,29 @@
               </div>
             </div>
             <div class="col-md-9">
-              <div class="panel panel-border">
-                <div class="panel-heading text-info">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
                   <h3 class="panel-title font-20">
                     <a href="#collapseOne" data-toggle="collapse">基本信息</a>
                   </h3>
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in">
-                  <div class="panel-body ">
+                  <div class="panel-body">
                     <div class="col-md-6">
-                      <dl class="horizontal clearfix">
+                      <dl class="dl-horizontal dl-sm">
                         <dt>姓名：</dt>
                         <dd><%=user.name%></dd>
                       </dl>
-                      <dl class="horizontal clearfix">
+                      <dl class="dl-horizontal dl-sm">
                         <dt>邮箱：</dt>
                         <dd><%=user.email%></dd>
                       </dl>
-                      <dl class="horizontal clearfix">
+                      <dl class="dl-horizontal dl-sm">
                         <dt>所在城市：</dt>
                         <dd><%if(user.address){%><%= user.address%>
                             <%}else{%>暂无<%}%></dd>
                       </dl>
-                      <dl class="horizontal clearfix">
+                      <dl class="dl-horizontal dl-sm">
                         <dt>所属公司：</dt>
                         <dd>
                           <%if(user.partner){%><%=user.partner.name %>
@@ -90,21 +90,21 @@
                       </dl>
                     </div>
                     <div class="col-md-6">
-                      <dl class="horizontal clearfix">
+                      <dl class="dl-horizontal dl-sm">
                         <dt>性别：</dt>
                         <dd>
                           <%if(user.gender == '0'){%>男<%}else{%>女<%}%>
                         </dd>
                       </dl>
-                      <dl class="horizontal clearfix">
+                      <dl class="dl-horizontal dl-sm">
                         <dt>生日：</dt>
                         <dd><%if(user.birthday){%><%= moment(user.birthday).format('YYYY-MM-DD')%><%}else{%>暂无<%}%></dd>
                       </dl>
-                      <dl class="horizontal clearfix">
+                      <dl class="dl-horizontal dl-sm">
                         <dt>身份证号：</dt>
                         <dd><%if(user.idcard){%><%= user.idcard%><%}else{%>暂无<%}%></dd>
                       </dl>
-                      <dl class="horizontal clearfix">
+                      <dl class="dl-horizontal dl-sm">
                         <dt>所属部门：</dt>
                         <dd>
                           <%if(user.organize){%><%=user.organize.name%>
@@ -115,8 +115,8 @@
                   </div>
                 </div>
               </div>
-              <div class="panel panel-border">
-                <div class="panel-heading text-info">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
                   <h3 class="panel-title font-20">
                     <a href="#collapseTwo" data-toggle="collapse">联系方式</a>
                   </h3>
@@ -124,13 +124,13 @@
                 <div id="collapseTwo" class="panel-collapse collapse in">
                   <div class="panel-body ">
                     <div class="col-md-6">
-                      <dl class="horizontal clearfix">
+                      <dl class="dl-horizontal dl-sm">
                         <dt>手机号码：</dt>
                         <dd><%if(user.mobile){%><%= user.mobile%><%}else{%>暂无<%}%></dd>
                       </dl>
                     </div>
                     <div class="col-md-6">
-                      <dl class="horizontal clearfix">
+                      <dl class="dl-horizontal dl-sm">
                         <dt>QQ：</dt>
                         <dd><%if(user.qq){%><%=user.qq%><%}else{%>暂无<%}%></dd>
                       </dl>
@@ -138,8 +138,8 @@
                   </div>
                 </div>
               </div>
-              <div class="panel panel-border">
-                <div class="panel-heading text-info">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
                   <h3 class="panel-title font-20">
                     <a href="#collapseThree" data-toggle="collapse">身份证件</a>
                   </h3>
@@ -147,8 +147,8 @@
                 <div id="collapseThree" class="panel-collapse collapse in">
                   <div class="panel-body ">
                     <div class="col-md-6">
-                      <dl class="horizontal clearfix">
-                          <dt>身份证正面</dt>
+                      <dl class="dl-horizontal dl-sm">
+                          <dt>身份证正面：</dt>
                           <dd>
                             <%if(user.idcard_front){%>
                             <img src="/upload/idcard/<%=user.idcard_front%>" width="245" height="158" class="img-rounded" title="身份证正面" alt="身份证正面">
@@ -157,8 +157,8 @@
                         </dl>
                     </div>
                     <div class="col-md-6">
-                      <dl class="horizontal clearfix">
-                          <dt>身份证背面</dt>
+                      <dl class="dl-horizontal dl-sm">
+                          <dt>身份证背面：</dt>
                           <dd>
                             <%if(user.idcard_back){%>
                             <img src="/upload/idcard/<%=user.idcard_back%>" width="245" height="158" class="img-rounded" title="身份证背面" alt="身份证背面">
