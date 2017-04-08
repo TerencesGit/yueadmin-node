@@ -6,8 +6,9 @@ const Message = require('../controllers/message');
 const Partner = require('../controllers/partner');
 const System = require('../controllers/system');
 const Installment = require('../controllers/installment');
-//const Transaction = require('../controllers/transaction');
 const Payment = require('../controllers/payment');
+const Transaction = require('../controllers/transaction');
+//const Mall = require('../controllers/mall');
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart();
 
@@ -195,7 +196,7 @@ router.get('/system/remove_account', System.removeAccount);
 
 /** 交易平台 **/
 //首页
-//router.get('/transaction/home', Transaction.home)
+router.get('/transaction/home', Transaction.home)
 
 /** 支付平台 **/
 //账户信息设置
@@ -224,7 +225,6 @@ router.get('/payment/balance_withdrawals', Payment.balanceWithdrawals)
 router.get('/payment/income_and_expenditure', Payment.incomeAndExpenditure)
 router.get('/payment/transaction_record', Payment.transactionRecord)
 router.get('/payment/transaction_search_result', Payment.transactionSearchResult)
-
 
 /** 分期贷款 **/
 //平台管理

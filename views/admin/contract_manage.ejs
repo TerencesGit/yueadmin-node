@@ -10,7 +10,7 @@
     <div id="main" class="main" data-page="contract_manage">
       <div class="wrapper animated fadeInRight">
         <div class="container-fluid">
-          <div class="panel panel-secondary">
+          <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">
                 <span>合同管理</span>
@@ -51,8 +51,8 @@
                       <td><a href="/admin/show_contract_detail?id=<%=contract._id%>" class="btn btn-link" title="查看">查看</a>
                       </td>
                       <td>
-                        <a href="/admin/edit_contract?id=<%= contract._id%>" class="btn btn-warning btn-sm" title="查看">编辑</a>
-                        <a href="/admin/remove_contract?id=<%= contract._id%>" class="btn btn-danger btn-sm btn-contract-remove" title="删除">删除</a>
+                        <a href="/admin/edit_contract?id=<%= contract._id%>" class="btn btn-warning" title="查看">编辑</a>
+                        <a href="/admin/remove_contract?id=<%= contract._id%>" class="btn btn-danger btn-contract-remove" title="删除">删除</a>
                       </td>
                     </tr>
                  <%})%>

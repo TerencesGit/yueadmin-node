@@ -25,30 +25,30 @@
                     </div>
                     <div class="panel-body ">
                       <div class="col-md-6">
-                        <dl class="horizontal">
+                        <dl class="dl-horizontal">
                           <dt>企业名称：</dt>
                           <dd><%= partner.name%></dd>
                         </dl> 
-                        <dl class="horizontal">
+                        <dl class="dl-horizontal">
                           <dt>企业法人：</dt>
                           <dd><%= partner.corporation%></dd>
                         </dl>
-                        <dl class="horizontal">
+                        <dl class="dl-horizontal">
                           <dt>企业联系人：</dt>
                           <dd><%= partner.contact_name%></dd>
                         </dl>
-                        <dl class="horizontal">
+                        <dl class="dl-horizontal">
                           <dt>营业执照号：</dt>
                           <dd><%= partner.license_id%></dd>
                         </dl>
-                        <dl class="horizontal">
+                        <dl class="dl-horizontal">
                           <dt>企业地址：</dt>
                           <dd><%= partner.address%></dd>
                         </dl>
                       </div>
                       <div class="col-md-6">
-                        <dl class="horizontal">
-                          <dt class="hidden">企业LOGO：</dt>
+                        <dl class="dl-horizontal">
+                          <dt class="">企业LOGO：</dt>
                           <dd>
                             <img src="/upload/logo/<%= partner.logo%>" class="img-rounded" width="150" height="150" title="企业LOGO" alt="企业LOGO">
                           </dd>
@@ -62,14 +62,14 @@
                     </div>
                     <div class="panel-body">
                       <div class="col-md-6">
-                        <dl class="horizontal">
+                        <dl class="dl-horizontal">
                           <dt>联系手机：</dt>
                           <dd>
                             <%if(partner.mobile){%><%= partner.mobile%>
                             <%}else{%>尚未设置<%}%>
                           </dd>
                         </dl>
-                        <dl class="horizontal">
+                        <dl class="dl-horizontal">
                           <dt>联系电话：</dt>
                           <dd>
                             <%if(partner.telephone){%><%= partner.telephone%>
@@ -78,14 +78,14 @@
                         </dl>
                       </div>
                       <div class="col-md-6">
-                        <dl class="horizontal">
+                        <dl class="dl-horizontal">
                           <dt>企业邮箱：</dt>
                           <dd>
                             <%if(partner.email){%><%= partner.email%>
                             <%}else{%>尚未设置<%}%>
                           </dd>
                         </dl>
-                        <dl class="horizontal">
+                        <dl class="dl-horizontal">
                           <dt>企业邮编：</dt>
                           <dd><%= partner.post%></dd>
                         </dl>
