@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../link') %>
+    <link rel="stylesheet" href="/plugins/dataTables/css/dataTables.bootstrap.css">
+  </head>
+  <body>
+    <%- include('./aside') %>
+    <%- include('../header') %>
+    <div id="main" class="main" data-page="sup_order_manage">
+      <div class="wrapper animated fadeInRight"> 
+        <div class="container-fluid">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= title%></h3>
+            </div>
+            <div class="panel-body min-h-500">
+              <table id="noticeDataTable" class="table table-hover table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>订单号</th>
+                    <th>下单时间</th>
+                    <th>支付时间</th>
+                    <th>订单状态</th>
+                    <th>产品名称</th>
+                    <th>供应商</th>
+                    <th>订单总价</th>
+                    <th>下单人</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-order="001">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <div class="btn-group">
+                          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">设置
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                              <li>
+                                <a href="#setOrganizeModal" class="btn btn-org" data-toggle="modal">部门设置</a>
+                              </li>
+                              <li>
+                                <a href="#setTitleModal" class="btn btn-title" data-toggle="modal">岗位设置</a>
+                              </li>
+                              <li>
+                              </li>
+                          </ul>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="warp-footer"></div>
+      </div>
+    	<%- include('../footer') %>
+    </div>
+    <%- include('../script')%>
+    <script src="/plugins/dataTables/js/jquery.dataTables.js"></script>
+    <script src="/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+    <script src="/js/notice.js"></script>
+  </body>
+</html>
