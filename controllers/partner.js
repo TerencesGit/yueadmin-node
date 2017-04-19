@@ -297,8 +297,9 @@ exports.organizeManage = function(req, res){
 //获取组织树
 exports.getOrganizeTree = function(req, res){
 	const partnerId = req.query.partnerId;
+	var organizeId;
 	if(req.query.organizeId){
-		const organizeId = req.query.organizeId;
+		organizeId = req.query.organizeId;
 	}
 	var _organizes = [];
 	var _organize;

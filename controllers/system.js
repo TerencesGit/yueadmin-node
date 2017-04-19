@@ -68,7 +68,6 @@ exports.getFunctionTree = function(req, res){
 				}
 				_funcs.push(_func)
 			})
-		console.log(_funcs)
 		res.json({funcs: _funcs})
 	})
 }
