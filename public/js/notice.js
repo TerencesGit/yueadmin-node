@@ -71,5 +71,4 @@ function removeNoticeById(id, $tr){
 	.always(function() {
 		console.log("complete");
 	});
-	
 }	

@@ -23,11 +23,16 @@ router.post('/user/signup', User.signup);
 router.post('/user/signinAsync', User.signinAsync);
 router.post('/user/signin', User.signin);
 
+router.post('/login', User.login);
+router.post('/register', User.register);
+
+router.get('/user/permission', User.userPermission)
 //退出
 router.get('/logout', User.logout); 
+router.get('/logoutAsync', User.exit); 
 
 /* 管理员操作 */
-router.get('/user/list', User.signinRequired, User.userlist);
+router.get('/user/list', User.userlist);
 router.get('/user/delete', User.signinRequired, User.delete);
 router.post('/user/edit', User.signinRequired, User.edit);
 router.get('/user/user_detail', User.signinRequired, User.userDetail);
@@ -197,6 +202,21 @@ router.get('/system/remove_account', System.removeAccount);
 /** 交易平台 **/
 //首页
 router.get('/transaction/home', Transaction.home)
+/** 供应商 **/
+// 品牌管理
+router.post('/brand/provider/brandUpload', multipartMiddleware, Transaction.brandUpload)
+router.get('/upload/imageUpload', multipartMiddleware, Transaction.imageUpload)
+router.post('/upload/imageUpload', multipartMiddleware, Transaction.imageUpload)
+router.get('/brand/provider/brandList', Transaction.brandManage)
+router.post('/brand/provider/brandAdd', Transaction.addBrand)
+router.post('/brand/provider/brandSave', Transaction.saveBrand)
+router.get('/brand/provider/brandDel', Transaction.brandDel)
+router.get('/brand/provider/brandDetail', Transaction.brandDetail)
+
+// 商品管理
+router.get('/user/getWareList', Transaction.getWareList)
+router.post('/user/addWare', Transaction.addWare)
+router.get('/user/wareDetail', Transaction.wareDetail)
 
 /** 支付平台 **/
 //账户信息设置
