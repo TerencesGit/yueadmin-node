@@ -54,6 +54,17 @@ app.use(function(req, res, next) {
     app.locals.notices = _notices;
     next()
 });
+app.all('/*', function (req, res, next) {
+    var url = req.originalUrl;
+    var urlPattern = /sign|login|register|find_password/;
+    if(urlPattern.test(url)) {
+      return next()
+    }
+    if(!req.session.user) {
+      return res.redirect('/signin')
+    }
+    next();
+});
 app.use('/', routes);
 app.use('/users', users);
 

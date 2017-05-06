@@ -284,8 +284,10 @@ exports.userPermission = function(req, res) {
 exports.signin = function(req, res) {
   var _user = req.body.user;
   var name = _user.username,
-    passwd = _user.password;
+      passwd = _user.password,
+      remember = _user.remember;
   console.log(_user);
+  console.log(remember)
   var emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
   if (!emailReg.test(name)) {
     User.findOne({ mobile: name }, function(err, user) {
@@ -320,6 +322,7 @@ exports.signin = function(req, res) {
           if (isMatch) {
             console.log(user)
             req.session.user = user;
+            
             res.redirect('/')
           } else {
             _user.error = '密码不正确！';
