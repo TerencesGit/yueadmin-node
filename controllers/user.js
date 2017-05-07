@@ -99,50 +99,6 @@ exports.signup = function(req, res) {
     }
   })
 }
-//异步登录功能
-exports.signinAsync = function(req, res) {
-  var _user = req.body.user;
-  var name = _user.name,
-      passwd = _user.passwd;
-  var emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-  if (!emailReg.test(name)) {
-    User.findOne({ mobile: name }, function(err, user) {
-      if (err) console.log(err)
-      if (!user) {
-        return res.json({ status: 0 })
-      }
-      user.comparePassword(passwd, function(err, isMatch) {
-        if (err) console.log(err)
-        if (isMatch) {
-          req.session.user = user;
-          setTimeout(function() {
-            return res.json({ status: 2 })
-          }, 2000)
-        } else {
-          return res.json({ status: 1 })
-        }
-      })
-    })
-  } else {
-    User.findOne({ email: name }, function(err, user) {
-      if (err) console.log(err)
-      if (!user) {
-        return res.json({ status: 0 })
-      }
-      user.comparePassword(passwd, function(err, isMatch) {
-        if (err) console.log(err)
-        if (isMatch) {
-          req.session.user = user;
-          setTimeout(function() {
-            res.json({ status: 2 })
-          }, 2000)
-        } else {
-          res.json({ status: 1 })
-        }
-      })
-    })
-  }
-}
 // 异步注册
 exports.register = function (req, res) {
   console.log(req.body)
@@ -165,7 +121,7 @@ exports.register = function (req, res) {
     }
   })
 }
-// 异步登录
+// 登录功能
 exports.login = function(req, res) {
   console.log(req.body)
   const TIME = 1000
@@ -686,7 +642,7 @@ exports.userlist = function(req, res) {
       totalNumber = users.length;
     })
   User.findByPagination(model, function(err, pageIndex, pageCount, users) {
-    res.render('admin/userlist', {
+    res.render('admin/userManage', {
       title: '用户列表',
       users: users,
       pageCount: pageCount,
@@ -696,7 +652,7 @@ exports.userlist = function(req, res) {
   })
 }
 //用户删除
-exports.delete = function(req, res) {
+exports.userDel = function(req, res) {
   var uid = req.query.uid;
   if (uid) {
     User.remove({ _id: uid }, function(err, user) {
@@ -711,7 +667,7 @@ exports.edit = function edit(req, res) {
     id = _user.id;
   User.update({ _id: id }, { '$set': _user }, function(err, msg) {
     if (err) console.log(err);
-    res.redirect('/user/list')
+    res.redirect('/supadmin/userList')
   })
 }
 //用户详情

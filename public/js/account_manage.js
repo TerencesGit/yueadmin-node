@@ -29,7 +29,7 @@ btnStatus.on('click', function(e){
 })
 function setAccountStatus(id, status, target){
   $.ajax({
-    url: '/system/set_account_status?id='+id+'&&status='+status,
+    url: '/supadmin/set_account_status?id='+id+'&&status='+status,
     type: 'GET',
   })
   .done(function(res) {

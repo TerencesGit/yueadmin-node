@@ -103,6 +103,59 @@
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown
 }
+@-webkit-keyframes shake {
+  0%,
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0)
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: translateX(-10px);
+    transform: translateX(-10px)
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    -webkit-transform: translateX(10px);
+    transform: translateX(10px)
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0)
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: translateX(-10px);
+    -ms-transform: translateX(-10px);
+    transform: translateX(-10px)
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    -webkit-transform: translateX(10px);
+    -ms-transform: translateX(10px);
+    transform: translateX(10px)
+  }
+}
+
+.shake {
+  -webkit-animation-name: shake;
+  animation-name: shake
+}
 /**========== animation end ==========**/
 /**========== global styles ==========**/
 body {
@@ -1075,9 +1128,9 @@ a.disabled {
   border-radius: 5px;
   border: 1px solid #ddd;
 }
-.tools > li > a:hover {
+/*.tools > li > a:hover {
   background-color: rgba(0,0,0,.1);
-}
+}*/
 .tools > li > a.btn-reg {
   padding: 4px;
 }
@@ -1091,6 +1144,7 @@ a.disabled {
 .tools > li > a > span {
    display: block;
 }
+
 /** tools end **/ 
 
 /** ui-step start **/
@@ -1130,6 +1184,37 @@ a.disabled {
   color: #24c600;
 }
 /** ui-step end **/
+/** message start **/
+.message {
+  position: absolute;
+  z-index: 999;
+  top: -100px;
+  left: 50%;
+  width: 350px;
+  margin-left: -175px;
+  padding: 10px;
+}
+/** message end **/
+/** loading start */
+.loading {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  background: rgba(0,0,0,.5)
+}
+.loading .icon {
+  position: absolute;
+  top: 35%;
+  width: 60px;
+  height: 60px;
+  background: url(../img/loading.gif);
+  background-size: cover;
+}
+/** loading end */
 
 /** login start **/
 .login-page {

@@ -539,3 +539,29 @@ function getANotB(a, b){
  }
  return arr;
 }
+// 消息提示
+function $message (message, type, icon) {
+  type = type || 'warning'
+  icon = icon || 'warning'
+  const msgHtml = '<div id="message" class="message alert alert-'+type+'">\
+                  <i class="fa fa-'+icon+'"></i>\
+                  '+message+'</div>';
+  $(document.body).append(msgHtml);
+  const $msg = $('#message');
+  $msg.animate({top: 30}, 500)
+  setTimeout(function() {
+    $msg.animate({top: -100}, 500)
+  }, 3000)
+  setTimeout(function() {
+    $msg.remove()
+  }, 3500)
+}
+// 加载中
+const $loading = {
+  show: function(){
+    $(document.body).append('<div class="loading"><i class="icon"></i></div>')
+  },
+  hide: function() {
+    $('.loading').remove()
+  }
+}

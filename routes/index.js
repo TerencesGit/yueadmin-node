@@ -20,7 +20,6 @@ router.get('/signin', User.showSignin);
 router.get('/signup', User.showSignup);
 
 router.post('/user/signup', User.signup);
-router.post('/user/signinAsync', User.signinAsync);
 router.post('/user/signin', User.signin);
 
 router.post('/login', User.login);
@@ -32,10 +31,10 @@ router.get('/logout', User.logout);
 router.get('/logoutAsync', User.exit); 
 
 /* 管理员操作 */
-router.get('/user/list', User.userlist);
-router.get('/user/delete', User.signinRequired, User.delete);
-router.post('/user/edit', User.signinRequired, User.edit);
-router.get('/user/user_detail', User.signinRequired, User.userDetail);
+router.get('/supadmin/userList', User.userlist);
+router.get('/supadmin/userDel', User.signinRequired, User.userDel);
+router.post('/supadmin/userEdit', User.signinRequired, User.edit);
+router.get('/supadmin/userDetail', User.signinRequired, User.userDetail);
 
 /* 账号操作 */
 router.get('/findByEmail', User.findByEmail);
@@ -192,12 +191,10 @@ router.post('/system/save_notice', multipartMiddleware, System.noticeFileUpload,
 router.get('/system/notice_detail', System.noticeDetail);
 router.get('/system/notice_edit', System.noticeEdit);
 router.get('/system/notice_remove', System.noticeRemove);
-
 //账户管理
-router.get('/system/account_manage', System.accountManage);
-router.get('/system/show_account_info', System.showAccountInfo);
-router.get('/system/set_account_status', System.setAccountStatus);
-router.get('/system/remove_account', System.removeAccount);
+router.get('/supadmin/account_manage', System.accountManage);
+router.get('/supadmin/show_account_info', System.showAccountInfo);
+router.get('/supadmin/set_account_status', System.setAccountStatus);
 
 /** 交易平台 **/
 //首页

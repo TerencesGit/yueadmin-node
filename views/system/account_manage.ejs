@@ -37,7 +37,7 @@
                       <td><%if(user.partner){%>企业用户<%}else{%>个人用户<%}%></td>
                       <td><%if(user.partner){%><%= user.partner.name %><%}%></td>
                       <td><%= moment(user.meta.createAt).format('YYYY-MM-DD') %></td>
-                      <td><a href="/system/show_account_info?id=<%= user._id%>">查看</a></td>
+                      <td><a href="/supadmin/show_account_info?id=<%= user._id%>">查看</a></td>
                       <td>
                         <%if(user.status == 0){%>
                         <a href="javascript:;" class="btn-status" data-status="<%= user.status%>" title="禁用状态"><i class="fa fa-toggle-off fa-2x"></i></a>

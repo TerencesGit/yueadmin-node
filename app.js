@@ -56,14 +56,21 @@ app.use(function(req, res, next) {
 });
 app.all('/*', function (req, res, next) {
     var url = req.originalUrl;
-    var urlPattern = /sign|login|register|find_password/;
+    console.log(url)
+    var urlPattern = /\\provider\\|\\distributor\\|\\admin\\/;
     if(urlPattern.test(url)) {
-      return next()
+      if(req.session.user) {
+        return next()
+      }
+      return res.json({status: '401', message: '尚未登录或session已过期'})
+    } else if (url.match('/supadmin/')) {
+      if(req.session.user && req.session.user.role >= '20'){
+        console.log(req.session.user)
+        return next()
+      }
+      return res.json({status: '403', message: '无此权限'})
     }
-    if(!req.session.user) {
-      return res.redirect('/signin')
-    }
-    next();
+    next()
 });
 app.use('/', routes);
 app.use('/users', users);

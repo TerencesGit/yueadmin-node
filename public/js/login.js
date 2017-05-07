@@ -1,6 +1,11 @@
 $(function() {
   //绘制验证码
   ($('#canvasCode').length === 1) && drawCode();
+  if($.cookie('remember')){
+    $('#username').val(atob(unescape($.cookie('username'))))
+    $('#password').val(atob(unescape($.cookie('password'))))
+    $('#remember').attr('checked', true)
+  }
 })
 //注册表单对象
 const signupForm = $('#signupForm'),
@@ -135,13 +140,42 @@ signinCode.blur(function(){
   if($(this).val() !== ''){
     clearTip($(this))
   }
+  signinForm.removeClass('animated shake')
 })
 //登录表单提交
 btnSignIn.on('click', function(e){
   e.preventDefault()
-  validateSigninForm() && signinForm.submit()
+  validateSigninForm() && signinAsync() || signinForm.addClass('animated shake')
 })
-
+function signinAsync() {
+  $.ajax({
+    url: '/login',
+    type: 'POST',
+    data: {username: nameInput.val(), password: passInput.val()},
+    beforeSend: function(){
+      $loading.show()
+    }
+  })
+  .done(function(res) {
+    $loading.hide()
+    if(res.status === 1) {
+      saveCookie()
+      $message(res.message, 'success', 'check')
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1000)
+    } else {
+      $message(res.message)
+    }
+  })
+  .fail(function() {
+    $loading.hide()
+  })
+  .always(function() {
+    $loading.hide()
+  });
+  return true;
+}
 //找回密码表单验证
 let _tempBindEmail;
 bindEmailInput.blur(function(){
@@ -179,3 +213,17 @@ btnResetPasswd.on('click', function(e){
   checkConsistency(resetPassword2, resetPassword, msg.confirmPasswd) && 
   resetPasswdForm.submit()
 })
+//保存cookie 
+function saveCookie(){
+  if(rememberCheck.prop('checked')){
+    var uname = escape(btoa(nameInput.val()));
+    var passwd = escape(btoa(passInput.val()));
+    $.cookie('remember', true, {expires: 7});
+    $.cookie('username', uname, {expires: 7});
+    $.cookie('password', passwd, {expires: 7});
+  }else{
+    $.cookie('remember', false, {expires: -1});
+    $.cookie('username', '', {expires: -1});
+    $.cookie('password', '', {expires: -1});
+  }
+}

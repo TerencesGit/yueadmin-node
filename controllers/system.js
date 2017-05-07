@@ -562,15 +562,3 @@ exports.setAccountStatus = function(req, res){
 		})
 	}
 }
-//删除账户
-exports.removeAccount = function(req, res){
-	var id = req.query.id;
-	if(id){
-		User.remove({_id: id}, function(err, msg){
-			if(err) console.log(err)
-				res.json({status: 1})
-		})
-	}else{
-		res.json({status: 0})
-	}
-}
